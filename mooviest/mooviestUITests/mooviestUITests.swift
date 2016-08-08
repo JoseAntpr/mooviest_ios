@@ -1,14 +1,14 @@
 //
-//  mooviestUITests.swift
-//  mooviestUITests
+//  MooviestUITests.swift
+//  MooviestUITests
 //
-//  Created by Antonio RG on 21/7/16.
-//  Copyright © 2016 Antonio RG. All rights reserved.
+//  Created by Antonio RG on 3/8/16.
+//  Copyright © 2016 Mooviest. All rights reserved.
 //
 
 import XCTest
 
-class mooviestUITests: XCTestCase {
+class MooviestUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()

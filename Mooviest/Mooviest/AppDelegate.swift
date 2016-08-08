@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  mooviest
+//  Mooviest
 //
-//  Created by Antonio RG on 21/7/16.
-//  Copyright © 2016 Antonio RG. All rights reserved.
+//  Created by Antonio RG on 3/8/16.
+//  Copyright © 2016 Mooviest. All rights reserved.
 //
 
 import UIKit
@@ -16,26 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let tabBarController = UITabBarController()
-        let tab1 = SwipeTabViewController(nibName: nil, bundle: nil)
-        let tab2 = ViewController(nibName: nil, bundle: nil)
-        let tab3 = ViewController(nibName: nil, bundle: nil)
-        tabBarController.viewControllers = [tab1, tab2, tab3]
-        
-        let swipe = UIImage(named: "Swipe")
-        let thumbUp = UIImage(named: "thumb-up")
-        let account = UIImage(named: "account")
-        
-        tab1.tabBarItem = UITabBarItem(title: nil, image: swipe, tag: 1)
-        tab2.tabBarItem = UITabBarItem(title: nil, image: thumbUp, tag: 2)
-        tab3.tabBarItem = UITabBarItem(title: nil, image: account, tag: 3)
-        
-        
+        let login = LoginViewController()
         
         let frame = UIScreen.mainScreen().bounds
         self.window = UIWindow(frame: frame)
         if let w = self.window {
-            w.rootViewController = tabBarController
+            w.rootViewController = login
             w.makeKeyAndVisible()
         }
         return true
@@ -62,8 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 
 extension UIColor {

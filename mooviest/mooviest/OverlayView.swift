@@ -1,9 +1,9 @@
 //
 //  OverlayView.swift
-//  TinderSwipeCardsSwift
+//  Mooviest
 //
-//  Created by Gao Chao on 4/30/15.
-//  Copyright (c) 2015 gcweb. All rights reserved.
+//  Created by Antonio RG on 3/8/16.
+//  Copyright © 2016 Mooviest. All rights reserved.
 //
 
 import Foundation
@@ -17,11 +17,11 @@ enum GGOverlayViewMode {
 class OverlayView: UIView{
     var _mode: GGOverlayViewMode! = GGOverlayViewMode.GGOverlayViewModeLeft
     var imageView: UIImageView!
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     init() {
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
@@ -35,20 +35,20 @@ class OverlayView: UIView{
         addConstraint(imageView.topAnchor.constraintEqualToAnchor(topAnchor))
         addConstraint(imageView.bottomAnchor.constraintEqualToAnchor(bottomAnchor))
     }
-
+    
     func setMode(mode: GGOverlayViewMode) -> Void {
         if _mode == mode {
             return
         }
         _mode = mode
-
+        
         if _mode == GGOverlayViewMode.GGOverlayViewModeLeft {
             imageView.image = UIImage(named: "closes")
         } else {
             imageView.image = UIImage(named: "heart")
         }
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         

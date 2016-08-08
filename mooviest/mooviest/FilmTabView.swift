@@ -1,6 +1,6 @@
 //
 //  FilmTabView.swift
-//  mooviest
+//  Mooviest
 //
 //  Created by Antonio RG on 21/7/16.
 //  Copyright © 2016 Antonio RG. All rights reserved.
@@ -26,7 +26,7 @@ class FilmTabView: UIView {
         self.backgroundColor = UIColor.whiteColor()
         
         label.text = "Prueba"
-      
+        
         addSubview(label)
     }
     
@@ -39,5 +39,4 @@ class FilmTabView: UIView {
         addConstraint(label.heightAnchor.constraintEqualToConstant(50))
         
     }
-
 }

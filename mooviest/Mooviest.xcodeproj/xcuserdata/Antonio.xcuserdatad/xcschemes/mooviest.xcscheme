@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A9D8F9E41D40D30E0011DCB1"
+               BlueprintIdentifier = "A977B5DB1D51FB00009FC1CE"
                BuildableName = "Mooviest.app"
-               BlueprintName = "mooviest"
+               BlueprintName = "Mooviest"
                ReferencedContainer = "container:Mooviest.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A9D8F9F81D40D30E0011DCB1"
-               BuildableName = "Mooviest.temp_caseinsensitive_rename.xctest"
-               BlueprintName = "mooviestTests"
+               BlueprintIdentifier = "A977B5EF1D51FB00009FC1CE"
+               BuildableName = "MooviestTests.xctest"
+               BlueprintName = "MooviestTests"
                ReferencedContainer = "container:Mooviest.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A9D8FA031D40D30E0011DCB1"
-               BuildableName = "Mooviest.temp_caseinsensitive_rename.xctest"
-               BlueprintName = "mooviestUITests"
+               BlueprintIdentifier = "A977B5FA1D51FB00009FC1CE"
+               BuildableName = "MooviestUITests.xctest"
+               BlueprintName = "MooviestUITests"
                ReferencedContainer = "container:Mooviest.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -52,9 +52,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9D8F9E41D40D30E0011DCB1"
+            BlueprintIdentifier = "A977B5DB1D51FB00009FC1CE"
             BuildableName = "Mooviest.app"
-            BlueprintName = "mooviest"
+            BlueprintName = "Mooviest"
             ReferencedContainer = "container:Mooviest.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -75,9 +75,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9D8F9E41D40D30E0011DCB1"
+            BlueprintIdentifier = "A977B5DB1D51FB00009FC1CE"
             BuildableName = "Mooviest.app"
-            BlueprintName = "mooviest"
+            BlueprintName = "Mooviest"
             ReferencedContainer = "container:Mooviest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -94,9 +94,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9D8F9E41D40D30E0011DCB1"
+            BlueprintIdentifier = "A977B5DB1D51FB00009FC1CE"
             BuildableName = "Mooviest.app"
-            BlueprintName = "mooviest"
+            BlueprintName = "Mooviest"
             ReferencedContainer = "container:Mooviest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

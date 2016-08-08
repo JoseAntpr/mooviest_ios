@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/Antonio/Documents/mooviest_ios/mooviest/Mooviest.xcodeproj">
+      location = "self:Mooviest.xcodeproj">
    </FileRef>
 </Workspace>

@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>mooviest.xcscheme</key>
+		<key>Mooviest.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,17 +12,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>A9D8F9E41D40D30E0011DCB1</key>
+		<key>A977B5DB1D51FB00009FC1CE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A9D8F9F81D40D30E0011DCB1</key>
+		<key>A977B5EF1D51FB00009FC1CE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A9D8FA031D40D30E0011DCB1</key>
+		<key>A977B5FA1D51FB00009FC1CE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
