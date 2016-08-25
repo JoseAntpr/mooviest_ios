@@ -9,30 +9,43 @@
 import UIKit
 
 class SwipeTabViewController: UIViewController, DraggableViewDelegate {
-    var v = SwipeTabView()
+    var v: SwipeTabView!
     
     var exampleCardLabels: [String]!
     var allCards: [DraggableView]!
     
     let MAX_BUFFER_SIZE = 2
-    let CARD_HEIGHT: CGFloat = 530
-    let CARD_WIDTH: CGFloat = 375
-    
+    var FRAME_HEIGHT = CGFloat(530)
+    var FRAME_WIDTH = CGFloat(375)
+    var CARD_HEIGHT = CGFloat()
+    var CARD_WIDTH = CGFloat()
+    var MARGIN_TOP = CGFloat()
+    var MARGIN_LEFT = CGFloat()
     var cardsLoadedIndex: Int!
     var loadedCards: [DraggableView]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        calculateSizeAndPositionCard()
+        v = SwipeTabView(Card_width: CARD_WIDTH, Card_height: CARD_HEIGHT)
         view.addSubview(v)
         setupConstraints()
         setupView()
-        
     }
     
     override func didReceiveMemoryWarning() {
         navigationController?.navigationBarHidden = false
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func calculateSizeAndPositionCard() {
+        FRAME_HEIGHT = self.view.frame.size.height
+        FRAME_WIDTH = self.view.frame.size.width
+        CARD_HEIGHT = FRAME_HEIGHT * 0.68
+        CARD_WIDTH = FRAME_WIDTH * 0.87
+        MARGIN_LEFT = (FRAME_WIDTH * 0.13) / 2
+        MARGIN_TOP = (FRAME_HEIGHT * 0.27) / 2
     }
     
     func setupConstraints() {
@@ -72,6 +85,8 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         
         v.closedButton.addTarget(self, action: #selector(self.swipeLeft), forControlEvents: .TouchUpInside)
         v.heartButton.addTarget(self, action: #selector(self.swipeRight), forControlEvents: .TouchUpInside)
+        v.clockButton.addTarget(self, action: #selector(self.swipeLeft), forControlEvents: .TouchUpInside)
+        v.eyeButton.addTarget(self, action: #selector(self.swipeRight), forControlEvents: .TouchUpInside)
         
     }
     
@@ -149,6 +164,30 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         }
     }
     
+    func cardSwipedTop(card: UIView) -> Void {
+        loadedCards.removeAtIndex(0)
+        
+        if cardsLoadedIndex < allCards.count {
+            loadedCards.append(allCards[cardsLoadedIndex])
+            cardsLoadedIndex = cardsLoadedIndex + 1
+            v.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
+            //setupConstraintsSubView(Index: MAX_BUFFER_SIZE - 1)
+            
+        }
+    }
+    
+    func cardSwipedBottom(card: UIView) -> Void {
+        loadedCards.removeAtIndex(0)
+        
+        if cardsLoadedIndex < allCards.count {
+            loadedCards.append(allCards[cardsLoadedIndex])
+            cardsLoadedIndex = cardsLoadedIndex + 1
+            v.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
+            //setupConstraintsSubView(Index: MAX_BUFFER_SIZE - 1)
+            
+        }
+    }
+    
     func swipeRight() -> Void {
         if loadedCards.count <= 0 {
             return
@@ -175,8 +214,34 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         dragView.leftClickAction()
     }
     
+    func swipeTop() -> Void {
+        if loadedCards.count <= 0 {
+            return
+        }
+        let dragView: DraggableView = loadedCards[0]
+        dragView.overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeLeft)
+        UIView.animateWithDuration(0.2, animations: {
+            () -> Void in
+            dragView.overlayView.alpha = 1
+        })
+        dragView.topClickAction()
+    }
+    
+    func swipeBottom() -> Void {
+        if loadedCards.count <= 0 {
+            return
+        }
+        let dragView: DraggableView = loadedCards[0]
+        dragView.overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeLeft)
+        UIView.animateWithDuration(0.2, animations: {
+            () -> Void in
+            dragView.overlayView.alpha = 1
+        })
+        dragView.bottomClickAction()
+    }
+    
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake(CGFloat(v.frame.minX + 20), CGFloat(v.frame.minY + 80), CARD_WIDTH, CARD_HEIGHT))
+        let draggableView = DraggableView(frame: CGRectMake(CGFloat(v.frame.minX + MARGIN_LEFT) , CGFloat(v.frame.minY + MARGIN_TOP), CARD_WIDTH, CARD_HEIGHT))
         draggableView.imageView.image = UIImage(named: exampleCardLabels[index])
         draggableView.delegate = self
         return draggableView

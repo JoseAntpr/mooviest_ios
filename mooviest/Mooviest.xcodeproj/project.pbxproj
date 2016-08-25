@@ -220,6 +220,7 @@
 				TargetAttributes = {
 					A977B5DB1D51FB00009FC1CE = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = MTWP2E29RY;
 					};
 					A977B5EF1D51FB00009FC1CE = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -437,6 +438,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Mooviest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mooviest.Mooviest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -449,6 +451,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Mooviest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mooviest.Mooviest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
