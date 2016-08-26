@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A914BDFA1D70547000F30FC2 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A914BDF91D70547000F30FC2 /* Alamofire.framework */; };
 		A92140EB1D53B59900C4D605 /* FilmTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92140EA1D53B59900C4D605 /* FilmTabBarController.swift */; };
 		A977B5E01D51FB00009FC1CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A977B5DF1D51FB00009FC1CE /* AppDelegate.swift */; };
 		A977B5E21D51FB00009FC1CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A977B5E11D51FB00009FC1CE /* ViewController.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A914BDF91D70547000F30FC2 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		A92140EA1D53B59900C4D605 /* FilmTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmTabBarController.swift; sourceTree = "<group>"; };
 		A977B5DC1D51FB00009FC1CE /* Mooviest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mooviest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A977B5DF1D51FB00009FC1CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A914BDFA1D70547000F30FC2 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +98,7 @@
 		A977B5D31D51FB00009FC1CE = {
 			isa = PBXGroup;
 			children = (
+				A914BDF91D70547000F30FC2 /* Alamofire.framework */,
 				A977B5DE1D51FB00009FC1CE /* Mooviest */,
 				A977B5F31D51FB00009FC1CE /* MooviestTests */,
 				A977B5FE1D51FB00009FC1CE /* MooviestUITests */,
@@ -437,6 +441,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Mooviest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -450,6 +458,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Mooviest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
