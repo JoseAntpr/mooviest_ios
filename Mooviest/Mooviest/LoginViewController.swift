@@ -58,7 +58,7 @@ class LoginViewController: UIViewController {
         
         tabBarController.viewControllers = [nVController1, tab2, tab3]
         
-        UITabBar.appearance().barTintColor = UIColor(netHex: 0x940224)
+        UITabBar.appearance().barTintColor = UIColor(netHex: mooviest_red)
         UITabBar.appearance().tintColor = UIColor.whiteColor()
        
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate

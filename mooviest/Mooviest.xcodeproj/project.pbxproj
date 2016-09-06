@@ -28,14 +28,12 @@
 		A98742C41D75F5C500AE3079 /* ParticipationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98742C31D75F5C500AE3079 /* ParticipationModel.swift */; };
 		A98742C71D75FA1100AE3079 /* MovieParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98742C61D75FA1100AE3079 /* MovieParser.swift */; };
 		A98742C91D75FA4600AE3079 /* RatingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98742C81D75FA4600AE3079 /* RatingModel.swift */; };
-		A9A4D74B1D7F397800533D4C /* NewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A4D74A1D7F397800533D4C /* NewController.swift */; };
 		A9DD23CD1D76DF6F0064B037 /* ParticipationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DD23CC1D76DF6F0064B037 /* ParticipationParser.swift */; };
 		A9DD23CF1D76DF8B0064B037 /* RatingParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DD23CE1D76DF8B0064B037 /* RatingParser.swift */; };
 		A9DD23D11D76E5160064B037 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DD23D01D76E5160064B037 /* Errors.swift */; };
 		A9DD23D31D76E77B0064B037 /* ParserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DD23D21D76E77B0064B037 /* ParserProtocol.swift */; };
 		A9E986431D7D887100A9F4F5 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E986421D7D887100A9F4F5 /* MovieDetailViewController.swift */; };
 		A9E986451D7D88AF00A9F4F5 /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E986441D7D88AF00A9F4F5 /* MovieDetailView.swift */; };
-		A9E986471D7EC57C00A9F4F5 /* CoverImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E986461D7EC57C00A9F4F5 /* CoverImageView.swift */; };
 		A9EEF7CA1D783C2900F66C09 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EEF7C91D783C2900F66C09 /* Kingfisher.framework */; };
 		A9F68BF01D70A7F8005A1CC8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F68BEE1D70A7F8005A1CC8 /* Alamofire.framework */; };
 		A9F68BF31D70AA0A005A1CC8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F68BEF1D70A7F8005A1CC8 /* SwiftyJSON.framework */; };
@@ -86,14 +84,12 @@
 		A98742C31D75F5C500AE3079 /* ParticipationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParticipationModel.swift; path = Model/ParticipationModel.swift; sourceTree = "<group>"; };
 		A98742C61D75FA1100AE3079 /* MovieParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieParser.swift; path = Model/Parser/MovieParser.swift; sourceTree = "<group>"; };
 		A98742C81D75FA4600AE3079 /* RatingModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RatingModel.swift; path = Model/RatingModel.swift; sourceTree = "<group>"; };
-		A9A4D74A1D7F397800533D4C /* NewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewController.swift; sourceTree = "<group>"; };
 		A9DD23CC1D76DF6F0064B037 /* ParticipationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParticipationParser.swift; path = Model/Parser/ParticipationParser.swift; sourceTree = "<group>"; };
 		A9DD23CE1D76DF8B0064B037 /* RatingParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RatingParser.swift; path = Model/Parser/RatingParser.swift; sourceTree = "<group>"; };
 		A9DD23D01D76E5160064B037 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Errors.swift; path = Model/Errors.swift; sourceTree = "<group>"; };
 		A9DD23D21D76E77B0064B037 /* ParserProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParserProtocol.swift; path = Protocol/ParserProtocol.swift; sourceTree = "<group>"; };
 		A9E986421D7D887100A9F4F5 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		A9E986441D7D88AF00A9F4F5 /* MovieDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
-		A9E986461D7EC57C00A9F4F5 /* CoverImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverImageView.swift; sourceTree = "<group>"; };
 		A9EEF7C91D783C2900F66C09 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		A9F68BEE1D70A7F8005A1CC8 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		A9F68BEF1D70A7F8005A1CC8 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
@@ -172,8 +168,6 @@
 				A914BDFD1D705D6B00F30FC2 /* DataModel.swift */,
 				A9E986421D7D887100A9F4F5 /* MovieDetailViewController.swift */,
 				A9E986441D7D88AF00A9F4F5 /* MovieDetailView.swift */,
-				A9E986461D7EC57C00A9F4F5 /* CoverImageView.swift */,
-				A9A4D74A1D7F397800533D4C /* NewController.swift */,
 			);
 			path = Mooviest;
 			sourceTree = "<group>";
@@ -382,7 +376,6 @@
 				A977B61C1D520ACC009FC1CE /* Colors.swift in Sources */,
 				A92140EB1D53B59900C4D605 /* FilmTabBarController.swift in Sources */,
 				A977B6141D51FE32009FC1CE /* DraggableView.swift in Sources */,
-				A9E986471D7EC57C00A9F4F5 /* CoverImageView.swift in Sources */,
 				A977B60E1D51FCBE009FC1CE /* FilmTabView.swift in Sources */,
 				A98742C21D75F31400AE3079 /* ModelProtocol.swift in Sources */,
 				A98742C91D75FA4600AE3079 /* RatingModel.swift in Sources */,
@@ -391,7 +384,6 @@
 				A977B6161D51FE8D009FC1CE /* OverlayView.swift in Sources */,
 				A9DD23CD1D76DF6F0064B037 /* ParticipationParser.swift in Sources */,
 				A98742C71D75FA1100AE3079 /* MovieParser.swift in Sources */,
-				A9A4D74B1D7F397800533D4C /* NewController.swift in Sources */,
 				A9DD23CF1D76DF8B0064B037 /* RatingParser.swift in Sources */,
 				A977B5E21D51FB00009FC1CE /* ViewController.swift in Sources */,
 				A9DD23D31D76E77B0064B037 /* ParserProtocol.swift in Sources */,
