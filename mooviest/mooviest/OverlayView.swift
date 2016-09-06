@@ -12,10 +12,12 @@ import UIKit
 enum GGOverlayViewMode {
     case GGOverlayViewModeLeft
     case GGOverlayViewModeRight
+    case GGOverlayViewModeTop
+    case GGOverlayViewModeBottom
 }
 
 class OverlayView: UIView{
-    var _mode: GGOverlayViewMode! = GGOverlayViewMode.GGOverlayViewModeLeft
+    var _mode: GGOverlayViewMode = GGOverlayViewMode.GGOverlayViewModeLeft
     var imageView: UIImageView!
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,8 +46,12 @@ class OverlayView: UIView{
         
         if _mode == GGOverlayViewMode.GGOverlayViewModeLeft {
             imageView.image = UIImage(named: "closes")
-        } else {
+        } else if _mode == GGOverlayViewMode.GGOverlayViewModeRight {
             imageView.image = UIImage(named: "heart")
+        } else if _mode == GGOverlayViewMode.GGOverlayViewModeTop {
+            imageView.image = UIImage(named: "clock")
+        } else {
+            imageView.image = UIImage(named: "eye")
         }
     }
     

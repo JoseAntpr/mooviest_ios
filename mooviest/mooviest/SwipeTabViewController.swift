@@ -7,13 +7,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SwipeTabViewController: UIViewController, DraggableViewDelegate {
     var v: SwipeTabView!
-    
-    var exampleCardLabels: [String]!
+    //var exampleCardLabels: [String]!
     var allCards: [DraggableView]!
-    
     let MAX_BUFFER_SIZE = 2
     var FRAME_HEIGHT = CGFloat(530)
     var FRAME_WIDTH = CGFloat(375)
@@ -23,14 +22,33 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
     var MARGIN_LEFT = CGFloat()
     var cardsLoadedIndex: Int!
     var loadedCards: [DraggableView]!
-    
+    var movies = [Movie]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.hidden = false
         calculateSizeAndPositionCard()
         v = SwipeTabView(Card_width: CARD_WIDTH, Card_height: CARD_HEIGHT)
         view.addSubview(v)
         setupConstraints()
-        setupView()
+        DataModel.sharedInstance.getMoviesSwipe(Lang: 1, Count: 10) {
+            (data) in
+            for m in data {
+                let movie = try! MovieParser.jsonToMovie(Movie: m)
+                self.movies.append(movie)
+            }
+            print(self.movies[0])
+            self.setupView()
+        }
+    }
+    
+    func tappedCard(sender: UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            
+            let index = (sender.view as! DraggableView).index
+            print("tapped movie: \(movies[index].originalTitle)")
+            let nViewController = MovieDetailViewController()
+            navigationController?.pushViewController(nViewController, animated: true)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -68,7 +86,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
 //        let rightBarButton = UIBarButtonItem(customView: replayButton)
 //
 //        navigationItem.rightBarButtonItem = rightBarButton
-        exampleCardLabels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+        //exampleCardLabels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
         allCards = []
         loadedCards = []
         cardsLoadedIndex = 0
@@ -85,8 +103,8 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         
         v.closedButton.addTarget(self, action: #selector(self.swipeLeft), forControlEvents: .TouchUpInside)
         v.heartButton.addTarget(self, action: #selector(self.swipeRight), forControlEvents: .TouchUpInside)
-        v.clockButton.addTarget(self, action: #selector(self.swipeLeft), forControlEvents: .TouchUpInside)
-        v.eyeButton.addTarget(self, action: #selector(self.swipeRight), forControlEvents: .TouchUpInside)
+        v.clockButton.addTarget(self, action: #selector(self.swipeTop), forControlEvents: .TouchUpInside)
+        v.eyeButton.addTarget(self, action: #selector(self.swipeBottom), forControlEvents: .TouchUpInside)
         
     }
     
@@ -106,7 +124,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
             card.removeFromSuperview()
         }
 
-        exampleCardLabels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+       // exampleCardLabels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
         allCards = []
         cardsLoadedIndex = 0
         loadedCards = []
@@ -115,11 +133,12 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
     
     
     func loadCards() -> Void {
-        if exampleCardLabels.count > 0 {
-            let numLoadedCardsCap = exampleCardLabels.count > MAX_BUFFER_SIZE ? MAX_BUFFER_SIZE : exampleCardLabels.count
-            for i in 0 ..< exampleCardLabels.count {
+        if movies.count > 0 {
+            let numLoadedCardsCap = movies.count > MAX_BUFFER_SIZE ? MAX_BUFFER_SIZE : movies.count
+            for i in 0 ..< movies.count {
                 let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(i)
-                print("create " + exampleCardLabels[i] )
+                
+                print("create " + movies[i].originalTitle)
                 allCards.append(newCard)
                 if i < numLoadedCardsCap {
                     loadedCards.append(newCard)
@@ -219,7 +238,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
             return
         }
         let dragView: DraggableView = loadedCards[0]
-        dragView.overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeLeft)
+        dragView.overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeTop)
         UIView.animateWithDuration(0.2, animations: {
             () -> Void in
             dragView.overlayView.alpha = 1
@@ -232,7 +251,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
             return
         }
         let dragView: DraggableView = loadedCards[0]
-        dragView.overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeLeft)
+        dragView.overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeBottom)
         UIView.animateWithDuration(0.2, animations: {
             () -> Void in
             dragView.overlayView.alpha = 1
@@ -241,8 +260,15 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
     }
     
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake(CGFloat(v.frame.minX + MARGIN_LEFT) , CGFloat(v.frame.minY + MARGIN_TOP), CARD_WIDTH, CARD_HEIGHT))
-        draggableView.imageView.image = UIImage(named: exampleCardLabels[index])
+        let draggableView = DraggableView(frame: CGRectMake(CGFloat(v.frame.minX + MARGIN_LEFT) , CGFloat(v.frame.minY + MARGIN_TOP), CARD_WIDTH, CARD_HEIGHT), index: index)
+        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(self.tappedCard))
+        draggableView.userInteractionEnabled = true
+        draggableView.addGestureRecognizer(tapGestureRecognizer)
+        
+        let url = movies[index].image
+        
+        draggableView.imageView.kf_setImageWithURL(NSURL(string:  url),placeholderImage: UIImage(named:  "noimage"))
+        
         draggableView.delegate = self
         return draggableView
     }

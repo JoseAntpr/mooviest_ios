@@ -31,21 +31,28 @@ class DraggableView: UIView {
     var originPoint: CGPoint!
     var overlayView: OverlayView!
     var imageView: UIImageView!
+    var noImageLabel: UILabel!
     
     var xFromCenter: Float!
     var yFromCenter: Float!
+    var index:Int!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, index: Int) {
         super.init(frame: frame)
-        
+        self.index = index
+        print(index)
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(DraggableView.beingDragged(_:)))
         addGestureRecognizer(panGestureRecognizer)
         setupComponents()
         setupConstraints()
+    }
+    
+    func getIndex()-> Int{
+        return index
     }
     
     func setupComponents() {
@@ -53,6 +60,11 @@ class DraggableView: UIView {
         yFromCenter = 0
         
         backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
+        noImageLabel = UILabel()
+        noImageLabel.text = "Image No Found"
+        noImageLabel.textColor = UIColor.whiteColor()
+        noImageLabel.textAlignment = NSTextAlignment.Center
+        noImageLabel.font = noImageLabel.font.fontWithSize(30)
         
         imageView = UIImageView(image: UIImage(named: "clock"))
         imageView.contentMode = UIViewContentMode.ScaleToFill
@@ -61,12 +73,14 @@ class DraggableView: UIView {
         
         overlayView = OverlayView()
         overlayView.alpha = 0
-        
+        addSubview(noImageLabel)
         addSubview(imageView)
         addSubview(overlayView)
+        
     }
     
     func setupConstraints() {
+        noImageLabel.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -79,6 +93,12 @@ class DraggableView: UIView {
         addConstraint(overlayView.centerYAnchor.constraintEqualToAnchor(centerYAnchor))
         addConstraint(overlayView.widthAnchor.constraintEqualToConstant(150))
         addConstraint(overlayView.heightAnchor.constraintEqualToConstant(150))
+        
+        addConstraint(noImageLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor))
+        addConstraint(noImageLabel.centerYAnchor.constraintEqualToAnchor(centerYAnchor))
+        addConstraint(noImageLabel.widthAnchor.constraintEqualToAnchor(widthAnchor))
+        addConstraint(noImageLabel.heightAnchor.constraintEqualToConstant(100))
+
     }
     
     func beingDragged(gestureRecognizer: UIPanGestureRecognizer) -> Void {
@@ -100,7 +120,7 @@ class DraggableView: UIView {
             let transform = CGAffineTransformMakeRotation(CGFloat(rotationAngle))
             let scaleTransform = CGAffineTransformScale(transform, CGFloat(scale), CGFloat(scale))
             self.transform = scaleTransform
-            self.updateOverlay(CGFloat(xFromCenter))
+            self.updateOverlay(sinceXCenter: CGFloat(xFromCenter),sinceYCenter: CGFloat(yFromCenter))
             break
         case UIGestureRecognizerState.Ended:
             self.afterSwipeAction()
@@ -114,33 +134,54 @@ class DraggableView: UIView {
         }
     }
     
-    func updateOverlay(distance: CGFloat) -> Void {
-        if distance > 0 {
-            overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeRight)
+    func updateOverlay(sinceXCenter x: CGFloat, sinceYCenter y: CGFloat) -> Void {
+        var distance = CGFloat(0)
+        if abs(x) >= abs(y) {
+            distance = x
+            if x > 0 {
+                overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeRight)
+            } else {
+                overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeLeft)
+            }
         } else {
-            overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeLeft)
+            distance = y
+            if y > 0 {
+                overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeBottom)
+            } else {
+                overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeTop)
+            }
         }
         overlayView.alpha = CGFloat(min(fabsf(Float(distance))/100, 1))
+    }
+    
+    func returnOriginalPosition() {
+        UIView.animateWithDuration(0.3, animations: {() -> Void in
+            self.transform = CGAffineTransformMakeRotation(0)
+            self.overlayView.alpha = 0
+            self.center = self.originPoint
+        })
     }
     
     func afterSwipeAction() -> Void {
         let floatXFromCenter = Float(xFromCenter)
         let floatYFromCenter = Float(yFromCenter)
-        if floatXFromCenter > ACTION_MARGIN {
-            self.rightAction()
-        } else if floatXFromCenter < -ACTION_MARGIN {
-            self.leftAction()
-        } else if floatYFromCenter > ACTION_MARGIN {
-            self.bottomAction()
-        } else if floatYFromCenter < -ACTION_MARGIN {
-            self.topAction()
+    
+        if abs(floatXFromCenter) >=  abs(floatYFromCenter) {
+            if floatXFromCenter > ACTION_MARGIN {
+                self.rightAction()
+            } else if floatXFromCenter < -ACTION_MARGIN {
+                self.leftAction()
+            } else {
+                returnOriginalPosition()
+            }
         } else {
-            
-            UIView.animateWithDuration(0.3, animations: {() -> Void in
-                self.transform = CGAffineTransformMakeRotation(0)
-                self.overlayView.alpha = 0
-                self.center = self.originPoint
-            })
+            if floatYFromCenter > ACTION_MARGIN {
+                self.bottomAction()
+            } else if floatYFromCenter < -ACTION_MARGIN {
+                self.topAction()
+            } else {
+                returnOriginalPosition()
+            }
         }
     }
     
