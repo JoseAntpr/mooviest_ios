@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  Mooviest
+
+  Created by Antonio RG on 12/9/16.
+  Copyright © 2016 Mooviest. All rights reserved.
+*/
+
+// LoginView
+
+titleCreateAccountButton = "¿No tienes cuenta? Create una";
+
+//InfoMovieView
+synopsislabel = "Sinopsis";

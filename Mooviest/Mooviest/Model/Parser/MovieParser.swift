@@ -16,7 +16,7 @@ class MovieParser: NSObject, Parser {
             let average = m["average"].string, let runtime = m["runtime"].int,
             let released = m["released"].int, let producers = m["movie_producer"].string,
             let sagaOrder = m["saga_order"].int,let genresJson = m["genres"].array,
-            let participationsJson = m["participations"].array, let ratingsJson = m["ratings"].array,
+            let backdrop = m["backdrop"].string ,let participationsJson = m["participations"].array, let ratingsJson = m["ratings"].array,
             let langs = m["langs"].array
             else {
                 throw Error.InvalidMovie
@@ -47,11 +47,11 @@ class MovieParser: NSObject, Parser {
             let rating = try! RatingParser.jsonToRating(Rating: r)
             ratings.append(rating)
         }
-        
+       
         if image.lowercaseString.rangeOfString("http://") == nil &&
             image.lowercaseString.rangeOfString("https://") == nil {
             image =  "https://img.tviso.com/ES/poster/w430/"+image
         }
-        return Movie(id: id, image: image, originalTitle: originalTitle, average: average, title: title, synopsis: synopsis, runtime: runtime, released: released, producers: producers, trailer: trailer, country: country, countryCode: countryCode, sagaOrder: sagaOrder, genres: genres, participantes: participations, ratings: ratings)
+        return Movie(id: id, image: image, backdrop: backdrop, originalTitle: originalTitle, average: average, title: title, synopsis: synopsis, runtime: runtime, released: released, producers: producers, trailer: trailer, country: country, countryCode: countryCode, sagaOrder: sagaOrder, genres: genres, participantes: participations, ratings: ratings)
     }
 }

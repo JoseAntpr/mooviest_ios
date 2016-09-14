@@ -53,7 +53,7 @@ class LoginView: UIView {
         loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         loginButton.layer.cornerRadius = 3
         
-        createAccountButton.setTitle("No account yet? Create one", forState: .Normal)
+        createAccountButton.setTitle(NSLocalizedString("titleCreateAccountButton", comment: "Title of createAccountButton"), forState: .Normal)
         createAccountButton.setTitleColor(UIColor.whiteColor().colorWithAlphaComponent(0.7), forState: .Normal)
 
         

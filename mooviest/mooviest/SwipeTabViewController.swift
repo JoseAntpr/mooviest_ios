@@ -32,7 +32,9 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         setupConstraints()
         DataModel.sharedInstance.getMoviesSwipe(Lang: 1, Count: 10) {
             (data) in
+            print(data)
             for m in data {
+                
                 let movie = try! MovieParser.jsonToMovie(Movie: m)
                 self.movies.append(movie)
             }
@@ -47,6 +49,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
             let index = (sender.view as! DraggableView).index
             print("tapped movie: \(movies[index].originalTitle)")
             let nViewController = MovieDetailViewController()
+            nViewController.movie = movies[index]
             navigationController?.pushViewController(nViewController, animated: true)
         }
     }

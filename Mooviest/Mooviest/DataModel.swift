@@ -13,7 +13,7 @@ import SwiftyJSON
 
 class DataModel: NSObject {
     static let sharedInstance = DataModel()
-    var path = "http://localhost:8000/api"// "http://192.168.1.134:8000/api"// 
+    var path =  "http://localhost:8000/api"// "http://192.168.1.134:8000/api"//
     var movies = [Movie]()
 
     

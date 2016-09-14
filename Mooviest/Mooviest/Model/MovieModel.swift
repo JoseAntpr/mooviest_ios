@@ -13,6 +13,7 @@ import Foundation
 struct Movie: Model {
     var id: Int
     var image: String
+    var backdrop: String
     var originalTitle: String
     var average: String
     var title: String
