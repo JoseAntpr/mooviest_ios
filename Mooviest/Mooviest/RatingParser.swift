@@ -7,14 +7,14 @@
 //
 
 import Foundation
-import SwiftyJSON
+
 
 class RatingParser: NSObject, Parser {
-    static func jsonToRating(Rating r: JSON)throws -> Rating {
-        guard let name = r["name"].string, let rating = r["rating"].int,
-            let count = r["count"].int, let dateUpdate = r["date_update"].string
+    static func jsonToRating(Rating r: [String:Any])throws -> Rating {
+        guard let name = r["name"] as? String, let rating = r["rating"] as? Int,
+            let count = r["count"] as? Int, let dateUpdate = r["date_update"] as? String
             else {
-                throw Error.InvalidRating
+                throw ErrorMovie.invalidRating
         }
         return Rating(name: name, rating: rating, count: count, dateUpdate: dateUpdate)
     }

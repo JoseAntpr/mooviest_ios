@@ -9,12 +9,12 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-
+    
     var v = LoginView()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(v)
-        v.loginButton.addTarget(self, action: #selector(self.login), forControlEvents: .TouchUpInside)
+        v.loginButton.addTarget(self, action: #selector(self.login), for: .touchUpInside)
         setupConstraints()
     }
     
@@ -26,10 +26,10 @@ class LoginViewController: UIViewController {
     func setupConstraints() {
         v.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addConstraint(v.leftAnchor.constraintEqualToAnchor(view.leftAnchor))
-        view.addConstraint(v.rightAnchor.constraintEqualToAnchor(view.rightAnchor))
-        view.addConstraint(v.topAnchor.constraintEqualToAnchor(view.topAnchor))
-        view.addConstraint(v.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor))
+        view.addConstraint(v.leftAnchor.constraint(equalTo: view.leftAnchor))
+        view.addConstraint(v.rightAnchor.constraint(equalTo: view.rightAnchor))
+        view.addConstraint(v.topAnchor.constraint(equalTo: view.topAnchor))
+        view.addConstraint(v.bottomAnchor.constraint(equalTo: view.bottomAnchor))
     }
     
     func login() {
@@ -50,24 +50,24 @@ class LoginViewController: UIViewController {
         navigationController?.pushViewController(tabBarController, animated: true)
         
         //crear un protocolo que la vista tenga un nav controller con unos parametros por defectos que serán los siguientes
-        nVController1.navigationBar.topItem?.titleView = UIImageView(image: UIImage(named: "title")!.imageWithRenderingMode(.AlwaysOriginal))
+        nVController1.navigationBar.topItem?.titleView = UIImageView(image: UIImage(named: "title")!.withRenderingMode(.alwaysOriginal))
         nVController1.navigationBar.barTintColor = UIColor(netHex: mooviest_red)
         nVController1.navigationItem.backBarButtonItem = nil
-        nVController1.navigationBar.barStyle = UIBarStyle.Black
+        nVController1.navigationBar.barStyle = UIBarStyle.black
         
         
         tabBarController.viewControllers = [nVController1, tab2, tab3]
         
         UITabBar.appearance().barTintColor = UIColor(netHex: mooviest_red)
-        UITabBar.appearance().tintColor = UIColor.whiteColor()
-       
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        UITabBar.appearance().tintColor = UIColor.white
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = tabBarController
-
+        
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
-
+    
 }

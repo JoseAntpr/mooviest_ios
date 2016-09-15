@@ -1,5 +1,5 @@
 //
-//  RatingModel.swift
+//  ParticipationModel.swift
 //  Mooviest
 //
 //  Created by Antonio RG on 30/8/16.
@@ -8,9 +8,10 @@
 
 import Foundation
 
-struct Rating: Model {
+struct Participation:Model {
+    var id: Int
     var name: String
-    var rating:Int
-    var count: Int
-    var dateUpdate: String
+    var role: Int
+    var character: String
+    var award: String
 }

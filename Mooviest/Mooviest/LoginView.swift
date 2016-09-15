@@ -9,16 +9,16 @@
 import UIKit
 
 class LoginView: UIView {
-
-    let height = UIApplication.sharedApplication().statusBarFrame.size.height
+    
+    let height = UIApplication.shared.statusBarFrame.size.height
     var backgroundStatusView = UIView()
     var titleImageView = UIImageView()
     var userTextField = UITextField()
     var userLineImageView = UIImageView()
     var passTextField = UITextField()
     var passLineImageView = UIImageView()
-    var loginButton = UIButton(type: UIButtonType.System) as UIButton
-    var createAccountButton = UIButton(type: UIButtonType.System) as UIButton
+    var loginButton = UIButton(type: UIButtonType.system) as UIButton
+    var createAccountButton = UIButton(type: UIButtonType.system) as UIButton
     
     init() {
         super.init(frame: CGRect.zero)
@@ -33,29 +33,29 @@ class LoginView: UIView {
     func setupComponents() {
         self.backgroundColor = UIColor(netHex: mooviest_red)
         
-        titleImageView.image = UIImage(named: "Mooviest")!.imageWithRenderingMode(.AlwaysOriginal)
-        titleImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        titleImageView.image = UIImage(named: "Mooviest")!.withRenderingMode(.alwaysOriginal)
+        titleImageView.contentMode = UIViewContentMode.scaleAspectFit
         
-        backgroundStatusView.backgroundColor = UIColor(netHex: dark_red).colorWithAlphaComponent(0.5)
+        backgroundStatusView.backgroundColor = UIColor(netHex: dark_red).withAlphaComponent(0.5)
         
-        userTextField.textColor = UIColor.whiteColor()
-        userTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        userTextField.textColor = UIColor.white
+        userTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.white])
         
-        passTextField.textColor = UIColor.whiteColor()
-        passTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
-        passTextField.secureTextEntry = true
+        passTextField.textColor = UIColor.white
+        passTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.white])
+        passTextField.isSecureTextEntry = true
         
-        userLineImageView.backgroundColor = UIColor.whiteColor()
-        passLineImageView.backgroundColor = UIColor.whiteColor()
+        userLineImageView.backgroundColor = UIColor.white
+        passLineImageView.backgroundColor = UIColor.white
         
-        loginButton.backgroundColor = UIColor(netHex: dark_red).colorWithAlphaComponent(0.5)
-        loginButton.setTitle("LOGIN", forState: .Normal)
-        loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        loginButton.backgroundColor = UIColor(netHex: dark_red).withAlphaComponent(0.5)
+        loginButton.setTitle("LOGIN", for: UIControlState())
+        loginButton.setTitleColor(UIColor.white, for: UIControlState())
         loginButton.layer.cornerRadius = 3
         
-        createAccountButton.setTitle(NSLocalizedString("titleCreateAccountButton", comment: "Title of createAccountButton"), forState: .Normal)
-        createAccountButton.setTitleColor(UIColor.whiteColor().colorWithAlphaComponent(0.7), forState: .Normal)
-
+        createAccountButton.setTitle(NSLocalizedString("titleCreateAccountButton", comment: "Title of createAccountButton"), for: UIControlState())
+        createAccountButton.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: UIControlState())
+        
         
         
         addSubview(backgroundStatusView)
@@ -79,47 +79,47 @@ class LoginView: UIView {
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(backgroundStatusView.leftAnchor.constraintEqualToAnchor(leftAnchor))
-        addConstraint(backgroundStatusView.topAnchor.constraintEqualToAnchor(topAnchor))
-        addConstraint(backgroundStatusView.widthAnchor.constraintEqualToAnchor(widthAnchor))
-        addConstraint(backgroundStatusView.heightAnchor.constraintEqualToConstant(height))
+        addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(backgroundStatusView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(backgroundStatusView.heightAnchor.constraint(equalToConstant: height))
         
-        addConstraint(titleImageView.centerXAnchor.constraintEqualToAnchor(centerXAnchor))
-        addConstraint(titleImageView.topAnchor.constraintEqualToAnchor(backgroundStatusView.bottomAnchor, constant: 65))
-        addConstraint(titleImageView.widthAnchor.constraintEqualToAnchor(widthAnchor,multiplier: 0.75))
-        addConstraint(titleImageView.heightAnchor.constraintEqualToConstant(65))
+        addConstraint(titleImageView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(titleImageView.topAnchor.constraint(equalTo: backgroundStatusView.bottomAnchor, constant: 65))
+        addConstraint(titleImageView.widthAnchor.constraint(equalTo: widthAnchor,multiplier: 0.75))
+        addConstraint(titleImageView.heightAnchor.constraint(equalToConstant: 65))
         
-        addConstraint(userTextField.centerXAnchor.constraintEqualToAnchor(centerXAnchor))
-        addConstraint(userTextField.topAnchor.constraintEqualToAnchor(titleImageView.bottomAnchor, constant: 60))
-        addConstraint(userTextField.widthAnchor.constraintEqualToAnchor(widthAnchor, multiplier: 0.8))
-        addConstraint(userTextField.heightAnchor.constraintEqualToConstant(55))
-
-        addConstraint(userLineImageView.centerXAnchor.constraintEqualToAnchor(centerXAnchor))
-        addConstraint(userLineImageView.topAnchor.constraintEqualToAnchor(userTextField.bottomAnchor))
-        addConstraint(userLineImageView.widthAnchor.constraintEqualToAnchor(userTextField.widthAnchor))
-        addConstraint(userLineImageView.heightAnchor.constraintEqualToConstant(1))
+        addConstraint(userTextField.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(userTextField.topAnchor.constraint(equalTo: titleImageView.bottomAnchor, constant: 60))
+        addConstraint(userTextField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8))
+        addConstraint(userTextField.heightAnchor.constraint(equalToConstant: 55))
         
-        addConstraint(passTextField.centerXAnchor.constraintEqualToAnchor(centerXAnchor))
-        addConstraint(passTextField.topAnchor.constraintEqualToAnchor(userLineImageView.bottomAnchor, constant: 30))
-        addConstraint(passTextField.widthAnchor.constraintEqualToAnchor(widthAnchor, multiplier: 0.8))
-        addConstraint(passTextField.heightAnchor.constraintEqualToConstant(50))
+        addConstraint(userLineImageView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(userLineImageView.topAnchor.constraint(equalTo: userTextField.bottomAnchor))
+        addConstraint(userLineImageView.widthAnchor.constraint(equalTo: userTextField.widthAnchor))
+        addConstraint(userLineImageView.heightAnchor.constraint(equalToConstant: 1))
         
-        addConstraint(passLineImageView.centerXAnchor.constraintEqualToAnchor(centerXAnchor))
-        addConstraint(passLineImageView.topAnchor.constraintEqualToAnchor(passTextField.bottomAnchor))
-        addConstraint(passLineImageView.widthAnchor.constraintEqualToAnchor(passTextField.widthAnchor))
-        addConstraint(passLineImageView.heightAnchor.constraintEqualToConstant(1))
-
-        addConstraint(loginButton.centerXAnchor.constraintEqualToAnchor(centerXAnchor))
-        addConstraint(loginButton.topAnchor.constraintEqualToAnchor(passLineImageView.bottomAnchor,constant: 55))
-        addConstraint(loginButton.widthAnchor.constraintEqualToAnchor(passLineImageView.widthAnchor))
-        addConstraint(loginButton.heightAnchor.constraintEqualToConstant(40))
-
-        addConstraint(createAccountButton.centerXAnchor.constraintEqualToAnchor(centerXAnchor))
-        addConstraint(createAccountButton.topAnchor.constraintEqualToAnchor(loginButton.bottomAnchor,constant: 40))
-        addConstraint(createAccountButton.widthAnchor.constraintEqualToAnchor(passLineImageView.widthAnchor))
-        addConstraint(createAccountButton.heightAnchor.constraintEqualToConstant(20))
+        addConstraint(passTextField.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(passTextField.topAnchor.constraint(equalTo: userLineImageView.bottomAnchor, constant: 30))
+        addConstraint(passTextField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8))
+        addConstraint(passTextField.heightAnchor.constraint(equalToConstant: 50))
+        
+        addConstraint(passLineImageView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(passLineImageView.topAnchor.constraint(equalTo: passTextField.bottomAnchor))
+        addConstraint(passLineImageView.widthAnchor.constraint(equalTo: passTextField.widthAnchor))
+        addConstraint(passLineImageView.heightAnchor.constraint(equalToConstant: 1))
+        
+        addConstraint(loginButton.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(loginButton.topAnchor.constraint(equalTo: passLineImageView.bottomAnchor,constant: 55))
+        addConstraint(loginButton.widthAnchor.constraint(equalTo: passLineImageView.widthAnchor))
+        addConstraint(loginButton.heightAnchor.constraint(equalToConstant: 40))
+        
+        addConstraint(createAccountButton.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(createAccountButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor,constant: 40))
+        addConstraint(createAccountButton.widthAnchor.constraint(equalTo: passLineImageView.widthAnchor))
+        addConstraint(createAccountButton.heightAnchor.constraint(equalToConstant: 20))
         
     }
-
-
+    
+    
 }

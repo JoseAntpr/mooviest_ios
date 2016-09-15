@@ -19,10 +19,10 @@ let ROTATION_ANGLE: Float = 3.14/8  //%%% Higher = stronger rotation angle
 
 
 protocol DraggableViewDelegate {
-    func cardSwipedLeft(card: UIView) -> Void
-    func cardSwipedRight(card: UIView) -> Void
-    func cardSwipedTop(card: UIView) -> Void
-    func cardSwipedBottom(card: UIView) -> Void
+    func cardSwipedLeft(_ card: UIView) -> Void
+    func cardSwipedRight(_ card: UIView) -> Void
+    func cardSwipedTop(_ card: UIView) -> Void
+    func cardSwipedBottom(_ card: UIView) -> Void
 }
 
 class DraggableView: UIView {
@@ -59,15 +59,15 @@ class DraggableView: UIView {
         xFromCenter = 0
         yFromCenter = 0
         
-        backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
+        backgroundColor = UIColor.white.withAlphaComponent(0)
         noImageLabel = UILabel()
         noImageLabel.text = "Image No Found"
-        noImageLabel.textColor = UIColor.whiteColor()
-        noImageLabel.textAlignment = NSTextAlignment.Center
-        noImageLabel.font = noImageLabel.font.fontWithSize(30)
+        noImageLabel.textColor = UIColor.white
+        noImageLabel.textAlignment = NSTextAlignment.center
+        noImageLabel.font = noImageLabel.font.withSize(30)
         
         imageView = UIImageView(image: UIImage(named: "clock"))
-        imageView.contentMode = UIViewContentMode.ScaleToFill
+        imageView.contentMode = UIViewContentMode.scaleToFill
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
         
@@ -84,52 +84,52 @@ class DraggableView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(imageView.leftAnchor.constraintEqualToAnchor(leftAnchor))
-        addConstraint(imageView.topAnchor.constraintEqualToAnchor(topAnchor))
-        addConstraint(imageView.rightAnchor.constraintEqualToAnchor(rightAnchor))
-        addConstraint(imageView.bottomAnchor.constraintEqualToAnchor(bottomAnchor))
+        addConstraint(imageView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(imageView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(imageView.rightAnchor.constraint(equalTo: rightAnchor))
+        addConstraint(imageView.bottomAnchor.constraint(equalTo: bottomAnchor))
         
-        addConstraint(overlayView.centerXAnchor.constraintEqualToAnchor(centerXAnchor))
-        addConstraint(overlayView.centerYAnchor.constraintEqualToAnchor(centerYAnchor))
-        addConstraint(overlayView.widthAnchor.constraintEqualToConstant(150))
-        addConstraint(overlayView.heightAnchor.constraintEqualToConstant(150))
+        addConstraint(overlayView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(overlayView.centerYAnchor.constraint(equalTo: centerYAnchor))
+        addConstraint(overlayView.widthAnchor.constraint(equalToConstant: 150))
+        addConstraint(overlayView.heightAnchor.constraint(equalToConstant: 150))
         
-        addConstraint(noImageLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor))
-        addConstraint(noImageLabel.centerYAnchor.constraintEqualToAnchor(centerYAnchor))
-        addConstraint(noImageLabel.widthAnchor.constraintEqualToAnchor(widthAnchor))
-        addConstraint(noImageLabel.heightAnchor.constraintEqualToConstant(100))
-
+        addConstraint(noImageLabel.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(noImageLabel.centerYAnchor.constraint(equalTo: centerYAnchor))
+        addConstraint(noImageLabel.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(noImageLabel.heightAnchor.constraint(equalToConstant: 100))
+        
     }
     
-    func beingDragged(gestureRecognizer: UIPanGestureRecognizer) -> Void {
-        xFromCenter = Float(gestureRecognizer.translationInView(self).x)
-        yFromCenter = Float(gestureRecognizer.translationInView(self).y)
+    func beingDragged(_ gestureRecognizer: UIPanGestureRecognizer) -> Void {
+        xFromCenter = Float(gestureRecognizer.translation(in: self).x)
+        yFromCenter = Float(gestureRecognizer.translation(in: self).y)
         
         switch gestureRecognizer.state {
-        case UIGestureRecognizerState.Began:
+        case UIGestureRecognizerState.began:
             self.originPoint = self.center
             print(self.center)
             break
-        case UIGestureRecognizerState.Changed:
+        case UIGestureRecognizerState.changed:
             let rotationStrength: Float = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
             let rotationAngle = ROTATION_ANGLE * rotationStrength
             let scale = max(1 - fabsf(rotationStrength) / SCALE_STRENGTH, SCALE_MAX)
             
-            self.center = CGPointMake(self.originPoint.x + CGFloat(xFromCenter), self.originPoint.y + CGFloat(yFromCenter))
+            self.center = CGPoint(x: self.originPoint.x + CGFloat(xFromCenter), y: self.originPoint.y + CGFloat(yFromCenter))
             
-            let transform = CGAffineTransformMakeRotation(CGFloat(rotationAngle))
-            let scaleTransform = CGAffineTransformScale(transform, CGFloat(scale), CGFloat(scale))
+            let transform = CGAffineTransform(rotationAngle: CGFloat(rotationAngle))
+            let scaleTransform = transform.scaledBy(x: CGFloat(scale), y: CGFloat(scale))
             self.transform = scaleTransform
             self.updateOverlay(sinceXCenter: CGFloat(xFromCenter),sinceYCenter: CGFloat(yFromCenter))
             break
-        case UIGestureRecognizerState.Ended:
+        case UIGestureRecognizerState.ended:
             self.afterSwipeAction()
             break
-        case UIGestureRecognizerState.Possible:
+        case UIGestureRecognizerState.possible:
             break
-        case UIGestureRecognizerState.Cancelled:
+        case UIGestureRecognizerState.cancelled:
             break
-        case UIGestureRecognizerState.Failed:
+        case UIGestureRecognizerState.failed:
             break
         }
     }
@@ -139,24 +139,24 @@ class DraggableView: UIView {
         if abs(x) >= abs(y) {
             distance = x
             if x > 0 {
-                overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeRight)
+                overlayView.setMode(GGOverlayViewMode.ggOverlayViewModeRight)
             } else {
-                overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeLeft)
+                overlayView.setMode(GGOverlayViewMode.ggOverlayViewModeLeft)
             }
         } else {
             distance = y
             if y > 0 {
-                overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeBottom)
+                overlayView.setMode(GGOverlayViewMode.ggOverlayViewModeBottom)
             } else {
-                overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeTop)
+                overlayView.setMode(GGOverlayViewMode.ggOverlayViewModeTop)
             }
         }
         overlayView.alpha = CGFloat(min(fabsf(Float(distance))/100, 1))
     }
     
     func returnOriginalPosition() {
-        UIView.animateWithDuration(0.3, animations: {() -> Void in
-            self.transform = CGAffineTransformMakeRotation(0)
+        UIView.animate(withDuration: 0.3, animations: {() -> Void in
+            self.transform = CGAffineTransform(rotationAngle: 0)
             self.overlayView.alpha = 0
             self.center = self.originPoint
         })
@@ -165,7 +165,7 @@ class DraggableView: UIView {
     func afterSwipeAction() -> Void {
         let floatXFromCenter = Float(xFromCenter)
         let floatYFromCenter = Float(yFromCenter)
-    
+        
         if abs(floatXFromCenter) >=  abs(floatYFromCenter) {
             if floatXFromCenter > ACTION_MARGIN {
                 self.rightAction()
@@ -186,11 +186,11 @@ class DraggableView: UIView {
     }
     
     func rightAction() -> Void {
-        let finishPoint: CGPoint = CGPointMake(600, 2 * CGFloat(yFromCenter) + self.originPoint.y)
-        UIView.animateWithDuration(0.3,
-                                   animations: {
-                                    self.center = finishPoint
-                                    self.transform = CGAffineTransformMakeRotation(1)
+        let finishPoint: CGPoint = CGPoint(x: 600, y: 2 * CGFloat(yFromCenter) + self.originPoint.y)
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+                        self.center = finishPoint
+                        self.transform = CGAffineTransform(rotationAngle: 1)
             }, completion: {
                 (value: Bool) in
                 self.removeFromSuperview()
@@ -199,11 +199,11 @@ class DraggableView: UIView {
     }
     
     func leftAction() -> Void {
-        let finishPoint: CGPoint = CGPointMake(-300, 2 * CGFloat(yFromCenter) + self.originPoint.y)
-        UIView.animateWithDuration(0.3,
-                                   animations: {
-                                    self.center = finishPoint
-                                    self.transform = CGAffineTransformMakeRotation(-1)
+        let finishPoint: CGPoint = CGPoint(x: -300, y: 2 * CGFloat(yFromCenter) + self.originPoint.y)
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+                        self.center = finishPoint
+                        self.transform = CGAffineTransform(rotationAngle: -1)
             }, completion: {
                 (value: Bool) in
                 self.removeFromSuperview()
@@ -212,11 +212,11 @@ class DraggableView: UIView {
     }
     
     func topAction() -> Void {
-        let finishPoint: CGPoint = CGPointMake(2 * CGFloat(xFromCenter) + self.originPoint.x, -200)
-        UIView.animateWithDuration(0.3,
-                                   animations: {
-                                    self.center = finishPoint
-                                    //self.transform = CGAffineTransformMakeRotation(1)
+        let finishPoint: CGPoint = CGPoint(x: 2 * CGFloat(xFromCenter) + self.originPoint.x, y: -200)
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+                        self.center = finishPoint
+                        //self.transform = CGAffineTransformMakeRotation(1)
             }, completion: {
                 (value: Bool) in
                 self.removeFromSuperview()
@@ -225,11 +225,11 @@ class DraggableView: UIView {
     }
     
     func bottomAction() -> Void {
-        let finishPoint: CGPoint = CGPointMake(2 * CGFloat(xFromCenter) + self.originPoint.x, 1000)
-        UIView.animateWithDuration(0.3,
-                                   animations: {
-                                    self.center = finishPoint
-                                    //self.transform = CGAffineTransformMakeRotation(1)
+        let finishPoint: CGPoint = CGPoint(x: 2 * CGFloat(xFromCenter) + self.originPoint.x, y: 1000)
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+                        self.center = finishPoint
+                        //self.transform = CGAffineTransformMakeRotation(1)
             }, completion: {
                 (value: Bool) in
                 self.removeFromSuperview()
@@ -238,11 +238,11 @@ class DraggableView: UIView {
     }
     
     func rightClickAction() -> Void {
-        let finishPoint = CGPointMake(600, self.center.y)
-        UIView.animateWithDuration(0.3,
-                                   animations: {
-                                    self.center = finishPoint
-                                    self.transform = CGAffineTransformMakeRotation(1)
+        let finishPoint = CGPoint(x: 600, y: self.center.y)
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+                        self.center = finishPoint
+                        self.transform = CGAffineTransform(rotationAngle: 1)
             }, completion: {
                 (value: Bool) in
                 self.removeFromSuperview()
@@ -251,11 +251,11 @@ class DraggableView: UIView {
     }
     
     func leftClickAction() -> Void {
-        let finishPoint: CGPoint = CGPointMake(-200, self.center.y)
-        UIView.animateWithDuration(0.3,
-                                   animations: {
-                                    self.center = finishPoint
-                                    self.transform = CGAffineTransformMakeRotation(-1)
+        let finishPoint: CGPoint = CGPoint(x: -200, y: self.center.y)
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+                        self.center = finishPoint
+                        self.transform = CGAffineTransform(rotationAngle: -1)
             }, completion: {
                 (value: Bool) in
                 self.removeFromSuperview()
@@ -264,11 +264,11 @@ class DraggableView: UIView {
     }
     
     func topClickAction() -> Void {
-        let finishPoint = CGPointMake(self.center.x, -200)
-        UIView.animateWithDuration(0.3,
-                                   animations: {
-                                    self.center = finishPoint
-                                    //self.transform = CGAffineTransformMakeRotation(1)
+        let finishPoint = CGPoint(x: self.center.x, y: -200)
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+                        self.center = finishPoint
+                        //self.transform = CGAffineTransformMakeRotation(1)
             }, completion: {
                 (value: Bool) in
                 self.removeFromSuperview()
@@ -277,11 +277,11 @@ class DraggableView: UIView {
     }
     
     func bottomClickAction() -> Void {
-        let finishPoint = CGPointMake(self.center.x,1000)
-        UIView.animateWithDuration(0.3,
-                                   animations: {
-                                    self.center = finishPoint
-                                    //self.transform = CGAffineTransformMakeRotation(1)
+        let finishPoint = CGPoint(x: self.center.x,y: 1000)
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+                        self.center = finishPoint
+                        //self.transform = CGAffineTransformMakeRotation(1)
             }, completion: {
                 (value: Bool) in
                 self.removeFromSuperview()

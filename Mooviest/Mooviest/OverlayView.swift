@@ -10,14 +10,14 @@ import Foundation
 import UIKit
 
 enum GGOverlayViewMode {
-    case GGOverlayViewModeLeft
-    case GGOverlayViewModeRight
-    case GGOverlayViewModeTop
-    case GGOverlayViewModeBottom
+    case ggOverlayViewModeLeft
+    case ggOverlayViewModeRight
+    case ggOverlayViewModeTop
+    case ggOverlayViewModeBottom
 }
 
 class OverlayView: UIView{
-    var _mode: GGOverlayViewMode = GGOverlayViewMode.GGOverlayViewModeLeft
+    var _mode: GGOverlayViewMode = GGOverlayViewMode.ggOverlayViewModeLeft
     var imageView: UIImageView!
     
     required init?(coder aDecoder: NSCoder) {
@@ -26,29 +26,29 @@ class OverlayView: UIView{
     
     init() {
         super.init(frame: CGRect.zero)
-        self.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
+        self.backgroundColor = UIColor.white.withAlphaComponent(0)
         imageView = UIImageView(image: UIImage(named: "closes"))
         self.addSubview(imageView)
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(imageView.leftAnchor.constraintEqualToAnchor(leftAnchor))
-        addConstraint(imageView.rightAnchor.constraintEqualToAnchor(rightAnchor))
-        addConstraint(imageView.topAnchor.constraintEqualToAnchor(topAnchor))
-        addConstraint(imageView.bottomAnchor.constraintEqualToAnchor(bottomAnchor))
+        addConstraint(imageView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(imageView.rightAnchor.constraint(equalTo: rightAnchor))
+        addConstraint(imageView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(imageView.bottomAnchor.constraint(equalTo: bottomAnchor))
     }
     
-    func setMode(mode: GGOverlayViewMode) -> Void {
+    func setMode(_ mode: GGOverlayViewMode) -> Void {
         if _mode == mode {
             return
         }
         _mode = mode
         
-        if _mode == GGOverlayViewMode.GGOverlayViewModeLeft {
+        if _mode == GGOverlayViewMode.ggOverlayViewModeLeft {
             imageView.image = UIImage(named: "closes")
-        } else if _mode == GGOverlayViewMode.GGOverlayViewModeRight {
+        } else if _mode == GGOverlayViewMode.ggOverlayViewModeRight {
             imageView.image = UIImage(named: "heart")
-        } else if _mode == GGOverlayViewMode.GGOverlayViewModeTop {
+        } else if _mode == GGOverlayViewMode.ggOverlayViewModeTop {
             imageView.image = UIImage(named: "clock")
         } else {
             imageView.image = UIImage(named: "eye")

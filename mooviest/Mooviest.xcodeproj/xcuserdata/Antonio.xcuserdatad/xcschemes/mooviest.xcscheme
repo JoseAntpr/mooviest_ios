@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0800"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A977B5DB1D51FB00009FC1CE"
+               BlueprintIdentifier = "A96B520A1D89CCF60061A766"
                BuildableName = "Mooviest.app"
                BlueprintName = "Mooviest"
                ReferencedContainer = "container:Mooviest.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A977B5EF1D51FB00009FC1CE"
+               BlueprintIdentifier = "A96B521E1D89CCF70061A766"
                BuildableName = "MooviestTests.xctest"
                BlueprintName = "MooviestTests"
                ReferencedContainer = "container:Mooviest.xcodeproj">
@@ -42,7 +42,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A977B5FA1D51FB00009FC1CE"
+               BlueprintIdentifier = "A96B52291D89CCF70061A766"
                BuildableName = "MooviestUITests.xctest"
                BlueprintName = "MooviestUITests"
                ReferencedContainer = "container:Mooviest.xcodeproj">
@@ -52,7 +52,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A977B5DB1D51FB00009FC1CE"
+            BlueprintIdentifier = "A96B520A1D89CCF60061A766"
             BuildableName = "Mooviest.app"
             BlueprintName = "Mooviest"
             ReferencedContainer = "container:Mooviest.xcodeproj">
@@ -75,12 +75,19 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A977B5DB1D51FB00009FC1CE"
+            BlueprintIdentifier = "A96B520A1D89CCF60061A766"
             BuildableName = "Mooviest.app"
             BlueprintName = "Mooviest"
             ReferencedContainer = "container:Mooviest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OS_ACTIVITY_MODE "
+            value = "disable"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -94,7 +101,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A977B5DB1D51FB00009FC1CE"
+            BlueprintIdentifier = "A96B520A1D89CCF60061A766"
             BuildableName = "Mooviest.app"
             BlueprintName = "Mooviest"
             ReferencedContainer = "container:Mooviest.xcodeproj">

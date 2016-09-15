@@ -8,10 +8,9 @@
 
 import Foundation
 
-enum Error:ErrorType {
-    case InvalidRating
-    case InvalidMovie
-    case InvalidParticipation
-    case InvalidResponseAPI
+enum ErrorMovie:Error {
+    case invalidRating
+    case invalidMovie
+    case invalidParticipation
+    case invalidResponseAPI
 }
-

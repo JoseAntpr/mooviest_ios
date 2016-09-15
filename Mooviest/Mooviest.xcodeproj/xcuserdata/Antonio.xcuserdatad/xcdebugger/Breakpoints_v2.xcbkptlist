@@ -9,14 +9,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Mooviest/SwipeTabViewController.swift"
-            timestampString = "494888040.039527"
+            filePath = "Mooviest/DataModel.swift"
+            timestampString = "495624994.63051"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "5">
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "getMoviesSwipe(Lang:Count:completionRequest:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -25,14 +25,60 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Mooviest/DraggableView.swift"
-            timestampString = "494884216.52706"
+            filePath = "Mooviest/SwipeTabViewController.swift"
+            timestampString = "495627362.132936"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "beingDragged(_:)"
-            landmarkType = "5">
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mooviest/ParticipationParser.swift"
+            timestampString = "495616791.831472"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "jsonToParticipation(Participation:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mooviest/SwipeTabViewController.swift"
+            timestampString = "495627362.132936"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mooviest/MovieDetailViewController.swift"
+            timestampString = "495629407.847828"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "352"
+            endingLineNumber = "352">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
