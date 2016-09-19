@@ -33,6 +33,55 @@ class DataModel: NSObject {
                 }
         }
     }
+    
+    func login(Username u: String, Password p: String,completionRequest:  @escaping ([String:Any]) -> Void){
+        let user = "admin"
+        let password = "admin"
+        
+        let credentialData = "\(user):\(password)".data(using: String.Encoding.utf8)!
+        let base64Credentials = credentialData.base64EncodedString(options: [])
+        
+        let headers = ["Authorization": "Basic \(base64Credentials)","Content-Type": "application/json"]
+        let parameters: Parameters = [
+            "username": u,
+            "password": p
+        ]
+        
+        Alamofire.request( "\(path)/users/login/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers)
+            .responseJSON {response in
+                if let res = response.result.value as? [String:Any] {
+                    completionRequest(res)
+                }
+        }
+    }
+    
+    func register(Username u: String, Password p: String, Email e: String, Lang l: String,completionRequest:  @escaping ([String:Any]) -> Void){
+        let user = "admin"
+        let password = "admin"
+        
+        let credentialData = "\(user):\(password)".data(using: String.Encoding.utf8)!
+        let base64Credentials = credentialData.base64EncodedString(options: [])
+        
+        let headers = ["Authorization": "Basic \(base64Credentials)","Content-Type": "application/json"]
+        let parameters: Parameters = [
+            "username": u,
+            "password": p,
+            "email": e,
+            "profile": [
+                "lang": [
+                    "code": l
+                ]
+            ]
+        ]
+        
+        Alamofire.request( "\(path)/users/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers)
+            .responseJSON {response in
+                
+                if let res = response.result.value as? [String:Any] {
+                    completionRequest(res)
+                }
+        }
+    }
 }
 
 //    var map = [Territory]()

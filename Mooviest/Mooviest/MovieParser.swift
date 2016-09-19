@@ -52,6 +52,6 @@ class MovieParser: NSObject, Parser {
             image.lowercased().range(of: "https://") == nil {
             image =  "https://img.tviso.com/ES/poster/w430/"+image
         }
-        return Movie(id: id, image: image, backdrop: backdrop, originalTitle: originalTitle, average: average, title: title, synopsis: synopsis, runtime: runtime, released: released, producers: producers, trailer: trailer, country: country, countryCode: countryCode, sagaOrder: sagaOrder, genres: genres, participantes: participations, ratings: ratings)
+        return Movie(id: id, image: image, backdrop: backdrop, originalTitle: originalTitle, average: average, title: title, synopsis: synopsis, runtime: runtime, released: released, producers: producers, trailer: trailer, country: country, countryCode: countryCode, sagaOrder: sagaOrder, genres: genres, participations: participations, ratings: ratings)
     }
 }

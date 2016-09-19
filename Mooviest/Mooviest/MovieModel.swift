@@ -26,7 +26,7 @@ struct Movie: Model {
     var countryCode: String
     var sagaOrder: Int
     var genres: [String]
-    var participantes: [Participation]
+    var participations: [Participation]
     var ratings: [Rating]
     //emotions
 }
