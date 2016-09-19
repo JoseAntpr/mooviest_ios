@@ -141,6 +141,7 @@
 		A965ACE71D8AB62B00F9FF47 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A9DA6E5F1D9070910097C2B6 /* Deprecated */,
 				A9EF59911D8DD3D90005C819 /* Resgister & Login */,
 				A965ACEC1D8AB71D00F9FF47 /* SwipeView */,
 				A965ACEB1D8AB6DC00F9FF47 /* MovieDetail */,
@@ -279,13 +280,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A9DA6E5F1D9070910097C2B6 /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */,
+				A96411C81D8BE02C00E3AAB4 /* RegisterView.swift */,
+			);
+			name = Deprecated;
+			sourceTree = "<group>";
+		};
 		A9EF59911D8DD3D90005C819 /* Resgister & Login */ = {
 			isa = PBXGroup;
 			children = (
 				A96B52421D89D4CF0061A766 /* LoginViewController.swift */,
 				A96B52441D89D52B0061A766 /* LoginView.swift */,
-				A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */,
-				A96411C81D8BE02C00E3AAB4 /* RegisterView.swift */,
 				A9EF59921D8DD41D0005C819 /* TextFieldView.swift */,
 			);
 			name = "Resgister & Login";

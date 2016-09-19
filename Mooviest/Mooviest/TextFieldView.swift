@@ -13,7 +13,7 @@ class TextFieldView: UIView {
     var lineView = UIView()
     var textColor:UIColor!
     var placeholderColor:UIColor!
-    
+    var editTextButton:UIButton!
     init() {
         super.init(frame: CGRect.zero)
         setupComponents()
@@ -24,11 +24,17 @@ class TextFieldView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    
     func setupComponents() {
         textField.autocorrectionType = .no // autocorreccion
         textField.autocapitalizationType = .none //La primera mayuscula
         textField.spellCheckingType = .no //correcion ortografica
         textField.enablesReturnKeyAutomatically = true
+        
+        editTextButton = UIButton(type: UIButtonType.system) as UIButton //(type: UIButtonType.system) as UIButton
+        
+        textField.rightView = editTextButton;
+        textField.rightViewMode = UITextFieldViewMode.always
         
         addSubview(textField)
         addSubview(lineView)
@@ -81,6 +87,10 @@ class TextFieldView: UIView {
     }
  
     func adjustFontSizeToFitHeight () {
-        self.textField.font =  UIFont(name: self.textField.font!.fontName, size:self.textField.frame.size.height*0.7)!
+        textField.font =  UIFont(name: self.textField.font!.fontName, size:self.textField.frame.size.height*0.7)!
+        editTextButton.frame.size = CGSize(width: self.textField.frame.size.height, height: self.textField.frame.size.height)
+    }
+    func clearText() {
+        textField.text = nil
     }
 }

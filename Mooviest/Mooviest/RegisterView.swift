@@ -15,16 +15,18 @@ class RegisterView: UIView {
     var backgroundStatusView = UIView()
     var titleImageView = UIImageView()
     
+    
+    
+    
     var formView = UIView()
     var padingformView = UIView()
-    
     var centralView = UIView()
     var userTextFieldView = TextFieldView()
     var emailTextFieldView = TextFieldView()
     var passTextFieldView = TextFieldView()
     var confirmPassTextFieldView = TextFieldView()
-    
     var createAccountButton = UIButton(type: UIButtonType.system) as UIButton
+    
     var backLoginButton = UIButton(type: UIButtonType.system) as UIButton
     
     
@@ -47,11 +49,6 @@ class RegisterView: UIView {
         backgroundStatusView.backgroundColor = UIColor(netHex: dark_red).withAlphaComponent(0.5)
         
         formView.backgroundColor = UIColor.white
-//        formView.layer.shadowColor = UIColor.orange.cgColor
-//        formView.layer.shadowOpacity = 1
-//        formView.layer.shadowOffset = CGSize(width: 3, height: 3)
-//        formView.layer.shadowRadius = 10
-        
         formView.layer.cornerRadius = 3
         formView.layer.masksToBounds = true
         
@@ -142,8 +139,8 @@ class RegisterView: UIView {
        
         centralView.addConstraint(formView.centerYAnchor.constraint(equalTo: centralView.centerYAnchor))
         centralView.addConstraint(formView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
-        centralView.addConstraint(formView.widthAnchor.constraint(equalTo: centralView.widthAnchor,multiplier: 0.85))
-        centralView.addConstraint(formView.heightAnchor.constraint(equalTo: centralView.heightAnchor))
+        centralView.addConstraint(formView.widthAnchor.constraint(equalTo: centralView.widthAnchor,multiplier: 0.8))
+        centralView.addConstraint(formView.heightAnchor.constraint(equalTo: centralView.heightAnchor, multiplier: 0.9))
     
         formView.addConstraint(padingformView.centerYAnchor.constraint(equalTo: formView.centerYAnchor))
         formView.addConstraint(padingformView.centerXAnchor.constraint(equalTo: formView.centerXAnchor))
