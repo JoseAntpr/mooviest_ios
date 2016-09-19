@@ -10,6 +10,7 @@ import Foundation
 
 struct Participation:Model {
     var id: Int
+    var image:String
     var name: String
     var role: Int
     var character: String

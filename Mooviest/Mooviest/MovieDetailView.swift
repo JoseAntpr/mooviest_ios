@@ -60,8 +60,12 @@ class MovieDetailView: UIView {
         barSegmentedControl.tintColor = UIColor(netHex: mooviest_red)
         
         //infoView.backgroundColor = UIColor.greenColor()
-        castView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout())
-        castView.backgroundColor = UIColor.red
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 1
+        layout.minimumLineSpacing = 1
+        
+        castView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
+        castView.backgroundColor = UIColor.white
         seeView.backgroundColor = UIColor.yellow
         
         headerView.clipsToBounds = true
@@ -124,7 +128,7 @@ class MovieDetailView: UIView {
         addConstraint(bodyScrollView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(bodyScrollView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(bodyScrollView.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(bodyScrollView.heightAnchor.constraint(equalTo: heightAnchor))//430x613
+        addConstraint(bodyScrollView.heightAnchor.constraint(equalTo: heightAnchor))
         
         bodyScrollView.addConstraint(coverImageView.topAnchor.constraint(equalTo: bodyScrollView.topAnchor,constant: 70))
         bodyScrollView.addConstraint(coverImageView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor, constant: 20))
@@ -136,20 +140,21 @@ class MovieDetailView: UIView {
         bodyScrollView.addConstraint(titleLabel.heightAnchor.constraint(equalToConstant: 20))
         bodyScrollView.addConstraint(titleLabel.widthAnchor.constraint(equalToConstant: 100))
         
-        bodyScrollView.addConstraint(infoView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 60))
+        bodyScrollView.addConstraint(infoView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 50))
         bodyScrollView.addConstraint(infoView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor))
         bodyScrollView.addConstraint(infoView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor))
-        bodyScrollView.addConstraint(infoView.heightAnchor.constraint(equalToConstant: 800))
+        bodyScrollView.addConstraint(infoView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor))
         
-        bodyScrollView.addConstraint(castView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 60))
+        bodyScrollView.addConstraint(castView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 50))
         bodyScrollView.addConstraint(castView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor,constant: 5))
         bodyScrollView.addConstraint(castView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor,constant: -10))
-        bodyScrollView.addConstraint(castView.heightAnchor.constraint(equalToConstant: 800))
+        bodyScrollView.addConstraint(castView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor,constant: -145))
         
-        bodyScrollView.addConstraint(seeView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 60))
+        
+        bodyScrollView.addConstraint(seeView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 50))
         bodyScrollView.addConstraint(seeView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor,constant: 5))
         bodyScrollView.addConstraint(seeView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor,constant: -10))
-        bodyScrollView.addConstraint(seeView.heightAnchor.constraint(equalToConstant: 800))
+        bodyScrollView.addConstraint(seeView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor, constant: -145))
         
         addConstraint(barSegmentedView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 10))
         addConstraint(barSegmentedView.leftAnchor.constraint(equalTo: leftAnchor))

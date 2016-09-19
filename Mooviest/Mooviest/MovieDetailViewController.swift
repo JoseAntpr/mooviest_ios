@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Kingfisher
+
 var offset_CoverStopScale:CGFloat!
 var offset_BackdropFadeOff:CGFloat!
 var offset_HeaderStop:CGFloat! // = 80 // At this offset the Header stops its transformations
@@ -14,21 +16,28 @@ var segmentViewOffset:CGFloat!
 let offset_B_LabelHeader:CGFloat = 30 // At this offset the Black label reaches the Header
 let distance_W_LabelHeader:CGFloat = 5 // The distance between the bottom of the Header and the top of the White Label
 
-class MovieDetailViewController: UIViewController, UIScrollViewDelegate {//, UICollectionViewDelegate, UICollectionViewDataSource {
-    var movie:Movie?
+class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    var movie:Movie!
     var heightView:CGFloat!
     var v: MovieDetailView!
     var heightNav:CGFloat!
-    let customCellIdentifier = "participationCollectionViewCell"
+    let participationCellIdentifier = "participationCollectionViewCell"
+    let ratingCellIdentifier = "ratingCollectionViewCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         v = MovieDetailView()
-        v.bodyScrollView.contentSize.height = 2500
+        
         v.bodyScrollView.delegate = self
-       // v.castView.delegate = self
-      //  v.castView.registerClass(ParticipationCollectionViewCell.self, forCellWithReuseIdentifier: customCellIdentifier)
+        v.castView.delegate = self
+        v.castView.dataSource = self
+        v.castView.register(ParticipationCollectionViewCell.self, forCellWithReuseIdentifier: participationCellIdentifier)
+        
+        v.infoView.ratingCollectionView.delegate = self
+        v.infoView.ratingCollectionView.dataSource = self
+        v.infoView.ratingCollectionView.register(RatingCollectionViewCell.self, forCellWithReuseIdentifier: ratingCellIdentifier)
+        
         setupView()
         view.addSubview(v)
         setupConstraints()
@@ -91,6 +100,10 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate {//, UIC
 //        
 //        v.headerLabel.textColor = colors.backgroundColor
 //        v.headerView.backgroundColor = colors.primaryColor
+        print("hei:\(v.barSegmentedView.center.y)")
+        v.bodyScrollView.contentSize.height = view.frame.size.height+v.barSegmentedView.center.y-v.barSegmentedView.frame.height*1.8
+        
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
@@ -102,86 +115,77 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate {//, UIC
     }
     
     func setupConstraints() {
+        
         v.translatesAutoresizingMaskIntoConstraints = false
         
         view.addConstraint(v.leftAnchor.constraint(equalTo: view.leftAnchor))
         view.addConstraint(v.rightAnchor.constraint(equalTo: view.rightAnchor))
         view.addConstraint(v.topAnchor.constraint(equalTo: view.topAnchor))
         view.addConstraint(v.bottomAnchor.constraint(equalTo: view.bottomAnchor))
+        
+        
     }
+   
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-   
-        let offset = scrollView.contentOffset.y
-        var avatarTransform = CATransform3DIdentity
-        var headerTransform = CATransform3DIdentity
-        var segmentTransform = CATransform3DIdentity
-        print(offset)
-        // PULL DOWN -----------------
-        
-        if offset < 0 {
-            let headerScaleFactor:CGFloat = -(offset) / v.headerView.bounds.height
-            let headerSizevariation = ((v.headerView.bounds.height * (1.0 + headerScaleFactor)) - v.headerView.bounds.height)/2.0
-            headerTransform = CATransform3DTranslate(headerTransform, 0, headerSizevariation, 0)
-            headerTransform = CATransform3DScale(headerTransform, 1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0)
+        if scrollView == v.bodyScrollView {
+            let offset = scrollView.contentOffset.y
+            var avatarTransform = CATransform3DIdentity
+            var headerTransform = CATransform3DIdentity
+            var segmentTransform = CATransform3DIdentity
             
-            //v.headerView.layer.transform = headerTransform
-        } else {    // SCROLL UP/DOWN ------------
+            // PULL DOWN -----------------
             
-            // Header -----------
-            
-            headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
-            
-            //  ------------ Label
-            //            if offset >= 117 {
-            //                let labelTransform = CATransform3DMakeTranslation(0, max(-distance_W_LabelHeader, offset_B_LabelHeader - offset), 0)
-            //                v.headerLabel.layer.transform = labelTransform
-            //            }
-            
-            //  ------------ Blur
-            
-            v.headerBackdropImageView.alpha = max (0, (1-( offset-offset_BackdropFadeOff*3)/distance_W_LabelHeader)/10)
-            
-            // Avatar -----------
-            //            print("cover : \(v.coverImageView.frame.origin)")
-            //            print("cover size : \(v.coverImageView.frame.size)")
-            //            print("cover top: \(v.coverImageView.frame.origin.y-v.coverImageView.frame.size.height)")
-            //            print("header : \(v.headerView.frame.origin)")
-            //            print("header size: \(v.headerView.frame.size)")
-            //            print("header bottom: \(v.headerView.frame.origin.y+v.headerView.frame.size.height)")
-            let avatarScaleFactor = (min(offset_CoverStopScale, offset)) / v.coverImageView.bounds.height  // Slow down the animation
-            let avatarSizeVariation = ((v.coverImageView.bounds.height * (1.0 + avatarScaleFactor)) - v.coverImageView.bounds.height)
-            avatarTransform = CATransform3DTranslate(avatarTransform, 0, 0.5*avatarSizeVariation, 0)
-            avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
-            
-            if offset <= offset_CoverStopScale {
-                if v.coverImageView.layer.zPosition < v.headerView.layer.zPosition{
-                    v.headerView.layer.zPosition = 0
-                }
-            }
-            else {
-                if v.coverImageView.layer.zPosition >= v.headerView.layer.zPosition{
-                    v.headerView.layer.zPosition = 1
-                    v.backgroundStatusView.layer.zPosition = 2
-                }
-            }
-            
-            // Segment control
-            
-            // Scroll the segment view until its offset reaches the same offset at which the header stopped shrinking
-            //segmentTransform = CATransform3DTranslate(segmentTransform, 0, max(segmentViewOffset, -offset_HeaderStop*1.60), 0)
-            if segmentViewOffset < offset {
-                print("transfor: \(offset)")
-                segmentTransform = CATransform3DTranslate(segmentTransform, 0,offset-segmentViewOffset, 0)
-                //                v.barSegmentedView.layer.transform = segmentTransform
+            if offset < 0 {
+                let headerScaleFactor:CGFloat = -(offset) / v.headerView.bounds.height
+                let headerSizevariation = ((v.headerView.bounds.height * (1.0 + headerScaleFactor)) - v.headerView.bounds.height)/2.0
+                headerTransform = CATransform3DTranslate(headerTransform, 0, headerSizevariation, 0)
+                headerTransform = CATransform3DScale(headerTransform, 1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0)
                 
+            } else {    // SCROLL UP/DOWN ------------
+                
+                // Header -----------
+                
+                headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
+                
+                //  ------------ Blur
+                
+                v.headerBackdropImageView.alpha = max (0, (1-( offset-offset_BackdropFadeOff*3)/distance_W_LabelHeader)/10)
+                
+                // Avatar -----------
+                let avatarScaleFactor = (min(offset_CoverStopScale, offset)) / v.coverImageView.bounds.height  // Slow down the animation
+                let avatarSizeVariation = ((v.coverImageView.bounds.height * (1.0 + avatarScaleFactor)) - v.coverImageView.bounds.height)
+                avatarTransform = CATransform3DTranslate(avatarTransform, 0, 0.5*avatarSizeVariation, 0)
+                avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
+                
+                if offset <= offset_CoverStopScale {
+                    if v.coverImageView.layer.zPosition < v.headerView.layer.zPosition{
+                        v.headerView.layer.zPosition = 0
+                    }
+                }
+                else {
+                    if v.coverImageView.layer.zPosition >= v.headerView.layer.zPosition{
+                        v.headerView.layer.zPosition = 1
+                        v.backgroundStatusView.layer.zPosition = 2
+                    }
+                }
+                
+                // Segment control
+                
+                // Scroll the segment view until its offset reaches the same offset at which the header stopped shrinking
+                //segmentTransform = CATransform3DTranslate(segmentTransform, 0, max(segmentViewOffset, -offset_HeaderStop*1.60), 0)
+                if segmentViewOffset < offset {
+                    
+                    segmentTransform = CATransform3DTranslate(segmentTransform, 0,offset-segmentViewOffset, 0)
+                    //                v.barSegmentedView.layer.transform = segmentTransform
+                    
+                }
             }
+            // Apply Transformations
+            v.barSegmentedView.layer.transform = segmentTransform
+            v.headerView.layer.transform = headerTransform
+            v.coverImageView.layer.transform = avatarTransform
         }
-        // Apply Transformations
-        v.barSegmentedView.layer.transform = segmentTransform
-        v.headerView.layer.transform = headerTransform
-        v.coverImageView.layer.transform = avatarTransform
-        
     }
     
     func changeSelected(sender: UISegmentedControl) {
@@ -205,17 +209,54 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate {//, UIC
         }
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: customCellIdentifier, for: indexPath as IndexPath)
-        return customCell
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell:UICollectionViewCell!
+        if collectionView == v.castView {
+            let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: participationCellIdentifier, for: indexPath as IndexPath) as! ParticipationCollectionViewCell
+            customCell.backgroundColor = UIColor.red
+            let url = URL(string: movie.participations[indexPath.item].image)
+            customCell.faceImageView.kf_setImage(with: url,placeholder: UIImage(named:  "noimage"))
+            cell = customCell
+        } else {
+            let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: ratingCellIdentifier, for: indexPath as IndexPath) as! RatingCollectionViewCell
+            customCell.backgroundColor = UIColor.red
+            customCell.faceImageView.image = UIImage(named:  movie.ratings[indexPath.item].name)
+            cell = customCell
+        }
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        var count = 0
+        if collectionView == v.castView {
+            count = movie.participations.count
+        } else {
+            count = movie!.ratings.count
+        }
+            
+        return count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var size:CGSize!
+        if collectionView == v.castView {
+            let width = (collectionView.frame.width/3)-1
+            size = CGSize(width: width, height: width*1.30)
+        } else {
+            let width = (collectionView.frame.width/6)-1
+            size = CGSize(width: width, height: width)
+        }
+        return size
+        
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
     }
+    
+    
     
 }

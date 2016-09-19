@@ -13,6 +13,7 @@ class InfoMovieView: UIView {
     var headerTitleView = UIView()
     var synopsislabel = UILabel()
     var synopsisTextView = UITextView()
+    var ratingCollectionView:UICollectionView!
     
     init() {
         super.init(frame: CGRect.zero)
@@ -37,9 +38,17 @@ class InfoMovieView: UIView {
         synopsisTextView.textAlignment = NSTextAlignment.justified
         synopsisTextView.textColor = UIColor.gray
         
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 1
+        layout.minimumLineSpacing = 1
+        
+        ratingCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
+        ratingCollectionView.backgroundColor = UIColor.white
+        
         headerTitleView.addSubview(synopsislabel)
         
         addSubview(headerTitleView)
+        addSubview(ratingCollectionView)
         addSubview(synopsisTextView)
     }
     
@@ -47,6 +56,7 @@ class InfoMovieView: UIView {
         headerTitleView.translatesAutoresizingMaskIntoConstraints = false
         synopsislabel.translatesAutoresizingMaskIntoConstraints = false
         synopsisTextView.translatesAutoresizingMaskIntoConstraints = false
+        ratingCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(headerTitleView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(headerTitleView.topAnchor.constraint(equalTo: topAnchor))
@@ -59,8 +69,13 @@ class InfoMovieView: UIView {
         headerTitleView.addConstraint(synopsislabel.heightAnchor.constraint(equalTo: headerTitleView.heightAnchor))
         
         addConstraint(synopsisTextView.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(synopsisTextView.topAnchor.constraint(equalTo: synopsislabel.bottomAnchor))
+        addConstraint(synopsisTextView.topAnchor.constraint(equalTo: headerTitleView.bottomAnchor))
         addConstraint(synopsisTextView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(synopsisTextView.heightAnchor.constraint(equalToConstant: 120))
+        
+        addConstraint(ratingCollectionView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(ratingCollectionView.topAnchor.constraint(equalTo: synopsisTextView.bottomAnchor))
+        addConstraint(ratingCollectionView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(ratingCollectionView.heightAnchor.constraint(equalToConstant: 120))
     }
 }
