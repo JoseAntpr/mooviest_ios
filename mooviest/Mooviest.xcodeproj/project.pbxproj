@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A943A86F1D8AEF5900525BF7 /* ParticipationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A943A86E1D8AEF5900525BF7 /* ParticipationCollectionViewCell.swift */; };
+		A943A8711D8B2E8700525BF7 /* RatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A943A8701D8B2E8700525BF7 /* RatingCollectionViewCell.swift */; };
+		A96411C91D8BE02C00E3AAB4 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96411C81D8BE02C00E3AAB4 /* RegisterView.swift */; };
 		A965ACE21D8AAE1C00F9FF47 /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A965ACE11D8AAE1C00F9FF47 /* MovieDetailView.swift */; };
 		A965ACE41D8AB07A00F9FF47 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A965ACE31D8AB07A00F9FF47 /* MovieDetailViewController.swift */; };
 		A965ACE61D8AB34B00F9FF47 /* InfoMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A965ACE51D8AB34B00F9FF47 /* InfoMovieView.swift */; };
@@ -33,10 +36,14 @@
 		A96B525F1D89DE960061A766 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B525E1D89DE960061A766 /* Errors.swift */; };
 		A96B52611D89DEBA0061A766 /* ModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B52601D89DEBA0061A766 /* ModelProtocol.swift */; };
 		A96B52631D89DED40061A766 /* ParserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B52621D89DED40061A766 /* ParserProtocol.swift */; };
+		A96B9B531D8D52C10038F4D9 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B9B521D8D52C10038F4D9 /* UserModel.swift */; };
+		A96B9B551D8D53A10038F4D9 /* UserParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B9B541D8D53A10038F4D9 /* UserParser.swift */; };
+		A96DCE1E1D8C6EF900BC2119 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */; };
 		A9B8694C1D89E49300DDC197 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B8694B1D89E49300DDC197 /* DataModel.swift */; };
 		A9B8694E1D89E73E00DDC197 /* MovieParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B8694D1D89E73E00DDC197 /* MovieParser.swift */; };
 		A9B869501D89E78A00DDC197 /* ParticipationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B8694F1D89E78A00DDC197 /* ParticipationParser.swift */; };
 		A9B869521D89E7C200DDC197 /* RatingParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B869511D89E7C200DDC197 /* RatingParser.swift */; };
+		A9EF59931D8DD41D0005C819 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EF59921D8DD41D0005C819 /* TextFieldView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +64,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A943A86E1D8AEF5900525BF7 /* ParticipationCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipationCollectionViewCell.swift; sourceTree = "<group>"; };
+		A943A8701D8B2E8700525BF7 /* RatingCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingCollectionViewCell.swift; sourceTree = "<group>"; };
+		A96411C81D8BE02C00E3AAB4 /* RegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		A965ACE11D8AAE1C00F9FF47 /* MovieDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
 		A965ACE31D8AB07A00F9FF47 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		A965ACE51D8AB34B00F9FF47 /* InfoMovieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoMovieView.swift; path = ../InfoMovieView.swift; sourceTree = "<group>"; };
@@ -91,10 +101,14 @@
 		A96B525E1D89DE960061A766 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		A96B52601D89DEBA0061A766 /* ModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelProtocol.swift; sourceTree = "<group>"; };
 		A96B52621D89DED40061A766 /* ParserProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserProtocol.swift; sourceTree = "<group>"; };
+		A96B9B521D8D52C10038F4D9 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		A96B9B541D8D53A10038F4D9 /* UserParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserParser.swift; sourceTree = "<group>"; };
+		A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A9B8694B1D89E49300DDC197 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		A9B8694D1D89E73E00DDC197 /* MovieParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieParser.swift; sourceTree = "<group>"; };
 		A9B8694F1D89E78A00DDC197 /* ParticipationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipationParser.swift; sourceTree = "<group>"; };
 		A9B869511D89E7C200DDC197 /* RatingParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingParser.swift; sourceTree = "<group>"; };
+		A9EF59921D8DD41D0005C819 /* TextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,8 +141,7 @@
 		A965ACE71D8AB62B00F9FF47 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A96B52421D89D4CF0061A766 /* LoginViewController.swift */,
-				A96B52441D89D52B0061A766 /* LoginView.swift */,
+				A9EF59911D8DD3D90005C819 /* Resgister & Login */,
 				A965ACEC1D8AB71D00F9FF47 /* SwipeView */,
 				A965ACEB1D8AB6DC00F9FF47 /* MovieDetail */,
 			);
@@ -143,6 +156,7 @@
 				A96B52581D89DE1E0061A766 /* MovieModel.swift */,
 				A96B525A1D89DE470061A766 /* RatingModel.swift */,
 				A96B525C1D89DE670061A766 /* ParticipationModel.swift */,
+				A96B9B521D8D52C10038F4D9 /* UserModel.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -162,6 +176,7 @@
 				A9B8694D1D89E73E00DDC197 /* MovieParser.swift */,
 				A9B8694F1D89E78A00DDC197 /* ParticipationParser.swift */,
 				A9B869511D89E7C200DDC197 /* RatingParser.swift */,
+				A96B9B541D8D53A10038F4D9 /* UserParser.swift */,
 			);
 			name = Parser;
 			sourceTree = "<group>";
@@ -169,7 +184,9 @@
 		A965ACEB1D8AB6DC00F9FF47 /* MovieDetail */ = {
 			isa = PBXGroup;
 			children = (
+				A943A8701D8B2E8700525BF7 /* RatingCollectionViewCell.swift */,
 				A965ACE51D8AB34B00F9FF47 /* InfoMovieView.swift */,
+				A943A86E1D8AEF5900525BF7 /* ParticipationCollectionViewCell.swift */,
 				A965ACE11D8AAE1C00F9FF47 /* MovieDetailView.swift */,
 				A965ACE31D8AB07A00F9FF47 /* MovieDetailViewController.swift */,
 			);
@@ -260,6 +277,18 @@
 				A96B523E1D89D34B0061A766 /* Kingfisher.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9EF59911D8DD3D90005C819 /* Resgister & Login */ = {
+			isa = PBXGroup;
+			children = (
+				A96B52421D89D4CF0061A766 /* LoginViewController.swift */,
+				A96B52441D89D52B0061A766 /* LoginView.swift */,
+				A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */,
+				A96411C81D8BE02C00E3AAB4 /* RegisterView.swift */,
+				A9EF59921D8DD41D0005C819 /* TextFieldView.swift */,
+			);
+			name = "Resgister & Login";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -424,15 +453,21 @@
 				A96B52431D89D4CF0061A766 /* LoginViewController.swift in Sources */,
 				A96B52591D89DE1E0061A766 /* MovieModel.swift in Sources */,
 				A96B52511D89DD010061A766 /* SwipeTabViewController.swift in Sources */,
+				A9EF59931D8DD41D0005C819 /* TextFieldView.swift in Sources */,
 				A965ACE41D8AB07A00F9FF47 /* MovieDetailViewController.swift in Sources */,
+				A943A8711D8B2E8700525BF7 /* RatingCollectionViewCell.swift in Sources */,
 				A965ACE61D8AB34B00F9FF47 /* InfoMovieView.swift in Sources */,
 				A96B525B1D89DE470061A766 /* RatingModel.swift in Sources */,
 				A9B8694C1D89E49300DDC197 /* DataModel.swift in Sources */,
 				A96B52611D89DEBA0061A766 /* ModelProtocol.swift in Sources */,
 				A96B52551D89DDB00061A766 /* DraggableView.swift in Sources */,
+				A96B9B551D8D53A10038F4D9 /* UserParser.swift in Sources */,
+				A96411C91D8BE02C00E3AAB4 /* RegisterView.swift in Sources */,
 				A96B52471D89D6B20061A766 /* Colors.swift in Sources */,
 				A96B52631D89DED40061A766 /* ParserProtocol.swift in Sources */,
+				A943A86F1D8AEF5900525BF7 /* ParticipationCollectionViewCell.swift in Sources */,
 				A9B869501D89E78A00DDC197 /* ParticipationParser.swift in Sources */,
+				A96B9B531D8D52C10038F4D9 /* UserModel.swift in Sources */,
 				A96B525F1D89DE960061A766 /* Errors.swift in Sources */,
 				A9B869521D89E7C200DDC197 /* RatingParser.swift in Sources */,
 				A96B52111D89CCF70061A766 /* ViewController.swift in Sources */,
@@ -440,6 +475,7 @@
 				A9B8694E1D89E73E00DDC197 /* MovieParser.swift in Sources */,
 				A965ACE21D8AAE1C00F9FF47 /* MovieDetailView.swift in Sources */,
 				A96B52531D89DD610061A766 /* SwipeTabView.swift in Sources */,
+				A96DCE1E1D8C6EF900BC2119 /* RegisterViewController.swift in Sources */,
 				A96B520F1D89CCF70061A766 /* AppDelegate.swift in Sources */,
 				A96B525D1D89DE670061A766 /* ParticipationModel.swift in Sources */,
 			);
