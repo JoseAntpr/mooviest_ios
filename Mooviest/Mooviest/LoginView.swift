@@ -122,7 +122,7 @@ class LoginView: UIView {
         centralView.addConstraint(formView.centerYAnchor.constraint(equalTo: centralView.centerYAnchor))
         centralView.addConstraint(formView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
         centralView.addConstraint(formView.widthAnchor.constraint(equalTo: centralView.widthAnchor,multiplier: 0.8))
-        centralView.addConstraint(formView.heightAnchor.constraint(equalTo: centralView.heightAnchor, multiplier: 0.75))
+        centralView.addConstraint(formView.heightAnchor.constraint(equalTo: centralView.heightAnchor, multiplier: 0.6))
         
         formView.addConstraint(padingformView.centerYAnchor.constraint(equalTo: formView.centerYAnchor))
         formView.addConstraint(padingformView.centerXAnchor.constraint(equalTo: formView.centerXAnchor))
@@ -132,7 +132,7 @@ class LoginView: UIView {
         padingformView.addConstraint(userOrEmailTextFieldView.topAnchor.constraint(equalTo: padingformView.topAnchor))
         padingformView.addConstraint(userOrEmailTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
         padingformView.addConstraint(userOrEmailTextFieldView.widthAnchor.constraint(equalTo: padingformView.widthAnchor))
-        padingformView.addConstraint(userOrEmailTextFieldView.heightAnchor.constraint(equalTo: padingformView.heightAnchor, multiplier: 0.4))
+        padingformView.addConstraint(userOrEmailTextFieldView.heightAnchor.constraint(equalTo: padingformView.heightAnchor, multiplier: 0.38))
         
         padingformView.addConstraint(passTextFieldView.topAnchor.constraint(equalTo: userOrEmailTextFieldView.bottomAnchor))
         padingformView.addConstraint(passTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
@@ -142,7 +142,7 @@ class LoginView: UIView {
         padingformView.addConstraint(loginButton.bottomAnchor.constraint(equalTo: padingformView.bottomAnchor))
         padingformView.addConstraint(loginButton.leftAnchor.constraint(equalTo: padingformView.leftAnchor))
         padingformView.addConstraint(loginButton.widthAnchor.constraint(equalTo: padingformView.widthAnchor))
-        padingformView.addConstraint(loginButton.heightAnchor.constraint(equalTo: userOrEmailTextFieldView.heightAnchor,multiplier: 0.5))
+        padingformView.addConstraint(loginButton.heightAnchor.constraint(equalTo: userOrEmailTextFieldView.heightAnchor,multiplier: 0.6))
     }
     
     func seTextFieldsDelegate(Delegate d: UITextFieldDelegate){

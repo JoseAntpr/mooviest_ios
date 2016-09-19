@@ -27,6 +27,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    //This method is called when the autolayout engine has finished to calculate your views' frames
+    override func viewDidLayoutSubviews() {
+        v.adjustFontSizeToFitHeight()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

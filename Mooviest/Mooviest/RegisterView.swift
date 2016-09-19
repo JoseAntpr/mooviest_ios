@@ -148,7 +148,7 @@ class RegisterView: UIView {
         formView.addConstraint(padingformView.centerYAnchor.constraint(equalTo: formView.centerYAnchor))
         formView.addConstraint(padingformView.centerXAnchor.constraint(equalTo: formView.centerXAnchor))
         formView.addConstraint(padingformView.widthAnchor.constraint(equalTo: formView.widthAnchor, multiplier: 0.9))
-        formView.addConstraint(padingformView.heightAnchor.constraint(equalTo: formView.heightAnchor, multiplier: 0.8))
+        formView.addConstraint(padingformView.heightAnchor.constraint(equalTo: formView.heightAnchor, multiplier: 0.85))
         
         padingformView.addConstraint(userTextFieldView.topAnchor.constraint(equalTo: padingformView.topAnchor))
         padingformView.addConstraint(userTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
