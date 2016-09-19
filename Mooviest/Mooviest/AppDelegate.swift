@@ -16,11 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let login =  LoginViewController() //MovieDetailViewController()//
-        
+        let navViewController = UINavigationController(rootViewController: login)
+        navViewController.navigationBar.barStyle = UIBarStyle.black
+//        navViewController.isNavigationBarHidden = true
         let frame = UIScreen.main.bounds
         self.window = UIWindow(frame: frame)
         if let w = self.window {
-            w.rootViewController = login
+            w.rootViewController = navViewController
             w.makeKeyAndVisible()
         }
         return true
@@ -64,5 +66,7 @@ extension UIColor {
         self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
     }
 }
+
+
 
 

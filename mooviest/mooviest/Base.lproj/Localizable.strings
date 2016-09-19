@@ -10,6 +10,9 @@
 
 titleCreateAccountButton = "No account yet? Create one";
 
+// RegisterView
+createAccountButton = "CREATE ACCOUNT";
+backloginButton = "Already a member? Login";
 
 //InfoMovieView
 synopsislabel = "Synopsis";

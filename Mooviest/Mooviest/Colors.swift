@@ -13,3 +13,4 @@ let dark_red = 0x4d0000
 let dark_gray = 0x212121
 let medium_gray = 0x343434
 let light_gray = 0xeeeeee
+let placeholder_gray = 0x848484

@@ -1,30 +1,33 @@
 //
-//  LoginViewController.swift
+//  RegisterViewController.swift
 //  Mooviest
 //
-//  Created by Antonio RG on 3/8/16.
+//  Created by Antonio RG on 16/9/16.
 //  Copyright © 2016 Mooviest. All rights reserved.
 //
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class RegisterViewController: UIViewController, UITextFieldDelegate {
     
-    var v = LoginView()
+    var v = RegisterView()
     var activeField:UITextField?
     var move = CGFloat(0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
+        v.seTextFieldsDelegate(Delegate:self)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         view.addGestureRecognizer(tap)
         view.addSubview(v)
-        v.loginButton.addTarget(self, action: #selector(self.login), for: .touchUpInside)
-        v.goCreateAccountFormButton.addTarget(self, action: #selector(self.createAccount), for: .touchUpInside)
-        v.seTextFieldsDelegate(Delegate: self)
-        setupConstraints()
         
+        v.backLoginButton.addTarget(self, action: #selector(self.backlogin), for: .touchUpInside)
+        v.createAccountButton.addTarget(self, action: #selector(self.register), for: .touchUpInside)
+        setupConstraints()
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,51 +44,28 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.addConstraint(v.bottomAnchor.constraint(equalTo: view.bottomAnchor))
     }
     
-    func login() {
-        let user = v.userOrEmailTextFieldView.getText()
-        let pass = v.passTextFieldView.getText()
-        
-        
-        DataModel.sharedInstance.login(Username: user, Password: pass) {
-            (data) in
-            print("login")
-            print(data)
-        }
-//        let tabBarController = UITabBarController()
-//        let tab1 = SwipeTabViewController(nibName: nil, bundle: nil)
-//        let tab2 = ViewController(nibName: nil, bundle: nil)
-//        let tab3 = ViewController(nibName: nil, bundle: nil)
-//        
-//        let swipe = UIImage(named: "Swipe")
-//        let thumbUp = UIImage(named: "thumb-up")
-//        let account = UIImage(named: "account")
-//        
-//        tab1.tabBarItem = UITabBarItem(title: nil, image: swipe, tag: 1)
-//        tab2.tabBarItem = UITabBarItem(title: nil, image: thumbUp, tag: 2)
-//        tab3.tabBarItem = UITabBarItem(title: nil, image: account, tag: 3)
-//        
-//        let nVController1 = UINavigationController(rootViewController: tab1)
-//        navigationController?.pushViewController(tabBarController, animated: true)
-//        
-//        //crear un protocolo que la vista tenga un nav controller con unos parametros por defectos que serán los siguientes
-//        nVController1.navigationBar.topItem?.titleView = UIImageView(image: UIImage(named: "title")!.withRenderingMode(.alwaysOriginal))
-//        nVController1.navigationBar.barTintColor = UIColor(netHex: mooviest_red)
-//        nVController1.navigationItem.backBarButtonItem = nil
-//        nVController1.navigationBar.barStyle = UIBarStyle.black
-//        
-//        
-//        tabBarController.viewControllers = [nVController1, tab2, tab3]
-//        
-//        UITabBar.appearance().barTintColor = UIColor(netHex: mooviest_red)
-//        UITabBar.appearance().tintColor = UIColor.white
-//        
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        appDelegate.window?.rootViewController = tabBarController    
+    //This method is called when the autolayout engine has finished to calculate your views' frames
+    override func viewDidLayoutSubviews() {
+        v.adjustFontSizeToFitHeight()
     }
     
-    func createAccount(){
-        let nextViewController = RegisterViewController()
-        navigationController?.pushViewController(nextViewController, animated: true)
+    func register() {
+        let user = v.userTextFieldView.getText()
+        let pass = v.passTextFieldView.getText()
+        let email = v.emailTextFieldView.getText()
+        let langCode = "es" //sacar idioma del movil
+        
+        DataModel.sharedInstance.register(Username: user, Password: pass, Email: email, Lang: langCode) {
+            (data) in
+            print("resgister")
+            print(data)
+            _ = self.navigationController?.popViewController(animated: true)
+        }
+        
+    }
+    
+    func backlogin() {
+       _ = self.navigationController?.popViewController(animated: true)
     }
     
     func dismissKeyboard() {
@@ -93,7 +73,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        
+    
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             let origin = self.activeField!.convert((activeField?.frame.origin)!, from: self.view)
             
@@ -122,12 +102,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             nextResponder?.becomeFirstResponder()
         }
         else {
-            if textField == v.passTextFieldView.textField {
-                login()
+            if textField == v.confirmPassTextFieldView.textField {
+                register()
             }
             
             // Not found, so remove keyboard.
-            
+           
             textField.resignFirstResponder()
         }
         return false

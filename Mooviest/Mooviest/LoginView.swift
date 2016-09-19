@@ -13,12 +13,17 @@ class LoginView: UIView {
     let height = UIApplication.shared.statusBarFrame.size.height
     var backgroundStatusView = UIView()
     var titleImageView = UIImageView()
-    var userTextField = UITextField()
-    var userLineImageView = UIImageView()
-    var passTextField = UITextField()
-    var passLineImageView = UIImageView()
+    
+    var formView = UIView()
+    var padingformView = UIView()
+    
+    var userOrEmailTextFieldView = TextFieldView()
+    var passTextFieldView = TextFieldView()
+    
+    var centralView = UIView()
     var loginButton = UIButton(type: UIButtonType.system) as UIButton
-    var createAccountButton = UIButton(type: UIButtonType.system) as UIButton
+    var goCreateAccountFormButton = UIButton(type: UIButtonType.system) as UIButton
+    
     
     init() {
         super.init(frame: CGRect.zero)
@@ -38,88 +43,115 @@ class LoginView: UIView {
         
         backgroundStatusView.backgroundColor = UIColor(netHex: dark_red).withAlphaComponent(0.5)
         
-        userTextField.textColor = UIColor.white
-        userTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.white])
+        formView.backgroundColor = UIColor.white
+        //        formView.layer.shadowColor = UIColor.orange.cgColor
+        //        formView.layer.shadowOpacity = 1
+        //        formView.layer.shadowOffset = CGSize(width: 3, height: 3)
+        //        formView.layer.shadowRadius = 10
         
-        passTextField.textColor = UIColor.white
-        passTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.white])
-        passTextField.isSecureTextEntry = true
+        formView.layer.cornerRadius = 3
+        formView.layer.masksToBounds = true
         
-        userLineImageView.backgroundColor = UIColor.white
-        passLineImageView.backgroundColor = UIColor.white
+        padingformView.backgroundColor = UIColor.white.withAlphaComponent(0)
+        centralView.backgroundColor = UIColor.white.withAlphaComponent(0)
         
-        loginButton.backgroundColor = UIColor(netHex: dark_red).withAlphaComponent(0.5)
+        userOrEmailTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
+        userOrEmailTextFieldView.setPlaceholder(Placeholder: "Username or email", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        userOrEmailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
+        userOrEmailTextFieldView.setReturnKeyType(returnKeyType: .next)
+        userOrEmailTextFieldView.textField.tag = 0
+        
+        passTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
+        passTextFieldView.setPlaceholder(Placeholder: "Password", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        passTextFieldView.setSecureText(isSecureTextEntry: true)
+        passTextFieldView.setReturnKeyType(returnKeyType: .default)
+        passTextFieldView.textField.tag = 1
+        
+        loginButton.backgroundColor = UIColor(netHex: mooviest_red)
         loginButton.setTitle("LOGIN", for: UIControlState())
         loginButton.setTitleColor(UIColor.white, for: UIControlState())
         loginButton.layer.cornerRadius = 3
         
-        createAccountButton.setTitle(NSLocalizedString("titleCreateAccountButton", comment: "Title of createAccountButton"), for: UIControlState())
-        createAccountButton.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: UIControlState())
+        goCreateAccountFormButton.setTitle(NSLocalizedString("titleCreateAccountButton", comment: "Title of goCreateAccountFormButton"), for: UIControlState())
+        goCreateAccountFormButton.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: UIControlState())
         
-        
+        formView.addSubview(padingformView)
+        padingformView.addSubview(userOrEmailTextFieldView)
+        padingformView.addSubview(passTextFieldView)
+        padingformView.addSubview(loginButton)
+        centralView.addSubview(formView)
         
         addSubview(backgroundStatusView)
         addSubview(titleImageView)
-        addSubview(userTextField)
-        addSubview(userLineImageView)
-        addSubview(passTextField)
-        addSubview(passLineImageView)
-        addSubview(loginButton)
-        addSubview(createAccountButton)
-        
+        addSubview(goCreateAccountFormButton)
+        addSubview(centralView)
     }
     
     func setupConstraints() {
         backgroundStatusView.translatesAutoresizingMaskIntoConstraints = false
         titleImageView.translatesAutoresizingMaskIntoConstraints = false
-        userTextField.translatesAutoresizingMaskIntoConstraints = false
-        userLineImageView.translatesAutoresizingMaskIntoConstraints = false
-        passTextField.translatesAutoresizingMaskIntoConstraints = false
-        passLineImageView.translatesAutoresizingMaskIntoConstraints = false
+        formView.translatesAutoresizingMaskIntoConstraints = false
+        padingformView.translatesAutoresizingMaskIntoConstraints = false
+        userOrEmailTextFieldView.translatesAutoresizingMaskIntoConstraints = false
+        passTextFieldView.translatesAutoresizingMaskIntoConstraints = false
+        centralView.translatesAutoresizingMaskIntoConstraints = false
         loginButton.translatesAutoresizingMaskIntoConstraints = false
-        createAccountButton.translatesAutoresizingMaskIntoConstraints = false
+        goCreateAccountFormButton.translatesAutoresizingMaskIntoConstraints = false
+       
         
-        addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(backgroundStatusView.heightAnchor.constraint(equalToConstant: height))
         
+        addConstraint(titleImageView.topAnchor.constraint(equalTo: backgroundStatusView.bottomAnchor))
         addConstraint(titleImageView.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(titleImageView.topAnchor.constraint(equalTo: backgroundStatusView.bottomAnchor, constant: 65))
         addConstraint(titleImageView.widthAnchor.constraint(equalTo: widthAnchor,multiplier: 0.75))
-        addConstraint(titleImageView.heightAnchor.constraint(equalToConstant: 65))
+        addConstraint(titleImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2))
         
-        addConstraint(userTextField.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(userTextField.topAnchor.constraint(equalTo: titleImageView.bottomAnchor, constant: 60))
-        addConstraint(userTextField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8))
-        addConstraint(userTextField.heightAnchor.constraint(equalToConstant: 55))
+        addConstraint(goCreateAccountFormButton.bottomAnchor.constraint(equalTo: bottomAnchor))
+        addConstraint(goCreateAccountFormButton.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(goCreateAccountFormButton.widthAnchor.constraint(equalTo: formView.widthAnchor))
+        addConstraint(goCreateAccountFormButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15))
         
-        addConstraint(userLineImageView.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(userLineImageView.topAnchor.constraint(equalTo: userTextField.bottomAnchor))
-        addConstraint(userLineImageView.widthAnchor.constraint(equalTo: userTextField.widthAnchor))
-        addConstraint(userLineImageView.heightAnchor.constraint(equalToConstant: 1))
+        addConstraint(centralView.topAnchor.constraint(equalTo: titleImageView.bottomAnchor))
+        addConstraint(centralView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(centralView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(centralView.bottomAnchor.constraint(equalTo: goCreateAccountFormButton.topAnchor))
         
-        addConstraint(passTextField.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(passTextField.topAnchor.constraint(equalTo: userLineImageView.bottomAnchor, constant: 30))
-        addConstraint(passTextField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8))
-        addConstraint(passTextField.heightAnchor.constraint(equalToConstant: 50))
+        centralView.addConstraint(formView.centerYAnchor.constraint(equalTo: centralView.centerYAnchor))
+        centralView.addConstraint(formView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
+        centralView.addConstraint(formView.widthAnchor.constraint(equalTo: centralView.widthAnchor,multiplier: 0.8))
+        centralView.addConstraint(formView.heightAnchor.constraint(equalTo: centralView.heightAnchor, multiplier: 0.75))
         
-        addConstraint(passLineImageView.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(passLineImageView.topAnchor.constraint(equalTo: passTextField.bottomAnchor))
-        addConstraint(passLineImageView.widthAnchor.constraint(equalTo: passTextField.widthAnchor))
-        addConstraint(passLineImageView.heightAnchor.constraint(equalToConstant: 1))
+        formView.addConstraint(padingformView.centerYAnchor.constraint(equalTo: formView.centerYAnchor))
+        formView.addConstraint(padingformView.centerXAnchor.constraint(equalTo: formView.centerXAnchor))
+        formView.addConstraint(padingformView.widthAnchor.constraint(equalTo: formView.widthAnchor, multiplier: 0.9))
+        formView.addConstraint(padingformView.heightAnchor.constraint(equalTo: formView.heightAnchor, multiplier: 0.8))
         
-        addConstraint(loginButton.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(loginButton.topAnchor.constraint(equalTo: passLineImageView.bottomAnchor,constant: 55))
-        addConstraint(loginButton.widthAnchor.constraint(equalTo: passLineImageView.widthAnchor))
-        addConstraint(loginButton.heightAnchor.constraint(equalToConstant: 40))
+        padingformView.addConstraint(userOrEmailTextFieldView.topAnchor.constraint(equalTo: padingformView.topAnchor))
+        padingformView.addConstraint(userOrEmailTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
+        padingformView.addConstraint(userOrEmailTextFieldView.widthAnchor.constraint(equalTo: padingformView.widthAnchor))
+        padingformView.addConstraint(userOrEmailTextFieldView.heightAnchor.constraint(equalTo: padingformView.heightAnchor, multiplier: 0.4))
         
-        addConstraint(createAccountButton.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(createAccountButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor,constant: 40))
-        addConstraint(createAccountButton.widthAnchor.constraint(equalTo: passLineImageView.widthAnchor))
-        addConstraint(createAccountButton.heightAnchor.constraint(equalToConstant: 20))
+        padingformView.addConstraint(passTextFieldView.topAnchor.constraint(equalTo: userOrEmailTextFieldView.bottomAnchor))
+        padingformView.addConstraint(passTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
+        padingformView.addConstraint(passTextFieldView.widthAnchor.constraint(equalTo: userOrEmailTextFieldView.widthAnchor))
+        padingformView.addConstraint(passTextFieldView.heightAnchor.constraint(equalTo: userOrEmailTextFieldView.heightAnchor))
         
+        padingformView.addConstraint(loginButton.bottomAnchor.constraint(equalTo: padingformView.bottomAnchor))
+        padingformView.addConstraint(loginButton.leftAnchor.constraint(equalTo: padingformView.leftAnchor))
+        padingformView.addConstraint(loginButton.widthAnchor.constraint(equalTo: padingformView.widthAnchor))
+        padingformView.addConstraint(loginButton.heightAnchor.constraint(equalTo: userOrEmailTextFieldView.heightAnchor,multiplier: 0.5))
     }
     
+    func seTextFieldsDelegate(Delegate d: UITextFieldDelegate){
+        userOrEmailTextFieldView.setDelegate(Delegate: d)
+        passTextFieldView.setDelegate(Delegate: d)
+    }
     
+    func adjustFontSizeToFitHeight () {
+        userOrEmailTextFieldView.adjustFontSizeToFitHeight()
+        passTextFieldView.adjustFontSizeToFitHeight()
+    }    
 }
