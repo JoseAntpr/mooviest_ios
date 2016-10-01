@@ -16,13 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let login =  LoginViewController() //MovieDetailViewController()//
-        let navViewController = UINavigationController(rootViewController: login)
-        navViewController.navigationBar.barStyle = UIBarStyle.black
-//        navViewController.isNavigationBarHidden = true
         let frame = UIScreen.main.bounds
         self.window = UIWindow(frame: frame)
         if let w = self.window {
-            w.rootViewController = navViewController
+            w.rootViewController = login
             w.makeKeyAndVisible()
         }
         return true
