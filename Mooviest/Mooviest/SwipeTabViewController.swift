@@ -1,3 +1,4 @@
+
 //
 //  SwipeTabViewController.swift
 //  Mooviest
@@ -23,6 +24,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
     var cardsLoadedIndex: Int!
     var loadedCards: [DraggableView]!
     var movies = [Movie]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = false
@@ -79,16 +81,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
     
     func setupView() {
         
-        //        let replayButton = UIButton(type: UIButtonType.Custom) as UIButton
-        //
-        //        replayButton.setImage( UIImage(named: "replay"), forState: UIControlState.Normal)
-        //        replayButton.tintColor = UIColor.whiteColor()
-        //        replayButton.addTarget(self, action: #selector(self.replay), forControlEvents: .TouchUpInside)
-        //
-        //        let rightBarButton = UIBarButtonItem(customView: replayButton)
-        //
-        //        navigationItem.rightBarButtonItem = rightBarButton
-        //exampleCardLabels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
         allCards = []
         loadedCards = []
         cardsLoadedIndex = 0
@@ -99,9 +91,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
                                            target: self, action: #selector(self.replay))
         replayButton.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = replayButton
-        
-        
-        
         
         v.closedButton.addTarget(self, action: #selector(self.swipeLeft), for: .touchUpInside)
         v.heartButton.addTarget(self, action: #selector(self.swipeRight), for: .touchUpInside)
@@ -117,7 +106,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         v.addConstraint(loadedCards[i].topAnchor.constraint(equalTo: v.topAnchor, constant: 60))
         v.addConstraint(loadedCards[i].rightAnchor.constraint(equalTo: v.rightAnchor,constant: -20))
         v.addConstraint(loadedCards[i].bottomAnchor.constraint(equalTo: v.panelButtonView.topAnchor,constant: -20))
-        
     }
     
     func replay() {
@@ -139,14 +127,12 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
             let numLoadedCardsCap = movies.count > MAX_BUFFER_SIZE ? MAX_BUFFER_SIZE : movies.count
             for i in 0 ..< movies.count {
                 let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(i)
-                
                 print("create " + movies[i].originalTitle)
                 allCards.append(newCard)
                 if i < numLoadedCardsCap {
                     loadedCards.append(newCard)
                 }
             }
-            
             for i in 0 ..< loadedCards.count {
                 if i > 0 {
                     v.insertSubview(loadedCards[i], belowSubview: loadedCards[i - 1])
@@ -155,7 +141,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
                 }
                 //setupConstraintsSubView(Index: i)
                 print("chargue \(i)")
-                
                 cardsLoadedIndex = cardsLoadedIndex + 1
             }
         }

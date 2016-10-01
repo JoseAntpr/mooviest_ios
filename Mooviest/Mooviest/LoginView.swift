@@ -8,8 +8,16 @@
 
 import UIKit
 
+enum TextFieldViewTag:Int {
+    case UserOrEmailTextFieldView = 0
+    case PassLoginTextFieldView = 1
+    case UserTextFieldView = 2
+    case EmailTextFieldView = 3
+    case PassTextFieldView = 4
+    case ConfirmPassTextFieldView = 5
+}
+
 class LoginView: UIView {
-    
     let height = UIApplication.shared.statusBarFrame.size.height
     var backgroundStatusView = UIView()
     var titleImageView = UIImageView()
@@ -32,6 +40,9 @@ class LoginView: UIView {
     var confirmPassTextFieldView = TextFieldView()
     var createAccountButton = UIButton(type: UIButtonType.system) as UIButton
     var backLoginButton = UIButton()
+    var clearTextButton:UIButton!
+    var secureTextButton:UIButton!
+    
     var formRegisterViewCenterXAnchor:NSLayoutConstraint!
     var formRegisterViewCenterYAnchor:NSLayoutConstraint!
     
@@ -54,11 +65,6 @@ class LoginView: UIView {
         backgroundStatusView.backgroundColor = UIColor(netHex: dark_red).withAlphaComponent(0.5)
         //Form Login
         formView.backgroundColor = UIColor.white
-        //        formView.layer.shadowColor = UIColor.orange.cgColor
-        //        formView.layer.shadowOpacity = 1
-        //        formView.layer.shadowOffset = CGSize(width: 3, height: 3)
-        //        formView.layer.shadowRadius = 10
-        
         formView.layer.cornerRadius = 3
         formView.layer.masksToBounds = true
         
@@ -69,17 +75,13 @@ class LoginView: UIView {
         userOrEmailTextFieldView.setPlaceholder(Placeholder: "Username or email", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
         userOrEmailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.emailAddress)
         userOrEmailTextFieldView.setReturnKeyType(returnKeyType: .next)
-        userOrEmailTextFieldView.textField.tag = 0
-        userOrEmailTextFieldView.editTextButton.setImage(UIImage(named: "replay"), for: UIControlState())
-        userOrEmailTextFieldView.editTextButton.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(0.4)
+        userOrEmailTextFieldView.textField.tag = TextFieldViewTag.UserOrEmailTextFieldView.rawValue
         
         passLoginTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
         passLoginTextFieldView.setPlaceholder(Placeholder: "Password", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
         passLoginTextFieldView.setSecureText(isSecureTextEntry: true)
         passLoginTextFieldView.setReturnKeyType(returnKeyType: .join)
-        passLoginTextFieldView.textField.tag = 1
-        passLoginTextFieldView.editTextButton.setImage(UIImage(named: "eye"), for: UIControlState())
-        passLoginTextFieldView.editTextButton.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(0.4)
+        passLoginTextFieldView.textField.tag = TextFieldViewTag.PassLoginTextFieldView.rawValue
         
         loginButton.backgroundColor = UIColor(netHex: mooviest_red)
         loginButton.setTitle("LOGIN", for: UIControlState())
@@ -100,33 +102,25 @@ class LoginView: UIView {
         userTextFieldView.setPlaceholder(Placeholder: "Username", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
         userTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         userTextFieldView.setReturnKeyType(returnKeyType: .next)
-        userTextFieldView.textField.tag = 2
-        userTextFieldView.editTextButton.setImage(UIImage(named: "replay"), for: UIControlState())
-        userTextFieldView.editTextButton.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(0.4)
+        userTextFieldView.textField.tag = TextFieldViewTag.UserTextFieldView.rawValue
         
         emailTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
         emailTextFieldView.setPlaceholder(Placeholder: "Email", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
         emailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.emailAddress)
         emailTextFieldView.setReturnKeyType(returnKeyType: .next)
-        emailTextFieldView.textField.tag = 3
-        emailTextFieldView.editTextButton.setImage(UIImage(named: "replay"), for: UIControlState())
-        emailTextFieldView.editTextButton.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(0.4)
+        emailTextFieldView.textField.tag = TextFieldViewTag.EmailTextFieldView.rawValue
         
         passTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
         passTextFieldView.setPlaceholder(Placeholder: "Password", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
         passTextFieldView.setSecureText(isSecureTextEntry: true)
         passTextFieldView.setReturnKeyType(returnKeyType: .next)
-        passTextFieldView.textField.tag = 4
-        passTextFieldView.editTextButton.setImage(UIImage(named: "eye"), for: UIControlState())
-        passTextFieldView.editTextButton.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(0.4)
+        passTextFieldView.textField.tag = TextFieldViewTag.PassTextFieldView.rawValue
         
         confirmPassTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
         confirmPassTextFieldView.setPlaceholder(Placeholder: "Confirm password", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
         confirmPassTextFieldView.setSecureText(isSecureTextEntry: true)
         confirmPassTextFieldView.setReturnKeyType(returnKeyType: .default)
-        confirmPassTextFieldView.textField.tag = 5
-        confirmPassTextFieldView.editTextButton.setImage(UIImage(named: "eye"), for: UIControlState())
-        confirmPassTextFieldView.editTextButton.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(0.4)
+        confirmPassTextFieldView.textField.tag = TextFieldViewTag.ConfirmPassTextFieldView.rawValue
         
         createAccountButton.backgroundColor = UIColor(netHex: mooviest_red)
         createAccountButton.setTitle(NSLocalizedString("createAccountButton", comment: "Title of createAccountButton"), for: UIControlState())
@@ -136,6 +130,16 @@ class LoginView: UIView {
         backLoginButton.setTitle(NSLocalizedString("backloginButton", comment: "Title of backLoginButton"), for: UIControlState())
         backLoginButton.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: UIControlState())
         backLoginButton.alpha = 0.0
+        
+        clearTextButton = UIButton(type: UIButtonType.system) as UIButton //(type: UIButtonType.system) as UIButton
+        clearTextButton.setImage(UIImage(named: "replay"), for: UIControlState())
+        clearTextButton.contentMode = .scaleToFill
+        clearTextButton.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(0.4)
+        
+        secureTextButton = UIButton(type: UIButtonType.system) as UIButton //(type: UIButtonType.system) as UIButton
+        secureTextButton.setImage(UIImage(named: "eye"), for: UIControlState())
+        secureTextButton.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(0.4)
+
         
         formRegisterView.addSubview(padingRegisterformView)
         padingRegisterformView.addSubview(userTextFieldView)
@@ -284,6 +288,9 @@ class LoginView: UIView {
         emailTextFieldView.adjustFontSizeToFitHeight()
         passTextFieldView.adjustFontSizeToFitHeight()
         confirmPassTextFieldView.adjustFontSizeToFitHeight()
+        let heightTextField = max(userOrEmailTextFieldView.textField.frame.height,passTextFieldView.textField.frame.height)
+        clearTextButton.frame.size = CGSize(width: heightTextField, height: heightTextField)
+        secureTextButton.frame.size = CGSize(width: heightTextField, height: heightTextField)
     }
     
     func clearAllTextField() {
@@ -293,45 +300,7 @@ class LoginView: UIView {
         emailTextFieldView.clearText()
         passTextFieldView.clearText()
         confirmPassTextFieldView.clearText()
-
-    }
-    
-    func registerViewSetHidden(withDuration: TimeInterval, from: UIView , to: UIView) {
-        
-        self.superview!.layoutIfNeeded()
-        UIView.animate(withDuration: withDuration, animations: {
-                self.formRegisterViewCenterXAnchor.constant = to == self.goCreateAccountFormButton ? self.superview!.frame.size.width:0
-                self.superview!.layoutIfNeeded()
-            }, completion: { (value) in
-                self.clearAllTextField()
-                if self.formRegisterViewCenterXAnchor.constant > 0 {
-//                    self.formRegisterViewCenterYAnchor.constant = self.superview!.frame.size.height
-                    self.formRegisterViewCenterXAnchor.constant = -self.superview!.frame.size.width
-                    self.formRegisterViewCenterYAnchor.constant = 0
-                }
-            }
-        )
-        from.transition(withDuration: withDuration, to: to)
-    }
+    }   
 }
 
-//Refactor extract outside
-extension UIView {
-    func transition(withDuration: TimeInterval, to:UIView) {
-        UIView.animate(withDuration: withDuration/2, animations: {
-            self.alpha = 0.0
-            }, completion: { (value) in
-                UIView.animate(withDuration: withDuration/2) {
-                    to.alpha = 0.7
-                }
-            }
-        )
-    }
-    
-    func comeBackOrigin(withDuration: TimeInterval , moved: CGFloat) {
-        UIView.animate(withDuration: withDuration) {
-            self.frame.origin.y -= moved
-        }
-    }
-    
-}
+
