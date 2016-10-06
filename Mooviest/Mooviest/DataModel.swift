@@ -11,7 +11,7 @@ import Alamofire
 
 class DataModel: NSObject {
     static let sharedInstance = DataModel()
-    var path =  "http://192.168.1.33:8000/api"//"http://localhost:8000/api"//
+    var path =  "http://192.168.1.134:8000/api"//"http://localhost:8000/api"//
     var movies = [Movie]()
     var user:User!
     

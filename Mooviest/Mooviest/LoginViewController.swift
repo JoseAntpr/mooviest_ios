@@ -282,16 +282,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let tab1 = SwipeTabViewController(nibName: nil, bundle: nil)
         let tab2 = ViewController(nibName: nil, bundle: nil)
         let tab3 = ViewController(nibName: nil, bundle: nil)
+        let tab4 = ViewController(nibName: nil, bundle: nil)
 
         let swipe = UIImage(named: "Swipe")
         let thumbUp = UIImage(named: "thumb-up")
         let account = UIImage(named: "account")
+        let account2 = UIImage(named: "account")
 
         tab1.tabBarItem = UITabBarItem(title: nil, image: swipe, tag: 1)
         tab2.tabBarItem = UITabBarItem(title: nil, image: thumbUp, tag: 2)
         tab3.tabBarItem = UITabBarItem(title: nil, image: account, tag: 3)
+        tab4.tabBarItem = UITabBarItem(title: nil, image: account2, tag: 4)
 
         let nVController1 = UINavigationController(rootViewController: tab1)
+        nVController1.navigationBar.isTranslucent = false
         navigationController?.pushViewController(tabBarController, animated: true)
 
         //crear un protocolo que la vista tenga un nav controller con unos parametros por defectos que serán los siguientes
@@ -300,11 +304,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         nVController1.navigationItem.backBarButtonItem = nil
         nVController1.navigationBar.barStyle = UIBarStyle.black
 
-
-        tabBarController.viewControllers = [nVController1, tab2, tab3]
-
-        UITabBar.appearance().barTintColor = UIColor(netHex: mooviest_red)
+        tabBarController.viewControllers = [nVController1, tab2, tab3, tab4]
+        tabBarController.tabBar.isTranslucent = false
+        
+        UITabBar.appearance().barTintColor = UIColor(netHex: mooviest_red).withAlphaComponent(1)
         UITabBar.appearance().tintColor = UIColor.white
+        
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = tabBarController
