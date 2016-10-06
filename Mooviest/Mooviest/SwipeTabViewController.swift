@@ -12,24 +12,17 @@ import Kingfisher
 
 class SwipeTabViewController: UIViewController, DraggableViewDelegate {
     var v: SwipeTabView!
-    //var exampleCardLabels: [String]!
     var allCards: [DraggableView]!
     let MAX_BUFFER_SIZE = 2
-    var FRAME_HEIGHT = CGFloat(530)
-    var FRAME_WIDTH = CGFloat(375)
-    var CARD_HEIGHT = CGFloat()
-    var CARD_WIDTH = CGFloat()
-    var MARGIN_TOP = CGFloat()
-    var MARGIN_LEFT = CGFloat()
     var cardsLoadedIndex: Int!
-    var loadedCards: [DraggableView]!
+    var loadedCards = [DraggableView]()
     var movies = [Movie]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = false
-        calculateSizeAndPositionCard()
-        v = SwipeTabView(Card_width: CARD_WIDTH, Card_height: CARD_HEIGHT)
+
+        v = SwipeTabView()
         view.addSubview(v)
         setupConstraints()
         DataModel.sharedInstance.getMoviesSwipe(Lang: 1, Count: 10) {
@@ -39,16 +32,13 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
                 let movie = try! MovieParser.jsonToMovie(Movie: m)
                 self.movies.append(movie)
             }
-//            print(self.movies[0])
             self.setupView()
         }
     }
-    
+     
     func tappedCard(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended {
-            
             let index = (sender.view as! DraggableView).index
-            print("tapped movie: \(movies[index!].originalTitle)")
             let nViewController = MovieDetailViewController()
             nViewController.movie = movies[index!]
             navigationController?.pushViewController(nViewController, animated: true)
@@ -59,15 +49,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         navigationController?.isNavigationBarHidden = false
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func calculateSizeAndPositionCard() {
-        FRAME_HEIGHT = self.view.frame.size.height
-        FRAME_WIDTH = self.view.frame.size.width
-        CARD_HEIGHT = FRAME_HEIGHT * 0.68
-        CARD_WIDTH = FRAME_WIDTH * 0.87
-        MARGIN_LEFT = (FRAME_WIDTH * 0.13) / 2
-        MARGIN_TOP = (FRAME_HEIGHT * 0.27) / 2
     }
     
     func setupConstraints() {
@@ -92,162 +73,33 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         replayButton.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = replayButton
         
-        v.closedButton.addTarget(self, action: #selector(self.swipeLeft), for: .touchUpInside)
-        v.heartButton.addTarget(self, action: #selector(self.swipeRight), for: .touchUpInside)
-        v.clockButton.addTarget(self, action: #selector(self.swipeTop), for: .touchUpInside)
-        v.eyeButton.addTarget(self, action: #selector(self.swipeBottom), for: .touchUpInside)
-        
+        v.closedButton.addTarget(self, action: #selector(self.clickSwipeLeft), for: .touchUpInside)
+        v.heartButton.addTarget(self, action: #selector(self.clickSwipeRight), for: .touchUpInside)
+        v.clockButton.addTarget(self, action: #selector(self.clickSwipeTop), for: .touchUpInside)
+        v.eyeButton.addTarget(self, action: #selector(self.clickSwipeBottom), for: .touchUpInside)
     }
     
     func setupConstraintsSubView (Index i: Int) {
         loadedCards[i].translatesAutoresizingMaskIntoConstraints = false
         
-        v.addConstraint(loadedCards[i].leftAnchor.constraint(equalTo: v.leftAnchor,constant: 20))
-        v.addConstraint(loadedCards[i].topAnchor.constraint(equalTo: v.topAnchor, constant: 60))
-        v.addConstraint(loadedCards[i].rightAnchor.constraint(equalTo: v.rightAnchor,constant: -20))
-        v.addConstraint(loadedCards[i].bottomAnchor.constraint(equalTo: v.panelButtonView.topAnchor,constant: -20))
+        v.panelSwipeView.addConstraint(loadedCards[i].widthAnchor.constraint(equalTo: v.panelSwipeView.widthAnchor))
+        v.panelSwipeView.addConstraint(loadedCards[i].centerXAnchor.constraint(equalTo: v.panelSwipeView.centerXAnchor))
+        v.panelSwipeView.addConstraint(loadedCards[i].heightAnchor.constraint(equalTo: v.panelSwipeView.heightAnchor, multiplier: 0.9))
+        v.panelSwipeView.addConstraint(loadedCards[i].centerYAnchor.constraint(equalTo: v.panelSwipeView.centerYAnchor))
     }
     
-    func replay() {
-        print("replay")
+    func replay() {//Finally, i will used for chargue more movie in the swipe
         for card in loadedCards {
             card.removeFromSuperview()
         }
-        
-        // exampleCardLabels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
         allCards = []
         cardsLoadedIndex = 0
         loadedCards = []
         loadCards()
     }
     
-    
-    func loadCards() -> Void {
-        if movies.count > 0 {
-            let numLoadedCardsCap = movies.count > MAX_BUFFER_SIZE ? MAX_BUFFER_SIZE : movies.count
-            for i in 0 ..< movies.count {
-                let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(i)
-                print("create " + movies[i].originalTitle)
-                allCards.append(newCard)
-                if i < numLoadedCardsCap {
-                    loadedCards.append(newCard)
-                }
-            }
-            for i in 0 ..< loadedCards.count {
-                if i > 0 {
-                    v.insertSubview(loadedCards[i], belowSubview: loadedCards[i - 1])
-                } else {
-                    v.addSubview(loadedCards[i])
-                }
-                //setupConstraintsSubView(Index: i)
-                print("chargue \(i)")
-                cardsLoadedIndex = cardsLoadedIndex + 1
-            }
-        }
-    }
-    
-    func cardSwipedLeft(_ card: UIView) -> Void {
-        loadedCards.remove(at: 0)
-        
-        if cardsLoadedIndex < allCards.count {
-            loadedCards.append(allCards[cardsLoadedIndex])
-            cardsLoadedIndex = cardsLoadedIndex + 1
-            v.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
-            //setupConstraintsSubView(Index: MAX_BUFFER_SIZE - 1)
-            
-        }
-    }
-    
-    func cardSwipedRight(_ card: UIView) -> Void {
-        loadedCards.remove(at: 0)
-        
-        if cardsLoadedIndex < allCards.count {
-            loadedCards.append(allCards[cardsLoadedIndex])
-            cardsLoadedIndex = cardsLoadedIndex + 1
-            v.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
-            //setupConstraintsSubView(Index: MAX_BUFFER_SIZE - 1)
-            
-        }
-    }
-    
-    func cardSwipedTop(_ card: UIView) -> Void {
-        loadedCards.remove(at: 0)
-        
-        if cardsLoadedIndex < allCards.count {
-            loadedCards.append(allCards[cardsLoadedIndex])
-            cardsLoadedIndex = cardsLoadedIndex + 1
-            v.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
-            //setupConstraintsSubView(Index: MAX_BUFFER_SIZE - 1)
-            
-        }
-    }
-    
-    func cardSwipedBottom(_ card: UIView) -> Void {
-        loadedCards.remove(at: 0)
-        
-        if cardsLoadedIndex < allCards.count {
-            loadedCards.append(allCards[cardsLoadedIndex])
-            cardsLoadedIndex = cardsLoadedIndex + 1
-            v.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
-            //setupConstraintsSubView(Index: MAX_BUFFER_SIZE - 1)
-            
-        }
-    }
-    
-    func swipeRight() -> Void {
-        if loadedCards.count <= 0 {
-            return
-        }
-        let dragView: DraggableView = loadedCards[0]
-        dragView.overlayView.setMode(GGOverlayViewMode.ggOverlayViewModeRight)
-        UIView.animate(withDuration: 0.2, animations: {
-            () -> Void in
-            dragView.overlayView.alpha = 1
-        })
-        dragView.rightClickAction()
-    }
-    
-    func swipeLeft() -> Void {
-        if loadedCards.count <= 0 {
-            return
-        }
-        let dragView: DraggableView = loadedCards[0]
-        dragView.overlayView.setMode(GGOverlayViewMode.ggOverlayViewModeLeft)
-        UIView.animate(withDuration: 0.2, animations: {
-            () -> Void in
-            dragView.overlayView.alpha = 1
-        })
-        dragView.leftClickAction()
-    }
-    
-    func swipeTop() -> Void {
-        if loadedCards.count <= 0 {
-            return
-        }
-        let dragView: DraggableView = loadedCards[0]
-        dragView.overlayView.setMode(GGOverlayViewMode.ggOverlayViewModeTop)
-        UIView.animate(withDuration: 0.2, animations: {
-            () -> Void in
-            dragView.overlayView.alpha = 1
-        })
-        dragView.topClickAction()
-    }
-    
-    func swipeBottom() -> Void {
-        if loadedCards.count <= 0 {
-            return
-        }
-        let dragView: DraggableView = loadedCards[0]
-        dragView.overlayView.setMode(GGOverlayViewMode.ggOverlayViewModeBottom)
-        UIView.animate(withDuration: 0.2, animations: {
-            () -> Void in
-            dragView.overlayView.alpha = 1
-        })
-        dragView.bottomClickAction()
-    }
-    
     func createDraggableViewWithDataAtIndex(_ index: NSInteger) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRect(x: CGFloat(v.frame.minX + MARGIN_LEFT) , y: CGFloat(v.frame.minY + MARGIN_TOP), width: CARD_WIDTH, height: CARD_HEIGHT), index: index)
+        let draggableView = DraggableView(index: index)
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(self.tappedCard))
         draggableView.isUserInteractionEnabled = true
         draggableView.addGestureRecognizer(tapGestureRecognizer)
@@ -258,6 +110,82 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         
         draggableView.delegate = self
         return draggableView
+    }
+    
+    func loadCards() -> Void {
+        if movies.count > 0 {
+            let numLoadedCardsCap = movies.count > MAX_BUFFER_SIZE ? MAX_BUFFER_SIZE : movies.count
+            for i in 0 ..< movies.count {
+                let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(i)
+                allCards.append(newCard)
+                if i < numLoadedCardsCap {
+                    loadedCards.append(newCard)
+                }
+            }
+            for i in 0 ..< loadedCards.count {
+                if i > 0 {
+                    v.panelSwipeView.insertSubview(loadedCards[i], belowSubview: loadedCards[i - 1])
+                } else {
+                    v.panelSwipeView.addSubview(loadedCards[i])
+                }
+                setupConstraintsSubView(Index: i)
+                cardsLoadedIndex = cardsLoadedIndex + 1
+            }
+        }
+    }
+    
+    func afterSwiped() {
+        loadedCards.remove(at: 0)
+        
+        if cardsLoadedIndex < allCards.count {
+            loadedCards.append(allCards[cardsLoadedIndex])
+            cardsLoadedIndex = cardsLoadedIndex + 1
+            v.panelSwipeView.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
+            setupConstraintsSubView(Index: MAX_BUFFER_SIZE - 1)
+        }
+    }
+    func cardSwipedLeft(_ card: UIView) -> Void {
+        //update db before remove card
+        afterSwiped()
+    }
+    
+    func cardSwipedRight(_ card: UIView) -> Void {
+        //update db before remove card
+        afterSwiped()
+    }
+    
+    func cardSwipedTop(_ card: UIView) -> Void {
+        //update db before remove card
+        afterSwiped()
+    }
+    
+    func cardSwipedBottom(_ card: UIView) -> Void {
+        //update db before remove card
+        afterSwiped()
+    }
+    
+    func clickSwipeRight() -> Void {
+        if loadedCards.count > 0 {
+            loadedCards[0].rightAction()
+        }
+    }
+    
+    func clickSwipeLeft() -> Void {
+        if loadedCards.count > 0 {
+            loadedCards[0].leftAction()
+        }
+    }
+    
+    func clickSwipeTop() -> Void {
+        if loadedCards.count > 0 {
+            loadedCards[0].topAction()
+        }
+    }
+    
+    func clickSwipeBottom() -> Void {
+        if loadedCards.count > 0 {
+            loadedCards[0].bottomAction()
+        }
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {

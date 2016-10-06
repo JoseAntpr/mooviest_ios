@@ -57,6 +57,5 @@ class OverlayView: UIView{
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
     }
 }

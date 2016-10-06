@@ -9,23 +9,26 @@
 import UIKit
 
 class SwipeTabView: UIView {
-    var SIZE_SMALL_BUTTON: CGFloat!
-    var SIZE_BUTTON: CGFloat!
-    var card_width: CGFloat!
-    var card_height: CGFloat!
+    //Contants
+    let porcentWidthBarButtons = CGFloat(0.85)
+    let porcentHeightBarButtons = CGFloat(0.1)
+    let spaceBottomBarButtons = CGFloat(5)
+    
+    let porcentWidthButton = CGFloat(0.16)
+    ///
+    
     var panelButtonView = UIView()
     var closedButton = UIButton(type: UIButtonType.system) as UIButton
     var clockButton = UIButton(type: UIButtonType.system) as UIButton
     var eyeButton = UIButton(type: UIButtonType.system) as UIButton
     var heartButton = UIButton(type: UIButtonType.system) as UIButton
+    let space1View = UIView ()
+    let space2View = UIView ()
+    let space3View = UIView ()
+    let panelSwipeView = UIView()
     
-    
-    init(Card_width w: CGFloat, Card_height h: CGFloat ) {
+    init() {
         super.init(frame: CGRect.zero)
-        card_width = w
-        card_height = h
-        SIZE_BUTTON = card_height * 0.2/2
-        SIZE_SMALL_BUTTON = SIZE_BUTTON * 0.9
         setupComponents()
         setupConstraints()
     }
@@ -44,13 +47,16 @@ class SwipeTabView: UIView {
         eyeButton.setImage( UIImage(named: "eye")?.withRenderingMode(.alwaysOriginal), for: UIControlState())
         heartButton.setImage( UIImage(named: "heart")?.withRenderingMode(.alwaysOriginal), for: UIControlState())
         
-        
-        addSubview(panelButtonView)
         panelButtonView.addSubview(closedButton)
         panelButtonView.addSubview(clockButton)
         panelButtonView.addSubview(eyeButton)
         panelButtonView.addSubview(heartButton)
+        panelButtonView.addSubview(space1View)
+        panelButtonView.addSubview(space2View)
+        panelButtonView.addSubview(space3View)
         
+        addSubview(panelButtonView)
+        addSubview(panelSwipeView)
     }
     
     func setupConstraints() {
@@ -59,35 +65,56 @@ class SwipeTabView: UIView {
         clockButton.translatesAutoresizingMaskIntoConstraints = false
         eyeButton.translatesAutoresizingMaskIntoConstraints = false
         heartButton.translatesAutoresizingMaskIntoConstraints = false
+        space1View.translatesAutoresizingMaskIntoConstraints = false
+        space2View.translatesAutoresizingMaskIntoConstraints = false
+        space3View.translatesAutoresizingMaskIntoConstraints = false
+        panelSwipeView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addConstraint(panelSwipeView.topAnchor.constraint(equalTo: topAnchor,constant: spaceBottomBarButtons))
+        addConstraint(panelSwipeView.bottomAnchor.constraint(equalTo: panelButtonView.topAnchor))
+        addConstraint(panelSwipeView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(panelSwipeView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: porcentWidthBarButtons))
         
         addConstraint(panelButtonView.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(panelButtonView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -52 ))
-        addConstraint(panelButtonView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.87))
-        addConstraint(panelButtonView.heightAnchor.constraint(equalToConstant: SIZE_BUTTON))
+        addConstraint(panelButtonView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -spaceBottomBarButtons))
+        addConstraint(panelButtonView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: porcentWidthBarButtons))
+        addConstraint(panelButtonView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: porcentWidthBarButtons*porcentWidthButton))
         
-        let MARGIN: CGFloat = (card_width-(SIZE_SMALL_BUTTON*2)-(SIZE_BUTTON*2))/3
-        print(panelButtonView.frame.size.width)
+        let porcentWidthSpace = (1 - porcentWidthButton*4)/3
         
         panelButtonView.addConstraint(closedButton.leftAnchor.constraint(equalTo: panelButtonView.leftAnchor))
         panelButtonView.addConstraint(closedButton.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
-        panelButtonView.addConstraint(closedButton.widthAnchor.constraint(equalToConstant: SIZE_SMALL_BUTTON))
-        panelButtonView.addConstraint(closedButton.heightAnchor.constraint(equalToConstant: SIZE_SMALL_BUTTON))
+        panelButtonView.addConstraint(closedButton.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
+        panelButtonView.addConstraint(closedButton.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
         
-        panelButtonView.addConstraint(clockButton.leftAnchor.constraint(equalTo: closedButton.rightAnchor, constant: MARGIN))
-        panelButtonView.addConstraint(clockButton.topAnchor.constraint(equalTo: panelButtonView.topAnchor))
-        panelButtonView.addConstraint(clockButton.widthAnchor.constraint(equalToConstant: SIZE_BUTTON))
-        panelButtonView.addConstraint(clockButton.heightAnchor.constraint(equalToConstant: SIZE_BUTTON))
+        panelButtonView.addConstraint(space1View.leftAnchor.constraint(equalTo: closedButton.rightAnchor))
+        panelButtonView.addConstraint(space1View.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
+        panelButtonView.addConstraint(space1View.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
+        panelButtonView.addConstraint(space1View.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
         
-        panelButtonView.addConstraint(eyeButton.leftAnchor.constraint(equalTo: clockButton.rightAnchor, constant: MARGIN))
-        panelButtonView.addConstraint(eyeButton.topAnchor.constraint(equalTo: panelButtonView.topAnchor))
-        panelButtonView.addConstraint(eyeButton.widthAnchor.constraint(equalToConstant: SIZE_BUTTON))
-        panelButtonView.addConstraint(eyeButton.heightAnchor.constraint(equalToConstant: SIZE_BUTTON))
+        panelButtonView.addConstraint(clockButton.leftAnchor.constraint(equalTo: space1View.rightAnchor))
+        panelButtonView.addConstraint(clockButton.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
+        panelButtonView.addConstraint(clockButton.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
+        panelButtonView.addConstraint(clockButton.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
         
-        panelButtonView.addConstraint(heartButton.rightAnchor.constraint(equalTo: panelButtonView.rightAnchor))
+        panelButtonView.addConstraint(space2View.leftAnchor.constraint(equalTo: clockButton.rightAnchor))
+        panelButtonView.addConstraint(space2View.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
+        panelButtonView.addConstraint(space2View.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
+        panelButtonView.addConstraint(space2View.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
+        
+        panelButtonView.addConstraint(eyeButton.leftAnchor.constraint(equalTo: space2View.rightAnchor))
+        panelButtonView.addConstraint(eyeButton.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
+        panelButtonView.addConstraint(eyeButton.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
+        panelButtonView.addConstraint(eyeButton.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
+        
+        panelButtonView.addConstraint(space3View.leftAnchor.constraint(equalTo: eyeButton.rightAnchor))
+        panelButtonView.addConstraint(space3View.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
+        panelButtonView.addConstraint(space3View.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
+        panelButtonView.addConstraint(space3View.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
+        
+        panelButtonView.addConstraint(heartButton.leftAnchor.constraint(equalTo: space3View.rightAnchor))
         panelButtonView.addConstraint(heartButton.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
-        panelButtonView.addConstraint(heartButton.widthAnchor.constraint(equalToConstant: SIZE_SMALL_BUTTON))
-        panelButtonView.addConstraint(heartButton.heightAnchor.constraint(equalToConstant: SIZE_SMALL_BUTTON))
-        
+        panelButtonView.addConstraint(heartButton.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
+        panelButtonView.addConstraint(heartButton.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
     }
-    
 }

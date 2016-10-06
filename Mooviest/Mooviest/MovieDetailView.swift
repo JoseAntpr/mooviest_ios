@@ -148,13 +148,13 @@ class MovieDetailView: UIView {
         bodyScrollView.addConstraint(castView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 50))
         bodyScrollView.addConstraint(castView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor,constant: 5))
         bodyScrollView.addConstraint(castView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor,constant: -10))
-        bodyScrollView.addConstraint(castView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor,constant: -145))
+        bodyScrollView.addConstraint(castView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor,constant:  -97))
         
         
         bodyScrollView.addConstraint(seeView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 50))
         bodyScrollView.addConstraint(seeView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor,constant: 5))
         bodyScrollView.addConstraint(seeView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor,constant: -10))
-        bodyScrollView.addConstraint(seeView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor, constant: -145))
+        bodyScrollView.addConstraint(seeView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor, constant: -97))
         
         addConstraint(barSegmentedView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 10))
         addConstraint(barSegmentedView.leftAnchor.constraint(equalTo: leftAnchor))

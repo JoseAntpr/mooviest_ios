@@ -161,6 +161,7 @@
 		A965ACE71D8AB62B00F9FF47 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A96EEA9E1DA25E870057FEE6 /* Perfil */,
 				A9DA6E5F1D9070910097C2B6 /* Deprecated */,
 				A9EF59911D8DD3D90005C819 /* Resgister & Login */,
 				A965ACEC1D8AB71D00F9FF47 /* SwipeView */,
@@ -299,6 +300,13 @@
 				A96B523E1D89D34B0061A766 /* Kingfisher.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A96EEA9E1DA25E870057FEE6 /* Perfil */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Perfil;
 			sourceTree = "<group>";
 		};
 		A9DA6E5F1D9070910097C2B6 /* Deprecated */ = {
