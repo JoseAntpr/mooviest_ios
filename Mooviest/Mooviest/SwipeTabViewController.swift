@@ -35,7 +35,11 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
             self.setupView()
         }
     }
-     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = false
+    }
+    
     func tappedCard(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended {
             let index = (sender.view as! DraggableView).index
@@ -84,7 +88,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         
         v.panelSwipeView.addConstraint(loadedCards[i].widthAnchor.constraint(equalTo: v.panelSwipeView.widthAnchor))
         v.panelSwipeView.addConstraint(loadedCards[i].centerXAnchor.constraint(equalTo: v.panelSwipeView.centerXAnchor))
-        v.panelSwipeView.addConstraint(loadedCards[i].heightAnchor.constraint(equalTo: v.panelSwipeView.heightAnchor, multiplier: 0.9))
+        v.panelSwipeView.addConstraint(loadedCards[i].heightAnchor.constraint(equalTo: v.panelSwipeView.heightAnchor, multiplier: 0.91))
         v.panelSwipeView.addConstraint(loadedCards[i].centerYAnchor.constraint(equalTo: v.panelSwipeView.centerYAnchor))
     }
     

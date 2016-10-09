@@ -1,25 +1,27 @@
 //
-//  MovieDetailViewController.swift
+//  ProfileViewController.swift
 //  Mooviest
 //
-//  Created by Antonio RG on 5/9/16.
+//  Created by Antonio RG on 9/10/16.
 //  Copyright © 2016 Mooviest. All rights reserved.
 //
 
 import UIKit
 import Kingfisher
 
-var offset_CoverStopScale:CGFloat!
-var offset_BackdropFadeOff:CGFloat!
-var offset_HeaderStop:CGFloat! // = 80 // At this offset the Header stops its transformations
-var segmentViewOffset:CGFloat!
-let offset_B_LabelHeader:CGFloat = 30 // At this offset the Black label reaches the Header
-let distance_W_LabelHeader:CGFloat = 5 // The distance between the bottom of the Header and the top of the White Label
 
-class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    var movie:Movie!
+
+class ProfileViewController: UIViewController, UIScrollViewDelegate {
+    var offset_CoverStopScale:CGFloat!
+    var offset_BackdropFadeOff:CGFloat!
+    var offset_HeaderStop:CGFloat! // = 80 // At this offset the Header stops its transformations
+    var segmentViewOffset:CGFloat!
+    let offset_B_LabelHeader:CGFloat = 30 // At this offset the Black label reaches the Header
+    let distance_W_LabelHeader:CGFloat = 5 // The distance between the bottom of the Header and the top of the White Label
+    
+    var user = DataModel.sharedInstance.user
     var heightView:CGFloat!
-    var v: MovieDetailView!
+    var v: ProfileView!
     var heightNav:CGFloat!
     let participationCellIdentifier = "participationCollectionViewCell"
     let ratingCellIdentifier = "ratingCollectionViewCell"
@@ -27,17 +29,10 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
-        v = MovieDetailView()
+        v = ProfileView()
         
         v.bodyScrollView.delegate = self
-        v.castView.delegate = self
-        v.castView.dataSource = self
-        v.castView.register(ParticipationCollectionViewCell.self, forCellWithReuseIdentifier: participationCellIdentifier)
-        
-        v.infoView.ratingCollectionView.delegate = self
-        v.infoView.ratingCollectionView.dataSource = self
-        v.infoView.ratingCollectionView.register(RatingCollectionViewCell.self, forCellWithReuseIdentifier: ratingCellIdentifier)
-        
+//              
         setupView()
         view.addSubview(v)
         setupConstraints()
@@ -70,44 +65,34 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     func setupView() {
-        
-        v.coverImageView.kf_setImage(with: URL(string:  movie!.image))
-        v.coverImageView.contentMode = UIViewContentMode.scaleToFill
-        v.coverImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
-        v.coverImageView.layer.borderWidth = 1.8
-        v.coverImageView.layer.cornerRadius = 5
-        v.coverImageView.layer.masksToBounds = true
-        v.headerBackdropImageView.kf_setImage(with: URL(string: "https://img.tviso.com/ES/backdrop/w600\(movie!.backdrop)"))
-        v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
-        
+        v.coverImageView.kf_setImage(with: URL(string:  (user?.avatar)!),placeholder: UIImage(named: "contact"))
+        v.coverImageView.layer.cornerRadius = view.frame.size.width*0.2
+        v.titleLabel.text = "@\(user!.username)"
         v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
-        
-        v.infoView.synopsisTextView.text = movie?.synopsis
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        let colors = v.headerBackdropImageView.image!.getColors()
-//        
-//        //        backgroundView.backgroundColor = colors.backgroundColor
-//        //        mainLabel.textColor = colors.primaryColor
-//        //        secondaryLabel.textColor = colors.secondaryColor
-//        //        detailLabel.textColor = colors.detailColor headerBackdropImageView.image?.getColors()
-//        //        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-//        //        let blurView = UIVisualEffectView(effect: blurEffect)
-//        //        blurView.frame =  v.headerBackdropImageView.frame
-//        //        v.headerBackdropImageView.addSubview(blurView)
-//        
-//        v.headerLabel.textColor = colors.backgroundColor
-//        v.headerView.backgroundColor = colors.primaryColor
-        print("hei:\(v.barSegmentedView.center.y)")
+        //        let colors = v.headerBackdropImageView.image!.getColors()
+        //
+        //        //        backgroundView.backgroundColor = colors.backgroundColor
+        //        //        mainLabel.textColor = colors.primaryColor
+        //        //        secondaryLabel.textColor = colors.secondaryColor
+        //        //        detailLabel.textColor = colors.detailColor headerBackdropImageView.image?.getColors()
+        //        //        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        //        //        let blurView = UIVisualEffectView(effect: blurEffect)
+        //        //        blurView.frame =  v.headerBackdropImageView.frame
+        //        //        v.headerBackdropImageView.addSubview(blurView)
+        //
+        //        v.headerLabel.textColor = colors.backgroundColor
+        //        v.headerView.backgroundColor = colors.primaryColor
         v.bodyScrollView.contentSize.height = view.frame.size.height+v.barSegmentedView.center.y-v.barSegmentedView.frame.height*1.8
         
         
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
     }
     
@@ -127,15 +112,18 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         
         
     }
-   
+    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset.y
+        print(offset)
         if scrollView == v.bodyScrollView {
+           
             let offset = scrollView.contentOffset.y
             var avatarTransform = CATransform3DIdentity
             var headerTransform = CATransform3DIdentity
             var segmentTransform = CATransform3DIdentity
-            
+             print(offset)
             // PULL DOWN -----------------
             
             if offset < 0 {
@@ -209,50 +197,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             v.infoView.isHidden = false
             print("default")
         }
-    }
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell:UICollectionViewCell!
-        if collectionView == v.castView {
-            let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: participationCellIdentifier, for: indexPath as IndexPath) as! ParticipationCollectionViewCell
-            customCell.backgroundColor = UIColor.red
-            let url = URL(string: movie.participations[indexPath.item].image)
-            customCell.faceImageView.kf_setImage(with: url,placeholder: UIImage(named:  "noimage"))
-            cell = customCell
-        } else {
-            let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: ratingCellIdentifier, for: indexPath as IndexPath) as! RatingCollectionViewCell
-            customCell.backgroundColor = UIColor.red
-            customCell.faceImageView.image = UIImage(named:  movie.ratings[indexPath.item].name)
-            cell = customCell
-        }
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var count = 0
-        if collectionView == v.castView {
-            count = movie.participations.count
-        } else {
-            count = movie!.ratings.count
-        }
-            
-        return count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var size:CGSize!
-        if collectionView == v.castView {
-            let width = (collectionView.frame.width/3)-1
-            size = CGSize(width: width, height: width*1.30)
-        } else {
-            let width = (collectionView.frame.width/6)-1
-            size = CGSize(width: width, height: width)
-        }
-        return size
-        
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {

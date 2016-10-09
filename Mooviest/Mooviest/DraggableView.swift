@@ -117,7 +117,12 @@ class DraggableView: UIView {
         case UIGestureRecognizerState.changed:
             let rotationStrength: Float = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
             let rotationAngle = ROTATION_ANGLE * rotationStrength
-            let scale = max(1 - fabsf(rotationStrength) / SCALE_STRENGTH, SCALE_MAX)
+            var scale = max(1 - fabsf(rotationStrength) / SCALE_STRENGTH, SCALE_MAX)
+            
+            let rotationStrength2: Float = min(yFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
+            let scale2 = max(1 - fabsf(rotationStrength2) / SCALE_STRENGTH, SCALE_MAX)
+            scale = min(scale, scale2)
+            
             let translation = CGAffineTransform(translationX:  CGFloat(xFromCenter), y:  CGFloat(yFromCenter))
             let rotation = CGAffineTransform(rotationAngle: CGFloat(rotationAngle))
             let scaleTransform = rotation.concatenating(translation).scaledBy(x: CGFloat(scale), y: CGFloat(scale))
@@ -166,23 +171,28 @@ class DraggableView: UIView {
     }
     
     func move(direction: MoveDirection) {
-        var translate:CGAffineTransform!
-        var rotation:CGAffineTransform!
-        
+        var transform:CGAffineTransform!
         switch direction {
             case .left ,
                  .right:
-                translate =  CGAffineTransform(translationX: self.frame.width*2*CGFloat(direction.rawValue), y: CGFloat(yFromCenter))
-                rotation = CGAffineTransform(rotationAngle: CGFloat(direction.rawValue))
+                let rotationStrength: Float = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
+                let rotationAngle = ROTATION_ANGLE * rotationStrength
+                let translation = CGAffineTransform(translationX: self.frame.width*2*CGFloat(direction.rawValue), y: CGFloat(yFromCenter))
+                let rotation = CGAffineTransform(rotationAngle: CGFloat(1 - abs(rotationAngle))*CGFloat(direction.rawValue))
+                transform = rotation.concatenating(translation).scaledBy(x: CGFloat(SCALE_MAX), y: CGFloat(SCALE_MAX))
             case .top ,
                  .bottom:
-                translate =  CGAffineTransform(translationX: CGFloat(xFromCenter), y: self.frame.height*CGFloat(direction.rawValue))
-                rotation = CGAffineTransform(rotationAngle: 0)
+                let rotationStrength: Float = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
+                let rotationAngle = ROTATION_ANGLE * rotationStrength
+                let y = yFromCenter < ACTION_MARGIN ? CGFloat(direction.rawValue) * CGFloat(self.frame.height) : CGFloat(yFromCenter*3.3)
+                let translation = CGAffineTransform(translationX: CGFloat(xFromCenter), y: y)
+                let rotation = CGAffineTransform(rotationAngle: CGFloat(rotationAngle))
+                transform = rotation.concatenating(translation).scaledBy(x: CGFloat(SCALE_MAX), y: CGFloat(SCALE_MAX))
         }
         
         UIView.animate(withDuration: 0.3,
                        animations: {
-                        self.transform = rotation.concatenating(translate)
+                        self.transform = transform
             }, completion: {
                 (value: Bool) in
                 self.removeFromSuperview()

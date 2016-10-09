@@ -10,7 +10,7 @@ import UIKit
 
 class SwipeTabView: UIView {
     //Contants
-    let porcentWidthBarButtons = CGFloat(0.85)
+    let porcentWidthBarButtons = CGFloat(0.86)
     let porcentHeightBarButtons = CGFloat(0.1)
     let spaceBottomBarButtons = CGFloat(5)
     
