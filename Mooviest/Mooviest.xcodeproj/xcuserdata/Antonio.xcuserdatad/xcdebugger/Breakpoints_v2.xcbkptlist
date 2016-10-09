@@ -74,12 +74,12 @@
                   moduleName = "Mooviest"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Antonio/Documents/mooviest_ios/Mooviest/Mooviest/SwipeTabViewController.swift"
-                  timestampString = "497353676.138532"
+                  timestampString = "497697639.844441"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44"
-                  offsetFromSymbolStart = "1460">
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "1384">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -89,11 +89,11 @@
                   moduleName = "Mooviest"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Antonio/Documents/mooviest_ios/Mooviest/Mooviest/SwipeTabViewController.swift"
-                  timestampString = "497353676.139985"
+                  timestampString = "497697639.847181"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
                   offsetFromSymbolStart = "2228">
                </Location>
             </Locations>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mooviest/MovieDetailViewController.swift"
-            timestampString = "495705640.688284"
+            timestampString = "497704086.355152"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "393"
-            endingLineNumber = "393">
+            startingLineNumber = "395"
+            endingLineNumber = "395">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -213,11 +213,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mooviest/MovieDetailViewController.swift"
-            timestampString = "495663784.332991"
+            timestampString = "497704086.355152"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -261,11 +261,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mooviest/LoginViewController.swift"
-            timestampString = "496236515.040079"
+            timestampString = "497524544.835764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "register()"
             landmarkType = "7">
             <Locations>
@@ -277,11 +277,11 @@
                   moduleName = "Mooviest"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Antonio/Documents/mooviest_ios/Mooviest/Mooviest/LoginViewController.swift"
-                  timestampString = "497353676.249952"
+                  timestampString = "497697639.855497"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "232"
-                  endingLineNumber = "232"
+                  startingLineNumber = "233"
+                  endingLineNumber = "233"
                   offsetFromSymbolStart = "764">
                </Location>
                <Location
@@ -292,14 +292,46 @@
                   moduleName = "Mooviest"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Antonio/Documents/mooviest_ios/Mooviest/Mooviest/LoginViewController.swift"
-                  timestampString = "497353676.251356"
+                  timestampString = "497697639.857909"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "233"
-                  endingLineNumber = "233"
+                  startingLineNumber = "234"
+                  endingLineNumber = "234"
                   offsetFromSymbolStart = "16">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mooviest/AnimatedTabBarController.swift"
+            timestampString = "497704086.355152"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "makeTabBar()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mooviest/ProfileViewController.swift"
+            timestampString = "497698933.18221"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "setupView()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
