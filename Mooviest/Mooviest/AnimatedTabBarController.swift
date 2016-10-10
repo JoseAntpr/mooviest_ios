@@ -84,10 +84,13 @@ class AnimatedTabBarController: RAMAnimatedTabBarController {
         nVController4.navigationBar.setBackgroundImage(UIImage(), for: .default)
         nVController4.navigationBar.shadowImage = UIImage()
         nVController4.navigationBar.isTranslucent = true
+        nVController4.navigationBar.clipsToBounds = true
+        nVController4.navigationBar.tintColor = UIColor.white.withAlphaComponent(0.7)
         nVController4.tabBarItem = tbItem4
         
         self.viewControllers = [nVController1, nVController2, nVController3, nVController4]
         self.tabBar.barTintColor = UIColor(netHex: mooviest_red)
+        self.tabBar.isTranslucent = false 
     }
 
     

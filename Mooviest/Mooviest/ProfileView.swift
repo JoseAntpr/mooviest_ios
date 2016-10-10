@@ -67,8 +67,8 @@ class ProfileView: UIView {
         
         bodyScrollView.showsHorizontalScrollIndicator = false
         bodyScrollView.showsVerticalScrollIndicator = false
-        infoView.backgroundColor = UIColor.red
-        castView.backgroundColor = UIColor.orange
+        infoView.backgroundColor = UIColor.orange
+        castView.backgroundColor = UIColor.red
         seeView.backgroundColor = UIColor.yellow
         
         headerView.clipsToBounds = true
@@ -86,7 +86,6 @@ class ProfileView: UIView {
         barSegmentedView.addSubview(barSegmentedControl)
         
         addSubview(headerView)
-        addSubview(UIView())
         addSubview(bodyScrollView)
         addSubview(profileCardView)
         addSubview(barSegmentedView)
@@ -168,9 +167,9 @@ class ProfileView: UIView {
         barSegmentedView.addConstraint(barSegmentedControl.bottomAnchor.constraint(equalTo: barSegmentedView.bottomAnchor,constant: -5))
     }
     
-    func adjustConerRadius(){
-        coverImageView.layer.cornerRadius = coverImageView.frame.width/2
-    }
+//    func adjustConerRadius(){
+//        coverImageView.layer.cornerRadius = coverImageView.frame.width/2
+//    }
     
     
 }

@@ -325,11 +325,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mooviest/ProfileViewController.swift"
-            timestampString = "497791073.073206"
+            timestampString = "497806713.554591"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "setupView()"
             landmarkType = "7">
          </BreakpointContent>

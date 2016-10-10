@@ -49,6 +49,8 @@
 		A9B8694E1D89E73E00DDC197 /* MovieParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B8694D1D89E73E00DDC197 /* MovieParser.swift */; };
 		A9B869501D89E78A00DDC197 /* ParticipationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B8694F1D89E78A00DDC197 /* ParticipationParser.swift */; };
 		A9B869521D89E7C200DDC197 /* RatingParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B869511D89E7C200DDC197 /* RatingParser.swift */; };
+		A9E5C93D1DAC06F500CC2E34 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E5C93C1DAC06F500CC2E34 /* EditProfileView.swift */; };
+		A9E5C93F1DAC11E900CC2E34 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E5C93E1DAC11E900CC2E34 /* EditProfileViewController.swift */; };
 		A9EF59931D8DD41D0005C819 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EF59921D8DD41D0005C819 /* TextFieldView.swift */; };
 /* End PBXBuildFile section */
 
@@ -120,6 +122,8 @@
 		A9B8694D1D89E73E00DDC197 /* MovieParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieParser.swift; sourceTree = "<group>"; };
 		A9B8694F1D89E78A00DDC197 /* ParticipationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipationParser.swift; sourceTree = "<group>"; };
 		A9B869511D89E7C200DDC197 /* RatingParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingParser.swift; sourceTree = "<group>"; };
+		A9E5C93C1DAC06F500CC2E34 /* EditProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		A9E5C93E1DAC11E900CC2E34 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		A9EF59921D8DD41D0005C819 /* TextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -317,6 +321,8 @@
 			children = (
 				A9B7B3431DAA37FF00A470BF /* ProfileView.swift */,
 				A9B7B3451DAA381100A470BF /* ProfileViewController.swift */,
+				A9E5C93C1DAC06F500CC2E34 /* EditProfileView.swift */,
+				A9E5C93E1DAC11E900CC2E34 /* EditProfileViewController.swift */,
 			);
 			name = Perfil;
 			sourceTree = "<group>";
@@ -501,6 +507,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9E5C93D1DAC06F500CC2E34 /* EditProfileView.swift in Sources */,
 				A911DEE21D929CA5004BB61F /* UIViewExtension.swift in Sources */,
 				A96B52571D89DDD60061A766 /* OverlayView.swift in Sources */,
 				A96B52431D89D4CF0061A766 /* LoginViewController.swift in Sources */,
@@ -508,6 +515,7 @@
 				A96B52511D89DD010061A766 /* SwipeTabViewController.swift in Sources */,
 				A9EF59931D8DD41D0005C819 /* TextFieldView.swift in Sources */,
 				A965ACE41D8AB07A00F9FF47 /* MovieDetailViewController.swift in Sources */,
+				A9E5C93F1DAC11E900CC2E34 /* EditProfileViewController.swift in Sources */,
 				A943A8711D8B2E8700525BF7 /* RatingCollectionViewCell.swift in Sources */,
 				A911DEE51D929E28004BB61F /* TextFieldValidateExtension.swift in Sources */,
 				A965ACE61D8AB34B00F9FF47 /* InfoMovieView.swift in Sources */,

@@ -108,4 +108,8 @@ class TextFieldView: UIView {
         errorLabel.text = message
     }
     
+    func setAutocapitalizationType(autocapitalizationType t: UITextAutocapitalizationType){
+        textField.autocapitalizationType = t
+    }
+    
 }

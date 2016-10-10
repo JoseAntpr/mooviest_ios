@@ -139,7 +139,6 @@ class LoginView: UIView {
         secureTextButton = UIButton(type: UIButtonType.system) as UIButton //(type: UIButtonType.system) as UIButton
         secureTextButton.setImage(UIImage(named: "eye"), for: UIControlState())
         secureTextButton.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(0.4)
-
         
         formRegisterView.addSubview(padingRegisterformView)
         padingRegisterformView.addSubview(userTextFieldView)

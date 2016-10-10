@@ -23,7 +23,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     var heightView:CGFloat!
     var v: ProfileView!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         v = ProfileView()
@@ -41,6 +40,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+       
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
     }
     
@@ -57,6 +57,11 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         v.coverImageView.layer.cornerRadius = view.frame.size.width*0.2
         v.titleLabel.text = "@\(user!.username)"
         v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
+        let editButton = UIBarButtonItem(image: UIImage(named: "pencil"),
+                                           style: UIBarButtonItemStyle.plain ,
+                                           target: self, action: #selector(self.editProfile))
+        editButton.tintColor = UIColor.white
+        navigationItem.rightBarButtonItem = editButton
     }
     
     func calculateOffset() {
@@ -64,6 +69,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         offset_CoverStopScale = offset_HeaderStop
         offset_CardProfileStop = offset_HeaderStop+v.profileCardView.frame.height+10
         offset_BackdropFadeOff = offset_CoverStopScale/1.6
+        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(-offset_CardProfileStop+10, for: .default)
+
     }
     
     func setupConstraints() {
@@ -98,6 +105,9 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             } else {
                 //Alpha
                 v.headerBackdropImageView.alpha = max (0, (1-( offset-offset_BackdropFadeOff*3)/distance_W_LabelHeader)/10)
+                let move  = max(offset_CardProfileStop-offset,0)
+                self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(move, for: .default)
+                
                 
                 //Animations
                 headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
@@ -117,7 +127,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                 else {
                     if v.coverImageView.layer.zPosition >= v.headerView.layer.zPosition{
                         v.headerView.layer.zPosition = 1
-                        v.backgroundStatusView.layer.zPosition = 2
+                        v.barSegmentedView.layer.zPosition = 2
+                        v.backgroundStatusView.layer.zPosition = 3
                     }
                 }
             }
@@ -150,7 +161,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    
-    
-    
+    func editProfile(){
+        let nViewController = EditProfileViewController()
+        navigationController?.pushViewController(nViewController, animated: true)
+    }
 }
