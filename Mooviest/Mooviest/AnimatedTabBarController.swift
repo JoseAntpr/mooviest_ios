@@ -68,7 +68,7 @@ class AnimatedTabBarController: RAMAnimatedTabBarController {
         let tbItem3 = createAnimatedTabBarItem(title: "Lists", animation: RAMBounceAnimation(),
                                                namedIcon: "list", color: UIColor.white.withAlphaComponent(0.5),
                                                colorSelected: .white)
-        let tab3 = ViewController(nibName: nil, bundle: nil)
+        let tab3 = ListsViewController(nibName: nil, bundle: nil)
         let nVController3 = createNavigationController(rootViewController: tab3, title: tbItem3.title!)
         nVController3.tabBarItem = tbItem3
         
