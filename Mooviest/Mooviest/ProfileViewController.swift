@@ -88,7 +88,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             var avatarTransform = CATransform3DIdentity
             var headerTransform = CATransform3DIdentity
             var cardTransform = CATransform3DIdentity
-            var scrollTransform = CATransform3DIdentity
             
             if offset < 0 {
                 let headerScaleFactor:CGFloat = -(offset) / v.headerView.bounds.height
@@ -96,7 +95,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                 headerTransform = CATransform3DTranslate(headerTransform, 0, headerSizevariation*0.5, 0)
                 cardTransform = CATransform3DTranslate(headerTransform, 0, headerSizevariation, 0)
                 headerTransform = CATransform3DScale(headerTransform, 1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0)
-                scrollTransform = CATransform3DTranslate(cardTransform, 0, offset, 0)
                 
                 if v.coverImageView.layer.zPosition < v.headerView.layer.zPosition{
                     v.headerView.layer.zPosition = 0
@@ -112,7 +110,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                 //Animations
                 headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
                 cardTransform = CATransform3DTranslate(cardTransform, 0, max(-offset_CardProfileStop, -offset), 0)
-                scrollTransform = cardTransform
                 
                 let avatarScaleFactor = (min(offset_CoverStopScale, offset)) / v.coverImageView.bounds.height
                 let avatarSizeVariation = ((v.coverImageView.bounds.height * (1.0 + avatarScaleFactor)) - v.coverImageView.bounds.height)
@@ -132,11 +129,12 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                     }
                 }
             }
-            v.barSegmentedView.layer.transform = cardTransform
             v.headerView.layer.transform = headerTransform
             v.coverImageView.layer.transform = avatarTransform
             v.profileCardView.layer.transform  = cardTransform
-            v.bodyScrollView.layer.transform  = scrollTransform
+            v.barSegmentedView.layer.transform = cardTransform
+            //finalmente cada tab tendrá su propio transform en funcion de su height
+            v.tabsView.layer.transform  = cardTransform
         }
     }
     

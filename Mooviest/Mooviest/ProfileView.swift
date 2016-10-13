@@ -17,6 +17,7 @@ class ProfileView: UIView {
     var headerBackdropImageView = UIImageView()
     
     var bodyScrollView = UIScrollView()
+    var tabsView = UIView()
     var infoView = UIView()
     var castView = UIView()
     var seeView = UIView()
@@ -75,9 +76,9 @@ class ProfileView: UIView {
         
         headerView.addSubview(headerBackdropImageView)
         
-        bodyScrollView.addSubview(seeView)
-        bodyScrollView.addSubview(castView)
-        bodyScrollView.addSubview(infoView)
+        tabsView.addSubview(seeView)
+        tabsView.addSubview(castView)
+        tabsView.addSubview(infoView)
         
         
         profileCardView.addSubview(coverImageView)
@@ -86,8 +87,9 @@ class ProfileView: UIView {
         barSegmentedView.addSubview(barSegmentedControl)
         
         addSubview(headerView)
-        addSubview(bodyScrollView)
+        addSubview(tabsView)
         addSubview(profileCardView)
+        addSubview(bodyScrollView)
         addSubview(barSegmentedView)
         addSubview(backgroundStatusView)
     }
@@ -95,6 +97,7 @@ class ProfileView: UIView {
     func setupConstraints() {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         bodyScrollView.translatesAutoresizingMaskIntoConstraints = false
+        tabsView.translatesAutoresizingMaskIntoConstraints = false
         coverImageView.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         headerBackdropImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -136,25 +139,30 @@ class ProfileView: UIView {
         profileCardView.addConstraint(titleLabel.heightAnchor.constraint(equalToConstant: 20))
         profileCardView.addConstraint(titleLabel.widthAnchor.constraint(equalToConstant: 100))
         
-        addConstraint(bodyScrollView.topAnchor.constraint(equalTo: barSegmentedView.bottomAnchor))
+        addConstraint(bodyScrollView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(bodyScrollView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(bodyScrollView.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(bodyScrollView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1.15))
+        addConstraint(bodyScrollView.heightAnchor.constraint(equalTo: heightAnchor))
+
+        addConstraint(tabsView.topAnchor.constraint(equalTo: barSegmentedView.bottomAnchor))
+        addConstraint(tabsView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(tabsView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(tabsView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1.15))
         
-        bodyScrollView.addConstraint(infoView.topAnchor.constraint(equalTo: bodyScrollView.topAnchor))
-        bodyScrollView.addConstraint(infoView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor,constant: 5))
-        bodyScrollView.addConstraint(infoView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor,constant: -10))
-        bodyScrollView.addConstraint(infoView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor))
+        tabsView.addConstraint(infoView.topAnchor.constraint(equalTo: tabsView.topAnchor))
+        tabsView.addConstraint(infoView.leftAnchor.constraint(equalTo: tabsView.leftAnchor,constant: 5))
+        tabsView.addConstraint(infoView.widthAnchor.constraint(equalTo: tabsView.widthAnchor,constant: -10))
+        tabsView.addConstraint(infoView.heightAnchor.constraint(equalTo: tabsView.heightAnchor))
         
-        bodyScrollView.addConstraint(castView.topAnchor.constraint(equalTo: bodyScrollView.topAnchor))
-        bodyScrollView.addConstraint(castView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor,constant: 5))
-        bodyScrollView.addConstraint(castView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor,constant: -10))
-        bodyScrollView.addConstraint(castView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor))
+        tabsView.addConstraint(castView.topAnchor.constraint(equalTo: tabsView.topAnchor))
+        tabsView.addConstraint(castView.leftAnchor.constraint(equalTo: tabsView.leftAnchor,constant: 5))
+        tabsView.addConstraint(castView.widthAnchor.constraint(equalTo: tabsView.widthAnchor,constant: -10))
+        tabsView.addConstraint(castView.heightAnchor.constraint(equalTo: tabsView.heightAnchor))
         
-        bodyScrollView.addConstraint(seeView.topAnchor.constraint(equalTo: bodyScrollView.topAnchor))
-        bodyScrollView.addConstraint(seeView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor,constant: 5))
-        bodyScrollView.addConstraint(seeView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor,constant: -10))
-        bodyScrollView.addConstraint(seeView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor))
+        tabsView.addConstraint(seeView.topAnchor.constraint(equalTo: tabsView.topAnchor))
+        tabsView.addConstraint(seeView.leftAnchor.constraint(equalTo: tabsView.leftAnchor,constant: 5))
+        tabsView.addConstraint(seeView.widthAnchor.constraint(equalTo: tabsView.widthAnchor,constant: -10))
+        tabsView.addConstraint(seeView.heightAnchor.constraint(equalTo: tabsView.heightAnchor))
         
         addConstraint(barSegmentedView.topAnchor.constraint(equalTo: profileCardView.bottomAnchor,constant: 10))
         addConstraint(barSegmentedView.leftAnchor.constraint(equalTo: leftAnchor))
@@ -166,10 +174,4 @@ class ProfileView: UIView {
         barSegmentedView.addConstraint(barSegmentedControl.rightAnchor.constraint(equalTo: barSegmentedView.rightAnchor,constant: -5))
         barSegmentedView.addConstraint(barSegmentedControl.bottomAnchor.constraint(equalTo: barSegmentedView.bottomAnchor,constant: -5))
     }
-    
-//    func adjustConerRadius(){
-//        coverImageView.layer.cornerRadius = coverImageView.frame.width/2
-//    }
-    
-    
 }
