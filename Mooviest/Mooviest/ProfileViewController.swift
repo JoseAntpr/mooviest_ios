@@ -18,6 +18,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     var offset_CoverStopScale:CGFloat!
     var offset_CardProfileStop:CGFloat!
     var offset_BackdropFadeOff:CGFloat!
+    let distance_W_LabelHeader:CGFloat = 5
     
     var user = DataModel.sharedInstance.user
     var heightView:CGFloat!

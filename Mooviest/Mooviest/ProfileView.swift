@@ -54,10 +54,7 @@ class ProfileView: UIView {
         profileCardView.backgroundColor = .white
         coverImageView.image = UIImage(named: "contact")
         coverImageView.backgroundColor = UIColor.white
-        coverImageView.contentMode = UIViewContentMode.scaleToFill
-        coverImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
-        coverImageView.layer.borderWidth = 1.8
-        coverImageView.layer.masksToBounds = true
+        
         titleLabel.text = "body title"
         titleLabel.textAlignment = .center
         
@@ -66,8 +63,8 @@ class ProfileView: UIView {
         barSegmentedControl.selectedSegmentIndex = 0
         barSegmentedControl.tintColor = UIColor(netHex: mooviest_red)
         
-        bodyScrollView.showsHorizontalScrollIndicator = false
-        bodyScrollView.showsVerticalScrollIndicator = false
+//        bodyScrollView.showsHorizontalScrollIndicator = false
+//        bodyScrollView.showsVerticalScrollIndicator = false
         infoView.backgroundColor = UIColor.orange
         castView.backgroundColor = UIColor.red
         seeView.backgroundColor = UIColor.yellow
