@@ -11,26 +11,33 @@ import UIKit
 class MovieDetailView: UIView {
     
     let height = UIApplication.shared.statusBarFrame.size.height
-    var backgroundStatusView = UIView()
-    var headerView = UIView()
-    var headerLabel = UILabel()
-    var headerBackdropImageView = UIImageView()
-    var bodyScrollView = UIScrollView()
-    var coverImageView = UIImageView()
-    var titleLabel = UILabel()
+    let heightSegmentedView = CGFloat(40)
+    var heightNavBar:CGFloat!
     
-    var barSegmentedView = UIView()
-    //    var lineView = UIView()
-    var barSegmentedControl: UISegmentedControl!
-    var infoView = InfoMovieView()
+    let backgroundStatusView = UIView()
+    
+    let headerView = UIView()
+    let headerBackdropImageView = UIImageView()
+    
+    let bodyScrollView = UIScrollView()
+    
+    let tabsView = UIView()
+    var profileCardView = UIView()
+    let coverImageView = UIImageView()
+    let titleLabel = UILabel()
+    
+    let infoView = InfoMovieView()
     var castView:UICollectionView!
-    var seeView = UIView()
+    let seeView = UIView()
     
-    init() {
+    let barSegmentedView = UIView()
+    var barSegmentedControl: UISegmentedControl!
+    
+    init(heightNavBar h: CGFloat) {
         super.init(frame: CGRect.zero)
+        heightNavBar = h
         setupComponents()
         setupConstraints()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,27 +46,20 @@ class MovieDetailView: UIView {
     
     func setupComponents() {
         self.backgroundColor = UIColor.white
-        headerLabel.text = "Header title"
-        headerLabel.textColor = UIColor.white
+        
         headerView.backgroundColor = UIColor(netHex: mooviest_red)
-        //bodyScrollView.backgroundColor = UIColor.blueColor()
         
         titleLabel.text = "body title"
-        
         backgroundStatusView.backgroundColor = UIColor(netHex: dark_gray).withAlphaComponent(0.5)
-        
-        // Header - Blurred Image
         
         bodyScrollView.showsHorizontalScrollIndicator = false
         bodyScrollView.showsVerticalScrollIndicator = false
         
-        //        lineView.backgroundColor = UIColor.grayColor()
         let items = ["INFORMACIÓN", "REPARTO", "VER"]
         barSegmentedControl = UISegmentedControl(items: items)
         barSegmentedControl.selectedSegmentIndex = 0
         barSegmentedControl.tintColor = UIColor(netHex: mooviest_red)
         
-        //infoView.backgroundColor = UIColor.greenColor()
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 1
         layout.minimumLineSpacing = 1
@@ -70,21 +70,21 @@ class MovieDetailView: UIView {
         
         headerView.clipsToBounds = true
         
-        headerView.addSubview(headerLabel)
         headerView.addSubview(headerBackdropImageView)
         
-        bodyScrollView.addSubview(titleLabel)
-        bodyScrollView.addSubview(coverImageView)
-        bodyScrollView.addSubview(seeView)
-        bodyScrollView.addSubview(castView)
-        bodyScrollView.addSubview(infoView)
+        profileCardView.addSubview(titleLabel)
+        profileCardView.addSubview(coverImageView)
+        
+        tabsView.addSubview(seeView)
+        tabsView.addSubview(castView)
+        tabsView.addSubview(infoView)
         
         barSegmentedView.addSubview(barSegmentedControl)
-        //        barSegmentedView.addSubview(lineView)
-        
         
         addSubview(headerView)
+        addSubview(profileCardView)
         addSubview(bodyScrollView)
+        addSubview(tabsView)
         addSubview(backgroundStatusView)
         addSubview(barSegmentedView)
     }
@@ -92,18 +92,17 @@ class MovieDetailView: UIView {
     func setupConstraints() {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         bodyScrollView.translatesAutoresizingMaskIntoConstraints = false
-        headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        tabsView.translatesAutoresizingMaskIntoConstraints = false
         coverImageView.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         headerBackdropImageView.translatesAutoresizingMaskIntoConstraints = false
         backgroundStatusView.translatesAutoresizingMaskIntoConstraints = false
         barSegmentedView.translatesAutoresizingMaskIntoConstraints = false
         barSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        //        lineView.translatesAutoresizingMaskIntoConstraints = false
         infoView.translatesAutoresizingMaskIntoConstraints = false
         castView.translatesAutoresizingMaskIntoConstraints = false
         seeView.translatesAutoresizingMaskIntoConstraints = false
-        
+        profileCardView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
@@ -113,64 +112,62 @@ class MovieDetailView: UIView {
         addConstraint(headerView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(headerView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(headerView.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(headerView.heightAnchor.constraint(equalTo: widthAnchor,multiplier: 0.5))
-        
-        headerView.addConstraint(headerLabel.heightAnchor.constraint(equalToConstant: 35))
-        headerView.addConstraint(headerLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor))
-        headerView.addConstraint(headerLabel.widthAnchor.constraint(equalTo: headerView.widthAnchor))
-        headerView.addConstraint(headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor))
+        addConstraint(headerView.heightAnchor.constraint(equalTo: widthAnchor,multiplier: 0.5))        
         
         headerView.addConstraint(headerBackdropImageView.leftAnchor.constraint(equalTo: headerView.leftAnchor))
         headerView.addConstraint(headerBackdropImageView.widthAnchor.constraint(equalTo: headerView.widthAnchor))
         headerView.addConstraint(headerBackdropImageView.topAnchor.constraint(equalTo: headerView.topAnchor))
         headerView.addConstraint(headerBackdropImageView.heightAnchor.constraint(equalTo: headerView.heightAnchor))
         
+        addConstraint(profileCardView.topAnchor.constraint(equalTo: headerView.bottomAnchor))
+        addConstraint(profileCardView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(profileCardView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(profileCardView.heightAnchor.constraint(equalTo: headerView.heightAnchor, multiplier: 0.7))
+        
+        profileCardView.addConstraint(coverImageView.centerYAnchor.constraint(equalTo: profileCardView.topAnchor))
+        profileCardView.addConstraint(coverImageView.leftAnchor.constraint(equalTo: profileCardView.leftAnchor, constant: 20))
+        profileCardView.addConstraint(coverImageView.widthAnchor.constraint(equalTo: coverImageView.heightAnchor, multiplier: 0.7))
+        profileCardView.addConstraint(coverImageView.heightAnchor.constraint(equalTo: profileCardView.heightAnchor, multiplier: 1.7))
+        
+        profileCardView.addConstraint(titleLabel.centerYAnchor.constraint(equalTo: profileCardView.centerYAnchor,constant: 5))
+        profileCardView.addConstraint(titleLabel.leftAnchor.constraint(equalTo: coverImageView.rightAnchor, constant: 10))
+        profileCardView.addConstraint(titleLabel.heightAnchor.constraint(equalToConstant: 20))
+        profileCardView.addConstraint(titleLabel.widthAnchor.constraint(equalToConstant: 100))
+        
         addConstraint(bodyScrollView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(bodyScrollView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(bodyScrollView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(bodyScrollView.heightAnchor.constraint(equalTo: heightAnchor))
         
-        bodyScrollView.addConstraint(coverImageView.topAnchor.constraint(equalTo: bodyScrollView.topAnchor,constant: 70))
-        bodyScrollView.addConstraint(coverImageView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor, constant: 20))
-        bodyScrollView.addConstraint(coverImageView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor, multiplier: 0.4))
-        bodyScrollView.addConstraint(coverImageView.heightAnchor.constraint(equalTo: coverImageView.widthAnchor, multiplier: 1.4))
+        let heightTabsView = -heightNavBar-height-heightSegmentedView
+        addConstraint(tabsView.topAnchor.constraint(equalTo: barSegmentedView.bottomAnchor))
+        addConstraint(tabsView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(tabsView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(tabsView.heightAnchor.constraint(equalTo: heightAnchor,constant: heightTabsView))
         
-        bodyScrollView.addConstraint(titleLabel.topAnchor.constraint(equalTo: coverImageView.topAnchor,constant: 5))
-        bodyScrollView.addConstraint(titleLabel.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor, constant: 10))
-        bodyScrollView.addConstraint(titleLabel.heightAnchor.constraint(equalToConstant: 20))
-        bodyScrollView.addConstraint(titleLabel.widthAnchor.constraint(equalToConstant: 100))
+        tabsView.addConstraint(infoView.topAnchor.constraint(equalTo: tabsView.topAnchor))
+        tabsView.addConstraint(infoView.leftAnchor.constraint(equalTo: tabsView.leftAnchor))
+        tabsView.addConstraint(infoView.widthAnchor.constraint(equalTo: tabsView.widthAnchor))
+        tabsView.addConstraint(infoView.heightAnchor.constraint(equalTo: tabsView.heightAnchor))
         
-        bodyScrollView.addConstraint(infoView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 50))
-        bodyScrollView.addConstraint(infoView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor))
-        bodyScrollView.addConstraint(infoView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor))
-        bodyScrollView.addConstraint(infoView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor))
+        tabsView.addConstraint(castView.topAnchor.constraint(equalTo: tabsView.topAnchor))
+        tabsView.addConstraint(castView.leftAnchor.constraint(equalTo: tabsView.leftAnchor,constant: 5))
+        tabsView.addConstraint(castView.widthAnchor.constraint(equalTo: tabsView.widthAnchor,constant: -10))
+        tabsView.addConstraint(castView.heightAnchor.constraint(equalTo: tabsView.heightAnchor))
         
-        bodyScrollView.addConstraint(castView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 50))
-        bodyScrollView.addConstraint(castView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor,constant: 5))
-        bodyScrollView.addConstraint(castView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor,constant: -10))
-        bodyScrollView.addConstraint(castView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor,constant:  -97))
+        tabsView.addConstraint(seeView.topAnchor.constraint(equalTo: tabsView.topAnchor))
+        tabsView.addConstraint(seeView.leftAnchor.constraint(equalTo: tabsView.leftAnchor,constant: 5))
+        tabsView.addConstraint(seeView.widthAnchor.constraint(equalTo: tabsView.widthAnchor,constant: -10))
+        tabsView.addConstraint(seeView.heightAnchor.constraint(equalTo: tabsView.heightAnchor))
         
-        
-        bodyScrollView.addConstraint(seeView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 50))
-        bodyScrollView.addConstraint(seeView.leftAnchor.constraint(equalTo: bodyScrollView.leftAnchor,constant: 5))
-        bodyScrollView.addConstraint(seeView.widthAnchor.constraint(equalTo: bodyScrollView.widthAnchor,constant: -10))
-        bodyScrollView.addConstraint(seeView.heightAnchor.constraint(equalTo: bodyScrollView.heightAnchor, constant: -97))
-        
-        addConstraint(barSegmentedView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor,constant: 10))
+        addConstraint(barSegmentedView.topAnchor.constraint(equalTo: profileCardView.bottomAnchor))
         addConstraint(barSegmentedView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(barSegmentedView.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(barSegmentedView.heightAnchor.constraint(equalToConstant: 40))//430x613
+        addConstraint(barSegmentedView.heightAnchor.constraint(equalToConstant: heightSegmentedView))
         
         barSegmentedView.addConstraint(barSegmentedControl.topAnchor.constraint(equalTo: barSegmentedView.topAnchor,constant: 5))
         barSegmentedView.addConstraint(barSegmentedControl.leftAnchor.constraint(equalTo: barSegmentedView.leftAnchor,constant: 5))
         barSegmentedView.addConstraint(barSegmentedControl.rightAnchor.constraint(equalTo: barSegmentedView.rightAnchor,constant: -5))
         barSegmentedView.addConstraint(barSegmentedControl.bottomAnchor.constraint(equalTo: barSegmentedView.bottomAnchor,constant: -5))
-        
-        //        barSegmentedView.addConstraint(lineView.topAnchor.constraintEqualToAnchor(barSegmentedView.bottomAnchor,constant: 5))
-        //        barSegmentedView.addConstraint(lineView.leftAnchor.constraintEqualToAnchor(barSegmentedView.leftAnchor))
-        //        barSegmentedView.addConstraint(lineView.rightAnchor.constraintEqualToAnchor(barSegmentedView.rightAnchor,constant: -5))
-        //        barSegmentedView.addConstraint(lineView.heightAnchor.constraintEqualToConstant(0.5))
     }
-    
-    
 }

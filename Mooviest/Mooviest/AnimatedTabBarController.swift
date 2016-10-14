@@ -22,7 +22,6 @@ class AnimatedTabBarController: RAMAnimatedTabBarController {
         
         nVController.navigationBar.topItem?.title = t
         nVController.navigationBar.barTintColor = UIColor(netHex: mooviest_red)
-//        nVController.navigationItem.backBarButtonItem = nil
         nVController.navigationBar.barStyle = UIBarStyle.black
         nVController.navigationBar.isTranslucent = false
         
@@ -53,7 +52,14 @@ class AnimatedTabBarController: RAMAnimatedTabBarController {
                                                namedIcon: "swipe", color: UIColor.white.withAlphaComponent(0.5),
                                                colorSelected: .white)
         let tab1 = SwipeTabViewController(nibName: nil, bundle: nil)
-        let nVController1 = createNavigationController(rootViewController: tab1, title: tbItem1.title!)
+        let nVController1 = UINavigationController(rootViewController: tab1)
+        nVController1.navigationBar.topItem?.title = tbItem1.title!
+        nVController1.navigationBar.barStyle = UIBarStyle.black
+        nVController1.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        nVController1.navigationBar.shadowImage = UIImage()
+        nVController1.navigationBar.isTranslucent = true
+        nVController1.navigationBar.clipsToBounds = true
+        nVController1.navigationBar.tintColor = UIColor.white
         nVController1.tabBarItem = tbItem1
         
         //tab2 Advice
@@ -78,14 +84,13 @@ class AnimatedTabBarController: RAMAnimatedTabBarController {
                                                colorSelected: .white)
         let tab4 = ProfileViewController(nibName: nil, bundle: nil)
         let nVController4 = UINavigationController(rootViewController: tab4)
-        
         nVController4.navigationBar.topItem?.title = tbItem4.title!
         nVController4.navigationBar.barStyle = UIBarStyle.black
         nVController4.navigationBar.setBackgroundImage(UIImage(), for: .default)
         nVController4.navigationBar.shadowImage = UIImage()
         nVController4.navigationBar.isTranslucent = true
         nVController4.navigationBar.clipsToBounds = true
-        nVController4.navigationBar.tintColor = UIColor.white.withAlphaComponent(0.7)
+        nVController4.navigationBar.tintColor = UIColor.white
         nVController4.tabBarItem = tbItem4
         
         self.viewControllers = [nVController1, nVController2, nVController3, nVController4]
