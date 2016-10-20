@@ -29,13 +29,10 @@ class ProfileView: UIView {
     var barSegmentedView = UIView()
     var barSegmentedControl: UISegmentedControl!
     
-    
-    
     init() {
         super.init(frame: CGRect.zero)
         setupComponents()
-        setupConstraints()
-        
+        setupConstraints()        
     }
     
     required init?(coder aDecoder: NSCoder) {

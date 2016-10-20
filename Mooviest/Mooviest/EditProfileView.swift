@@ -30,6 +30,7 @@ class EditProfileView: UIView {
     
     var backgroundPhotoButtonView = UIView()
     var photoButton = UIButton(type: UIButtonType.system) as UIButton
+    
 //    var clearTextButton:UIButton!
 //    var secureTextButton:UIButton!
 

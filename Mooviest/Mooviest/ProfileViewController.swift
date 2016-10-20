@@ -20,7 +20,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     var offset_BackdropFadeOff:CGFloat!
     let distance_W_LabelHeader:CGFloat = 5
     
-    var user = DataModel.sharedInstance.user
+    var user:User?
     var heightView:CGFloat!
     var v: ProfileView!
 
@@ -28,6 +28,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         v = ProfileView()
         v.bodyScrollView.delegate = self
+//        setupDataView()
         setupView()
         view.addSubview(v)
         setupConstraints()
@@ -40,9 +41,10 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         calculateOffset()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-       
+    override func viewWillAppear(_ animated: Bool) {       
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
+        user = DataModel.sharedInstance.user
+        loadDataView()
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,17 +54,36 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
     }
-
+    
+    func loadDataView() {
+        if let avatar = user?.avatar {
+            print("avatar: \(avatar)")
+            v.coverImageView.kf_setImage(with: URL(string:  "\(DataModel.sharedInstance.path)\(avatar)"),placeholder: UIImage(named: "contact"))
+        }
+        v.coverImageView.layer.cornerRadius = v.coverImageView.frame.size.width/2
+        v.coverImageView.layer.masksToBounds = true
+        if let username = user?.username {
+            v.titleLabel.text = "@\(username)"
+        }
+        
+    }
+    
     func setupView() {
-        v.coverImageView.kf_setImage(with: URL(string:  (user?.avatar)!),placeholder: UIImage(named: "contact"))
-        v.coverImageView.layer.cornerRadius = view.frame.size.width*0.2
-        v.titleLabel.text = "@\(user!.username)"
         v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
         let editButton = UIBarButtonItem(image: UIImage(named: "pencil"),
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.editProfile))
         editButton.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = editButton
+        DataModel.sharedInstance.getUser() {
+            (successful, user) in
+            if successful {
+                self.user = user
+                self.loadDataView()
+            } else {
+                Message.msgPopupDelay(title:  "Profile view error", message: "Ha ocurrido algún error al cargar la vista", delay: 0, ctrl: self) {}
+            }
+        }
     }
     
     func calculateOffset() {
@@ -71,7 +92,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         offset_CardProfileStop = offset_HeaderStop+v.profileCardView.frame.height+10
         offset_BackdropFadeOff = offset_CoverStopScale/1.6
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(-offset_CardProfileStop+10, for: .default)
-
     }
     
     func setupConstraints() {
@@ -106,7 +126,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                 v.headerBackdropImageView.alpha = max (0, (1-( offset-offset_BackdropFadeOff*3)/distance_W_LabelHeader)/10)
                 let move  = max(offset_CardProfileStop-offset,0)
                 self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(move, for: .default)
-                
                 
                 //Animations
                 headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
@@ -162,6 +181,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     
     func editProfile(){
         let nViewController = EditProfileViewController()
+        nViewController.user = DataModel.sharedInstance.user
         navigationController?.pushViewController(nViewController, animated: true)
     }
 }
