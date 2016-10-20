@@ -22,6 +22,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     var movie:Movie!
     var heightView:CGFloat!
+    
     var v: MovieDetailView!
     var heightNav:CGFloat!
     let participationCellIdentifier = "participationCollectionViewCell"
@@ -32,12 +33,11 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         let height = self.navigationController?.navigationBar.frame.height
         v = MovieDetailView(heightNavBar: height!)
         
-        v.bodyScrollView.delegate = self
-        v.castView.delegate = self
-        v.castView.dataSource = self
-        v.castView.register(ParticipationCollectionViewCell.self, forCellWithReuseIdentifier: participationCellIdentifier)
+        v.setDelegate(ViewController: self)
         
-        v.infoView.ratingCollectionView.delegate = self
+        v.castCollectionView.dataSource = self
+        v.castCollectionView.register(ParticipationCollectionViewCell.self, forCellWithReuseIdentifier: participationCellIdentifier)
+        
         v.infoView.ratingCollectionView.dataSource = self
         v.infoView.ratingCollectionView.register(RatingCollectionViewCell.self, forCellWithReuseIdentifier: ratingCellIdentifier)
         
@@ -64,15 +64,16 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     override func viewDidAppear(_ animated: Bool) {
         //here extract predominant color
-        print("hei:\(v.barSegmentedView.center.y)")
-        v.bodyScrollView.contentSize.height = view.frame.size.height+v.barSegmentedView.center.y-v.barSegmentedView.frame.height*1.8
+        heightView = view.frame.size.height
+        v.seeScrollView.contentSize.height = v.seeView.frame.size.height*2
+        v.infoScrollView.contentSize.height = v.seeView.frame.size.height
+        changeTabs(index: 0)
         calculateOffset()        
     }
     override func viewDidDisappear(_ animated: Bool) {
-        let navBar = self.navigationController?.navigationBar
-        navBar?.setTitleVerticalPositionAdjustment(-1*(navBar?.titleVerticalPositionAdjustment(for: .default))!, for: .default)
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+    }
     func calculateOffset() {
         offset_HeaderStop = v.headerView.frame.size.height-(self.navigationController?.navigationBar.frame.size.height)!-v.height
         offset_CoverStopScale = offset_HeaderStop
@@ -83,6 +84,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     override func viewWillAppear(_ animated: Bool) {
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
+        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
     }
     
     override func didReceiveMemoryWarning() {
@@ -119,8 +121,13 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             } else {
                 //Alpha
                 v.headerBackdropImageView.alpha = max (0, (1-( offset-offset_BackdropFadeOff*3)/distance_W_LabelHeader)/10)
-                let move  = max(offset_CardProfileStop-offset,0)
-                self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(move, for: .default)
+                let offsetTitle  = max(offset_CardProfileStop-offset,0)
+                self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(offsetTitle, for: .default)
+                let offsetCaTabs  = max(offset-offset_CardProfileStop,0)
+                
+                v.castCollectionView.contentOffset.y = offsetCaTabs
+                v.seeScrollView.contentOffset.y = offsetCaTabs
+                v.infoScrollView.contentOffset.y = offsetCaTabs
                 
                 //Animations
                 headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
@@ -153,30 +160,44 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         }
     }
     
-    func changeSelected(sender: UISegmentedControl) {
-        print("Change selected")
-        switch sender.selectedSegmentIndex {
+    func calculateContentSize(height h: CGFloat) {
+        v.bodyScrollView.contentSize.height = view.frame.size.height-v.barSegmentedView.center.y+v.barSegmentedView.frame.size.height*2+h+10
+    }
+        
+    func changeTabs(index: Int){
+        switch index {
         case 1:
-            v.castView.isHidden = false
+            v.castCollectionView.isHidden = false
             v.seeView.isHidden = true
             v.infoView.isHidden = true
             print("1")
+            calculateContentSize(height: v.castCollectionView.contentSize.height)
+            
         case 2:
-            v.castView.isHidden = true
+            v.castCollectionView.isHidden = true
             v.seeView.isHidden = false
             v.infoView.isHidden = true
             print("2")
+            calculateContentSize(height: v.seeScrollView.contentSize.height)
         default:
-            v.castView.isHidden = true
+            v.castCollectionView.isHidden = true
             v.seeView.isHidden = true
             v.infoView.isHidden = false
             print("default")
+            calculateContentSize(height: v.infoScrollView.contentSize.height)
         }
+    }
+    
+    func changeSelected(sender: UISegmentedControl) {
+        if offset_CardProfileStop != nil && offset_CardProfileStop < v.bodyScrollView.contentOffset.y {
+            v.bodyScrollView.setContentOffset(CGPoint(x:0,y:offset_CardProfileStop), animated: false)
+        }
+        changeTabs(index: sender.selectedSegmentIndex)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell:UICollectionViewCell!
-        if collectionView == v.castView {
+        if collectionView == v.castCollectionView {
             let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: participationCellIdentifier, for: indexPath as IndexPath) as! ParticipationCollectionViewCell
             customCell.backgroundColor = UIColor.red
             let url = URL(string: movie.participations[indexPath.item].image)
@@ -193,7 +214,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count = 0
-        if collectionView == v.castView {
+        if collectionView == v.castCollectionView {
             count = movie.participations.count
         } else {
             count = movie!.ratings.count
@@ -203,7 +224,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
         var size:CGSize!
-        if collectionView == v.castView {
+        if collectionView == v.castCollectionView {
             let width = (collectionView.frame.width/3)-1
             size = CGSize(width: width, height: width*1.30)
         } else {

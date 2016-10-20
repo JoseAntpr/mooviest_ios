@@ -20,24 +20,28 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = false
-
-        v = SwipeTabView()
+        let height = self.navigationController?.navigationBar.frame.height
+        v = SwipeTabView(heightNavBar: height!)
         view.addSubview(v)
         setupConstraints()
         DataModel.sharedInstance.getMoviesSwipe(Lang: 1, Count: 10) {
             (data) in
             
             for m in data {
-                let movie = try! MovieParser.jsonToMovie(Movie: m)
-                self.movies.append(movie)
+                let movie:Movie?
+                do {
+                    movie = try MovieParser.jsonToMovie(Movie: m)
+                    self.movies.append(movie!)
+                } catch ErrorMovie.invalidMovie {
+                    movie = nil
+                }
             }
             self.setupView()
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = false
+    override func viewWillAppear(_ animated: Bool) {        
+        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
     }
     
     func tappedCard(_ sender: UITapGestureRecognizer) {
@@ -50,9 +54,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
     }
     
     override func didReceiveMemoryWarning() {
-        navigationController?.isNavigationBarHidden = false
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func setupConstraints() {
@@ -86,9 +88,9 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
     func setupConstraintsSubView (Index i: Int) {
         loadedCards[i].translatesAutoresizingMaskIntoConstraints = false
         
-        v.panelSwipeView.addConstraint(loadedCards[i].widthAnchor.constraint(equalTo: v.panelSwipeView.widthAnchor))
+        v.panelSwipeView.addConstraint(loadedCards[i].widthAnchor.constraint(equalTo: v.panelSwipeView.heightAnchor, multiplier: 0.7))
         v.panelSwipeView.addConstraint(loadedCards[i].centerXAnchor.constraint(equalTo: v.panelSwipeView.centerXAnchor))
-        v.panelSwipeView.addConstraint(loadedCards[i].heightAnchor.constraint(equalTo: v.panelSwipeView.heightAnchor, multiplier: 0.91))
+        v.panelSwipeView.addConstraint(loadedCards[i].heightAnchor.constraint(equalTo: v.panelSwipeView.heightAnchor))
         v.panelSwipeView.addConstraint(loadedCards[i].centerYAnchor.constraint(equalTo: v.panelSwipeView.centerYAnchor))
     }
     
@@ -110,8 +112,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         
         let url = movies[index].image
         
-        draggableView.imageView.kf_setImage(with: URL(string:  url),placeholder: UIImage(named:  "noimage"))
-        
+        draggableView.imageView.kf_setImage(with: URL(string:  url),placeholder: UIImage(named:  "noimage"))        
         draggableView.delegate = self
         return draggableView
     }

@@ -199,24 +199,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         from.transition(withDuration: withDuration, to: to)
     }
     
-    func msgPopupDelay(Title t: String, Message m:String, Delay s: Double, okTapped: @escaping ()->Void) {
-        
-        let alertController = UIAlertController(title: t, message: m, preferredStyle: .alert)
-        if s > 0 {
-        
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + s) {
-                alertController.dismiss(animated: true, completion: nil)
-                okTapped()
-            }
-        } else {
-            alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                okTapped()
-            }))
-        }
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
     func register() {
         if validateFormRegister() {
             let user = v.userTextFieldView.getText()
@@ -230,24 +212,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 //menssage emergente Success register
                 do {
                     DataModel.sharedInstance.user = try User(json: data)
-                    self.msgPopupDelay(Title: "Confirm", Message: "Register successful", Delay: 1){
+                    Message.msgPopupDelay(title: "Confirm", message: "Register successful", delay: 1, ctrl: self){
                         self.hiddenFormRegister()
                     }
                     
                 } catch {
                     DataModel.sharedInstance.user = nil
                     //error login
-                    self.msgPopupDelay(Title: "Register error", Message: "Ha ocurrido algún error", Delay: 0) {
+                    Message.msgPopupDelay(title: "Register error", message: "Ha ocurrido algún error", delay: 0,ctrl: self) {
                     }
                 }
             }
         
         } else {
             //Menssage emergente de error
-            self.msgPopupDelay(Title: "Register error", Message: "Error data form", Delay: 0) {
-        
+            Message.msgPopupDelay(title: "Register error", message: "Error data form", delay: 0, ctrl: self) {
             }
-
         }
     }
     
@@ -257,26 +237,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         
         DataModel.sharedInstance.login(Username: user, Password: pass) {
-            (data) in
-            print(data)
-            do {
-                DataModel.sharedInstance.user = try User(json: data)
-                self.msgPopupDelay(Title: "", Message: "Login successful", Delay: 1){
+            (successful,message) in
+            print(message)
+            if successful {
+                Message.msgPopupDelay(title: "", message: "Login successful", delay: 1,ctrl: self) {
                     self.chargueApp()
                 }
-            } catch {
-               DataModel.sharedInstance.user = nil
-                print(data)
-                //error login
-                let msg = data["message"] as? String
-                self.msgPopupDelay(Title: "Register error", Message: msg == nil ? "Ha ocurrido algún error":msg!, Delay: 0) {
-                }
-            
+            } else {
+                Message.msgPopupDelay(title: "Login error", message: message == nil ? "Ha ocurrido algún error":message!, delay: 0, ctrl: self) {}
             }
-           
-        }
-       
+        }       
     }
+    
     func chargueApp() {
         let tabBarController = AnimatedTabBarController()
         

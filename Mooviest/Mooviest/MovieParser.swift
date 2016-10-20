@@ -38,14 +38,26 @@ class MovieParser: NSObject, Parser {
         
         var participations = [Participation]()
         for p in participationsJson {
-            let participation = try! ParticipationParser.jsonToParticipation(Participation: p)
-            participations.append(participation)
+            let participation:Participation?
+            do {
+                participation = try ParticipationParser.jsonToParticipation(Participation: p)
+                participations.append(participation!)
+            } catch ErrorMovie.invalidParticipation {
+                participation = nil
+            }
         }
         
         var ratings = [Rating]()
         for r in ratingsJson {
-            let rating = try! RatingParser.jsonToRating(Rating: r)
-            ratings.append(rating)
+            
+            let rating:Rating?
+            do {
+                rating = try RatingParser.jsonToRating(Rating: r)
+                ratings.append(rating!)
+            } catch ErrorMovie.invalidRating {
+                rating = nil
+            }
+            
         }
         
         if image.lowercased().range(of: "http://") == nil &&

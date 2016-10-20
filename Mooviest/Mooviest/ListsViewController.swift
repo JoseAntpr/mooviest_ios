@@ -21,19 +21,22 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         DataModel.sharedInstance.getMoviesSwipe(Lang: 1, Count: 10) {
             (data) in
             
             for m in data {
-                let movie = try! MovieParser.jsonToMovie(Movie: m)
-                self.movies.append(movie)
+                let movie:Movie?
+                do {
+                    movie = try MovieParser.jsonToMovie(Movie: m)
+                    self.movies.append(movie!)
+                } catch ErrorMovie.invalidMovie {
+                    movie = nil
+                }
             }
             self.setupView()
             self.view.addSubview(self.v)
             self.setupConstraints()
         }
-       
     }
     
     override func didReceiveMemoryWarning() {

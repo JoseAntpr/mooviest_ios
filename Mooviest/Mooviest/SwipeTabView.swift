@@ -13,9 +13,14 @@ class SwipeTabView: UIView {
     let porcentWidthBarButtons = CGFloat(0.86)
     let porcentHeightBarButtons = CGFloat(0.1)
     let spaceBottomBarButtons = CGFloat(5)
-    
     let porcentWidthButton = CGFloat(0.16)
     ///
+    
+    let height = UIApplication.shared.statusBarFrame.size.height
+    var heightNavBar:CGFloat!
+    
+    var backgroundStatusView = UIView()
+    var headerView = UIView()
     
     var panelButtonView = UIView()
     var closedButton = UIButton(type: UIButtonType.system) as UIButton
@@ -27,8 +32,9 @@ class SwipeTabView: UIView {
     let space3View = UIView ()
     let panelSwipeView = UIView()
     
-    init() {
+    init(heightNavBar h: CGFloat) {
         super.init(frame: CGRect.zero)
+        heightNavBar = h
         setupComponents()
         setupConstraints()
     }
@@ -39,6 +45,9 @@ class SwipeTabView: UIView {
     
     func setupComponents() {
         self.backgroundColor = UIColor.white
+        
+        backgroundStatusView.backgroundColor = UIColor(netHex: dark_gray).withAlphaComponent(0.5)
+        headerView.backgroundColor = UIColor(netHex: mooviest_red)
         
         panelButtonView.backgroundColor = UIColor.white
         
@@ -57,9 +66,13 @@ class SwipeTabView: UIView {
         
         addSubview(panelButtonView)
         addSubview(panelSwipeView)
+        addSubview(headerView)
+        addSubview(backgroundStatusView)
     }
     
     func setupConstraints() {
+        backgroundStatusView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.translatesAutoresizingMaskIntoConstraints = false
         panelButtonView.translatesAutoresizingMaskIntoConstraints = false
         closedButton.translatesAutoresizingMaskIntoConstraints = false
         clockButton.translatesAutoresizingMaskIntoConstraints = false
@@ -70,10 +83,20 @@ class SwipeTabView: UIView {
         space3View.translatesAutoresizingMaskIntoConstraints = false
         panelSwipeView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(panelSwipeView.topAnchor.constraint(equalTo: topAnchor,constant: spaceBottomBarButtons))
-        addConstraint(panelSwipeView.bottomAnchor.constraint(equalTo: panelButtonView.topAnchor))
+        addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(backgroundStatusView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(backgroundStatusView.heightAnchor.constraint(equalToConstant: height))
+        
+        addConstraint(headerView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(headerView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(headerView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(headerView.heightAnchor.constraint(equalToConstant: height + heightNavBar))
+        
+        addConstraint(panelSwipeView.topAnchor.constraint(equalTo: headerView.bottomAnchor,constant: spaceBottomBarButtons*2))
+        addConstraint(panelSwipeView.bottomAnchor.constraint(equalTo: panelButtonView.topAnchor,constant: -spaceBottomBarButtons))
         addConstraint(panelSwipeView.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(panelSwipeView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: porcentWidthBarButtons))
+        addConstraint(panelSwipeView.widthAnchor.constraint(equalTo: widthAnchor))
         
         addConstraint(panelButtonView.centerXAnchor.constraint(equalTo: centerXAnchor))
         addConstraint(panelButtonView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -spaceBottomBarButtons))
