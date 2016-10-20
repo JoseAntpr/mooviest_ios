@@ -11,50 +11,32 @@ import Alamofire
 
 class DataModel: NSObject {
     static let sharedInstance = DataModel()
-    var path =  "http://localhost:8000/api"//"http://192.168.1.134:8000/api"//"http://localhost:8000/api"//
+    var path =  "http://localhost:8000"// "http://192.168.1.129:8000"//
     var movies = [Movie]()
-    var user:User!
+    var user:User?
+    var authenticationUser: Authentication?
     
-    func getMoviesSwipe(Lang l: Int, Count c: Int,completionRequest:  @escaping ([[String:Any]]) -> Void){
-        let user = "admin"
-        let password = "admin"
-        
-        let credentialData = "\(user):\(password)".data(using: String.Encoding.utf8)!
-        let base64Credentials = credentialData.base64EncodedString(options: [])
-        let headers = ["Authorization": "Basic \(base64Credentials)","Content-Type": "application/json"]
-        
-        Alamofire.request( "\(path)/movie_app_bylang?lang_id=\(l)&limit=\(c)", method: .get, headers: headers)
-            .responseJSON {response in
-                if let res = response.result.value as? [String:Any] {
-                    completionRequest(res["results"] as! [[String:Any]])
-                }
-        }
-    }
-    
-    func login(Username u: String, Password p: String,completionRequest:  @escaping ([String:Any]) -> Void){
-        let user = "admin"
-        let password = "admin"
-        let credentialData = "\(user):\(password)".data(using: String.Encoding.utf8)!
-        let base64Credentials = credentialData.base64EncodedString(options: [])
-        let headers = ["Authorization": "Basic \(base64Credentials)","Content-Type": "application/json"]
+    func login(Username u: String, Password p: String,completionRequest:  @escaping (Bool,String?) -> Void){
         let parameters: Parameters = [
             "username": u,
             "password": p
         ]
-        Alamofire.request( "\(path)/users/login/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers)
+        Alamofire.request( "\(path)/api/users/login/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []))
             .responseJSON {response in
                 if let res = response.result.value as? [String:Any] {
-                    completionRequest(res)
+                    let msg = res["message"] as? String
+                    do {
+                        self.authenticationUser = try Authentication(json: res)
+                        completionRequest(true,  msg)
+                    } catch {
+                        self.authenticationUser = nil
+                        completionRequest(false, msg)
+                    }
                 }
         }
     }
     
     func register(Username u: String, Password p: String, Email e: String, Lang l: String,completionRequest:  @escaping ([String:Any]) -> Void){
-        let user = "admin"
-        let password = "admin"
-        let credentialData = "\(user):\(password)".data(using: String.Encoding.utf8)!
-        let base64Credentials = credentialData.base64EncodedString(options: [])
-        let headers = ["Authorization": "Basic \(base64Credentials)","Content-Type": "application/json"]
         let parameters: Parameters = [
             "username": u,
             "password": p,
@@ -65,10 +47,96 @@ class DataModel: NSObject {
                 ]
             ]
         ]
-        Alamofire.request( "\(path)/users/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers)
-            .responseJSON {response in
+        Alamofire.request( "\(path)/api/users/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []))
+            .responseJSON { response in
                 if let res = response.result.value as? [String:Any] {
                     completionRequest(res)
+                }
+        }
+    }
+    
+    func getUser(completionRequest:  @escaping (Bool,User?)-> Void){
+        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        
+        Alamofire.request( "\(path)/api/users/\(authenticationUser!.idUser)/", method: .get, headers: headers)
+            .responseJSON {response in
+                if let res = response.result.value as? [String:Any] {
+                    do {
+                        self.user = try User(json: res)
+                        completionRequest(true, self.user)
+                    } catch {
+                        self.user = nil
+                        completionRequest(false, nil)
+                    }
+                }
+        }
+    }
+    
+    func updateUser(user: User, avatar: UIImage, completionRequest:  @escaping (Bool, String, User?) -> Void){
+        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "multipart/form-data"]
+        let url = try! URLRequest(url: "\(path)/api/users/\(user.id)/", method: .put, headers: headers)
+        let imageData:Data = UIImageJPEGRepresentation(avatar, 0.2)!
+        
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                multipartFormData.append(user.username.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "username")
+                multipartFormData.append(user.email.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "email")
+                multipartFormData.append(user.firstname.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "first_name")
+                multipartFormData.append(user.lastname.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "last_name")
+                multipartFormData.append(imageData, withName: "profile.avatar", fileName: "\(user.id).jpg", mimeType: "image/jpeg")
+                multipartFormData.append(user.gender.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "profile.gender")
+                multipartFormData.append(user.born.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "profile.born")
+                multipartFormData.append(user.postalCode.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "profile.postalCode")
+                multipartFormData.append(user.city.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "profile.city")
+                multipartFormData.append(user.codeLang.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "profile.lang.code")
+            },
+            with: url,
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseJSON { response in
+                        print(response)
+                        if let res = response.result.value as? [String:Any] {
+                            do {
+                                if let status = res["status"] as? Int {
+                                    if status == 200 {
+                                        self.user = try User(json: res)
+                                        completionRequest(true, "", self.user)
+                                    } else {
+                                        var msg = ""
+                                        if let errors = res["errors"] as? [String:Any] {
+                                            if let username = errors["username"] as? [String] {
+                                                msg += "\n\(username[0])"
+                                            }
+                                            if let email = errors["email"] as? [String] {
+                                                msg += "\n\(email[0])"
+                                            }
+                                            print(errors["username"] as! [String])
+                                        }
+                                        completionRequest(false, msg, nil)
+                                    }
+                                }
+                                
+                            } catch {
+                                completionRequest(false, "Error parser User", nil)
+                            }
+                        }
+                    }
+                case .failure(let msg):
+                    completionRequest(false, "Error encoding: \(msg)", nil)
+                }
+            }
+        )
+    }
+
+    func getMoviesSwipe(Lang l: Int, Count c: Int,completionRequest:  @escaping ([[String:Any]])throws-> Void){
+        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        
+        Alamofire.request( "\(path)/api/movie_app_bylang?lang_id=\(l)&limit=\(c)", method: .get, headers: headers)
+            .responseJSON {response in
+                print(response)
+                if let res = response.result.value as? [String:Any] {
+                    try! completionRequest(res["results"] as! [[String:Any]])
                 }
         }
     }

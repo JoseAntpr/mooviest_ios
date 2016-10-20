@@ -8,17 +8,8 @@
 
 import Foundation
 
-enum SerializationError: Error {
-    case missing(String)
-    case invalid(String, Any)
-}
-
 extension User {
     init(json:[String:Any]) throws {
-        //Extract id
-        guard let token = json["token"] as? String else{
-            throw SerializationError.missing("token")
-        }
         //Extract user
         guard let userJson = json["user"] as? [String:Any] else {
             throw SerializationError.missing("user")
@@ -35,26 +26,81 @@ extension User {
         guard let email = userJson["email"] as? String else {
             throw SerializationError.missing("email")
         }
-        //Extract id profile
+        //Extract firstname
+        guard let firstname = userJson["first_name"] as? String else {
+            throw SerializationError.missing("firstname")
+        }
+        //Extract lastname
+        guard let lastname = userJson["last_name"] as? String else {
+            throw SerializationError.missing("lastname")
+        }
+        //Extract profile
         guard let profileJson = userJson["profile"] as? [String:Any] else {
             throw SerializationError.missing("profile")
         }
-        //Extract id avatar
+        //Extract avatar
         guard let avatar = profileJson["avatar"] as? String else {
             throw SerializationError.missing("avatar")
         }
-        //Extract id avatar
+        //Extract code lang
         guard let langJson = profileJson["lang"] as? [String:Any],
-            let langCode = langJson["code"] as? String else {
+            let codeLang = langJson["code"] as? String else {
             throw SerializationError.missing("langCode")
         }
+        //Extract gender
+        var gender = ""
+        if let genderString = profileJson["gender"] as? String {
+            gender = genderString
+        }
+        //Extract born
+        var born = "2000-01-01"
+        if let bornString = profileJson["born"] as? String {
+            born = bornString
+        }
+        //Extract postal code
+        var postalCode = ""
+        if let postalCodeString = profileJson["postalCode"] as? String {
+            postalCode = postalCodeString
+        }
+        //Extract city
+        var city = ""
+        if let cityString = profileJson["city"] as? String {
+            city = cityString
+        }
+
         
         // Initialize properties
         self.id = id
         self.username = username
         self.email = email
-        self.token = token
-        self.langCode = langCode
+        self.firstname = firstname
+        self.lastname = lastname
         self.avatar = avatar
+        self.gender = gender
+        self.born = born
+        self.postalCode = postalCode
+        self.city = city
+        self.codeLang = codeLang
+    }
+    
+    func getJson()->[String:Any] {
+        let json:[String:Any] =  [
+                "id": id,
+                "username": username,
+                "email": email,
+                "first_name": firstname,
+                "last_name": lastname,
+                "profile": [
+//                    "avatar": avatar,
+                    "gender": gender,
+                    "born": born,
+                    "postalCode": postalCode,
+                    "city": city,
+                    "lang": [
+                        "code": codeLang
+                    ]
+            ]
+        ]
+        return json
     }
 }

@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum SerializationError: Error {
+    case missing(String)
+    case invalid(String, Any)
+}
 enum ErrorMovie:Error {
     case invalidRating
     case invalidMovie
