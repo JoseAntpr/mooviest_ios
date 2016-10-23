@@ -15,8 +15,9 @@ import Kingfisher
 class ListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let user = DataModel.sharedInstance.user
-    var v = ListView()
-    var movies = [Movie]()
+    var height:CGFloat!
+    var v:ListView!
+    var movies = [MovieListInfo]()
     let movieCellIdentifier = "movieCollectionViewCell"
     
     override func viewDidLoad() {
@@ -24,8 +25,6 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.setupView()
         self.view.addSubview(self.v)
         self.setupConstraints()
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,7 +50,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nViewController = MovieDetailViewController()
-        nViewController.movie = movies[indexPath.row]
+        nViewController.movieListInfo = movies[indexPath.row]
         navigationController?.pushViewController(nViewController, animated: true)
         
     }
@@ -67,10 +66,11 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = false
     }
     
     func setupView() {
+        height = self.navigationController?.navigationBar.frame.height
+        v = ListView(heightNavBar: height)
         v.movieCollectionView.delegate = self
         v.movieCollectionView.dataSource = self
         v.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)

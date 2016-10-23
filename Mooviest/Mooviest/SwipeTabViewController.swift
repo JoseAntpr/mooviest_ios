@@ -24,20 +24,20 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate {
         v = SwipeTabView(heightNavBar: height!)
         view.addSubview(v)
         setupConstraints()
-        DataModel.sharedInstance.getMoviesSwipe(Lang: 1, Count: 10) {
-            (data) in
-            
-            for m in data {
-                let movie:Movie?
-                do {
-                    movie = try MovieParser.jsonToMovie(Movie: m)
-                    self.movies.append(movie!)
-                } catch ErrorMovie.invalidMovie {
-                    movie = nil
-                }
-            }
-            self.setupView()
-        }
+//        DataModel.sharedInstance.getMoviesSwipe(Lang: 1, Count: 10) {
+//            (data) in
+//            
+//            for m in data {
+//                let movie:Movie?
+//                do {
+//                    movie = try Movie(json: m)
+//                    self.movies.append(movie!)
+//                } catch ErrorMovie.invalidMovie {
+//                    movie = nil
+//                }
+//            }
+//            self.setupView()
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {        

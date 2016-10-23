@@ -9,13 +9,24 @@
 import UIKit
 
 class ListsView: UIView {
-    let listView = UIView()
+    let height = UIApplication.shared.statusBarFrame.size.height
+    let width = UIApplication.shared.statusBarFrame.size.width
+    let margin:CGFloat = 5
+    var backgroundStatusView = UIView()
+    
+    var heightNavBar:CGFloat!
+    var headerView = UIView()
+
+    let listsScrollView = UIScrollView()
+    
     let watchListViewCell = ItemListView()
     let favouriteListViewCell = ItemListView()
     let seenListViewCell = ItemListView()
+    let blackListViewCell = ItemListView()
     
-    init() {
+    init(heightNavBar h: CGFloat) {
         super.init(frame: CGRect.zero)
+        heightNavBar = h
         setupComponents()
         setupConstraints()
     }
@@ -27,40 +38,70 @@ class ListsView: UIView {
     func setupComponents() {
         self.backgroundColor = .white
         
-        watchListViewCell.titleLabel.text = "Watch"
-        favouriteListViewCell.titleLabel.text = "Favourite"
-        seenListViewCell.titleLabel.text = "Seen"
+        backgroundStatusView.backgroundColor = UIColor(netHex: dark_gray).withAlphaComponent(0.5)
+        headerView.backgroundColor = UIColor(netHex: mooviest_red)
+        headerView.clipsToBounds = true
         
-        listView.addSubview(watchListViewCell)
-        listView.addSubview(favouriteListViewCell)
-        listView.addSubview(seenListViewCell)
-        addSubview(listView)
+        watchListViewCell.titleLabel.text = "Watch list"
+        favouriteListViewCell.titleLabel.text = "Favourite list"
+        seenListViewCell.titleLabel.text = "Seen list"
+        blackListViewCell.titleLabel.text = "Black list"
+        
+        listsScrollView.contentSize.height = width*2 + margin*4
+        
+        listsScrollView.addSubview(watchListViewCell)
+        listsScrollView.addSubview(favouriteListViewCell)
+        listsScrollView.addSubview(seenListViewCell)
+        listsScrollView.addSubview(blackListViewCell)
+        
+        addSubview(listsScrollView)
+        addSubview(headerView)
+        addSubview(backgroundStatusView)
     }
     
     func setupConstraints() {
-        listView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundStatusView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        listsScrollView.translatesAutoresizingMaskIntoConstraints = false
         watchListViewCell.translatesAutoresizingMaskIntoConstraints = false
         favouriteListViewCell.translatesAutoresizingMaskIntoConstraints = false
         seenListViewCell.translatesAutoresizingMaskIntoConstraints = false
+        blackListViewCell.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(listView.centerYAnchor.constraint(equalTo: centerYAnchor))
-        addConstraint(listView.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(listView.widthAnchor.constraint(equalTo: widthAnchor,multiplier: 0.90))
-        addConstraint(listView.heightAnchor.constraint(equalTo: heightAnchor,multiplier: 0.98))
+        addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(backgroundStatusView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(backgroundStatusView.heightAnchor.constraint(equalToConstant: height))
         
-        listView.addConstraint(watchListViewCell.centerXAnchor.constraint(equalTo: listView.centerXAnchor))
-        listView.addConstraint(watchListViewCell.topAnchor.constraint(equalTo: listView.topAnchor))
-        listView.addConstraint(watchListViewCell.widthAnchor.constraint(equalTo: listView.widthAnchor))
-        listView.addConstraint(watchListViewCell.heightAnchor.constraint(equalTo: listView.heightAnchor, multiplier:0.33))
+        addConstraint(headerView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(headerView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(headerView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(headerView.heightAnchor.constraint(equalToConstant: height + heightNavBar))
         
-        listView.addConstraint(favouriteListViewCell.centerXAnchor.constraint(equalTo: listView.centerXAnchor))
-        listView.addConstraint(favouriteListViewCell.centerYAnchor.constraint(equalTo: listView.centerYAnchor))
-        listView.addConstraint(favouriteListViewCell.widthAnchor.constraint(equalTo: listView.widthAnchor))
-        listView.addConstraint(favouriteListViewCell.heightAnchor.constraint(equalTo: listView.heightAnchor, multiplier:0.33))
+        addConstraint(listsScrollView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(listsScrollView.bottomAnchor.constraint(equalTo: bottomAnchor))
+        addConstraint(listsScrollView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(listsScrollView.rightAnchor.constraint(equalTo: rightAnchor))
         
-        listView.addConstraint(seenListViewCell.centerXAnchor.constraint(equalTo: listView.centerXAnchor))
-        listView.addConstraint(seenListViewCell.bottomAnchor.constraint(equalTo: listView.bottomAnchor))
-        listView.addConstraint(seenListViewCell.widthAnchor.constraint(equalTo: listView.widthAnchor))
-        listView.addConstraint(seenListViewCell.heightAnchor.constraint(equalTo: listView.heightAnchor, multiplier:0.33))
+        
+        listsScrollView.addConstraint(watchListViewCell.topAnchor.constraint(equalTo: listsScrollView.topAnchor, constant: margin))
+        listsScrollView.addConstraint(watchListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))
+        listsScrollView.addConstraint(watchListViewCell.widthAnchor.constraint(equalTo: listsScrollView.widthAnchor))
+        listsScrollView.addConstraint(watchListViewCell.heightAnchor.constraint(equalToConstant: width*0.5))
+        
+        listsScrollView.addConstraint(favouriteListViewCell.topAnchor.constraint(equalTo: watchListViewCell.bottomAnchor, constant: margin))
+        listsScrollView.addConstraint(favouriteListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))
+        listsScrollView.addConstraint(favouriteListViewCell.widthAnchor.constraint(equalTo: listsScrollView.widthAnchor))
+        listsScrollView.addConstraint(favouriteListViewCell.heightAnchor.constraint(equalTo: watchListViewCell.heightAnchor))
+        
+        listsScrollView.addConstraint(seenListViewCell.topAnchor.constraint(equalTo: favouriteListViewCell.bottomAnchor, constant: margin))
+        listsScrollView.addConstraint(seenListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))
+        listsScrollView.addConstraint(seenListViewCell.widthAnchor.constraint(equalTo: listsScrollView.widthAnchor))
+        listsScrollView.addConstraint(seenListViewCell.heightAnchor.constraint(equalTo: watchListViewCell.heightAnchor))
+        
+        listsScrollView.addConstraint(blackListViewCell.topAnchor.constraint(equalTo: seenListViewCell.bottomAnchor, constant: margin))
+        listsScrollView.addConstraint(blackListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))
+        listsScrollView.addConstraint(blackListViewCell.widthAnchor.constraint(equalTo: listsScrollView.widthAnchor))
+        listsScrollView.addConstraint(blackListViewCell.heightAnchor.constraint(equalTo: watchListViewCell.heightAnchor))
     }
 }

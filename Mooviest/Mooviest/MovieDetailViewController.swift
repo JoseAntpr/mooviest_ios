@@ -21,6 +21,9 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     let distance_W_LabelHeader:CGFloat = 5
     
     var movie:Movie!
+    var movieListInfo:MovieListInfo!
+    var ratings = [Rating]()
+    var participations = [Participation]()
     var heightView:CGFloat!
     
     var v: MovieDetailView!
@@ -32,7 +35,28 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         super.viewDidLoad()
         let height = self.navigationController?.navigationBar.frame.height
         v = MovieDetailView(heightNavBar: height!)
-        
+        DataModel.sharedInstance.getMovie(idmovie: movieListInfo.id, idMovieLang: movieListInfo.idMovieLang) {
+            (data) in
+            self.movie = try! Movie(json: data)
+            self.loadDataView()
+        }
+        setupView()
+        view.addSubview(v)
+        setupConstraints()
+    }
+    
+    func loadDataView() {
+        v.headerBackdropImageView.kf_setImage(with: URL(string: "https://img.tviso.com/ES/backdrop/w600\(movie!.backdrop)"))
+        v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
+        v.infoView.synopsisTextView.text = movie?.synopsis
+        ratings = movie.ratings
+        participations = movie.participations
+        v.infoView.ratingCollectionView.reloadData()
+        v.castCollectionView.reloadData()
+        print(participations)
+    }
+    
+    func setupView() {
         v.setDelegate(ViewController: self)
         
         v.castCollectionView.dataSource = self
@@ -40,26 +64,16 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         
         v.infoView.ratingCollectionView.dataSource = self
         v.infoView.ratingCollectionView.register(RatingCollectionViewCell.self, forCellWithReuseIdentifier: ratingCellIdentifier)
+        v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
+        v.titleLabel.text = movieListInfo.title
+        self.navigationItem.title = movieListInfo.title
         
-        setupView()
-        view.addSubview(v)
-        setupConstraints()
-    }
-    
-    func setupView() {
-        v.coverImageView.kf_setImage(with: URL(string:  movie!.image))
+        v.coverImageView.kf_setImage(with: URL(string:  movieListInfo!.image))
         v.coverImageView.contentMode = UIViewContentMode.scaleToFill
         v.coverImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
         v.coverImageView.layer.borderWidth = 1.8
         v.coverImageView.layer.cornerRadius = 5
         v.coverImageView.layer.masksToBounds = true
-        v.headerBackdropImageView.kf_setImage(with: URL(string: "https://img.tviso.com/ES/backdrop/w600\(movie!.backdrop)"))
-        v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
-        
-        v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
-        v.infoView.synopsisTextView.text = movie?.synopsis
-        v.titleLabel.text = movie.title
-        self.navigationItem.title = movie.title
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -70,10 +84,13 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         changeTabs(index: 0)
         calculateOffset()        
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
     }
+    
     func calculateOffset() {
         offset_HeaderStop = v.headerView.frame.size.height-(self.navigationController?.navigationBar.frame.size.height)!-v.height
         offset_CoverStopScale = offset_HeaderStop
@@ -84,6 +101,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     override func viewWillAppear(_ animated: Bool) {
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
+        self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
     }
     
@@ -116,8 +134,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                 
                 if v.coverImageView.layer.zPosition < v.headerView.layer.zPosition{
                     v.headerView.layer.zPosition = 0
-                }
-                
+                }                
             } else {
                 //Alpha
                 v.headerBackdropImageView.alpha = max (0, (1-( offset-offset_BackdropFadeOff*3)/distance_W_LabelHeader)/10)
@@ -200,13 +217,13 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         if collectionView == v.castCollectionView {
             let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: participationCellIdentifier, for: indexPath as IndexPath) as! ParticipationCollectionViewCell
             customCell.backgroundColor = UIColor.red
-            let url = URL(string: movie.participations[indexPath.item].image)
+            let url = URL(string: participations[indexPath.item].image)
             customCell.faceImageView.kf_setImage(with: url,placeholder: UIImage(named:  "noimage"))
             cell = customCell
         } else {
             let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: ratingCellIdentifier, for: indexPath as IndexPath) as! RatingCollectionViewCell
             customCell.backgroundColor = UIColor.red
-            customCell.faceImageView.image = UIImage(named:  movie.ratings[indexPath.item].name)
+            customCell.faceImageView.image = UIImage(named:  ratings[indexPath.item].name)
             cell = customCell
         }
         return cell
@@ -215,9 +232,9 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count = 0
         if collectionView == v.castCollectionView {
-            count = movie.participations.count
+            count = participations.count
         } else {
-            count = movie!.ratings.count
+            count = ratings.count
         }
         return count
     }

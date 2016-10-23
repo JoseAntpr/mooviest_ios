@@ -12,31 +12,32 @@ import Kingfisher
 
 
 class ListsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+    var height:CGFloat!
     let user = DataModel.sharedInstance.user
-    var v = ListsView()
-    var movies = [Movie]()
+    
+    var v: ListsView!
+    var movies = [MovieListInfo]()
     let movieCellIdentifier = "movieCollectionViewCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DataModel.sharedInstance.getMoviesSwipe(Lang: 1, Count: 10) {
+        DataModel.sharedInstance.getMovieList(listname: "watchlist", page: 1) {
             (data) in
-            
+            print(data)
             for m in data {
-                let movie:Movie?
-                do {
-                    movie = try MovieParser.jsonToMovie(Movie: m)
-                    self.movies.append(movie!)
-                } catch ErrorMovie.invalidMovie {
-                    movie = nil
-                }
+                let movie:MovieListInfo?
+                movie = try! MovieListInfo(json: m)
+                self.movies.append(movie!)
             }
-            self.setupView()
-            self.view.addSubview(self.v)
-            self.setupConstraints()
+            self.v.favouriteListViewCell.movieCollectionView.reloadData()
+            self.v.watchListViewCell.movieCollectionView.reloadData()
+            self.v.seenListViewCell.movieCollectionView.reloadData()
+            self.v.blackListViewCell.movieCollectionView.reloadData()
         }
+        self.setupView()
+        self.view.addSubview(self.v)
+        self.setupConstraints()
     }
     
     override func didReceiveMemoryWarning() {
@@ -81,20 +82,18 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         default:
            count = movies.count
         }
-
         return count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nViewController = MovieDetailViewController()
-        nViewController.movie = movies[indexPath.row]
+        nViewController.movieListInfo = movies[indexPath.row]
         navigationController?.pushViewController(nViewController, animated: true)
-
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width/3)-5
-        let size = CGSize(width: width, height: width*1.30)
+        let height = collectionView.frame.height
+        let size = CGSize(width: height*0.7, height: height)
         
         return size
     }
@@ -103,10 +102,13 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
     }
     
     func setupView() {
+        height = self.navigationController?.navigationBar.frame.height
+        v = ListsView(heightNavBar: height)
+        
         v.watchListViewCell.movieCollectionView.delegate = self
         v.watchListViewCell.movieCollectionView.dataSource = self
         v.watchListViewCell.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
@@ -119,10 +121,16 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         v.seenListViewCell.movieCollectionView.dataSource = self
         v.seenListViewCell.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
         
+        v.blackListViewCell.movieCollectionView.delegate = self
+        v.blackListViewCell.movieCollectionView.dataSource = self
+        v.blackListViewCell.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)        
+    
         v.watchListViewCell.moreButton.addTarget(self, action: #selector(self.tappedMore), for: .touchUpInside)
         v.favouriteListViewCell.moreButton.addTarget(self, action: #selector(self.tappedMore), for: .touchUpInside)
         v.seenListViewCell.moreButton.addTarget(self, action: #selector(self.tappedMore), for: .touchUpInside)
+        v.blackListViewCell.moreButton.addTarget(self, action: #selector(self.tappedMore), for: .touchUpInside)
     }
+    
     func tappedMore(button:UIButton)  {
         let nViewController = ListViewController()
         
@@ -144,9 +152,5 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         view.addConstraint(v.rightAnchor.constraint(equalTo: view.rightAnchor))
         view.addConstraint(v.topAnchor.constraint(equalTo: view.topAnchor))
         view.addConstraint(v.bottomAnchor.constraint(equalTo: view.bottomAnchor))
-    }
-    
-    func goList(){
-        print("list")
     }
 }

@@ -21,9 +21,12 @@ class AnimatedTabBarController: RAMAnimatedTabBarController {
         let nVController = UINavigationController(rootViewController: vc)
         
         nVController.navigationBar.topItem?.title = t
-        nVController.navigationBar.barTintColor = UIColor(netHex: mooviest_red)
+        nVController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        nVController.navigationBar.shadowImage = UIImage()
         nVController.navigationBar.barStyle = UIBarStyle.black
-        nVController.navigationBar.isTranslucent = false
+        nVController.navigationBar.isTranslucent = true
+        nVController.navigationBar.clipsToBounds = true
+        nVController.navigationBar.tintColor = UIColor.white
         
         return nVController
     }
