@@ -12,21 +12,22 @@ import Foundation
 
 struct Movie: Model {
     var id: Int
+    var idMovieLang: Int
+    var idCollection: Int //-1 para cuado no esté asignada
+    var typeMovie:String
+    
+    var title: String
+    var originalTitle: String
     var image: String
     var backdrop: String
-    var originalTitle: String
-    var average: String
-    var title: String
     var synopsis: String
+    var average: Float
     var runtime: Int
     var released: Int
     var producers: String
-    var trailer: String
     var country: String
-    var countryCode: String
-    var sagaOrder: Int
+    
     var genres: [String]
     var participations: [Participation]
     var ratings: [Rating]
-    //emotions
 }

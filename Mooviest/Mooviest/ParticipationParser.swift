@@ -8,16 +8,60 @@
 
 import Foundation
 
-
-class ParticipationParser: NSObject, Parser {
-    static func jsonToParticipation(Participation p: [String:Any])throws -> Participation {
-        guard let id = (p["celebrity"] as! [String:Any])["id"] as? Int, let name = (p["celebrity"] as! [String:Any])["name"] as? String,
-            let role = p["role"] as? Int, let character = p["character"] as? String == nil ? "":p["character"] as? String,
-            let award = p["award"] as? String, var image = (p["celebrity"] as! [String:Any])["image"] as? String
-            else {
-                throw ErrorMovie.invalidParticipation
+extension Participation {
+    init(json:[String:Any]) throws {
+        //Extract celebrity
+        guard let celebrity = json["celebrity"] as? [String:Any] else{
+            throw SerializationError.missing("celebrity")
         }
+        //Extract id
+        guard let id = celebrity["id"] as? Int else{
+            throw SerializationError.missing("id")
+        }
+        //Extract name
+        guard let name = celebrity["name"] as? String else{
+            throw SerializationError.missing("name")
+        }        
+        //Extract born
+        var born = ""
+        if let b = json["born"] as? String {
+            born = b
+        }
+        //Extract image
+        guard var image = celebrity["image"] as? String else{
+            throw SerializationError.missing("image")
+        }
+        //Extract twitter
+        guard let twitter = celebrity["twitter_account"] as? String else{
+            throw SerializationError.missing("twitter")
+        }
+        //Extract address
+        guard let address = celebrity["address"] as? String else{
+            throw SerializationError.missing("address")
+        }
+        //Extract role
+        guard let role = json["role"] as? Int else{
+            throw SerializationError.missing("role")
+        }
+        //Extract character
+        guard let character = json["character"] as? String else{
+            throw SerializationError.missing("character")
+        }
+        //Extract name
+        guard let award = json["award"] as? String else{
+            throw SerializationError.missing("award")
+        }
+        
         image = "https://img.tviso.com/XX/face/w175"+image
-        return Participation(id: id,image: image, name: name, role: role, character: character, award: award)
+
+        self.id = id
+        self.name = name
+        self.born = born
+        self.image = image
+        self.twitter = twitter
+        self.address = address
+        self.role = role
+        self.character = character
+        self.award = award
     }
 }

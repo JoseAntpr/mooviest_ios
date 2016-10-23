@@ -128,13 +128,36 @@ class DataModel: NSObject {
             }
         )
     }
+    func getMovieList(listname: String, page: Int, completionRequest:  @escaping ([[String:Any]])throws-> Void){
+        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        
+        Alamofire.request( "\(path)/api/users/\(authenticationUser!.idUser)/\(listname)/?page=\(page)", method: .get, headers: headers)
+            .responseJSON {response in
+                if let res = response.result.value as? [String:Any] {
+                    try! completionRequest(res["results"] as! [[String:Any]])
+                }
+        }
+    }
+    
+    func getMovie(idmovie: Int, idMovieLang: Int, completionRequest:  @escaping ([String:Any])throws-> Void){
+        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        
+        Alamofire.request( "\(path)/api/movie/\(idmovie)/?user_id=\(authenticationUser!.idUser)&movie_lang_id=\(idMovieLang)", method: .get, headers: headers)
+            .responseJSON {response in
+                print(response)
+                
+                if let res = response.result.value as? [String:Any] {
+                    try! completionRequest(res)
+                }
+        }
+    }
 
     func getMoviesSwipe(Lang l: Int, Count c: Int,completionRequest:  @escaping ([[String:Any]])throws-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         
         Alamofire.request( "\(path)/api/movie_app_bylang?lang_id=\(l)&limit=\(c)", method: .get, headers: headers)
             .responseJSON {response in
-                print(response)
+                
                 if let res = response.result.value as? [String:Any] {
                     try! completionRequest(res["results"] as! [[String:Any]])
                 }
