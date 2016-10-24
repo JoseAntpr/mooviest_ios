@@ -11,7 +11,7 @@ import Alamofire
 
 class DataModel: NSObject {
     static let sharedInstance = DataModel()
-    var path =  "http://localhost:8000"// "http://192.168.1.129:8000"//
+    var path =  "http://192.168.1.133:8000"//"http://localhost:8000"// 
     var movies = [Movie]()
     var user:User?
     var authenticationUser: Authentication?
@@ -128,6 +128,7 @@ class DataModel: NSObject {
             }
         )
     }
+    
     func getMovieList(listname: String, page: Int, completionRequest:  @escaping ([[String:Any]])throws-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         
@@ -152,6 +153,62 @@ class DataModel: NSObject {
         }
     }
 
+    func searchMovies(name: String, completionRequest:  @escaping ([[String:Any]],String)throws-> Void){
+        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        
+        let  url = "\(path)/api/movie_lang/?search=\(name)".addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed)
+        
+        Alamofire.request( url!, method: .get, headers: headers)
+            .responseJSON {response in
+                if let res = response.result.value as? [String:Any] {
+                    var next = ""
+                    next.toString(string: res["next"])
+                    try! completionRequest(res["results"] as! [[String:Any]], next)
+                }
+        }
+    }
+    
+    func nextMovies(url: String, completionRequest:  @escaping ([[String:Any]],String)throws-> Void){
+        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        
+        Alamofire.request( url, method: .get, headers: headers)
+            .responseJSON {response in
+                if let res = response.result.value as? [String:Any] {
+                    var next = ""
+                    next.toString(string: res["next"])
+                    try! completionRequest(res["results"] as! [[String:Any]], next)
+                }
+        }
+    }
+    
+    func insertMovieCollection(idMovie: Int, typeMovie: Int,completionRequest:  @escaping ([String:Any]) -> Void){
+        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        let parameters: Parameters = [
+            "user": authenticationUser!.idUser,
+            "movie": idMovie,
+            "typeMovie": typeMovie
+        ]
+        Alamofire.request( "\(path)/api/collection/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers).responseJSON { response in
+            print(response)
+                if let res = response.result.value as? [String:Any] {
+                    completionRequest(res)
+                }
+        }
+    }
+    
+    func updateMovieCollection(idCollection:Int, typeMovie: Int,completionRequest:  @escaping ([String:Any]) -> Void){
+        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        let parameters: Parameters = [
+            "typeMovie": typeMovie
+        ]
+        Alamofire.request( "\(path)/api/collection/\(idCollection)/", method: .patch,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers).responseJSON { response in
+            print(response)
+            if let res = response.result.value as? [String:Any] {
+                completionRequest(res)
+            }
+        }
+    }
+    
     func getMoviesSwipe(Lang l: Int, Count c: Int,completionRequest:  @escaping ([[String:Any]])throws-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         
