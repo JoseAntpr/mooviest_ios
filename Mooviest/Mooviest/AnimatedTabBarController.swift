@@ -69,7 +69,7 @@ class AnimatedTabBarController: RAMAnimatedTabBarController {
         let tbItem2 = createAnimatedTabBarItem(title: "Advice", animation: RAMBounceAnimation(),
                                                namedIcon: "thumb-up", color: UIColor.white.withAlphaComponent(0.5),
                                                colorSelected: .white)
-        let tab2 = ViewController(nibName: nil, bundle: nil)
+        let tab2 = SearchViewController(nibName: nil, bundle: nil)
         let nVController2 = createNavigationController(rootViewController: tab2, title: tbItem2.title!)
         nVController2.tabBarItem = tbItem2
         

@@ -10,6 +10,9 @@ import Foundation
 
 extension MovieListInfo {
     init(json:[String:Any]) throws {
+        let externalImagePath = "https://cdn.tviso.com/"
+        let tvisoImagePath = "https://img.tviso.com/ES/poster/w200/"
+        let pre = "EXTERNAL#"
         //Extract id
         guard let id = json["id"] as? Int else{
             throw SerializationError.missing("id")
@@ -23,16 +26,20 @@ extension MovieListInfo {
             throw SerializationError.missing("title")
         }
         //Extract image
-        guard var image = json["image"] as? String else{
-            throw SerializationError.missing("image")
-        }
+        var image = ""
+        image.toString(string: json["image"])
+        
         //Extract average
         guard let average = json["average"] as? Float else{
             throw SerializationError.missing("average")
         }
         //Extract collection (que devuelve cuando no esté en ninguna lista)
-        guard let collection = json["collection"] as? [String:Any] else{
-            throw SerializationError.missing("collection")
+        var collection:[String:Any] = [
+            "id": -1,
+            "typeMovie": ""
+        ]
+        if let co = json["collection"] as? [String:Any] {
+            collection = co
         }
         //Extract idCollection
         guard let idCollection = collection["id"] as? Int else{
@@ -42,9 +49,15 @@ extension MovieListInfo {
         guard let typeMovie = collection["typeMovie"] as? String else{
             throw SerializationError.missing("typeMovie")
         }
-        if image.lowercased().range(of: "http://") == nil &&
-            image.lowercased().range(of: "https://") == nil {
-            image = "https://img.tviso.com/ES/poster/w430/"+image
+        if image != "" {
+            
+            if image.hasPrefix(pre) {
+                image = externalImagePath + image.substring(from: pre.endIndex) + ".jpg"
+                print(image)
+            } else if !image.hasPrefix("http://") &&
+                !image.hasPrefix("https://"){
+                image =  tvisoImagePath+image
+            }
         }
         
         // Initialize properties

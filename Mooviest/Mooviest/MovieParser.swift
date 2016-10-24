@@ -10,6 +10,9 @@ import Foundation
 
 extension Movie {
     init(json:[String:Any])throws {
+        let externalImagePath = "https://cdn.tviso.com/"
+        let tvisoImagePath = "https://img.tviso.com/ES/poster/w430/"
+        let pre = "EXTERNAL#"
         
         //Extract id
         guard let id = json["id"] as? Int else{
@@ -28,13 +31,12 @@ extension Movie {
             throw SerializationError.missing("original title")
         }
         //Extract image
-        guard var image = json["image"] as? String else{
-            throw SerializationError.missing("image")
-        }
+        var image = ""
+        image.toString(string: json["image"])
         //Extract backdrop
-        guard let backdrop = json["backdrop"] as? String else{
-            throw SerializationError.missing("backdrop")
-        }
+        var backdrop = ""
+        backdrop.toString(string: json["backdrop"])
+        
         //Extract synopsis
         guard let synopsis = json["synopsis"] as? String else{
             throw SerializationError.missing("synopsis")
@@ -61,9 +63,14 @@ extension Movie {
             country = c
         }
         //Extract collection (que devuelve cuando no esté en ninguna lista)
-        guard let collection = json["collection"] as? [String:Any] else{
-            throw SerializationError.missing("collection")
+        var collection:[String:Any] = [
+            "id": -1,
+            "typeMovie": ""
+        ]
+        if let co = json["collection"] as? [String:Any] {
+            collection = co
         }
+        
         //Extract idCollection
         guard let idCollection = collection["id"] as? Int else{
             throw SerializationError.missing("idCollection")
@@ -96,12 +103,12 @@ extension Movie {
         var participations = [Participation]()
         for p in participationsJson {
             let participation:Participation?
-           // do {
-                participation = try! Participation(json: p)
+            do {
+                participation = try Participation(json: p)
                 participations.append(participation!)
-//            } catch is SerializationError {
-//                participation = nil
-//            }
+            } catch is SerializationError {
+                participation = nil
+            }
         }
         
         var ratings = [Rating]()
@@ -114,11 +121,18 @@ extension Movie {
                 rating = nil
             }
         }
+        if backdrop != "" {
+            backdrop = "https://img.tviso.com/ES/backdrop/w600\(backdrop)"
+        }
         
-        //completar imagenes segun url
-        if image.lowercased().range(of: "http://") == nil &&
-            image.lowercased().range(of: "https://") == nil {
-            image =  "https://img.tviso.com/ES/poster/w430/"+image
+        if image != "" {
+            
+            if image.hasPrefix(pre) {
+                image = externalImagePath + image.substring(from: pre.endIndex)
+            } else if !image.hasPrefix("http://") &&
+                !image.hasPrefix("https://"){
+                image =  tvisoImagePath+image
+            }
         }
         
         self.id = id

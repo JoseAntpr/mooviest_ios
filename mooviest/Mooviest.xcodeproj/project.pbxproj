@@ -45,6 +45,8 @@
 		A96B9B551D8D53A10038F4D9 /* UserParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B9B541D8D53A10038F4D9 /* UserParser.swift */; };
 		A96DCE1E1D8C6EF900BC2119 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */; };
 		A972E6601DB7D3ED00E291AE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A972E65F1DB7D3ED00E291AE /* Message.swift */; };
+		A99105F01DBCDA4700659481 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105EF1DBCDA4700659481 /* SearchView.swift */; };
+		A99105F21DBCDA5800659481 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105F11DBCDA5800659481 /* SearchViewController.swift */; };
 		A9B12EB71DA79FD100F3EF4E /* AnimatedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B12EB61DA79FD100F3EF4E /* AnimatedTabBarController.swift */; };
 		A9B7B3441DAA37FF00A470BF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B7B3431DAA37FF00A470BF /* ProfileView.swift */; };
 		A9B7B3461DAA381100A470BF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B7B3451DAA381100A470BF /* ProfileViewController.swift */; };
@@ -129,6 +131,8 @@
 		A96B9B541D8D53A10038F4D9 /* UserParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserParser.swift; sourceTree = "<group>"; };
 		A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A972E65F1DB7D3ED00E291AE /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		A99105EF1DBCDA4700659481 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		A99105F11DBCDA5800659481 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A9B12EB61DA79FD100F3EF4E /* AnimatedTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedTabBarController.swift; sourceTree = "<group>"; };
 		A9B7B3431DAA37FF00A470BF /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		A9B7B3451DAA381100A470BF /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +207,7 @@
 				A965ACEB1D8AB6DC00F9FF47 /* MovieDetail */,
 				A9DD49BA1DACD87100DACA5E /* Lists */,
 				A96EEA9E1DA25E870057FEE6 /* Perfil */,
+				A99105EE1DBCDA0500659481 /* Search */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -353,6 +358,15 @@
 				A9E5C93E1DAC11E900CC2E34 /* EditProfileViewController.swift */,
 			);
 			name = Perfil;
+			sourceTree = "<group>";
+		};
+		A99105EE1DBCDA0500659481 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				A99105EF1DBCDA4700659481 /* SearchView.swift */,
+				A99105F11DBCDA5800659481 /* SearchViewController.swift */,
+			);
+			name = Search;
 			sourceTree = "<group>";
 		};
 		A9D757C91DAED19D00905253 /* Subview */ = {
@@ -584,6 +598,7 @@
 				A96B52551D89DDB00061A766 /* DraggableView.swift in Sources */,
 				A96B9B551D8D53A10038F4D9 /* UserParser.swift in Sources */,
 				A96411C91D8BE02C00E3AAB4 /* RegisterView.swift in Sources */,
+				A99105F01DBCDA4700659481 /* SearchView.swift in Sources */,
 				A96B52471D89D6B20061A766 /* Colors.swift in Sources */,
 				A96B52631D89DED40061A766 /* ParserProtocol.swift in Sources */,
 				A943A86F1D8AEF5900525BF7 /* ParticipationCollectionViewCell.swift in Sources */,
@@ -598,6 +613,7 @@
 				A9B8694E1D89E73E00DDC197 /* MovieParser.swift in Sources */,
 				A965ACE21D8AAE1C00F9FF47 /* MovieDetailView.swift in Sources */,
 				A96B52531D89DD610061A766 /* SwipeTabView.swift in Sources */,
+				A99105F21DBCDA5800659481 /* SearchViewController.swift in Sources */,
 				A9D757CB1DAED2C200905253 /* ListView.swift in Sources */,
 				A96DCE1E1D8C6EF900BC2119 /* RegisterViewController.swift in Sources */,
 				A96B520F1D89CCF70061A766 /* AppDelegate.swift in Sources */,

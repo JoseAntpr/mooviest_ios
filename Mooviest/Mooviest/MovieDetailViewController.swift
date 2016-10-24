@@ -46,14 +46,26 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     func loadDataView() {
-        v.headerBackdropImageView.kf_setImage(with: URL(string: "https://img.tviso.com/ES/backdrop/w600\(movie!.backdrop)"))
+        v.headerBackdropImageView.kf_setImage(with: URL(string: movie!.backdrop))
         v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
         v.infoView.synopsisTextView.text = movie?.synopsis
         ratings = movie.ratings
         participations = movie.participations
         v.infoView.ratingCollectionView.reloadData()
         v.castCollectionView.reloadData()
-        print(participations)
+        
+        switch movie.typeMovie {
+        case TypeMovie.black.rawValue:
+            v.closedButton.tintColor = UIColor(netHex: mooviest_red)
+        case TypeMovie.favourite.rawValue:
+            v.heartButton.tintColor = UIColor(netHex: mooviest_red)
+        case TypeMovie.seen.rawValue:
+            v.eyeButton.tintColor = UIColor(netHex: mooviest_red)
+        case TypeMovie.watchlist.rawValue:
+            v.clockButton.tintColor = UIColor(netHex: mooviest_red)
+        default:
+            break
+        }
     }
     
     func setupView() {
@@ -74,6 +86,11 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v.coverImageView.layer.borderWidth = 1.8
         v.coverImageView.layer.cornerRadius = 5
         v.coverImageView.layer.masksToBounds = true
+        
+        v.closedButton.addTarget(self, action: #selector(self.tapped), for: .touchUpInside)
+        v.heartButton.addTarget(self, action: #selector(self.tapped), for: .touchUpInside)
+        v.clockButton.addTarget(self, action: #selector(self.tapped), for: .touchUpInside)
+        v.eyeButton.addTarget(self, action: #selector(self.tapped), for: .touchUpInside)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -107,6 +124,54 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func updateTypeMovie(typemovie: Int) {
+        if movie.typeMovie == "" {//insert Collection
+            DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie+1){
+                (res) in
+                if let id = res["id"] as? Int {
+                    self.movie.idCollection = id
+                    if let typeMovie = res["typeMovie"] as? String {
+                        self.movie.typeMovie = typeMovie
+                    }
+                }
+            }
+        } else {
+            DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie+1){
+                (res) in
+                print(res)
+                if let id = res["id"] as? Int {
+                    self.movie.idCollection = id
+                    if let typeMovie = res["typeMovie"] as? String {
+                        self.movie.typeMovie = typeMovie
+                    }
+                }
+            }
+        }
+    }
+    
+    func selectTypeMovie(button: UIButton) {
+        button.tintColor = UIColor(netHex: mooviest_red)
+        
+        switch button {
+        case v.clockButton:
+            updateTypeMovie(typemovie: TypeMovie.watchlist.hashValue)
+        case v.heartButton:
+            updateTypeMovie(typemovie: TypeMovie.favourite.hashValue)
+        case v.eyeButton:
+            updateTypeMovie(typemovie: TypeMovie.seen.hashValue)
+        default:
+            updateTypeMovie(typemovie: TypeMovie.black.hashValue)
+        }
+    }
+    
+    func tapped(button: UIButton) {
+        v.closedButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
+        v.clockButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
+        v.eyeButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
+        v.heartButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
+        selectTypeMovie(button: button)
     }
     
     func setupConstraints() {

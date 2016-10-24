@@ -34,3 +34,11 @@ extension  Rating {
         self.dateUpdate = dateUpdate
     }
 }
+
+extension String {
+    mutating func toString(string s: Any){
+        if let string = s as? String {
+            self = string
+        }
+    }
+}

@@ -8,7 +8,13 @@
 
 import Foundation
 
-
+enum TypeMovie:String {
+    case seen = "seen"
+    case watchlist = "watchlist"
+    case favourite = "favourite"
+    case swipe = "swipe"
+    case black = "black"
+}
 
 struct Movie: Model {
     var id: Int

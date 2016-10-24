@@ -18,3 +18,4 @@ enum ErrorMovie:Error {
     case invalidParticipation
     case invalidResponseAPI
 }
+

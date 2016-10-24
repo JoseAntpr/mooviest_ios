@@ -86,22 +86,22 @@ class ListsView: UIView {
         
         listsScrollView.addConstraint(watchListViewCell.topAnchor.constraint(equalTo: listsScrollView.topAnchor, constant: margin))
         listsScrollView.addConstraint(watchListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))
-        listsScrollView.addConstraint(watchListViewCell.widthAnchor.constraint(equalTo: listsScrollView.widthAnchor))
+        listsScrollView.addConstraint(watchListViewCell.widthAnchor.constraint(equalTo: listsScrollView.widthAnchor, multiplier: 0.9))
         listsScrollView.addConstraint(watchListViewCell.heightAnchor.constraint(equalToConstant: width*0.5))
         
         listsScrollView.addConstraint(favouriteListViewCell.topAnchor.constraint(equalTo: watchListViewCell.bottomAnchor, constant: margin))
         listsScrollView.addConstraint(favouriteListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))
-        listsScrollView.addConstraint(favouriteListViewCell.widthAnchor.constraint(equalTo: listsScrollView.widthAnchor))
+        listsScrollView.addConstraint(favouriteListViewCell.widthAnchor.constraint(equalTo: watchListViewCell.widthAnchor))
         listsScrollView.addConstraint(favouriteListViewCell.heightAnchor.constraint(equalTo: watchListViewCell.heightAnchor))
         
         listsScrollView.addConstraint(seenListViewCell.topAnchor.constraint(equalTo: favouriteListViewCell.bottomAnchor, constant: margin))
         listsScrollView.addConstraint(seenListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))
-        listsScrollView.addConstraint(seenListViewCell.widthAnchor.constraint(equalTo: listsScrollView.widthAnchor))
+        listsScrollView.addConstraint(seenListViewCell.widthAnchor.constraint(equalTo: watchListViewCell.widthAnchor))
         listsScrollView.addConstraint(seenListViewCell.heightAnchor.constraint(equalTo: watchListViewCell.heightAnchor))
         
         listsScrollView.addConstraint(blackListViewCell.topAnchor.constraint(equalTo: seenListViewCell.bottomAnchor, constant: margin))
         listsScrollView.addConstraint(blackListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))
-        listsScrollView.addConstraint(blackListViewCell.widthAnchor.constraint(equalTo: listsScrollView.widthAnchor))
+        listsScrollView.addConstraint(blackListViewCell.widthAnchor.constraint(equalTo: watchListViewCell.widthAnchor))
         listsScrollView.addConstraint(blackListViewCell.heightAnchor.constraint(equalTo: watchListViewCell.heightAnchor))
     }
 }
