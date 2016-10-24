@@ -17,7 +17,9 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let user = DataModel.sharedInstance.user
     var height:CGFloat!
     var v:ListView!
+    var nextUrl = ""
     var movies = [MovieListInfo]()
+    var typeMovie =  ""
     let movieCellIdentifier = "movieCollectionViewCell"
     
     override func viewDidLoad() {
@@ -62,10 +64,50 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return size
     }
     
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath){
+        if indexPath.row == movies.count-10 {
+            nextMovies()
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        reloadList()
+    }
+    
+    func reloadList(){
+        DataModel.sharedInstance.getMovieList(listname: typeMovie) {
+            (data, next) in
+            self.nextUrl = next
+            self.movies.removeAll()
+            for m in data {
+                let movie:MovieListInfo?
+                movie = try! MovieListInfo(json: m)
+                self.movies.append(movie!)
+            }
+            self.v.movieCollectionView.reloadData()
+        }
+    }
+    
+    func nextMovies(){
+        if nextUrl != "" {
+            DataModel.sharedInstance.nextMovies(url: nextUrl) {
+                (data, next) in
+                self.nextUrl = next
+                for m in data {
+                    let movie:MovieListInfo?
+                    movie = try! MovieListInfo(json: m)
+                    self.movies.append(movie!)
+                }
+                //guardar offset
+                self.v.movieCollectionView.reloadData()
+                //poner offset guardado
+            }
+        }
     }
     
     func setupView() {

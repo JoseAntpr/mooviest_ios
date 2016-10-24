@@ -11,6 +11,7 @@ import UIKit
 class ListsView: UIView {
     let height = UIApplication.shared.statusBarFrame.size.height
     let width = UIApplication.shared.statusBarFrame.size.width
+    var heightItemListView:CGFloat!
     let margin:CGFloat = 5
     var backgroundStatusView = UIView()
     
@@ -47,7 +48,9 @@ class ListsView: UIView {
         seenListViewCell.titleLabel.text = "Seen list"
         blackListViewCell.titleLabel.text = "Black list"
         
-        listsScrollView.contentSize.height = width*2 + margin*4
+        heightItemListView = width*0.6
+        
+        listsScrollView.contentSize.height = heightItemListView*4 + margin*4
         
         listsScrollView.addSubview(watchListViewCell)
         listsScrollView.addSubview(favouriteListViewCell)
@@ -86,8 +89,8 @@ class ListsView: UIView {
         
         listsScrollView.addConstraint(watchListViewCell.topAnchor.constraint(equalTo: listsScrollView.topAnchor, constant: margin))
         listsScrollView.addConstraint(watchListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))
-        listsScrollView.addConstraint(watchListViewCell.widthAnchor.constraint(equalTo: listsScrollView.widthAnchor, multiplier: 0.9))
-        listsScrollView.addConstraint(watchListViewCell.heightAnchor.constraint(equalToConstant: width*0.5))
+        listsScrollView.addConstraint(watchListViewCell.widthAnchor.constraint(equalTo: listsScrollView.widthAnchor, multiplier: 0.95))
+        listsScrollView.addConstraint(watchListViewCell.heightAnchor.constraint(equalToConstant: heightItemListView))
         
         listsScrollView.addConstraint(favouriteListViewCell.topAnchor.constraint(equalTo: watchListViewCell.bottomAnchor, constant: margin))
         listsScrollView.addConstraint(favouriteListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))

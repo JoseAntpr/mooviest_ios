@@ -9,32 +9,24 @@
 import UIKit
 import Kingfisher
 
-
-
 class ListsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     var height:CGFloat!
     let user = DataModel.sharedInstance.user
     
     var v: ListsView!
-    var movies = [MovieListInfo]()
+    var watchList = [MovieListInfo]()
+    var nextWatch = ""
+    var favouriteList = [MovieListInfo]()
+    var nextFavourite = ""
+    var seenList = [MovieListInfo]()
+    var nextSeen = ""
+    var blackList = [MovieListInfo]()
+    var nextBlack = ""
     let movieCellIdentifier = "movieCollectionViewCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        DataModel.sharedInstance.getMovieList(listname: "watchlist", page: 1) {
-            (data) in
-            print(data)
-            for m in data {
-                let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m)
-                self.movies.append(movie!)
-            }
-            self.v.favouriteListViewCell.movieCollectionView.reloadData()
-            self.v.watchListViewCell.movieCollectionView.reloadData()
-            self.v.seenListViewCell.movieCollectionView.reloadData()
-            self.v.blackListViewCell.movieCollectionView.reloadData()
-        }
+        reloadList()
         self.setupView()
         self.view.addSubview(self.v)
         self.setupConstraints()
@@ -48,46 +40,35 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         return UIStatusBarStyle.lightContent
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell:UICollectionViewCell!
-        let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCellIdentifier, for: indexPath as IndexPath) as! MovieCollectionViewCell
+    func getList(collectionView: UICollectionView)->[MovieListInfo] {
+        var list:[MovieListInfo]!
         
         switch collectionView {
-        case v.watchListViewCell.movieCollectionView:
-            let url = URL(string: movies[indexPath.item].image)
-            customCell.movieImageView.kf_setImage(with: url,placeholder: UIImage(named:  "noimage"))
-            cell = customCell
-        case v.favouriteListViewCell.movieCollectionView:
-            let url = URL(string: movies[indexPath.item].image)
-            customCell.movieImageView.kf_setImage(with: url,placeholder: UIImage(named:  "noimage"))
-            cell = customCell
-        default:
-            let url = URL(string: movies[indexPath.item].image)
-            customCell.movieImageView.kf_setImage(with: url,placeholder: UIImage(named:  "noimage"))
-            cell = customCell
+            case v.watchListViewCell.movieCollectionView: list = watchList
+            case v.favouriteListViewCell.movieCollectionView: list = favouriteList
+            case v.seenListViewCell.movieCollectionView: list = seenList
+            default: list = blackList
         }
-        cell.layer.masksToBounds = true
+        return list
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let image = getList(collectionView: collectionView)[indexPath.item].image
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCellIdentifier, for: indexPath as IndexPath) as! MovieCollectionViewCell
+        cell.movieImageView.kf_setImage(with: URL(string: image),placeholder: UIImage(named:  "noimage"))
         cell.layer.cornerRadius = 5
-     
+        cell.layer.masksToBounds = true
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var count = 0
-        switch collectionView {
-        case v.watchListViewCell.movieCollectionView:
-            count = movies.count
-        case v.favouriteListViewCell.movieCollectionView:
-            count = movies.count
-        default:
-           count = movies.count
-        }
-        return count
+        return getList(collectionView: collectionView).count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nViewController = MovieDetailViewController()
-        nViewController.movieListInfo = movies[indexPath.row]
+        nViewController.movieListInfo = getList(collectionView: collectionView)[indexPath.item]
         navigationController?.pushViewController(nViewController, animated: true)
     }
     
@@ -103,6 +84,57 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
+        reloadList()
+    }
+    
+    func reloadList(){
+        DataModel.sharedInstance.getMovieList(listname: TypeMovie.watchlist.rawValue) {
+            (data, next) in
+            self.nextWatch = next
+            self.watchList.removeAll()
+            for m in data {
+                let movie:MovieListInfo?
+                movie = try! MovieListInfo(json: m)
+                self.watchList.append(movie!)
+            }
+            self.v.watchListViewCell.movieCollectionView.reloadData()
+        }
+        
+        DataModel.sharedInstance.getMovieList(listname: TypeMovie.favourite.rawValue) {
+            (data,next) in
+            self.nextFavourite = next
+            self.favouriteList.removeAll()
+            for m in data {
+                let movie:MovieListInfo?
+                movie = try! MovieListInfo(json: m)
+                self.favouriteList.append(movie!)
+            }
+            self.v.favouriteListViewCell.movieCollectionView.reloadData()
+        }
+        
+        DataModel.sharedInstance.getMovieList(listname: TypeMovie.seen.rawValue) {
+            (data,next) in
+            self.nextSeen = next
+            self.seenList.removeAll()
+            for m in data {
+                let movie:MovieListInfo?
+                movie = try! MovieListInfo(json: m)
+                self.seenList.append(movie!)
+            }
+            self.v.seenListViewCell.movieCollectionView.reloadData()
+        }
+        
+        DataModel.sharedInstance.getMovieList(listname: TypeMovie.black.rawValue) {
+            (data,next) in
+            self.nextBlack = next
+            self.blackList.removeAll()
+            for m in data {
+                let movie:MovieListInfo?
+                movie = try! MovieListInfo(json: m)
+                self.blackList.append(movie!)
+            }
+            self.v.blackListViewCell.movieCollectionView.reloadData()
+        }
     }
     
     func setupView() {
@@ -136,11 +168,17 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         switch button {
         case v.watchListViewCell.moreButton:
-            nViewController.movies = movies
+            nViewController.typeMovie = TypeMovie.watchlist.rawValue
+            nViewController.nextUrl = nextWatch
         case v.favouriteListViewCell.moreButton:
-            nViewController.movies = movies
+            nViewController.typeMovie = TypeMovie.favourite.rawValue
+            nViewController.nextUrl = nextFavourite
+        case v.seenListViewCell.moreButton:
+            nViewController.typeMovie = TypeMovie.seen.rawValue
+            nViewController.nextUrl = nextSeen
         default:
-            nViewController.movies = movies
+            nViewController.typeMovie = TypeMovie.black.rawValue
+            nViewController.nextUrl = nextBlack
         }
         navigationController?.pushViewController(nViewController, animated: true)
     }
