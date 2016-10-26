@@ -60,6 +60,8 @@ class DraggableView: UIView {
         
         backgroundColor = UIColor.white.withAlphaComponent(0)
         coverView = CoverView(porcentCaption: 0.15, porcentTitle: 0.5 )
+        coverView.layer.cornerRadius = 5
+        coverView.layer.masksToBounds = true
     
         noImageLabel = UILabel()
         noImageLabel.text = "Image No Found"

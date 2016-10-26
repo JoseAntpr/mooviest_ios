@@ -178,7 +178,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func changeSecureText(button: UIButton) {
         if let textField = button.superview as? UITextField {
             textField.isSecureTextEntry = !textField.isSecureTextEntry
-            textField.rightView?.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(textField.isSecureTextEntry ? 0.4:0.9)
+            button.setImage(UIImage(named: textField.isSecureTextEntry ? "eye_off" : "eye"), for: UIControlState())
         }
     }
     
@@ -233,7 +233,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let user = v.userOrEmailTextFieldView.getText()
         let pass = v.passLoginTextFieldView.getText()
         
-        
         DataModel.sharedInstance.login(Username: user, Password: pass) {
             (successful,message) in
             print(message)
@@ -253,44 +252,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = tabBarController
     }
-    
-//    func chargueApp() {
-//        let tabBarController = UITabBarController()
-//        let tab1 = SwipeTabViewController(nibName: nil, bundle: nil)
-//        let tab2 = ViewController(nibName: nil, bundle: nil)
-//        let tab3 = ViewController(nibName: nil, bundle: nil)
-//        let tab4 = ViewController(nibName: nil, bundle: nil)
-//
-//        let swipe = UIImage(named: "Swipe")
-//        let thumbUp = UIImage(named: "thumb-up")
-//        let account = UIImage(named: "account")
-//        let account2 = UIImage(named: "account")
-//
-//        tab1.tabBarItem = UITabBarItem(title: "Swipe", image: swipe, tag: 1)
-//        tab2.tabBarItem = UITabBarItem(title: "Recomendaciones", image: thumbUp, tag: 2)
-//        tab3.tabBarItem = UITabBarItem(title: "Listas", image: account, tag: 3)
-//        tab4.tabBarItem = UITabBarItem(title: "Perfil", image: account2, tag: 4)
-//
-//        let nVController1 = UINavigationController(rootViewController: tab1)
-//        nVController1.navigationBar.isTranslucent = false
-//        navigationController?.pushViewController(tabBarController, animated: true)
-//
-//        //crear un protocolo que la vista tenga un nav controller con unos parametros por defectos que serán los siguientes
-//        nVController1.navigationBar.topItem?.titleView = UIImageView(image: UIImage(named: "title")!.withRenderingMode(.alwaysOriginal))
-//        nVController1.navigationBar.barTintColor = UIColor(netHex: mooviest_red)
-//        nVController1.navigationItem.backBarButtonItem = nil
-//        nVController1.navigationBar.barStyle = UIBarStyle.black
-//
-//        tabBarController.viewControllers = [nVController1, tab2, tab3, tab4]
-//        tabBarController.tabBar.isTranslucent = false
-//        
-//       // UITabBar.appearance().barTintColor = UIColor(netHex: mooviest_red).withAlphaComponent(1)
-//        UITabBar.appearance().tintColor = UIColor(netHex: mooviest_red)
-//        
-//
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        appDelegate.window?.rootViewController = tabBarController
-//    }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent

@@ -69,7 +69,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
-        searchBar.becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {

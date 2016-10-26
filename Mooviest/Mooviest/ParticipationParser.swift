@@ -40,7 +40,7 @@ extension Participation {
             throw SerializationError.missing("address")
         }
         //Extract role
-        guard let role = json["role"] as? Int else{
+        guard let role = json["role"] as? String else{
             throw SerializationError.missing("role")
         }
         //Extract character

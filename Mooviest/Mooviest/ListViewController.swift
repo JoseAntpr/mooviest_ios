@@ -75,6 +75,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
         reloadList()
     }
     

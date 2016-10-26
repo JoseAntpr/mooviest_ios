@@ -11,7 +11,7 @@ import Kingfisher
 
 
 
-class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ParticipationMovieProtocol {
 
     var offset_CoverStopScale:CGFloat!
     var offset_BackdropFadeOff:CGFloat!
@@ -99,7 +99,18 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v.seeScrollView.contentSize.height = v.seeView.frame.size.height*2
         v.infoScrollView.contentSize.height = v.seeView.frame.size.height
         changeTabs(index: 0)
-        calculateOffset()        
+        v.barSegmentedControl.selectedSegmentIndex = 0
+        calculateOffset()
+    }
+    
+    override func willMove(toParentViewController parent: UIViewController?) {
+        if parent == nil {
+            if let vc = navigationController?.viewControllers[0] as? SwipeTabViewController {
+                vc.movies[0].idCollection = movie.idCollection
+                vc.movies[0].typeMovie = movie.typeMovie
+            }
+             
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -281,10 +292,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         var cell:UICollectionViewCell!
         if collectionView == v.castCollectionView {
             let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: participationCellIdentifier, for: indexPath as IndexPath) as! ParticipationCollectionViewCell
-            customCell.backgroundColor = UIColor.red
-            let url = URL(string: participations[indexPath.item].image)
-            customCell.faceImageView.kf_setImage(with: url,placeholder: UIImage(named:  "noimage"))
-            cell = customCell
+            cell = loadParticipationToView(ParticipationCollectionViewCell: customCell, participation: participations[indexPath.item])            
         } else {
             let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: ratingCellIdentifier, for: indexPath as IndexPath) as! RatingCollectionViewCell
             customCell.backgroundColor = UIColor.red

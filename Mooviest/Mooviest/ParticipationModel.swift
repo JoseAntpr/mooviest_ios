@@ -15,7 +15,7 @@ struct Participation:Model {
     var born: String
     var twitter: String
     var address: String
-    var role: Int
+    var role: String
     var character: String
     var award: String
 }

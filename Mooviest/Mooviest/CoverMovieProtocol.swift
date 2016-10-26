@@ -1,5 +1,5 @@
 //
-//  MoviewCollectionProtocol.swift
+//  CoverMovieProtocol.swift
 //  Mooviest
 //
 //  Created by Antonio RG on 25/10/16.
@@ -15,9 +15,7 @@ protocol CoverMovieProtocol {
 
 extension CoverMovieProtocol {
     func loadMovieToView (coverView: CoverView, movie: MovieListInfo )-> CoverView {
-        coverView.movieImageView.kf_setImage(with: URL(string: movie.image),placeholder: UIImage(named:  "noimage"))
-        coverView.layer.cornerRadius = 5
-        coverView.layer.masksToBounds = true
+        coverView.movieImageView.kf_setImage(with: URL(string: movie.image),placeholder: UIImage(named:  "noimage"))        
         coverView.titleLabel.text = movie.title
         coverView.ratingLabel.text = "\(movie.average)"
         

@@ -33,7 +33,7 @@ class CoverView: UIView {
     func setupComponents() {
         self.backgroundColor = UIColor.blue
         
-        ratingImageView.image = UIImage(named: "star")?.withRenderingMode(.alwaysTemplate)
+        ratingImageView.image = UIImage(named: "star_rate")?.withRenderingMode(.alwaysTemplate)
         ratingImageView.tintColor = UIColor(netHex: favourite_color)
         ratingImageView.contentMode = .scaleToFill
         
@@ -47,14 +47,12 @@ class CoverView: UIView {
         movieImageView.contentMode = .scaleToFill
         
         captionView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.4)
-        
         captionView.addSubview(ratingImageView)
         captionView.addSubview(ratingLabel)
         captionView.addSubview(titleLabel)
         
         addSubview(movieImageView)
         addSubview(captionView)
-        
     }
     
     func setupConstraints() {
@@ -73,7 +71,6 @@ class CoverView: UIView {
         addConstraint(captionView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(captionView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(captionView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: porcentCaption))
-        
         
         addConstraint(titleLabel.topAnchor.constraint(equalTo: captionView.topAnchor))
         addConstraint(titleLabel.leftAnchor.constraint(equalTo: captionView.leftAnchor))

@@ -11,9 +11,9 @@ import UIKit
 import Kingfisher
 
 class SwipeTabViewController: UIViewController, DraggableViewDelegate, CoverMovieProtocol {
+    let MAX_BUFFER_SIZE = 2
     var v: SwipeTabView!
     var allCards: [DraggableView]!
-    let MAX_BUFFER_SIZE = 2
     var nextUrl = ""
     var loadedCards = [DraggableView]()
     var movies = [MovieListInfo]()
@@ -44,8 +44,27 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, CoverMovi
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
     override func viewWillAppear(_ animated: Bool) {        
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
+        updateSwipe()
+    }
+    
+    func updateSwipe() {
+        if movies.count > 0 && movies[0].typeMovie != "" {
+            switch movies[0].typeMovie {
+            case TypeMovie.watchlist.rawValue:
+                clickSwipeTop()
+            case TypeMovie.seen.rawValue:
+                clickSwipeBottom()
+            case TypeMovie.favourite.rawValue:
+                clickSwipeRight()
+            default:
+                clickSwipeLeft()
+            }
+        }
     }
     
     func tappedCard(_ sender: UITapGestureRecognizer) {

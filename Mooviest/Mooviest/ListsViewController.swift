@@ -56,7 +56,8 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         let movie = getList(collectionView: collectionView)[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCellIdentifier, for: indexPath as IndexPath) as! MovieCollectionViewCell
         cell.coverView = loadMovieToView(coverView: cell.coverView, movie: movie)
-        
+        cell.coverView.layer.cornerRadius = 5
+        cell.coverView.layer.masksToBounds = true
         return cell
     }
     

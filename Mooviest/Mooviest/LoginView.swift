@@ -131,14 +131,15 @@ class LoginView: UIView {
         backLoginButton.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: UIControlState())
         backLoginButton.alpha = 0.0
         
-        clearTextButton = UIButton(type: UIButtonType.system) as UIButton //(type: UIButtonType.system) as UIButton
-        clearTextButton.setImage(UIImage(named: "replay"), for: UIControlState())
+        clearTextButton = UIButton(type: UIButtonType.system) as UIButton
+        clearTextButton.setImage(UIImage(named: "clear"), for: UIControlState())
         clearTextButton.contentMode = .scaleToFill
-        clearTextButton.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(0.4)
+        clearTextButton.tintColor = .gray
         
-        secureTextButton = UIButton(type: UIButtonType.system) as UIButton //(type: UIButtonType.system) as UIButton
-        secureTextButton.setImage(UIImage(named: "eye"), for: UIControlState())
-        secureTextButton.tintColor = UIColor(netHex: placeholder_gray).withAlphaComponent(0.4)
+        secureTextButton = UIButton(type: UIButtonType.system) as UIButton
+        secureTextButton.setImage(UIImage(named: "eye_off"), for: UIControlState())
+        secureTextButton.tintColor = .gray
+        secureTextButton.contentMode = .scaleToFill
         
         formRegisterView.addSubview(padingRegisterformView)
         padingRegisterformView.addSubview(userTextFieldView)

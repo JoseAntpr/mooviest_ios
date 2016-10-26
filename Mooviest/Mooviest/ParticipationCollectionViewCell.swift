@@ -9,6 +9,10 @@
 import UIKit
 
 class ParticipationCollectionViewCell: UICollectionViewCell {
+    let captionView = UIView()
+    let roleLabel = UILabel()
+    let nameLabel = UILabel()
+    
     var faceImageView = UIImageView()
     
     override init(frame: CGRect) {
@@ -25,16 +29,49 @@ class ParticipationCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = UIColor.blue
         faceImageView.contentMode = .scaleToFill
         
+        captionView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.4)
+        
+        nameLabel.text = "Nombre"
+        nameLabel.textColor = .white
+        nameLabel.textAlignment = .center
+        nameLabel.lineBreakMode = .byWordWrapping
+        nameLabel.numberOfLines = 2
+
+        roleLabel.text = "Role"
+        roleLabel.textColor = .white
+        roleLabel.textAlignment = .center
+        
+        captionView.addSubview(nameLabel)
+        captionView.addSubview(roleLabel)
+
         addSubview(faceImageView)
+        addSubview(captionView)
     }
     
     func setupConstraints() {
         faceImageView.translatesAutoresizingMaskIntoConstraints = false
+        captionView.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        roleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(faceImageView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(faceImageView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(faceImageView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(faceImageView.heightAnchor.constraint(equalTo: heightAnchor))
         
+        addConstraint(captionView.bottomAnchor.constraint(equalTo: bottomAnchor))
+        addConstraint(captionView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(captionView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(captionView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5))
+        
+        captionView.addConstraint(nameLabel.topAnchor.constraint(equalTo: captionView.topAnchor))
+        captionView.addConstraint(nameLabel.leftAnchor.constraint(equalTo: captionView.leftAnchor))
+        captionView.addConstraint(nameLabel.widthAnchor.constraint(equalTo: captionView.widthAnchor))
+        captionView.addConstraint(nameLabel.heightAnchor.constraint(equalTo: captionView.heightAnchor, multiplier: 0.7))
+        
+        captionView.addConstraint(roleLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor))
+        captionView.addConstraint(roleLabel.leftAnchor.constraint(equalTo: captionView.leftAnchor))
+        captionView.addConstraint(roleLabel.widthAnchor.constraint(equalTo: captionView.widthAnchor))
+        captionView.addConstraint(roleLabel.heightAnchor.constraint(equalTo: captionView.heightAnchor, multiplier: 0.3))
     }
 }
