@@ -14,3 +14,8 @@ let dark_gray = 0x212121
 let medium_gray = 0x343434
 let light_gray = 0xeeeeee
 let placeholder_gray = 0x848484
+
+let seen_color = 0x3cca81
+let watchlist_color = 0x0090ff
+let favourite_color = 0xffcc00
+let blacklist_color = 0xe74034

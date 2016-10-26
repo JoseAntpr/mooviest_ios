@@ -8,6 +8,11 @@
 
 import Foundation
 
+let lang = [
+    "en": 1,
+    "es": 2
+]
+
 struct User:Model {
     var id: Int
     var username:String

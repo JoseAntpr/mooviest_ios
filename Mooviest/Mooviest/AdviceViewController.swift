@@ -1,23 +1,21 @@
 //
-//  ListViewController.swift
+//  AdviceViewController.swift
 //  Mooviest
 //
-//  Created by Antonio RG on 12/10/16.
+//  Created by Antonio RG on 25/10/16.
 //  Copyright © 2016 Mooviest. All rights reserved.
 //
-
 
 import UIKit
 import Kingfisher
 
 
 
-class ListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CoverMovieProtocol {
+class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CoverMovieProtocol {
     
     let user = DataModel.sharedInstance.user
     var height:CGFloat!
     var v:ListView!
-    var ctrlTitle = ""
     var nextUrl = ""
     var movies = [MovieListInfo]()
     var typeMovie =  ""
@@ -79,7 +77,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func reloadList(){
-        DataModel.sharedInstance.getMovieList(listname: typeMovie) {
+        DataModel.sharedInstance.getMoviesSwipe() {
             (data, next) in
             self.nextUrl = next
             self.movies.removeAll()
@@ -116,7 +114,16 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
         v.movieCollectionView.dataSource = self
         v.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
         
-        navigationItem.title = ctrlTitle
+        let searchButton = UIBarButtonItem(image: UIImage(named: "search"),
+                                           style: UIBarButtonItemStyle.plain ,
+                                           target: self, action: #selector(self.search))
+        searchButton.tintColor = UIColor.white
+        navigationItem.rightBarButtonItem = searchButton
+    }
+    
+    func search() {
+        let nViewController = SearchViewController()
+        navigationController?.pushViewController(nViewController, animated: true)
     }
     
     func setupConstraints() {
@@ -126,9 +133,5 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
         view.addConstraint(v.rightAnchor.constraint(equalTo: view.rightAnchor))
         view.addConstraint(v.topAnchor.constraint(equalTo: view.topAnchor))
         view.addConstraint(v.bottomAnchor.constraint(equalTo: view.bottomAnchor))
-    }
-    
-    func goList(){
-        print("list")
     }
 }

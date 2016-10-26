@@ -12,7 +12,7 @@ class ListsView: UIView {
     let height = UIApplication.shared.statusBarFrame.size.height
     let width = UIApplication.shared.statusBarFrame.size.width
     var heightItemListView:CGFloat!
-    let margin:CGFloat = 5
+    let margin:CGFloat = 8
     var backgroundStatusView = UIView()
     
     var heightNavBar:CGFloat!
@@ -48,9 +48,9 @@ class ListsView: UIView {
         seenListViewCell.titleLabel.text = "Seen list"
         blackListViewCell.titleLabel.text = "Black list"
         
-        heightItemListView = width*0.6
+        heightItemListView = width*0.7
         
-        listsScrollView.contentSize.height = heightItemListView*4 + margin*4
+        listsScrollView.contentSize.height = heightItemListView*4 + margin*6
         
         listsScrollView.addSubview(watchListViewCell)
         listsScrollView.addSubview(favouriteListViewCell)
@@ -106,5 +106,12 @@ class ListsView: UIView {
         listsScrollView.addConstraint(blackListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))
         listsScrollView.addConstraint(blackListViewCell.widthAnchor.constraint(equalTo: watchListViewCell.widthAnchor))
         listsScrollView.addConstraint(blackListViewCell.heightAnchor.constraint(equalTo: watchListViewCell.heightAnchor))
+    }
+    
+    func adjustFontSizeToFitHeight () {
+        watchListViewCell.adjustFontSizeToFitHeight()
+        favouriteListViewCell.adjustFontSizeToFitHeight()
+        seenListViewCell.adjustFontSizeToFitHeight()
+        blackListViewCell.adjustFontSizeToFitHeight()
     }
 }

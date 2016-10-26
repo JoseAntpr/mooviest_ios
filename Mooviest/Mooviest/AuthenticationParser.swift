@@ -22,9 +22,19 @@ extension Authentication {
         guard let idUser = userJson["id"] as? Int else{
             throw SerializationError.missing("id")
         }
+        //Extract profile
+        guard let profileJson = userJson["profile"] as? [String:Any] else {
+            throw SerializationError.missing("profile")
+        }
+        //Extract code lang
+        guard let langJson = profileJson["lang"] as? [String:Any],
+            let codeLang = langJson["code"] as? String else {
+                throw SerializationError.missing("langCode")
+        }
         
         // Initialize properties
         self.idUser = idUser
         self.token = token
+        self.codeLang = codeLang
     }
 }

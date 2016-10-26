@@ -11,4 +11,5 @@ import Foundation
 struct Authentication:Model {
     var idUser: Int
     var token: String
+    var codeLang:String
 }

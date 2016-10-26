@@ -36,28 +36,22 @@ class DraggableView: UIView {
     var panGestureRecognizer: UIPanGestureRecognizer!
     var originPoint: CGPoint!
     var overlayView: OverlayView!
-    var imageView: UIImageView!
+    var coverView:CoverView!
     var noImageLabel: UILabel!
     
     var xFromCenter: Float!
     var yFromCenter: Float!
-    var index:Int!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    init(index: Int) {
+    init() {
         super.init(frame: CGRect.zero)
-        self.index = index
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(DraggableView.beingDragged(_:)))
         addGestureRecognizer(panGestureRecognizer)
         setupComponents()
         setupConstraints()
-    }
-    
-    func getIndex()-> Int{
-        return index
     }
     
     func setupComponents() {
@@ -65,34 +59,32 @@ class DraggableView: UIView {
         yFromCenter = 0
         
         backgroundColor = UIColor.white.withAlphaComponent(0)
+        coverView = CoverView(porcentCaption: 0.15, porcentTitle: 0.5 )
+    
         noImageLabel = UILabel()
         noImageLabel.text = "Image No Found"
         noImageLabel.textColor = UIColor.white
         noImageLabel.textAlignment = NSTextAlignment.center
         noImageLabel.font = noImageLabel.font.withSize(30)
         
-        imageView = UIImageView(image: UIImage(named: "clock"))
-        imageView.contentMode = UIViewContentMode.scaleToFill
-        imageView.layer.cornerRadius = 5
-        imageView.layer.masksToBounds = true
-        
         overlayView = OverlayView()
         overlayView.alpha = 0
+        
         addSubview(noImageLabel)
-        addSubview(imageView)
+        addSubview(coverView)
         addSubview(overlayView)
         
     }
     
     func setupConstraints() {
         noImageLabel.translatesAutoresizingMaskIntoConstraints = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        coverView.translatesAutoresizingMaskIntoConstraints = false
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(imageView.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(imageView.topAnchor.constraint(equalTo: topAnchor))
-        addConstraint(imageView.rightAnchor.constraint(equalTo: rightAnchor))
-        addConstraint(imageView.bottomAnchor.constraint(equalTo: bottomAnchor))
+        addConstraint(coverView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(coverView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(coverView.rightAnchor.constraint(equalTo: rightAnchor))
+        addConstraint(coverView.bottomAnchor.constraint(equalTo: bottomAnchor))
         
         addConstraint(overlayView.centerXAnchor.constraint(equalTo: centerXAnchor))
         addConstraint(overlayView.centerYAnchor.constraint(equalTo: centerYAnchor))

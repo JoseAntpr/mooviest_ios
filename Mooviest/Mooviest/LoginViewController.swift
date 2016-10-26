@@ -204,14 +204,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             let user = v.userTextFieldView.getText()
             let pass = v.passTextFieldView.getText()
             let email = v.emailTextFieldView.getText()
-            let langCode = "es" //sacar idioma del movil
             
-            DataModel.sharedInstance.register(Username: user, Password: pass, Email: email, Lang: langCode) {
+            DataModel.sharedInstance.register(Username: user, Password: pass, Email: email) {
                 (data) in
-                print("resgister")
                 //menssage emergente Success register
                 do {
-                    DataModel.sharedInstance.user = try User(json: data)
+                    DataModel.sharedInstance.authenticationUser = try Authentication(json: data)
                     Message.msgPopupDelay(title: "Confirm", message: "Register successful", delay: 1, ctrl: self){
                         self.hiddenFormRegister()
                     }

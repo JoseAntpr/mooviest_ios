@@ -16,7 +16,7 @@ class SearchView: UIView {
     var backgroundStatusView = UIView()
     var headerView = UIView()
 
-    let searchBar = UISearchBar()
+//    let searchBar = UISearchBar()
     var movieCollectionView:UICollectionView!
 
     init(heightNavBar h: CGFloat) {
@@ -32,7 +32,7 @@ class SearchView: UIView {
     
     func setupComponents() {
         self.backgroundColor = UIColor.white
-        searchBar.barTintColor = UIColor(netHex: mooviest_red)
+//        searchBar.barTintColor = UIColor(netHex: mooviest_red)
         
         backgroundStatusView.backgroundColor = UIColor(netHex: dark_gray).withAlphaComponent(0.5)
         headerView.backgroundColor = UIColor(netHex: mooviest_red)
@@ -48,14 +48,14 @@ class SearchView: UIView {
         
         addSubview(headerView)
         addSubview(movieCollectionView)
-        addSubview(searchBar)
+//        addSubview(searchBar)
         addSubview(backgroundStatusView)
     }
     
     func setupConstraints() {
         backgroundStatusView.translatesAutoresizingMaskIntoConstraints = false
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
+//        searchBar.translatesAutoresizingMaskIntoConstraints = false
         movieCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
@@ -68,13 +68,13 @@ class SearchView: UIView {
         addConstraint(headerView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(headerView.heightAnchor.constraint(equalToConstant: height + heightNavBar))
         
-        addConstraint(searchBar.topAnchor.constraint(equalTo: headerView.bottomAnchor))
-        addConstraint(searchBar.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(searchBar.rightAnchor.constraint(equalTo: rightAnchor))
-        addConstraint(searchBar.heightAnchor.constraint(equalToConstant: 40))
+//        addConstraint(searchBar.topAnchor.constraint(equalTo: headerView.bottomAnchor))
+//        addConstraint(searchBar.leftAnchor.constraint(equalTo: leftAnchor))
+//        addConstraint(searchBar.rightAnchor.constraint(equalTo: rightAnchor))
+//        addConstraint(searchBar.heightAnchor.constraint(equalToConstant: 40))
         
-        addConstraint(movieCollectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor))
-        addConstraint(movieCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor))
+        addConstraint(movieCollectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor,constant:1))
+        addConstraint(movieCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor,constant:-1))
         addConstraint(movieCollectionView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(movieCollectionView.rightAnchor.constraint(equalTo: rightAnchor))
     }

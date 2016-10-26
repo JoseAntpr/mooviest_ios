@@ -27,7 +27,8 @@ class OverlayView: UIView{
     init() {
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.white.withAlphaComponent(0)
-        imageView = UIImageView(image: UIImage(named: "closes"))
+        imageView = UIImageView(image: UIImage(named: "clear")?.withRenderingMode(.alwaysTemplate))
+        imageView.tintColor = UIColor(netHex: blacklist_color)
         self.addSubview(imageView)
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -45,13 +46,17 @@ class OverlayView: UIView{
         _mode = mode
         
         if _mode == GGOverlayViewMode.ggOverlayViewModeLeft {
-            imageView.image = UIImage(named: "closes")
+            imageView.image = UIImage(named: "clear")?.withRenderingMode(.alwaysTemplate)
+            imageView.tintColor = UIColor(netHex: blacklist_color)
         } else if _mode == GGOverlayViewMode.ggOverlayViewModeRight {
-            imageView.image = UIImage(named: "heart")
+            imageView.image = UIImage(named: "star")?.withRenderingMode(.alwaysTemplate)
+            imageView.tintColor = UIColor(netHex: favourite_color)
         } else if _mode == GGOverlayViewMode.ggOverlayViewModeTop {
-            imageView.image = UIImage(named: "clock")
+            imageView.image = UIImage(named: "bookmark")?.withRenderingMode(.alwaysTemplate)
+            imageView.tintColor = UIColor(netHex: watchlist_color)
         } else {
-            imageView.image = UIImage(named: "eye")
+            imageView.image = UIImage(named: "eye")?.withRenderingMode(.alwaysTemplate)
+            imageView.tintColor = UIColor(netHex: seen_color)
         }
     }
     

@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class ListsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ListsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CoverMovieProtocol {
     var height:CGFloat!
     let user = DataModel.sharedInstance.user
     
@@ -53,17 +53,19 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let image = getList(collectionView: collectionView)[indexPath.item].image
+        let movie = getList(collectionView: collectionView)[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCellIdentifier, for: indexPath as IndexPath) as! MovieCollectionViewCell
-        cell.movieImageView.kf_setImage(with: URL(string: image),placeholder: UIImage(named:  "noimage"))
-        cell.layer.cornerRadius = 5
-        cell.layer.masksToBounds = true
+        cell.coverView = loadMovieToView(coverView: cell.coverView, movie: movie)
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return getList(collectionView: collectionView).count
+        let count = getList(collectionView: collectionView).count
+        if let item = collectionView.superview as? ItemListView {
+            item.emptyLabel.alpha = count == 0 ? 1:0
+        }
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -87,6 +89,11 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         reloadList()
     }
     
+    //This method is called when the autolayout engine has finished to calculate your views' frames
+    override func viewDidLayoutSubviews() {
+        v.adjustFontSizeToFitHeight()
+    }
+    
     func reloadList(){
         DataModel.sharedInstance.getMovieList(listname: TypeMovie.watchlist.rawValue) {
             (data, next) in
@@ -94,7 +101,7 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
             self.watchList.removeAll()
             for m in data {
                 let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m)
+                movie = try! MovieListInfo(json: m, isSwwipe: false)
                 self.watchList.append(movie!)
             }
             self.v.watchListViewCell.movieCollectionView.reloadData()
@@ -106,7 +113,7 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
             self.favouriteList.removeAll()
             for m in data {
                 let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m)
+                movie = try! MovieListInfo(json: m, isSwwipe: false)
                 self.favouriteList.append(movie!)
             }
             self.v.favouriteListViewCell.movieCollectionView.reloadData()
@@ -118,7 +125,7 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
             self.seenList.removeAll()
             for m in data {
                 let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m)
+                movie = try! MovieListInfo(json: m, isSwwipe: false)
                 self.seenList.append(movie!)
             }
             self.v.seenListViewCell.movieCollectionView.reloadData()
@@ -130,7 +137,7 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
             self.blackList.removeAll()
             for m in data {
                 let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m)
+                movie = try! MovieListInfo(json: m, isSwwipe: false)
                 self.blackList.append(movie!)
             }
             self.v.blackListViewCell.movieCollectionView.reloadData()
@@ -155,7 +162,13 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         v.blackListViewCell.movieCollectionView.delegate = self
         v.blackListViewCell.movieCollectionView.dataSource = self
-        v.blackListViewCell.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)        
+        v.blackListViewCell.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
+        
+        let searchButton = UIBarButtonItem(image: UIImage(named: "search"),
+                                           style: UIBarButtonItemStyle.plain ,
+                                           target: self, action: #selector(self.search))
+        searchButton.tintColor = UIColor.white
+        navigationItem.rightBarButtonItem = searchButton
     
         v.watchListViewCell.moreButton.addTarget(self, action: #selector(self.tappedMore), for: .touchUpInside)
         v.favouriteListViewCell.moreButton.addTarget(self, action: #selector(self.tappedMore), for: .touchUpInside)
@@ -170,16 +183,25 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         case v.watchListViewCell.moreButton:
             nViewController.typeMovie = TypeMovie.watchlist.rawValue
             nViewController.nextUrl = nextWatch
+            nViewController.ctrlTitle = "Watch list"
         case v.favouriteListViewCell.moreButton:
             nViewController.typeMovie = TypeMovie.favourite.rawValue
             nViewController.nextUrl = nextFavourite
+            nViewController.ctrlTitle = "Favourite list"
         case v.seenListViewCell.moreButton:
             nViewController.typeMovie = TypeMovie.seen.rawValue
             nViewController.nextUrl = nextSeen
+            nViewController.ctrlTitle = "Seen list"
         default:
             nViewController.typeMovie = TypeMovie.black.rawValue
             nViewController.nextUrl = nextBlack
+            nViewController.ctrlTitle = "Black list"
         }
+        navigationController?.pushViewController(nViewController, animated: true)
+    }
+    
+    func search() {
+        let nViewController = SearchViewController()
         navigationController?.pushViewController(nViewController, animated: true)
     }
     

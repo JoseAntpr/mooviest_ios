@@ -9,7 +9,7 @@
 import UIKit
 
 class MovieCollectionViewCell: UICollectionViewCell {
-    var movieImageView = UIImageView()
+    var coverView:CoverView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,20 +22,20 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
     
     func setupComponents() {
-        self.backgroundColor = UIColor.blue
-        movieImageView.contentMode = .scaleToFill
         
-        addSubview(movieImageView)
+        coverView = CoverView(porcentCaption:0.4, porcentTitle: 0.35)
+        coverView.titleLabel.lineBreakMode = .byWordWrapping
+        coverView.titleLabel.numberOfLines = 2
+        addSubview(coverView)
     }
     
     func setupConstraints() {
-        movieImageView.translatesAutoresizingMaskIntoConstraints = false
+        coverView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(movieImageView.topAnchor.constraint(equalTo: topAnchor))
-        addConstraint(movieImageView.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(movieImageView.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(movieImageView.heightAnchor.constraint(equalTo: heightAnchor))
-        
+        addConstraint(coverView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(coverView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(coverView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(coverView.heightAnchor.constraint(equalTo: heightAnchor))
     }
 }
 

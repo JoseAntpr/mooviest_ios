@@ -45,6 +45,7 @@
 		A96B9B551D8D53A10038F4D9 /* UserParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B9B541D8D53A10038F4D9 /* UserParser.swift */; };
 		A96DCE1E1D8C6EF900BC2119 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */; };
 		A972E6601DB7D3ED00E291AE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A972E65F1DB7D3ED00E291AE /* Message.swift */; };
+		A98DE6441DBECD00009B34A1 /* AdviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98DE6431DBECCFF009B34A1 /* AdviceViewController.swift */; };
 		A99105F01DBCDA4700659481 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105EF1DBCDA4700659481 /* SearchView.swift */; };
 		A99105F21DBCDA5800659481 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105F11DBCDA5800659481 /* SearchViewController.swift */; };
 		A9B12EB71DA79FD100F3EF4E /* AnimatedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B12EB61DA79FD100F3EF4E /* AnimatedTabBarController.swift */; };
@@ -64,6 +65,8 @@
 		A9DD49C01DACE2C700DACA5E /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DD49BF1DACE2C700DACA5E /* ItemListView.swift */; };
 		A9E5C93D1DAC06F500CC2E34 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E5C93C1DAC06F500CC2E34 /* EditProfileView.swift */; };
 		A9E5C93F1DAC11E900CC2E34 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E5C93E1DAC11E900CC2E34 /* EditProfileViewController.swift */; };
+		A9EC57931DBFDF8900542345 /* MoviewCollectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC57921DBFDF8900542345 /* MoviewCollectionProtocol.swift */; };
+		A9EC57951DBFE57B00542345 /* CoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC57941DBFE57B00542345 /* CoverView.swift */; };
 		A9EF59931D8DD41D0005C819 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EF59921D8DD41D0005C819 /* TextFieldView.swift */; };
 /* End PBXBuildFile section */
 
@@ -131,6 +134,7 @@
 		A96B9B541D8D53A10038F4D9 /* UserParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserParser.swift; sourceTree = "<group>"; };
 		A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A972E65F1DB7D3ED00E291AE /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		A98DE6431DBECCFF009B34A1 /* AdviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdviceViewController.swift; sourceTree = "<group>"; };
 		A99105EF1DBCDA4700659481 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		A99105F11DBCDA5800659481 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A9B12EB61DA79FD100F3EF4E /* AnimatedTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedTabBarController.swift; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 		A9DD49BF1DACE2C700DACA5E /* ItemListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
 		A9E5C93C1DAC06F500CC2E34 /* EditProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		A9E5C93E1DAC11E900CC2E34 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		A9EC57921DBFDF8900542345 /* MoviewCollectionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviewCollectionProtocol.swift; sourceTree = "<group>"; };
+		A9EC57941DBFE57B00542345 /* CoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverView.swift; sourceTree = "<group>"; };
 		A9EF59921D8DD41D0005C819 /* TextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -205,6 +211,7 @@
 				A9EF59911D8DD3D90005C819 /* Resgister & Login */,
 				A965ACEC1D8AB71D00F9FF47 /* SwipeView */,
 				A965ACEB1D8AB6DC00F9FF47 /* MovieDetail */,
+				A98DE6401DBECC75009B34A1 /* Advice */,
 				A9DD49BA1DACD87100DACA5E /* Lists */,
 				A96EEA9E1DA25E870057FEE6 /* Perfil */,
 				A99105EE1DBCDA0500659481 /* Search */,
@@ -230,8 +237,10 @@
 		A965ACE91D8AB6A200F9FF47 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				A9EC57911DBFDF5200542345 /* New Group */,
 				A96B52601D89DEBA0061A766 /* ModelProtocol.swift */,
 				A96B52621D89DED40061A766 /* ParserProtocol.swift */,
+				A9EC57921DBFDF8900542345 /* MoviewCollectionProtocol.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -360,6 +369,14 @@
 			name = Perfil;
 			sourceTree = "<group>";
 		};
+		A98DE6401DBECC75009B34A1 /* Advice */ = {
+			isa = PBXGroup;
+			children = (
+				A98DE6431DBECCFF009B34A1 /* AdviceViewController.swift */,
+			);
+			name = Advice;
+			sourceTree = "<group>";
+		};
 		A99105EE1DBCDA0500659481 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +391,7 @@
 			children = (
 				A9DD49BF1DACE2C700DACA5E /* ItemListView.swift */,
 				A9D757C71DAEB52600905253 /* MovieCollectionViewCell.swift */,
+				A9EC57941DBFE57B00542345 /* CoverView.swift */,
 			);
 			name = Subview;
 			sourceTree = "<group>";
@@ -397,6 +415,13 @@
 				A9D757CC1DAED2DE00905253 /* ListViewController.swift */,
 			);
 			name = Lists;
+			sourceTree = "<group>";
+		};
+		A9EC57911DBFDF5200542345 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 		A9EF59911D8DD3D90005C819 /* Resgister & Login */ = {
@@ -583,6 +608,7 @@
 				A9DD49BE1DACD89D00DACA5E /* ListsViewController.swift in Sources */,
 				A9E5C93F1DAC11E900CC2E34 /* EditProfileViewController.swift in Sources */,
 				A943A8711D8B2E8700525BF7 /* RatingCollectionViewCell.swift in Sources */,
+				A98DE6441DBECD00009B34A1 /* AdviceViewController.swift in Sources */,
 				A972E6601DB7D3ED00E291AE /* Message.swift in Sources */,
 				A9DD49C01DACE2C700DACA5E /* ItemListView.swift in Sources */,
 				A911DEE51D929E28004BB61F /* TextFieldValidateExtension.swift in Sources */,
@@ -593,6 +619,7 @@
 				A96B525B1D89DE470061A766 /* RatingModel.swift in Sources */,
 				A9B8694C1D89E49300DDC197 /* DataModel.swift in Sources */,
 				A9B12EB71DA79FD100F3EF4E /* AnimatedTabBarController.swift in Sources */,
+				A9EC57951DBFE57B00542345 /* CoverView.swift in Sources */,
 				A96B52611D89DEBA0061A766 /* ModelProtocol.swift in Sources */,
 				A9D757CD1DAED2DE00905253 /* ListViewController.swift in Sources */,
 				A96B52551D89DDB00061A766 /* DraggableView.swift in Sources */,
@@ -602,6 +629,7 @@
 				A96B52471D89D6B20061A766 /* Colors.swift in Sources */,
 				A96B52631D89DED40061A766 /* ParserProtocol.swift in Sources */,
 				A943A86F1D8AEF5900525BF7 /* ParticipationCollectionViewCell.swift in Sources */,
+				A9EC57931DBFDF8900542345 /* MoviewCollectionProtocol.swift in Sources */,
 				A9B869501D89E78A00DDC197 /* ParticipationParser.swift in Sources */,
 				A96B9B531D8D52C10038F4D9 /* UserModel.swift in Sources */,
 				A96B525F1D89DE960061A766 /* Errors.swift in Sources */,

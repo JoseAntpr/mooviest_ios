@@ -11,11 +11,12 @@ import Kingfisher
 
 
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, CoverMovieProtocol {
     
     let user = DataModel.sharedInstance.user
     var height:CGFloat!
-    var v:SearchView!
+    var v:ListView!
+    let searchBar = UISearchBar()
     var nextUrl = ""
     var movies = [MovieListInfo]()
     let movieCellIdentifier = "movieCollectionViewCell"
@@ -37,9 +38,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: movieCellIdentifier, for: indexPath as IndexPath) as! MovieCollectionViewCell
-        
-        let url = URL(string: movies[indexPath.item].image)
-        cell.movieImageView.kf_setImage(with: url,placeholder: UIImage(named:  "noimage"))
+        cell.coverView = loadMovieToView(coverView: cell.coverView, movie: movies[indexPath.item])
         
         return cell
     }
@@ -49,11 +48,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("salta")
         let nViewController = MovieDetailViewController()
         nViewController.movieListInfo = movies[indexPath.row]
         navigationController?.pushViewController(nViewController, animated: true)
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -72,21 +69,21 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
+        searchBar.becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
     }
     
     func setupView() {
         height = self.navigationController?.navigationBar.frame.height
-        v = SearchView(heightNavBar: height)
+        v = ListView(heightNavBar: height)
         v.movieCollectionView.delegate = self
         v.movieCollectionView.dataSource = self
         v.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
-        v.searchBar.delegate = self
-        
-//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
-//        view.addGestureRecognizer(tap)
+        searchBar.delegate = self
+        navigationItem.titleView = searchBar
     }
     
     func nextMovies(){
@@ -96,7 +93,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.nextUrl = next
                 for m in data {
                     let movie:MovieListInfo?
-                    movie = try! MovieListInfo(json: m)
+                    movie = try! MovieListInfo(json: m, isSwwipe: false)
                     self.movies.append(movie!)
                 }
                 //guardar offset
@@ -113,7 +110,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.nextUrl = next
             for m in data {
                 let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m)
+                movie = try! MovieListInfo(json: m, isSwwipe: false)
                 self.movies.append(movie!)
             }
             self.v.movieCollectionView.contentOffset.y = 0

@@ -9,9 +9,12 @@
 import Foundation
 
 extension MovieListInfo {
-    init(json:[String:Any]) throws {
+    init(json:[String:Any], isSwwipe: Bool) throws {
         let externalImagePath = "https://cdn.tviso.com/"
-        let tvisoImagePath = "https://img.tviso.com/ES/poster/w200/"
+        var tvisoImagePath = "https://img.tviso.com/ES/poster/w200/"
+        if isSwwipe {
+            tvisoImagePath = "https://img.tviso.com/ES/poster/w430/"
+        }
         let pre = "EXTERNAL#"
         //Extract id
         guard let id = json["id"] as? Int else{

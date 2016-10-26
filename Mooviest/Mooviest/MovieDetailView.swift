@@ -99,10 +99,19 @@ class MovieDetailView: UIView {
         
         barSegmentedView.addSubview(barSegmentedControl)
 
-        closedButton.setImage( UIImage(named: "closes"), for: UIControlState())
-        clockButton.setImage( UIImage(named: "clock"), for: UIControlState())
+        
+        closedButton.setImage( UIImage(named: "clear"), for: UIControlState())
+        closedButton.tintColor = UIColor(netHex: blacklist_color)
+        
+        clockButton.setImage( UIImage(named: "bookmark"), for: UIControlState())
+        clockButton.tintColor = UIColor(netHex: watchlist_color)
+        
         eyeButton.setImage( UIImage(named: "eye"), for: UIControlState())
-        heartButton.setImage( UIImage(named: "heart"), for: UIControlState())
+        eyeButton.tintColor = UIColor(netHex: seen_color)
+        
+        heartButton.setImage( UIImage(named: "star"), for: UIControlState())
+        heartButton.tintColor = UIColor(netHex: favourite_color)
+
         
         closedButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
         clockButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
