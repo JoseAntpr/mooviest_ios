@@ -111,10 +111,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeField = textField
         if secureArrayTag.index(of: textField.tag) != nil {
-            textField.rightView = v.secureTextButton;
+            textField.rightView = v.secureTextButton
             textField.rightViewMode = UITextFieldViewMode.always
         } else {
-            textField.rightView = v.clearTextButton;
+            textField.rightView = v.clearTextButton
             textField.rightViewMode = UITextFieldViewMode.always
         }
     }
@@ -122,7 +122,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField.returnKeyType {
         case .next:
-            let nextTag: NSInteger = textField.tag + 1;
+            let nextTag: NSInteger = textField.tag + 1
             // Try to find next responder
             if let nextResponder: UIResponder? = self.view.viewWithTag(nextTag){
                 nextResponder?.becomeFirstResponder()
@@ -221,7 +221,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
             }
-        
         } else {
             //Menssage emergente de error
             Message.msgPopupDelay(title: "Register error", message: "Error data form", delay: 0, ctrl: self) {

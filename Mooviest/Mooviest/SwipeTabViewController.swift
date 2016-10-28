@@ -45,11 +45,10 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, CoverMovi
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+         updateSwipe()
     }
     override func viewWillAppear(_ animated: Bool) {        
-        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
-        updateSwipe()
+        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)       
     }
     
     func updateSwipe() {
@@ -64,7 +63,22 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, CoverMovi
             default:
                 clickSwipeLeft()
             }
-        }
+        }        
+    }
+    
+    //This method is called when the autolayout engine has finished to calculate your views' frames
+    override func viewDidLayoutSubviews() {
+        let widthButton = v.closedButton.bounds.size.width
+        
+        v.closedButton.layer.cornerRadius = 0.5 * widthButton
+        v.closedButton.clipsToBounds = true
+        v.clockButton.layer.cornerRadius = 0.5 * widthButton
+        v.clockButton.clipsToBounds = true
+        v.heartButton.layer.cornerRadius = 0.5 * widthButton
+        v.heartButton.clipsToBounds = true
+        v.eyeButton.layer.cornerRadius = 0.5 * widthButton
+        v.eyeButton.clipsToBounds = true
+
     }
     
     func tappedCard(_ sender: UITapGestureRecognizer) {
@@ -169,7 +183,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, CoverMovi
         allCards.remove(at: 0)
         movies.remove(at: 0)
         
-        if loadedCards.count > 0 {
+        if allCards.count > 1 {
             loadedCards.append(allCards[1])
             v.panelSwipeView.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
             setupConstraintsSubView(Index: MAX_BUFFER_SIZE - 1)
@@ -180,30 +194,34 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, CoverMovi
     }
     
     func updateTypeMovie(typemovie: Int) {
-        var movie = movies[0]
-        if movie.typeMovie == "" {//insert Collection
-            DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie+1){
-                (res) in
-                if let id = res["id"] as? Int {
-                    movie.idCollection = id
-                    if let typeMovie = res["typeMovie"] as? String {
-                        movie.typeMovie = typeMovie
+        if movies.count > 0 {
+            var movie = movies[0]
+            if movie.idCollection > 0 {
+                if movie.typeMovie == "" {//insert Collection
+                    DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie+1){
+                        (res) in
+                        if let id = res["id"] as? Int {
+                            movie.idCollection = id
+                            if let typeMovie = res["typeMovie"] as? String {
+                                movie.typeMovie = typeMovie
+                            }
+                        }
+                    }
+                } else {
+                    DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie+1){
+                        (res) in
+                        print(res)
+                        if let id = res["id"] as? Int {
+                            movie.idCollection = id
+                            if let typeMovie = res["typeMovie"] as? String {
+                                movie.typeMovie = typeMovie
+                            }
+                        }
                     }
                 }
-            }
-        } else {
-            DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie+1){
-                (res) in
-                print(res)
-                if let id = res["id"] as? Int {
-                    movie.idCollection = id
-                    if let typeMovie = res["typeMovie"] as? String {
-                        movie.typeMovie = typeMovie
-                    }
-                }
+                movies[0] = movie
             }
         }
-        movies[0] = movie
     }
     
     func selectTypeMovie(button: UIButton) {

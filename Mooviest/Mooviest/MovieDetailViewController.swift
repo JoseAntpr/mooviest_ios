@@ -113,6 +113,21 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         }
     }
     
+    //This method is called when the autolayout engine has finished to calculate your views' frames
+    override func viewDidLayoutSubviews() {
+        let widthButton = v.closedButton.bounds.size.width
+        
+        v.closedButton.layer.cornerRadius = 0.5 * widthButton
+        v.closedButton.clipsToBounds = true
+        v.clockButton.layer.cornerRadius = 0.5 * widthButton
+        v.clockButton.clipsToBounds = true
+        v.heartButton.layer.cornerRadius = 0.5 * widthButton
+        v.heartButton.clipsToBounds = true
+        v.eyeButton.layer.cornerRadius = 0.5 * widthButton
+        v.eyeButton.clipsToBounds = true
+        
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
     }
     
@@ -163,17 +178,21 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     func selectTypeMovie(button: UIButton) {
-        button.tintColor = UIColor(netHex: mooviest_red)
+        
         
         switch button {
         case v.clockButton:
             updateTypeMovie(typemovie: TypeMovie.watchlist.hashValue)
+            button.tintColor = UIColor(netHex: watchlist_color)
         case v.heartButton:
             updateTypeMovie(typemovie: TypeMovie.favourite.hashValue)
+            button.tintColor = UIColor(netHex: favourite_color)
         case v.eyeButton:
             updateTypeMovie(typemovie: TypeMovie.seen.hashValue)
+            button.tintColor = UIColor(netHex: seen_color)
         default:
             updateTypeMovie(typemovie: TypeMovie.black.hashValue)
+            button.tintColor = UIColor(netHex: blacklist_color)
         }
     }
     

@@ -67,7 +67,7 @@ class ItemListView: UIView {
         addConstraint(titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5))
         addConstraint(titleLabel.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(titleLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.7))
-        addConstraint(titleLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.11))
+        addConstraint(titleLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1))
         
         addConstraint(moreButton.leftAnchor.constraint(equalTo: titleLabel.rightAnchor))
         addConstraint(moreButton.topAnchor.constraint(equalTo: topAnchor))

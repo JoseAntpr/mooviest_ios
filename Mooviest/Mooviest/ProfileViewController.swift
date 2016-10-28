@@ -60,17 +60,21 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             print("avatar: \(avatar)")
             v.coverImageView.kf_setImage(with: URL(string:  "\(DataModel.sharedInstance.path)\(avatar)"),placeholder: UIImage(named: "contact"))
         }
-        v.coverImageView.layer.cornerRadius = v.coverImageView.frame.size.width/2
-        v.coverImageView.layer.masksToBounds = true
         if let username = user?.username {
             v.titleLabel.text = "@\(username)"
         }
         
     }
     
+    //This method is called when the autolayout engine has finished to calculate your views' frames
+    override func viewDidLayoutSubviews() {
+        v.coverImageView.layer.cornerRadius = v.coverImageView.bounds.size.width*0.5
+        v.coverImageView.clipsToBounds = true
+    }
+    
     func setupView() {
         v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
-        let editButton = UIBarButtonItem(image: UIImage(named: "pencil"),
+        let editButton = UIBarButtonItem(image: UIImage(named: "edit"),
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.editProfile))
         editButton.tintColor = UIColor.white

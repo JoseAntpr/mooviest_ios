@@ -56,7 +56,6 @@ extension MovieListInfo {
             
             if image.hasPrefix(pre) {
                 image = externalImagePath + image.substring(from: pre.endIndex) + ".jpg"
-                print(image)
             } else if !image.hasPrefix("http://") &&
                 !image.hasPrefix("https://"){
                 image =  tvisoImagePath+image
