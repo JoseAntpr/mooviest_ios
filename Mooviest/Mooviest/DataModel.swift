@@ -11,7 +11,7 @@ import Alamofire
 
 class DataModel: NSObject {
     static let sharedInstance = DataModel()
-    var path =  "http://192.168.1.133:8000"//"http://localhost:8000"// 
+    var path =  "http://192.168.1.139:8000"//"http://localhost:8000"//
     var movies = [Movie]()
     var user:User?
     var authenticationUser: Authentication?
@@ -85,6 +85,7 @@ class DataModel: NSObject {
         let url = try! URLRequest(url: "\(path)/api/users/\(user.id)/", method: .put, headers: headers)
         let imageData:Data = UIImageJPEGRepresentation(avatar, 0.2)!
         
+        print(user)
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 multipartFormData.append(user.username.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "username")
@@ -118,7 +119,7 @@ class DataModel: NSObject {
                                             if let email = errors["email"] as? [String] {
                                                 msg += "\n\(email[0])"
                                             }
-                                            print(errors["username"] as! [String])
+                                            print(errors)
                                         }
                                         completionRequest(false, msg, nil)
                                     }

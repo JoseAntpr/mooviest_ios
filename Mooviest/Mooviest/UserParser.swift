@@ -53,10 +53,8 @@ extension User {
             gender = genderString
         }
         //Extract born
-        var born = "2000-01-01"
-        if let bornString = profileJson["born"] as? String {
-            born = bornString
-        }
+        var born = ""
+        born.toString(string: profileJson["born"])
         //Extract postal code
         var postalCode = ""
         if let postalCodeString = profileJson["postalCode"] as? String {
