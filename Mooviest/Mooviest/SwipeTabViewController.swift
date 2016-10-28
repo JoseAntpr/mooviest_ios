@@ -10,7 +10,7 @@
 import UIKit
 import Kingfisher
 
-class SwipeTabViewController: UIViewController, DraggableViewDelegate, CoverMovieProtocol {
+class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProtocol {
     let MAX_BUFFER_SIZE = 2
     var v: SwipeTabView!
     var allCards: [DraggableView]!
@@ -182,7 +182,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, CoverMovi
         loadedCards.remove(at: 0)
         allCards.remove(at: 0)
         movies.remove(at: 0)
-        
+        //controlar errores
         if allCards.count > 1 {
             loadedCards.append(allCards[1])
             v.panelSwipeView.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])

@@ -38,11 +38,12 @@ class ParticipationCollectionViewCell: UICollectionViewCell {
         nameLabel.textAlignment = .center
         nameLabel.lineBreakMode = .byWordWrapping
         nameLabel.numberOfLines = 2
+        nameLabel.font = UIFont.boldSystemFont(ofSize: nameLabel.font.pointSize)
 
         roleLabel.text = "Role"
         roleLabel.textColor = .white
         roleLabel.textAlignment = .center
-        
+        nameLabel.font = UIFont.boldSystemFont(ofSize: nameLabel.font.pointSize)
         captionView.addSubview(nameLabel)
         captionView.addSubview(roleLabel)
 

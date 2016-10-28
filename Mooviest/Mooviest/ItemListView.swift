@@ -44,8 +44,8 @@ class ItemListView: UIView {
         emptyLabel.textAlignment = .center
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 5
-        layout.minimumLineSpacing = 5
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
         layout.scrollDirection = .horizontal
         
         movieCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)

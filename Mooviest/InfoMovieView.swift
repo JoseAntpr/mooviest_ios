@@ -9,11 +9,24 @@
 import UIKit
 
 class InfoMovieView: UIView {
-    
-    var headerTitleView = UIView()
-    var synopsislabel = UILabel()
-    var synopsisTextView = UITextView()
+
     var ratingCollectionView:UICollectionView!
+    
+    var synopsisHeaderTitleView = UIView()
+    var synopsisLabel = UILabel()
+    var synopsisTextView = UITextView()
+    
+    var genreHeaderTitleView = UIView()
+    var genreLabel = UILabel()
+    var genreTextView = UITextView()
+    
+    var producerHeaderTitleView = UIView()
+    var producerLabel = UILabel()
+    var producerTextView = UITextView()
+//    
+//    var countryHeaderTitleView = UIView()
+//    var countryLabel = UILabel()
+//    var countryTextView = UITextView()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -25,57 +38,144 @@ class InfoMovieView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setupHeader(header:UIView, label: UILabel, key: String,msg: String) {
+        header.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
+        label.text = NSLocalizedString(key, comment:msg)
+        label.textColor = UIColor.darkGray
+        label.font.withSize(18)
+    }
+    
+    func setupTextView(textView: UITextView) {
+        textView.text = "Texto de prueba"
+        textView.textContainer.lineFragmentPadding = 20
+        textView.textAlignment = NSTextAlignment.justified
+        textView.textColor = UIColor.gray
+        textView.font = UIFont(name: textView.font!.fontName, size: 16)
+    }
+
     func setupComponents() {
         self.backgroundColor = UIColor.white
         
-        headerTitleView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
+        setupHeader(header: synopsisHeaderTitleView, label: synopsisLabel,key: "synopsisLabel",msg: "Text label synopsis")
+        setupHeader(header: genreHeaderTitleView, label: genreLabel,key: "genreLabel",msg: "Text label genre")
+        setupHeader(header: producerHeaderTitleView, label: producerLabel, key: "producerLabel",msg: "Text label producer")
+//        setupHeader(header: countryHeaderTitleView, label: countryLabel,key: "countryLabel",msg: "Text label country")
         
-        synopsislabel.text = NSLocalizedString("synopsislabel", comment: "Text label synopsis")
-        synopsislabel.textColor = UIColor.darkGray
-        
-        synopsisTextView.text = "Texto de prueba"
-        synopsisTextView.textContainer.lineFragmentPadding = 20
-        synopsisTextView.textAlignment = NSTextAlignment.justified
-        synopsisTextView.textColor = UIColor.gray
-        
+        setupTextView(textView: synopsisTextView)
+        setupTextView(textView: genreTextView)
+        setupTextView(textView: producerTextView)
+//        setupTextView(textView: countryTextView)
+
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 1
-        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.scrollDirection = .horizontal
         
         ratingCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
-        ratingCollectionView.backgroundColor = UIColor.white
+        ratingCollectionView.backgroundColor = UIColor.white.withAlphaComponent(0)
+        ratingCollectionView.showsHorizontalScrollIndicator = false
         
-        headerTitleView.addSubview(synopsislabel)
+        synopsisHeaderTitleView.addSubview(synopsisLabel)
+        genreHeaderTitleView.addSubview(genreLabel)
+        producerHeaderTitleView.addSubview(producerLabel)
+//        countryHeaderTitleView.addSubview(countryLabel)
         
-        addSubview(headerTitleView)
         addSubview(ratingCollectionView)
+        addSubview(synopsisHeaderTitleView)
         addSubview(synopsisTextView)
+        addSubview(genreHeaderTitleView)
+        addSubview(genreTextView)
+        addSubview(producerHeaderTitleView)
+        addSubview(producerTextView)
+//        addSubview(countryHeaderTitleView)
+//        addSubview(countryTextView)
     }
     
     func setupConstraints() {
-        headerTitleView.translatesAutoresizingMaskIntoConstraints = false
-        synopsislabel.translatesAutoresizingMaskIntoConstraints = false
+        synopsisHeaderTitleView.translatesAutoresizingMaskIntoConstraints = false
+        synopsisLabel.translatesAutoresizingMaskIntoConstraints = false
         synopsisTextView.translatesAutoresizingMaskIntoConstraints = false
         ratingCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        genreHeaderTitleView.translatesAutoresizingMaskIntoConstraints = false
+        producerHeaderTitleView.translatesAutoresizingMaskIntoConstraints = false
+        genreLabel.translatesAutoresizingMaskIntoConstraints = false
+        producerLabel.translatesAutoresizingMaskIntoConstraints = false
+        genreTextView.translatesAutoresizingMaskIntoConstraints = false
+        producerTextView.translatesAutoresizingMaskIntoConstraints = false
+//        countryHeaderTitleView.translatesAutoresizingMaskIntoConstraints = false
+//        countryLabel.translatesAutoresizingMaskIntoConstraints = false
+//        countryTextView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(headerTitleView.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(headerTitleView.topAnchor.constraint(equalTo: topAnchor))
-        addConstraint(headerTitleView.rightAnchor.constraint(equalTo: rightAnchor))
-        addConstraint(headerTitleView.heightAnchor.constraint(equalToConstant: 40))
+        addConstraint(ratingCollectionView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(ratingCollectionView.topAnchor.constraint(equalTo: topAnchor, constant: 20))
+        addConstraint(ratingCollectionView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9))
+        addConstraint(ratingCollectionView.heightAnchor.constraint(equalTo: ratingCollectionView.widthAnchor, multiplier: 1/4))
         
-        headerTitleView.addConstraint(synopsislabel.leftAnchor.constraint(equalTo: headerTitleView.leftAnchor, constant: 10))
-        headerTitleView.addConstraint(synopsislabel.topAnchor.constraint(equalTo: headerTitleView.topAnchor))
-        headerTitleView.addConstraint(synopsislabel.rightAnchor.constraint(equalTo: headerTitleView.rightAnchor))
-        headerTitleView.addConstraint(synopsislabel.heightAnchor.constraint(equalTo: headerTitleView.heightAnchor))
+        addConstraint(synopsisHeaderTitleView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(synopsisHeaderTitleView.topAnchor.constraint(equalTo:ratingCollectionView.bottomAnchor, constant: 10))
+        addConstraint(synopsisHeaderTitleView.rightAnchor.constraint(equalTo: rightAnchor))
+        addConstraint(synopsisHeaderTitleView.heightAnchor.constraint(equalTo: widthAnchor, multiplier:0.15))
+        
+        let porcentLabel = CGFloat(0.95)
+        synopsisHeaderTitleView.addConstraint(synopsisLabel.widthAnchor.constraint(equalTo: synopsisHeaderTitleView.widthAnchor, multiplier: porcentLabel))
+        synopsisHeaderTitleView.addConstraint(synopsisLabel.topAnchor.constraint(equalTo: synopsisHeaderTitleView.topAnchor))
+        synopsisHeaderTitleView.addConstraint(synopsisLabel.rightAnchor.constraint(equalTo: synopsisHeaderTitleView.rightAnchor))
+        synopsisHeaderTitleView.addConstraint(synopsisLabel.heightAnchor.constraint(equalTo: synopsisHeaderTitleView.heightAnchor))
         
         addConstraint(synopsisTextView.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(synopsisTextView.topAnchor.constraint(equalTo: headerTitleView.bottomAnchor))
+        addConstraint(synopsisTextView.topAnchor.constraint(equalTo: synopsisHeaderTitleView.bottomAnchor))
         addConstraint(synopsisTextView.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(synopsisTextView.heightAnchor.constraint(equalToConstant: 120))
+        addConstraint(synopsisTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier:0.3))
         
-        addConstraint(ratingCollectionView.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(ratingCollectionView.topAnchor.constraint(equalTo: synopsisTextView.bottomAnchor))
-        addConstraint(ratingCollectionView.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(ratingCollectionView.heightAnchor.constraint(equalToConstant: 120))
+        addConstraint(genreHeaderTitleView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(genreHeaderTitleView.topAnchor.constraint(equalTo:synopsisTextView.bottomAnchor))
+        addConstraint(genreHeaderTitleView.rightAnchor.constraint(equalTo: rightAnchor))
+        addConstraint(genreHeaderTitleView.heightAnchor.constraint(equalTo: synopsisHeaderTitleView.heightAnchor))
+        
+        genreHeaderTitleView.addConstraint(genreLabel.widthAnchor.constraint(equalTo: genreHeaderTitleView.widthAnchor, multiplier: porcentLabel))
+        genreHeaderTitleView.addConstraint(genreLabel.topAnchor.constraint(equalTo: genreHeaderTitleView.topAnchor))
+        genreHeaderTitleView.addConstraint(genreLabel.rightAnchor.constraint(equalTo: genreHeaderTitleView.rightAnchor))
+        genreHeaderTitleView.addConstraint(genreLabel.heightAnchor.constraint(equalTo: genreHeaderTitleView.heightAnchor))
+        
+        addConstraint(genreTextView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(genreTextView.topAnchor.constraint(equalTo: genreHeaderTitleView.bottomAnchor))
+        addConstraint(genreTextView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(genreTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier:0.1))
+        
+        addConstraint(producerHeaderTitleView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(producerHeaderTitleView.topAnchor.constraint(equalTo:genreTextView.bottomAnchor))
+        addConstraint(producerHeaderTitleView.rightAnchor.constraint(equalTo: rightAnchor))
+        addConstraint(producerHeaderTitleView.heightAnchor.constraint(equalTo: synopsisHeaderTitleView.heightAnchor))
+        
+        producerHeaderTitleView.addConstraint(producerLabel.widthAnchor.constraint(equalTo: producerHeaderTitleView.widthAnchor, multiplier: porcentLabel))
+        producerHeaderTitleView.addConstraint(producerLabel.topAnchor.constraint(equalTo: producerHeaderTitleView.topAnchor))
+        producerHeaderTitleView.addConstraint(producerLabel.rightAnchor.constraint(equalTo: producerHeaderTitleView.rightAnchor))
+        producerHeaderTitleView.addConstraint(producerLabel.heightAnchor.constraint(equalTo: producerHeaderTitleView.heightAnchor))
+        
+        addConstraint(producerTextView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(producerTextView.topAnchor.constraint(equalTo: producerHeaderTitleView.bottomAnchor))
+        addConstraint(producerTextView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(producerTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier:0.1))
+        
+//        addConstraint(countryHeaderTitleView.leftAnchor.constraint(equalTo: leftAnchor))
+//        addConstraint(countryHeaderTitleView.topAnchor.constraint(equalTo:producerTextView.bottomAnchor, constant: 10))
+//        addConstraint(countryHeaderTitleView.rightAnchor.constraint(equalTo: rightAnchor))
+//        addConstraint(countryHeaderTitleView.heightAnchor.constraint(equalTo: synopsisHeaderTitleView.heightAnchor))
+//        
+//        countryHeaderTitleView.addConstraint(countryLabel.leftAnchor.constraint(equalTo: countryHeaderTitleView.leftAnchor, constant:5))
+//        countryHeaderTitleView.addConstraint(countryLabel.topAnchor.constraint(equalTo: countryHeaderTitleView.topAnchor))
+//        countryHeaderTitleView.addConstraint(countryLabel.rightAnchor.constraint(equalTo: countryHeaderTitleView.rightAnchor))
+//        countryHeaderTitleView.addConstraint(countryLabel.heightAnchor.constraint(equalTo: countryHeaderTitleView.heightAnchor))
+//        
+//        addConstraint(countryTextView.leftAnchor.constraint(equalTo: leftAnchor))
+//        addConstraint(countryTextView.topAnchor.constraint(equalTo: countryHeaderTitleView.bottomAnchor))
+//        addConstraint(countryTextView.widthAnchor.constraint(equalTo: widthAnchor))
+//        addConstraint(countryTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier:0.2))
+    }
+    
+    func calculateHeight()-> CGFloat {
+        return ratingCollectionView.frame.height + synopsisHeaderTitleView.frame.height*4 +
+            synopsisTextView.frame.height + genreTextView.frame.height + producerTextView.frame.height
+            //+ v.infoView.countryTextView.frame.height
     }
 }

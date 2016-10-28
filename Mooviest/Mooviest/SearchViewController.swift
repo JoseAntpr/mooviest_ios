@@ -11,7 +11,7 @@ import Kingfisher
 
 
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, CoverMovieProtocol {
+class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, MovieProtocol {
     
     let user = DataModel.sharedInstance.user
     var height:CGFloat!

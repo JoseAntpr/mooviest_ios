@@ -9,7 +9,8 @@
 import UIKit
 
 class RatingCollectionViewCell: UICollectionViewCell {
-    var faceImageView = UIImageView()
+    let faceImageView = UIImageView()
+    let ratingLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,19 +23,41 @@ class RatingCollectionViewCell: UICollectionViewCell {
     }
     
     func setupComponents() {
-        self.backgroundColor = UIColor.blue
         faceImageView.contentMode = .scaleToFill
+        ratingLabel.text = "100"
         
+        ratingLabel.textAlignment = .center
+        ratingLabel.textColor = .darkGray
         addSubview(faceImageView)
+        addSubview(ratingLabel)
     }
     
     func setupConstraints() {
         faceImageView.translatesAutoresizingMaskIntoConstraints = false
+        ratingLabel.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(faceImageView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(faceImageView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(faceImageView.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(faceImageView.heightAnchor.constraint(equalTo: heightAnchor))
+        addConstraint(faceImageView.heightAnchor.constraint(equalTo: widthAnchor))
         
+        addConstraint(ratingLabel.topAnchor.constraint(equalTo: faceImageView.bottomAnchor, constant: 4))
+        addConstraint(ratingLabel.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(ratingLabel.rightAnchor.constraint(equalTo: rightAnchor))
+        addConstraint(ratingLabel.bottomAnchor.constraint(equalTo: bottomAnchor))        
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.adjustFontSizeToFitHeight()
+    }
+    
+    func adjustFontSizeToFitHeight() {
+        self.faceImageView.layer.masksToBounds = true
+        self.faceImageView.layer.cornerRadius  = faceImageView.frame.size.width*0.5
+        let heightLabel = ratingLabel.frame.height
+        ratingLabel.font = UIFont(name: self.ratingLabel.font!.fontName, size:heightLabel)!
+        ratingLabel.font = UIFont.boldSystemFont(ofSize: ratingLabel.font.pointSize)
     }
 }

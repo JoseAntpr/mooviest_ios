@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class ListsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CoverMovieProtocol {
+class ListsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieProtocol {
     var height:CGFloat!
     let user = DataModel.sharedInstance.user
     

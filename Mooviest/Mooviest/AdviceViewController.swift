@@ -11,7 +11,7 @@ import Kingfisher
 
 
 
-class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CoverMovieProtocol {
+class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieProtocol {
     
     let user = DataModel.sharedInstance.user
     var height:CGFloat!

@@ -16,4 +16,7 @@ createAccountButton = "CREAR CUENTA";
 backloginButton = "¿Eres miembro? Accede";
 
 //InfoMovieView
-synopsislabel = "Sinopsis";
+synopsisLabel = "Sinopsis";
+genreLabel = "Género";
+producerLabel = "Productor";
+countryLabel = "País";

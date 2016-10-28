@@ -11,7 +11,7 @@ import Kingfisher
 
 
 
-class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ParticipationMovieProtocol {
+class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieProtocol {
 
     var offset_CoverStopScale:CGFloat!
     var offset_BackdropFadeOff:CGFloat!
@@ -49,10 +49,20 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v.headerBackdropImageView.kf_setImage(with: URL(string: movie!.backdrop))
         v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
         v.infoView.synopsisTextView.text = movie?.synopsis
+        v.infoView.producerTextView.text = movie?.producers.replacingOccurrences(of: " |", with: ",")
+        v.infoView.genreTextView.text = movie?.genres.joined(separator: ", ")
+//        v.infoView.countryTextView.text = movie.country
+        
+        v.captionMovieView.ratingView.ratingLabel.text = "\(movie.average)"
+        v.captionMovieView.releasedLabel.text = "\(movie.released)"
+        v.captionMovieView.runtimeLabel.text = "\(movie.runtime) min"
+        
+        
         ratings = movie.ratings
         participations = movie.participations
         v.infoView.ratingCollectionView.reloadData()
         v.castCollectionView.reloadData()
+        
         
         switch movie.typeMovie {
         case TypeMovie.black.rawValue:
@@ -77,8 +87,9 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v.infoView.ratingCollectionView.dataSource = self
         v.infoView.ratingCollectionView.register(RatingCollectionViewCell.self, forCellWithReuseIdentifier: ratingCellIdentifier)
         v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
-        v.titleLabel.text = movieListInfo.title
+        v.captionMovieView.titleLabel.text = movieListInfo.title
         self.navigationItem.title = movieListInfo.title
+        v.captionMovieView.typeLabel.text = "Película"
         
         v.coverImageView.kf_setImage(with: URL(string:  movieListInfo!.image),placeholder: UIImage(named:  "noimage"))
         v.coverImageView.contentMode = UIViewContentMode.scaleToFill
@@ -96,8 +107,8 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     override func viewDidAppear(_ animated: Bool) {
         //here extract predominant color
         heightView = view.frame.size.height
-        v.seeScrollView.contentSize.height = v.seeView.frame.size.height*2
-        v.infoScrollView.contentSize.height = v.seeView.frame.size.height
+        v.seeScrollView.contentSize.height = v.seeView.frame.size.height
+        v.infoScrollView.contentSize.height = v.infoView.calculateHeight()
         changeTabs(index: 0)
         v.barSegmentedControl.selectedSegmentIndex = 0
         calculateOffset()
@@ -106,6 +117,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     override func willMove(toParentViewController parent: UIViewController?) {
         if parent == nil {
             if let vc = navigationController?.viewControllers[0] as? SwipeTabViewController {
+                //controlar error
                 vc.movies[0].idCollection = movie.idCollection
                 vc.movies[0].typeMovie = movie.typeMovie
             }
@@ -115,17 +127,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     //This method is called when the autolayout engine has finished to calculate your views' frames
     override func viewDidLayoutSubviews() {
-        let widthButton = v.closedButton.bounds.size.width
-        
-        v.closedButton.layer.cornerRadius = 0.5 * widthButton
-        v.closedButton.clipsToBounds = true
-        v.clockButton.layer.cornerRadius = 0.5 * widthButton
-        v.clockButton.clipsToBounds = true
-        v.heartButton.layer.cornerRadius = 0.5 * widthButton
-        v.heartButton.clipsToBounds = true
-        v.eyeButton.layer.cornerRadius = 0.5 * widthButton
-        v.eyeButton.clipsToBounds = true
-        
+        v.adjustFontSizeToFitHeight()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -314,12 +316,11 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             cell = loadParticipationToView(ParticipationCollectionViewCell: customCell, participation: participations[indexPath.item])            
         } else {
             let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: ratingCellIdentifier, for: indexPath as IndexPath) as! RatingCollectionViewCell
-            customCell.backgroundColor = UIColor.red
-            customCell.faceImageView.image = UIImage(named:  ratings[indexPath.item].name)
-            cell = customCell
+            cell = loadRatingToView(RatingCollectionViewCell: customCell, Rating: ratings[indexPath.item])
         }
         return cell
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count = 0
@@ -337,11 +338,12 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             let width = (collectionView.frame.width/3)-1
             size = CGSize(width: width, height: width*1.30)
         } else {
-            let width = (collectionView.frame.width/6)-1
-            size = CGSize(width: width, height: width)
+            let height = collectionView.frame.height
+            size = CGSize(width: height*0.7, height: height)
         }
         return size
     }
+    
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return UIStatusBarStyle.lightContent

@@ -27,13 +27,14 @@ class MovieDetailView: UIView {
     let tabsView = UIView()
     var profileCardView = UIView()
     let coverImageView = UIImageView()
-    let titleLabel = UILabel()
+    let captionMovieView = CaptionMovieView()
     
     let infoScrollView = UIScrollView()
     let infoView = InfoMovieView()
     var castCollectionView:UICollectionView!
     let seeScrollView = UIScrollView()
     let seeView = UIView()
+    let seeInfoLabel = UILabel()
     
     let barSegmentedView = UIView()
     var barSegmentedControl: UISegmentedControl!
@@ -62,11 +63,9 @@ class MovieDetailView: UIView {
     func setupComponents() {
         self.backgroundColor = UIColor.white
         
-        headerView.backgroundColor = UIColor(netHex: mooviest_red)
-        
-        titleLabel.text = "body title"
         backgroundStatusView.backgroundColor = UIColor(netHex: dark_gray).withAlphaComponent(0.5)
-        
+        headerView.backgroundColor = UIColor(netHex: mooviest_red)
+
         bodyScrollView.showsHorizontalScrollIndicator = false
         bodyScrollView.showsVerticalScrollIndicator = false
         
@@ -81,24 +80,8 @@ class MovieDetailView: UIView {
         
         castCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
         castCollectionView.backgroundColor = UIColor.white
-        seeView.backgroundColor = UIColor.yellow
         
         headerView.clipsToBounds = true
-        
-        headerView.addSubview(headerBackdropImageView)
-        
-        profileCardView.addSubview(titleLabel)
-        profileCardView.addSubview(coverImageView)
-        
-        seeScrollView.addSubview(seeView)
-        infoScrollView.addSubview(infoView)
-        
-        tabsView.addSubview(seeScrollView)
-        tabsView.addSubview(castCollectionView)
-        tabsView.addSubview(infoScrollView)
-        
-        barSegmentedView.addSubview(barSegmentedControl)
-
         
         closedButton.setImage( UIImage(named: "clear"), for: UIControlState())
         closedButton.tintColor = .black
@@ -115,8 +98,26 @@ class MovieDetailView: UIView {
         heartButton.setImage( UIImage(named: "star"), for: UIControlState())
         heartButton.tintColor = UIColor(netHex: favourite_color)
         heartButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-
         
+        seeInfoLabel.text = "Proximamente se podrá visualizar..."
+        seeInfoLabel.textColor = .darkGray
+        seeInfoLabel.font = UIFont.boldSystemFont(ofSize: seeInfoLabel.font.pointSize)
+        seeInfoLabel.textAlignment = .center
+        
+        headerView.addSubview(headerBackdropImageView)
+        profileCardView.addSubview(captionMovieView)
+        profileCardView.addSubview(coverImageView)
+        
+        seeView.addSubview(seeInfoLabel)
+        seeScrollView.addSubview(seeView)
+        infoScrollView.addSubview(infoView)
+        
+        tabsView.addSubview(seeScrollView)
+        tabsView.addSubview(castCollectionView)
+        tabsView.addSubview(infoScrollView)
+        
+        barSegmentedView.addSubview(barSegmentedControl)
+
         closedButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
         clockButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
         eyeButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
@@ -146,7 +147,6 @@ class MovieDetailView: UIView {
         bodyScrollView.translatesAutoresizingMaskIntoConstraints = false
         tabsView.translatesAutoresizingMaskIntoConstraints = false
         coverImageView.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         headerBackdropImageView.translatesAutoresizingMaskIntoConstraints = false
         backgroundStatusView.translatesAutoresizingMaskIntoConstraints = false
         barSegmentedView.translatesAutoresizingMaskIntoConstraints = false
@@ -165,6 +165,8 @@ class MovieDetailView: UIView {
         space1View.translatesAutoresizingMaskIntoConstraints = false
         space2View.translatesAutoresizingMaskIntoConstraints = false
         space3View.translatesAutoresizingMaskIntoConstraints = false
+        captionMovieView.translatesAutoresizingMaskIntoConstraints = false
+        seeInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
@@ -190,11 +192,11 @@ class MovieDetailView: UIView {
         profileCardView.addConstraint(coverImageView.leftAnchor.constraint(equalTo: profileCardView.leftAnchor, constant: 20))
         profileCardView.addConstraint(coverImageView.widthAnchor.constraint(equalTo: coverImageView.heightAnchor, multiplier: 0.7))
         profileCardView.addConstraint(coverImageView.heightAnchor.constraint(equalTo: profileCardView.heightAnchor, multiplier: 1.7))
-        
-        profileCardView.addConstraint(titleLabel.centerYAnchor.constraint(equalTo: profileCardView.centerYAnchor,constant: 5))
-        profileCardView.addConstraint(titleLabel.leftAnchor.constraint(equalTo: coverImageView.rightAnchor, constant: 10))
-        profileCardView.addConstraint(titleLabel.heightAnchor.constraint(equalToConstant: 20))
-        profileCardView.addConstraint(titleLabel.widthAnchor.constraint(equalToConstant: 100))
+        let margin = CGFloat(4)
+        profileCardView.addConstraint(captionMovieView.topAnchor.constraint(equalTo: profileCardView.topAnchor, constant: margin))
+        profileCardView.addConstraint(captionMovieView.leftAnchor.constraint(equalTo: coverImageView.rightAnchor, constant: margin))
+        profileCardView.addConstraint(captionMovieView.rightAnchor.constraint(equalTo: profileCardView.rightAnchor, constant: -margin))
+        profileCardView.addConstraint(captionMovieView.bottomAnchor.constraint(equalTo: profileCardView.bottomAnchor, constant: -margin))
         
         addConstraint(bodyScrollView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(bodyScrollView.leftAnchor.constraint(equalTo: leftAnchor))
@@ -232,6 +234,11 @@ class MovieDetailView: UIView {
         seeScrollView.addConstraint(seeView.widthAnchor.constraint(equalTo: seeScrollView.widthAnchor))
         seeScrollView.addConstraint(seeView.heightAnchor.constraint(equalTo: seeScrollView.heightAnchor))
         
+        seeView.addConstraint(seeInfoLabel.topAnchor.constraint(equalTo: seeView.topAnchor, constant:50))
+        seeView.addConstraint(seeInfoLabel.leftAnchor.constraint(equalTo: seeView.leftAnchor))
+        seeView.addConstraint(seeInfoLabel.widthAnchor.constraint(equalTo: seeView.widthAnchor))
+        seeView.addConstraint(seeInfoLabel.heightAnchor.constraint(equalTo: seeView.heightAnchor, multiplier:0.1))
+        
         addConstraint(barSegmentedView.topAnchor.constraint(equalTo: profileCardView.bottomAnchor))
         addConstraint(barSegmentedView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(barSegmentedView.widthAnchor.constraint(equalTo: widthAnchor))
@@ -240,7 +247,7 @@ class MovieDetailView: UIView {
         barSegmentedView.addConstraint(barSegmentedControl.topAnchor.constraint(equalTo: barSegmentedView.topAnchor,constant: 5))
         barSegmentedView.addConstraint(barSegmentedControl.leftAnchor.constraint(equalTo: barSegmentedView.leftAnchor,constant: 5))
         barSegmentedView.addConstraint(barSegmentedControl.rightAnchor.constraint(equalTo: barSegmentedView.rightAnchor,constant: -5))
-        barSegmentedView.addConstraint(barSegmentedControl.bottomAnchor.constraint(equalTo: barSegmentedView.bottomAnchor,constant: -5))
+        barSegmentedView.addConstraint(barSegmentedControl.bottomAnchor.constraint(equalTo: barSegmentedView.bottomAnchor))
         
         addConstraint(panelButtonView.centerXAnchor.constraint(equalTo: centerXAnchor))
         addConstraint(panelButtonView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -spaceBottomBarButtons))
@@ -291,5 +298,21 @@ class MovieDetailView: UIView {
         castCollectionView.delegate = vc
         seeScrollView.delegate = vc
         infoView.ratingCollectionView.delegate = vc
+    }
+    
+    func adjustFontSizeToFitHeight () {
+        let widthButton = closedButton.bounds.size.width
+        
+        closedButton.layer.cornerRadius = 0.5 * widthButton
+        closedButton.clipsToBounds = true
+        clockButton.layer.cornerRadius = 0.5 * widthButton
+        clockButton.clipsToBounds = true
+        heartButton.layer.cornerRadius = 0.5 * widthButton
+        heartButton.clipsToBounds = true
+        eyeButton.layer.cornerRadius = 0.5 * widthButton
+        eyeButton.clipsToBounds = true
+
+        captionMovieView.adjustFontSizeToFitHeight()
+        
     }
 }
