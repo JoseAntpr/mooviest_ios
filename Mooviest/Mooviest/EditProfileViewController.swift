@@ -243,10 +243,13 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     
     //TextField Delegate
     func textFieldDidEndEditing(_ textField: UITextField) {
+        print(activeField?.text)
+        validatePickers(textField: activeField!)
         v.formView.comeBackOrigin(withDuration: 0.3, moved: move)
         move = 0
         activeField = nil
         textField.rightView = nil
+        
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -262,36 +265,42 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         }
         return false
     }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeField = textField   
-        textField.rightView = v.clearTextButton
-        textField.rightViewMode = UITextFieldViewMode.always
+    func validatePickers(textField: UITextField) {
         switch textField {
         case v.dateTextFieldView.textField:
-            if textField.text == "" {
+            v.dateTextFieldView.setErrorText(message: "")
+            if let date = stringToDate(dateFormat: dateFormat, text: textField.text!) {
+                datePicker.date = date
+            }
+            else {
                 textField.text = getDate(sender: datePicker)
-                _ = v.dateTextFieldView.validateDate(dateFormat: dateFormat)
-            } else {
-                datePicker.date = stringToDate(dateFormat: dateFormat, text: textField.text!)
             }
         case v.genderTextFieldView.textField:
+            v.genderTextFieldView.setErrorText(message: "")
             let index = genders.index(of: textField.text!)
             if index == nil {
-               textField.text = genders[0]
+                textField.text = genders[genderPicker.selectedRow(inComponent: 0)]
             } else {
                 genderPicker.selectRow(index!, inComponent: 0, animated: false)
             }
+            
         case v.countryTextFieldView.textField:
+            v.countryTextFieldView.setErrorText(message: "")
             let index = countries.index(of: textField.text!)
             if index == nil {
-                textField.text = countries[0]
+                textField.text = countries[countryPicker.selectedRow(inComponent: 0)]
             } else {
                 countryPicker.selectRow(index!, inComponent: 0, animated: false)
             }
         default: break
         }
 
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeField = textField   
+        textField.rightView = v.clearTextButton
+        textField.rightViewMode = UITextFieldViewMode.always
+        validatePickers(textField: textField)
     }
     
     func getDate(sender: UIDatePicker)-> String {
@@ -302,17 +311,15 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     
     func datePickerChanged(sender: UIDatePicker) {
         v.dateTextFieldView.textField.text = getDate(sender: sender)
-        _ = v.dateTextFieldView.validateDate(dateFormat: dateFormat)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch pickerView {
         case genderPicker:
             v.genderTextFieldView.textField.text = genders[row]
-            _ = v.genderTextFieldView.validateTextIndexOf(strings: genders, message: "Ivalid gender")
+
         default:
             v.countryTextFieldView.textField.text = countries[row]        
-            _ = v.countryTextFieldView.validateTextIndexOf(strings: countries, message: "Ivalid country")
         }
         
     }
@@ -365,10 +372,10 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         view.addConstraint(v.bottomAnchor.constraint(equalTo: view.bottomAnchor))
     }
 
-    func stringToDate(dateFormat:String, text: String)-> Date {
+    func stringToDate(dateFormat:String, text: String)-> Date? {
         let dateFormater = DateFormatter()
         dateFormater.dateFormat = dateFormat
-        return dateFormater.date(from: text)!
+        return dateFormater.date(from: text)
     }
     
     func loadDataView() {
