@@ -1,16 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "iphone",
+      "idiom" : "universal",
+      "filename" : "ic_save.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "iphone",
+      "idiom" : "universal",
+      "filename" : "ic_save_2x.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
-      "filename" : "Save Filled_66.png",
+      "idiom" : "universal",
+      "filename" : "ic_save_3x.png",
       "scale" : "3x"
     }
   ],
