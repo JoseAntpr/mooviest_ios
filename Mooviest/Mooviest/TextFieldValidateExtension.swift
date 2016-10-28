@@ -32,4 +32,22 @@ extension TextFieldView {
         
         return successful
     }
+    
+    func validateDate(dateFormat: String)->Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        let date = dateFormatter.date(from: self.textField.text!)
+        let successful = date != nil || textField.text! == ""
+        self.setErrorText(message: successful ? "":"Date format incorrect")
+        
+        return successful
+    }
+    
+    func validateTextIndexOf(strings: [String], message: String)->Bool {
+        let i = strings.index(of: textField.text!)
+        let successful = i != nil || textField.text! == ""
+        self.setErrorText(message: successful ? "":message)
+
+        return successful
+    }
 }
