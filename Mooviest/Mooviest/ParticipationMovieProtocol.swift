@@ -14,8 +14,7 @@ protocol ParticipationMovieProtocol {
 
 extension ParticipationMovieProtocol {
     func loadParticipationToView (ParticipationCollectionViewCell pv: ParticipationCollectionViewCell, participation p: Participation )-> ParticipationCollectionViewCell {
-        pv.backgroundColor = UIColor.red
-        pv.faceImageView.kf_setImage(with:  URL(string: p.image),placeholder: UIImage(named:  "noimage"))
+        pv.faceImageView.kf_setImage(with:  URL(string: p.image),placeholder: UIImage(named:  "noimageprofile"))
         pv.nameLabel.text = p.name
         pv.roleLabel.text = p.role
         

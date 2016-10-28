@@ -80,7 +80,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v.titleLabel.text = movieListInfo.title
         self.navigationItem.title = movieListInfo.title
         
-        v.coverImageView.kf_setImage(with: URL(string:  movieListInfo!.image))
+        v.coverImageView.kf_setImage(with: URL(string:  movieListInfo!.image),placeholder: UIImage(named:  "noimage"))
         v.coverImageView.contentMode = UIViewContentMode.scaleToFill
         v.coverImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
         v.coverImageView.layer.borderWidth = 1.8
