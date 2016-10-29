@@ -206,14 +206,14 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     func selectBlackList(item: KCFloatingActionButtonItem) {
-        updateTypeMovie(typemovie: TypeMovie.watchlist) {
+        updateTypeMovie(typemovie: TypeMovie.black) {
             (ok) in
             if ok {
                 self.v.seenItem.itemBackgroundColor = .lightGray
                 self.v.wacthItem.itemBackgroundColor = .lightGray
                 self.v.favouriteItem.itemBackgroundColor = .lightGray
-                item.itemBackgroundColor = watchlist_color
-                self.updateFloatButton(nameImage: "bookmark", backgroundColor: item.itemBackgroundColor!, tintColor: .white)
+                item.itemBackgroundColor = blacklist_color
+                self.updateFloatButton(nameImage: "clear", backgroundColor: item.itemBackgroundColor!, tintColor: .white)
             }
         }
     }

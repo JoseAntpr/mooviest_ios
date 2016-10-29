@@ -229,21 +229,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
             }
         }
     }
-    
-//    func selectTypeMovie(button: UIButton) {
-//        button.tintColor =   mooviest_red
-//        
-//        switch button {
-//        case v.clockButton:
-//            updateTypeMovie(typemovie: TypeMovie.watchlist.hashValue)
-//        case v.heartButton:
-//            updateTypeMovie(typemovie: TypeMovie.favourite.hashValue)
-//        case v.eyeButton:
-//            updateTypeMovie(typemovie: TypeMovie.seen.hashValue)
-//        default:
-//            updateTypeMovie(typemovie: TypeMovie.black.hashValue)
-//        }
-//    }
 
     func cardSwipedLeft(_ card: UIView) -> Void {
         updateTypeMovie(typemovie: TypeMovie.black.hashValue)

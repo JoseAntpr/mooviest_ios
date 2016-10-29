@@ -166,6 +166,7 @@ class DraggableView: UIView {
     }
     
     func move(direction: MoveDirection) {
+        overlayView.alpha = 0
         var transform:CGAffineTransform!
         switch direction {
             case .left ,
@@ -205,7 +206,7 @@ class DraggableView: UIView {
     }
     
     func topAction() -> Void {
-       move(direction: .top)
+        move(direction: .top)
         delegate.cardSwipedTop(self)
     }
     
