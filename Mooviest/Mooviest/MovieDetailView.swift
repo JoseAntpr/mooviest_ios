@@ -24,15 +24,14 @@ class MovieDetailView: UIView {
     
     let bodyScrollView = UIScrollView()
     
-    let tabsView = UIView()
+//    let tabsView = UIView()
     var profileCardView = UIView()
     let coverImageView = UIImageView()
     let captionMovieView = CaptionMovieView()
     
-    let infoScrollView = UIScrollView()
     let infoView = InfoMovieView()
     var castCollectionView:UICollectionView!
-    let seeScrollView = UIScrollView()
+    
     let seeView = UIView()
     let seeInfoLabel = UILabel()
     
@@ -99,6 +98,11 @@ class MovieDetailView: UIView {
         heartButton.tintColor = UIColor(netHex: favourite_color)
         heartButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         
+        closedButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
+        clockButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
+        eyeButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
+        heartButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
+        
         seeInfoLabel.text = "Proximamente se podrá visualizar..."
         seeInfoLabel.textColor = .darkGray
         seeInfoLabel.font = UIFont.boldSystemFont(ofSize: seeInfoLabel.font.pointSize)
@@ -108,21 +112,13 @@ class MovieDetailView: UIView {
         profileCardView.addSubview(captionMovieView)
         profileCardView.addSubview(coverImageView)
         
-        seeView.addSubview(seeInfoLabel)
-        seeScrollView.addSubview(seeView)
-        infoScrollView.addSubview(infoView)
+        barSegmentedView.backgroundColor = .white
         
-        tabsView.addSubview(seeScrollView)
-        tabsView.addSubview(castCollectionView)
-        tabsView.addSubview(infoScrollView)
+        
+        seeView.addSubview(seeInfoLabel)
         
         barSegmentedView.addSubview(barSegmentedControl)
 
-        closedButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
-        clockButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
-        eyeButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
-        heartButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
-        
         panelButtonView.addSubview(closedButton)
         panelButtonView.addSubview(clockButton)
         panelButtonView.addSubview(eyeButton)
@@ -134,7 +130,10 @@ class MovieDetailView: UIView {
         
         addSubview(headerView)
         
-        addSubview(tabsView)
+        
+        addSubview(seeView)
+        addSubview(castCollectionView)
+        addSubview(infoView)
         addSubview(profileCardView)
         addSubview(bodyScrollView)
         addSubview(panelButtonView)
@@ -145,7 +144,6 @@ class MovieDetailView: UIView {
     func setupConstraints() {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         bodyScrollView.translatesAutoresizingMaskIntoConstraints = false
-        tabsView.translatesAutoresizingMaskIntoConstraints = false
         coverImageView.translatesAutoresizingMaskIntoConstraints = false
         headerBackdropImageView.translatesAutoresizingMaskIntoConstraints = false
         backgroundStatusView.translatesAutoresizingMaskIntoConstraints = false
@@ -155,8 +153,6 @@ class MovieDetailView: UIView {
         castCollectionView.translatesAutoresizingMaskIntoConstraints = false
         seeView.translatesAutoresizingMaskIntoConstraints = false
         profileCardView.translatesAutoresizingMaskIntoConstraints = false
-        seeScrollView.translatesAutoresizingMaskIntoConstraints = false
-        infoScrollView.translatesAutoresizingMaskIntoConstraints = false
         panelButtonView.translatesAutoresizingMaskIntoConstraints = false
         closedButton.translatesAutoresizingMaskIntoConstraints = false
         clockButton.translatesAutoresizingMaskIntoConstraints = false
@@ -204,35 +200,21 @@ class MovieDetailView: UIView {
         addConstraint(bodyScrollView.heightAnchor.constraint(equalTo: heightAnchor))
         
         let heightTabsView = -heightNavBar-height-heightSegmentedView
-        addConstraint(tabsView.topAnchor.constraint(equalTo: barSegmentedView.bottomAnchor))
-        addConstraint(tabsView.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(tabsView.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(tabsView.heightAnchor.constraint(equalTo: heightAnchor,constant: heightTabsView))
         
-        tabsView.addConstraint(infoScrollView.topAnchor.constraint(equalTo: tabsView.topAnchor))
-        tabsView.addConstraint(infoScrollView.leftAnchor.constraint(equalTo: tabsView.leftAnchor))
-        tabsView.addConstraint(infoScrollView.widthAnchor.constraint(equalTo: tabsView.widthAnchor))
-        tabsView.addConstraint(infoScrollView.heightAnchor.constraint(equalTo: tabsView.heightAnchor))
+        addConstraint(infoView.topAnchor.constraint(equalTo: barSegmentedView.bottomAnchor))
+        addConstraint(infoView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(infoView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(infoView.heightAnchor.constraint(equalTo: heightAnchor,constant: heightTabsView))
         
-        infoScrollView.addConstraint(infoView.topAnchor.constraint(equalTo: infoScrollView.topAnchor))
-        infoScrollView.addConstraint(infoView.leftAnchor.constraint(equalTo: infoScrollView.leftAnchor))
-        infoScrollView.addConstraint(infoView.widthAnchor.constraint(equalTo: infoScrollView.widthAnchor))
-        infoScrollView.addConstraint(infoView.heightAnchor.constraint(equalTo: infoScrollView.heightAnchor))
+        addConstraint(castCollectionView.topAnchor.constraint(equalTo: barSegmentedView.bottomAnchor))
+        addConstraint(castCollectionView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(castCollectionView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(castCollectionView.heightAnchor.constraint(equalTo: heightAnchor,constant: heightTabsView))
         
-        tabsView.addConstraint(castCollectionView.topAnchor.constraint(equalTo: tabsView.topAnchor))
-        tabsView.addConstraint(castCollectionView.leftAnchor.constraint(equalTo: tabsView.leftAnchor,constant: 5))
-        tabsView.addConstraint(castCollectionView.widthAnchor.constraint(equalTo: tabsView.widthAnchor,constant: -10))
-        tabsView.addConstraint(castCollectionView.heightAnchor.constraint(equalTo: tabsView.heightAnchor))
-        
-        tabsView.addConstraint(seeScrollView.topAnchor.constraint(equalTo: tabsView.topAnchor))
-        tabsView.addConstraint(seeScrollView.leftAnchor.constraint(equalTo: tabsView.leftAnchor,constant: 5))
-        tabsView.addConstraint(seeScrollView.widthAnchor.constraint(equalTo: tabsView.widthAnchor,constant: -10))
-        tabsView.addConstraint(seeScrollView.heightAnchor.constraint(equalTo: tabsView.heightAnchor))
-        
-        seeScrollView.addConstraint(seeView.topAnchor.constraint(equalTo: seeScrollView.topAnchor))
-        seeScrollView.addConstraint(seeView.leftAnchor.constraint(equalTo: seeScrollView.leftAnchor))
-        seeScrollView.addConstraint(seeView.widthAnchor.constraint(equalTo: seeScrollView.widthAnchor))
-        seeScrollView.addConstraint(seeView.heightAnchor.constraint(equalTo: seeScrollView.heightAnchor))
+        addConstraint(seeView.topAnchor.constraint(equalTo: barSegmentedView.bottomAnchor))
+        addConstraint(seeView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(seeView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(seeView.heightAnchor.constraint(equalTo: heightAnchor,constant: heightTabsView))
         
         seeView.addConstraint(seeInfoLabel.topAnchor.constraint(equalTo: seeView.topAnchor, constant:50))
         seeView.addConstraint(seeInfoLabel.leftAnchor.constraint(equalTo: seeView.leftAnchor))
@@ -247,7 +229,7 @@ class MovieDetailView: UIView {
         barSegmentedView.addConstraint(barSegmentedControl.topAnchor.constraint(equalTo: barSegmentedView.topAnchor,constant: 5))
         barSegmentedView.addConstraint(barSegmentedControl.leftAnchor.constraint(equalTo: barSegmentedView.leftAnchor,constant: 5))
         barSegmentedView.addConstraint(barSegmentedControl.rightAnchor.constraint(equalTo: barSegmentedView.rightAnchor,constant: -5))
-        barSegmentedView.addConstraint(barSegmentedControl.bottomAnchor.constraint(equalTo: barSegmentedView.bottomAnchor))
+        barSegmentedView.addConstraint(barSegmentedControl.bottomAnchor.constraint(equalTo: barSegmentedView.bottomAnchor,constant: -5))
         
         addConstraint(panelButtonView.centerXAnchor.constraint(equalTo: centerXAnchor))
         addConstraint(panelButtonView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -spaceBottomBarButtons))
@@ -294,9 +276,7 @@ class MovieDetailView: UIView {
     
     func setDelegate(ViewController vc: MovieDetailViewController) {
         bodyScrollView.delegate = vc
-        infoScrollView.delegate = vc
         castCollectionView.delegate = vc
-        seeScrollView.delegate = vc
         infoView.ratingCollectionView.delegate = vc
     }
     

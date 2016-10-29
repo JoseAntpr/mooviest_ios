@@ -11,7 +11,7 @@ import Kingfisher
 
 
 
-class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieProtocol {
+class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate,  UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieProtocol {
 
     var offset_CoverStopScale:CGFloat!
     var offset_BackdropFadeOff:CGFloat!
@@ -83,9 +83,10 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         
         v.castCollectionView.dataSource = self
         v.castCollectionView.register(ParticipationCollectionViewCell.self, forCellWithReuseIdentifier: participationCellIdentifier)
-        
+        v.castCollectionView.isScrollEnabled = false 
         v.infoView.ratingCollectionView.dataSource = self
         v.infoView.ratingCollectionView.register(RatingCollectionViewCell.self, forCellWithReuseIdentifier: ratingCellIdentifier)
+        
         v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
         v.captionMovieView.titleLabel.text = movieListInfo.title
         self.navigationItem.title = movieListInfo.title
@@ -107,8 +108,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     override func viewDidAppear(_ animated: Bool) {
         //here extract predominant color
         heightView = view.frame.size.height
-        v.seeScrollView.contentSize.height = v.seeView.frame.size.height
-        v.infoScrollView.contentSize.height = v.infoView.calculateHeight()
         changeTabs(index: 0)
         v.barSegmentedControl.selectedSegmentIndex = 0
         calculateOffset()
@@ -145,6 +144,10 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        v.bodyScrollView.addSubview(v.seeView)
+        v.bodyScrollView.addSubview(v.castCollectionView)
+        v.bodyScrollView.addSubview(v.infoView)
+        
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
@@ -221,14 +224,15 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             var avatarTransform = CATransform3DIdentity
             var headerTransform = CATransform3DIdentity
             var cardTransform = CATransform3DIdentity
-            
+            var noScrollTransform = CATransform3DIdentity
+            print("offset body:\(offset)")
             if offset < 0 {
                 let headerScaleFactor:CGFloat = -(offset) / v.headerView.bounds.height
                 let headerSizevariation = ((v.headerView.bounds.height * (1.0 + headerScaleFactor)) - v.headerView.bounds.height)/2.0
                 headerTransform = CATransform3DTranslate(headerTransform, 0, headerSizevariation*0.5, 0)
                 cardTransform = CATransform3DTranslate(headerTransform, 0, headerSizevariation, 0)
                 headerTransform = CATransform3DScale(headerTransform, 1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0)
-                
+                noScrollTransform = cardTransform
                 if v.coverImageView.layer.zPosition < v.headerView.layer.zPosition{
                     v.headerView.layer.zPosition = 0
                 }                
@@ -240,12 +244,11 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                 let offsetCaTabs  = max(offset-offset_CardProfileStop,0)
                 
                 v.castCollectionView.contentOffset.y = offsetCaTabs
-                v.seeScrollView.contentOffset.y = offsetCaTabs
-                v.infoScrollView.contentOffset.y = offsetCaTabs
                 
                 //Animations
                 headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
                 cardTransform = CATransform3DTranslate(cardTransform, 0, max(-offset_CardProfileStop, -offset), 0)
+                noScrollTransform = CATransform3DTranslate(noScrollTransform, 0, -offset, 0)
                 
                 let avatarScaleFactor = (min(offset_CoverStopScale, offset)) / v.coverImageView.bounds.height
                 let avatarSizeVariation = ((v.coverImageView.bounds.height * (1.0 + avatarScaleFactor)) - v.coverImageView.bounds.height)
@@ -270,7 +273,9 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             v.profileCardView.layer.transform  = cardTransform
             v.barSegmentedView.layer.transform = cardTransform
             //finalmente cada tab tendrá su propio transform en funcion de su height
-            v.tabsView.layer.transform  = cardTransform
+            v.castCollectionView.layer.transform  = cardTransform
+            v.infoView.layer.transform  = noScrollTransform
+            v.seeView.layer.transform  = noScrollTransform
         }
     }
     
@@ -292,13 +297,13 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             v.seeView.isHidden = false
             v.infoView.isHidden = true
             print("2")
-            calculateContentSize(height: v.seeScrollView.contentSize.height)
+            calculateContentSize(height: v.seeView.frame.height)
         default:
             v.castCollectionView.isHidden = true
             v.seeView.isHidden = true
             v.infoView.isHidden = false
             print("default")
-            calculateContentSize(height: v.infoScrollView.contentSize.height)
+            calculateContentSize(height: v.infoView.calculateHeight())
         }
     }
     
@@ -311,12 +316,12 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell:UICollectionViewCell!
-        if collectionView == v.castCollectionView {
-            let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: participationCellIdentifier, for: indexPath as IndexPath) as! ParticipationCollectionViewCell
-            cell = loadParticipationToView(ParticipationCollectionViewCell: customCell, participation: participations[indexPath.item])            
-        } else {
+        if collectionView == v.infoView.ratingCollectionView {
             let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: ratingCellIdentifier, for: indexPath as IndexPath) as! RatingCollectionViewCell
             cell = loadRatingToView(RatingCollectionViewCell: customCell, Rating: ratings[indexPath.item])
+        } else {
+            let customCell = collectionView.dequeueReusableCell(withReuseIdentifier: participationCellIdentifier, for: indexPath as IndexPath) as! ParticipationCollectionViewCell
+            cell = loadParticipationToView(ParticipationCollectionViewCell: customCell, participation: participations[indexPath.item])
         }
         return cell
     }
@@ -324,26 +329,32 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count = 0
-        if collectionView == v.castCollectionView {
-            count = participations.count
-        } else {
+        if collectionView == v.infoView.ratingCollectionView {
             count = ratings.count
+        } else {
+            count = participations.count
         }
         return count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
         var size:CGSize!
-        if collectionView == v.castCollectionView {
-            let width = (collectionView.frame.width/3)-1
-            size = CGSize(width: width, height: width*1.30)
-        } else {
+        if collectionView == v.infoView.ratingCollectionView {
             let height = collectionView.frame.height
             size = CGSize(width: height*0.7, height: height)
+        } else {
+            let width = (collectionView.frame.width/3)-1
+            size = CGSize(width: width, height: width*1.30)
         }
         return size
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == v.castCollectionView {
+            print(participations[indexPath.item].name)
+            //search movies where partipation work
+        }
+    }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return UIStatusBarStyle.lightContent

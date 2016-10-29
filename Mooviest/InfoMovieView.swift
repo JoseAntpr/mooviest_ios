@@ -51,6 +51,8 @@ class InfoMovieView: UIView {
         textView.textAlignment = NSTextAlignment.justified
         textView.textColor = UIColor.gray
         textView.font = UIFont(name: textView.font!.fontName, size: 16)
+        textView.isSelectable = false
+        textView.isEditable = false
     }
 
     func setupComponents() {
