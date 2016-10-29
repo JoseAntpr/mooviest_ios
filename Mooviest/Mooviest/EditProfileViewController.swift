@@ -417,7 +417,9 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         dateFormater.dateFormat = dateFormat
         let born = dateFormater.date(from: v.dateTextFieldView.getText())
         dateFormater.dateFormat = "yyyy-MM-dd"
-        user?.born = dateFormater.string(from: born!)
+        if born != nil {
+            user?.born = dateFormater.string(from: born!)
+        }
     }
     
     func saveProfile(){

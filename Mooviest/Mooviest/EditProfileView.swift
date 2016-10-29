@@ -89,16 +89,19 @@ class EditProfileView: UIView {
         dateTextFieldView.setPlaceholder(Placeholder: "Born", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
         dateTextFieldView.setReturnKeyType(returnKeyType: .next)
         dateTextFieldView.textField.tag = 4
+        dateTextFieldView.textField.isSelected = false
         
         genderTextFieldView.setTexColor(TextColor: UIColor.black)
         genderTextFieldView.setPlaceholder(Placeholder: "gender", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
         genderTextFieldView.setReturnKeyType(returnKeyType: .next)
         genderTextFieldView.textField.tag = 5
+        genderTextFieldView.textField.isSelected = false
         
         countryTextFieldView.setTexColor(TextColor: UIColor.black)
         countryTextFieldView.setPlaceholder(Placeholder: "Country", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
         countryTextFieldView.setReturnKeyType(returnKeyType: .send)
         countryTextFieldView.textField.tag = 6
+        countryTextFieldView.textField.isSelected = false
         
         photoButton.setImage(UIImage(named: "camera"), for: UIControlState())
         photoButton.tintColor = UIColor(netHex: mooviest_red)
