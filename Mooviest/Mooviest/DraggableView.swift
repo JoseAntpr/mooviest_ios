@@ -32,6 +32,7 @@ protocol DraggableViewDelegate {
 }
 
 class DraggableView: UIView {
+    let heightOverlay = CGFloat(150)
     var delegate: DraggableViewDelegate!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var originPoint: CGPoint!
@@ -70,12 +71,13 @@ class DraggableView: UIView {
         noImageLabel.font = noImageLabel.font.withSize(30)
         
         overlayView = OverlayView()
+        overlayView.layer.cornerRadius = 0.5 * heightOverlay
+        overlayView.clipsToBounds = true
         overlayView.alpha = 0
         
         addSubview(noImageLabel)
         addSubview(coverView)
-        addSubview(overlayView)
-        
+        addSubview(overlayView)        
     }
     
     func setupConstraints() {
@@ -90,14 +92,13 @@ class DraggableView: UIView {
         
         addConstraint(overlayView.centerXAnchor.constraint(equalTo: centerXAnchor))
         addConstraint(overlayView.centerYAnchor.constraint(equalTo: centerYAnchor))
-        addConstraint(overlayView.widthAnchor.constraint(equalToConstant: 150))
-        addConstraint(overlayView.heightAnchor.constraint(equalToConstant: 150))
+        addConstraint(overlayView.widthAnchor.constraint(equalToConstant: heightOverlay))
+        addConstraint(overlayView.heightAnchor.constraint(equalToConstant: heightOverlay))
         
         addConstraint(noImageLabel.centerXAnchor.constraint(equalTo: centerXAnchor))
         addConstraint(noImageLabel.centerYAnchor.constraint(equalTo: centerYAnchor))
         addConstraint(noImageLabel.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(noImageLabel.heightAnchor.constraint(equalToConstant: 100))
-        
+        addConstraint(noImageLabel.heightAnchor.constraint(equalToConstant: 100))        
     }
     
     func beingDragged(_ gestureRecognizer: UIPanGestureRecognizer) -> Void {

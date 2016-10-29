@@ -157,7 +157,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         super.didReceiveMemoryWarning()
     }
     
-    func updateTypeMovie(typemovie: Int) {
+    func updateTypeMovie(typemovie: Int,completion: @escaping (Bool) -> Void) {
         if movie.typeMovie == "" {//insert Collection
             DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie+1){
                 (res) in
@@ -165,6 +165,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                     self.movie.idCollection = id
                     if let typeMovie = res["typeMovie"] as? String {
                         self.movie.typeMovie = typeMovie
+                        completion(true)
                     }
                 }
             }
@@ -176,6 +177,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                     self.movie.idCollection = id
                     if let typeMovie = res["typeMovie"] as? String {
                         self.movie.typeMovie = typeMovie
+                        completion(true)
                     }
                 }
             }
@@ -187,17 +189,33 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         
         switch button {
         case v.clockButton:
-            updateTypeMovie(typemovie: TypeMovie.watchlist.hashValue)
-            button.tintColor = UIColor(netHex: watchlist_color)
+            updateTypeMovie(typemovie: TypeMovie.watchlist.hashValue) {
+                (ok) in
+                if ok {
+                    button.tintColor = UIColor(netHex: watchlist_color)
+                }
+            }
         case v.heartButton:
-            updateTypeMovie(typemovie: TypeMovie.favourite.hashValue)
-            button.tintColor = UIColor(netHex: favourite_color)
+            updateTypeMovie(typemovie: TypeMovie.favourite.hashValue) {
+                (ok) in
+                if ok {
+                    button.tintColor = UIColor(netHex: favourite_color)
+                }
+            }
         case v.eyeButton:
-            updateTypeMovie(typemovie: TypeMovie.seen.hashValue)
-            button.tintColor = UIColor(netHex: seen_color)
+            updateTypeMovie(typemovie: TypeMovie.seen.hashValue) {
+                (ok) in
+                if ok {
+                    button.tintColor = UIColor(netHex: seen_color)
+                }
+            }
         default:
-            updateTypeMovie(typemovie: TypeMovie.black.hashValue)
-            button.tintColor = UIColor(netHex: blacklist_color)
+            updateTypeMovie(typemovie: TypeMovie.black.hashValue){
+                (ok) in
+                if ok {
+                    button.tintColor = UIColor(netHex: blacklist_color)
+                }
+            }
         }
     }
     
