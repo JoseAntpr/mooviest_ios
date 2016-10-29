@@ -17,7 +17,7 @@ protocol MovieProtocol {
 extension MovieProtocol {
     
     func loadMovieToView (coverView: CoverView, movie: MovieListInfo )-> CoverView {
-        coverView.movieImageView.kf_setImage(with: URL(string: movie.image),placeholder: UIImage(named:  "noimage"))
+        coverView.movieImageView.kf.setImage(with: URL(string: movie.image),placeholder: UIImage(named:  "noimage"))
         coverView.titleLabel.text = movie.title
         coverView.ratingLabel.text = "\(movie.average)"
         
@@ -25,7 +25,7 @@ extension MovieProtocol {
     }
     
     func loadParticipationToView (ParticipationCollectionViewCell pv: ParticipationCollectionViewCell, participation p: Participation )-> ParticipationCollectionViewCell {
-        pv.faceImageView.kf_setImage(with:  URL(string: p.image),placeholder: UIImage(named:  "noimageprofile"))
+        pv.faceImageView.kf.setImage(with:  URL(string: p.image),placeholder: UIImage(named:  "noimageprofile"))
         pv.nameLabel.text = p.name
         pv.roleLabel.text = p.role
         

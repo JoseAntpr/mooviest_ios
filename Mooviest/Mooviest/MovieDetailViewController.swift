@@ -8,7 +8,7 @@
 
 import UIKit
 import Kingfisher
-
+import KCFloatingActionButton
 
 
 class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate,  UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieProtocol {
@@ -45,64 +45,8 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         setupConstraints()
     }
     
-    func loadDataView() {
-        v.headerBackdropImageView.kf_setImage(with: URL(string: movie!.backdrop))
-        v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
-        v.infoView.synopsisTextView.text = movie?.synopsis
-        v.infoView.producerTextView.text = movie?.producers.replacingOccurrences(of: " |", with: ",")
-        v.infoView.genreTextView.text = movie?.genres.joined(separator: ", ")
-//        v.infoView.countryTextView.text = movie.country
-        
-        v.captionMovieView.ratingView.ratingLabel.text = "\(movie.average)"
-        v.captionMovieView.releasedLabel.text = "\(movie.released)"
-        v.captionMovieView.runtimeLabel.text = "\(movie.runtime) min"
-        
-        
-        ratings = movie.ratings
-        participations = movie.participations
-        v.infoView.ratingCollectionView.reloadData()
-        v.castCollectionView.reloadData()
-        
-        
-        switch movie.typeMovie {
-        case TypeMovie.black.rawValue:
-            v.closedButton.tintColor = UIColor(netHex: mooviest_red)
-        case TypeMovie.favourite.rawValue:
-            v.heartButton.tintColor = UIColor(netHex: mooviest_red)
-        case TypeMovie.seen.rawValue:
-            v.eyeButton.tintColor = UIColor(netHex: mooviest_red)
-        case TypeMovie.watchlist.rawValue:
-            v.clockButton.tintColor = UIColor(netHex: mooviest_red)
-        default:
-            break
-        }
-    }
-    
-    func setupView() {
-        v.setDelegate(ViewController: self)
-        
-        v.castCollectionView.dataSource = self
-        v.castCollectionView.register(ParticipationCollectionViewCell.self, forCellWithReuseIdentifier: participationCellIdentifier)
-        v.castCollectionView.isScrollEnabled = false 
-        v.infoView.ratingCollectionView.dataSource = self
-        v.infoView.ratingCollectionView.register(RatingCollectionViewCell.self, forCellWithReuseIdentifier: ratingCellIdentifier)
-        
-        v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
-        v.captionMovieView.titleLabel.text = movieListInfo.title
-        self.navigationItem.title = movieListInfo.title
-        v.captionMovieView.typeLabel.text = "Película"
-        
-        v.coverImageView.kf_setImage(with: URL(string:  movieListInfo!.image),placeholder: UIImage(named:  "noimage"))
-        v.coverImageView.contentMode = UIViewContentMode.scaleToFill
-        v.coverImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
-        v.coverImageView.layer.borderWidth = 1.8
-        v.coverImageView.layer.cornerRadius = 5
-        v.coverImageView.layer.masksToBounds = true
-        
-        v.closedButton.addTarget(self, action: #selector(self.tapped), for: .touchUpInside)
-        v.heartButton.addTarget(self, action: #selector(self.tapped), for: .touchUpInside)
-        v.clockButton.addTarget(self, action: #selector(self.tapped), for: .touchUpInside)
-        v.eyeButton.addTarget(self, action: #selector(self.tapped), for: .touchUpInside)
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -120,20 +64,86 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                 vc.movies[0].idCollection = movie.idCollection
                 vc.movies[0].typeMovie = movie.typeMovie
             }
-             
         }
     }
     
-    //This method is called when the autolayout engine has finished to calculate your views' frames
     override func viewDidLayoutSubviews() {
         v.adjustFontSizeToFitHeight()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    func loadDataView() {
+        v.coverImageView.kf.setImage(with: URL(string:  movieListInfo!.image),placeholder: UIImage(named:  "noimage"))        
+        //add default backdrop
+        v.headerBackdropImageView.kf.setImage(with: URL(string: movie!.backdrop))
+        v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
+        v.infoView.synopsisTextView.text = movie?.synopsis
+        v.infoView.producerTextView.text = movie?.producers.replacingOccurrences(of: " |", with: ",")
+        v.infoView.genreTextView.text = movie?.genres.joined(separator: ", ")
+//        v.infoView.countryTextView.text = movie.country
+        
+        v.captionMovieView.ratingView.ratingLabel.text = "\(movie.average)"
+        v.captionMovieView.releasedLabel.text = "\(movie.released)"
+        v.captionMovieView.runtimeLabel.text = "\(movie.runtime) min"
+        
+        ratings = movie.ratings
+        participations = movie.participations
+        v.infoView.ratingCollectionView.reloadData()
+        v.castCollectionView.reloadData()
+        
+        switch movie.typeMovie {
+        case TypeMovie.black.rawValue:
+            v.blackItem.itemBackgroundColor = blacklist_color
+            self.updateFloatButton(nameImage: "clear", backgroundColor: blacklist_color, tintColor: .white)
+        case TypeMovie.favourite.rawValue:
+            v.favouriteItem.itemBackgroundColor = favourite_color
+            self.updateFloatButton(nameImage: "star", backgroundColor: favourite_color, tintColor: .white)
+        case TypeMovie.seen.rawValue:
+            v.seenItem.itemBackgroundColor = seen_color
+            self.updateFloatButton(nameImage: "eye", backgroundColor: seen_color, tintColor: .white)
+        case TypeMovie.watchlist.rawValue:
+            v.wacthItem.itemBackgroundColor = watchlist_color
+            self.updateFloatButton(nameImage: "bookmark", backgroundColor: watchlist_color, tintColor: .white)
+        default:
+            break
+        }
+        
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    func setupView() {
+        v.setDelegate(ViewController: self)
+        
+        v.castCollectionView.dataSource = self
+        v.castCollectionView.register(ParticipationCollectionViewCell.self, forCellWithReuseIdentifier: participationCellIdentifier)
+        v.castCollectionView.isScrollEnabled = false 
+        v.infoView.ratingCollectionView.dataSource = self
+        v.infoView.ratingCollectionView.register(RatingCollectionViewCell.self, forCellWithReuseIdentifier: ratingCellIdentifier)
+        
+        v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
+        v.captionMovieView.titleLabel.text = movieListInfo.title
+        self.navigationItem.title = movieListInfo.title
+        v.captionMovieView.typeLabel.text = "Película"
+        
+        v.coverImageView.kf.setImage(with: URL(string:  movieListInfo!.image),placeholder: UIImage(named:  "noimage"))
+        v.coverImageView.contentMode = UIViewContentMode.scaleToFill
+        v.coverImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
+        v.coverImageView.layer.borderWidth = 1.8
+        v.coverImageView.layer.cornerRadius = 5
+        v.coverImageView.layer.masksToBounds = true
+        
+        v.blackItem.handler = { item in
+            self.selectBlackList(item: item)
+        }
+        v.seenItem.handler = { item in
+            self.selectSeenList(item: item)
+        }
+        v.favouriteItem.handler = { item in
+            self.selectFavouriteList(item: item)
+        }
+        v.wacthItem.handler = { item in
+            self.selectWatchList(item: item)
+        }
     }
+    
     
     func calculateOffset() {
         offset_HeaderStop = v.headerView.frame.size.height-(self.navigationController?.navigationBar.frame.size.height)!-v.height
@@ -157,74 +167,95 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         super.didReceiveMemoryWarning()
     }
     
-    func updateTypeMovie(typemovie: Int,completion: @escaping (Bool) -> Void) {
-        if movie.typeMovie == "" {//insert Collection
-            DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie+1){
-                (res) in
-                if let id = res["id"] as? Int {
-                    self.movie.idCollection = id
-                    if let typeMovie = res["typeMovie"] as? String {
-                        self.movie.typeMovie = typeMovie
-                        completion(true)
+    func updateTypeMovie(typemovie: TypeMovie,completion: @escaping (Bool) -> Void) {
+        if movie != nil {
+            if movie.typeMovie == "" {//insert Collection
+                DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie.hashValue+1){
+                    (res) in
+                    if let id = res["id"] as? Int {
+                        self.movie.idCollection = id
+                        if let typeMovie = res["typeMovie"] as? String {
+                            self.movie.typeMovie = typeMovie
+                            completion(true)
+                        }
                     }
                 }
-            }
-        } else {
-            DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie+1){
-                (res) in
-                print(res)
-                if let id = res["id"] as? Int {
-                    self.movie.idCollection = id
-                    if let typeMovie = res["typeMovie"] as? String {
-                        self.movie.typeMovie = typeMovie
-                        completion(true)
+            } else if typemovie.rawValue != movie.typeMovie {
+                DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie.hashValue+1){
+                    (res) in
+                    print(res)
+                    if let id = res["id"] as? Int {
+                        self.movie.idCollection = id
+                        if let typeMovie = res["typeMovie"] as? String {
+                            self.movie.typeMovie = typeMovie
+                            completion(true)
+                        }
                     }
                 }
+            } else {
+                completion(false)
             }
         }
     }
     
-    func selectTypeMovie(button: UIButton) {
-        
-        
-        switch button {
-        case v.clockButton:
-            updateTypeMovie(typemovie: TypeMovie.watchlist.hashValue) {
-                (ok) in
-                if ok {
-                    button.tintColor = UIColor(netHex: watchlist_color)
-                }
-            }
-        case v.heartButton:
-            updateTypeMovie(typemovie: TypeMovie.favourite.hashValue) {
-                (ok) in
-                if ok {
-                    button.tintColor = UIColor(netHex: favourite_color)
-                }
-            }
-        case v.eyeButton:
-            updateTypeMovie(typemovie: TypeMovie.seen.hashValue) {
-                (ok) in
-                if ok {
-                    button.tintColor = UIColor(netHex: seen_color)
-                }
-            }
-        default:
-            updateTypeMovie(typemovie: TypeMovie.black.hashValue){
-                (ok) in
-                if ok {
-                    button.tintColor = UIColor(netHex: blacklist_color)
-                }
+    
+    func updateFloatButton(nameImage: String, backgroundColor: UIColor, tintColor:UIColor) {
+        self.v.fab.buttonImage = UIImage(named: nameImage)?.withRenderingMode(.alwaysTemplate)
+        self.v.fab.buttonColor = backgroundColor
+        self.v.fab.plusColor = tintColor
+    }
+    
+    func selectBlackList(item: KCFloatingActionButtonItem) {
+        updateTypeMovie(typemovie: TypeMovie.watchlist) {
+            (ok) in
+            if ok {
+                self.v.seenItem.itemBackgroundColor = .lightGray
+                self.v.wacthItem.itemBackgroundColor = .lightGray
+                self.v.favouriteItem.itemBackgroundColor = .lightGray
+                item.itemBackgroundColor = watchlist_color
+                self.updateFloatButton(nameImage: "bookmark", backgroundColor: item.itemBackgroundColor!, tintColor: .white)
             }
         }
     }
-    
-    func tapped(button: UIButton) {
-        v.closedButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
-        v.clockButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
-        v.eyeButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
-        v.heartButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
-        selectTypeMovie(button: button)
+
+    func selectSeenList(item: KCFloatingActionButtonItem) {
+        updateTypeMovie(typemovie: TypeMovie.seen) {
+            (ok) in
+            if ok {
+                self.v.blackItem.itemBackgroundColor = .lightGray
+                self.v.wacthItem.itemBackgroundColor = .lightGray
+                self.v.favouriteItem.itemBackgroundColor = .lightGray
+                item.itemBackgroundColor = seen_color
+                self.updateFloatButton(nameImage: "eye", backgroundColor: item.itemBackgroundColor!, tintColor: .white)
+            }
+        }
+    }
+
+    func selectFavouriteList(item: KCFloatingActionButtonItem) {
+        updateTypeMovie(typemovie: TypeMovie.favourite) {
+            (ok) in
+            if ok {
+                self.v.blackItem.itemBackgroundColor = .lightGray
+                self.v.seenItem.itemBackgroundColor = .lightGray
+                self.v.wacthItem.itemBackgroundColor = .lightGray
+                item.itemBackgroundColor = favourite_color
+                self.updateFloatButton(nameImage: "star", backgroundColor: item.itemBackgroundColor!, tintColor: .white)
+            }
+        }
+    }
+
+    func selectWatchList(item: KCFloatingActionButtonItem) {
+        v.blackItem.itemBackgroundColor = .lightGray
+        v.seenItem.itemBackgroundColor = .lightGray
+        v.favouriteItem.itemBackgroundColor = .lightGray
+        
+        updateTypeMovie(typemovie: TypeMovie.watchlist) {
+            (ok) in
+            if ok {
+                item.itemBackgroundColor = watchlist_color
+                self.updateFloatButton(nameImage: "bookmark", backgroundColor: item.itemBackgroundColor!, tintColor: .white)
+            }
+        }
     }
     
     func setupConstraints() {
@@ -243,7 +274,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             var headerTransform = CATransform3DIdentity
             var cardTransform = CATransform3DIdentity
             var noScrollTransform = CATransform3DIdentity
-            print("offset body:\(offset)")
+
             if offset < 0 {
                 let headerScaleFactor:CGFloat = -(offset) / v.headerView.bounds.height
                 let headerSizevariation = ((v.headerView.bounds.height * (1.0 + headerScaleFactor)) - v.headerView.bounds.height)/2.0
@@ -283,6 +314,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                         v.headerView.layer.zPosition = 1
                         v.barSegmentedView.layer.zPosition = 2
                         v.backgroundStatusView.layer.zPosition = 3
+                        v.fab.layer.zPosition = 3
                     }
                 }
             }
@@ -290,7 +322,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             v.coverImageView.layer.transform = avatarTransform
             v.profileCardView.layer.transform  = cardTransform
             v.barSegmentedView.layer.transform = cardTransform
-            //finalmente cada tab tendrá su propio transform en funcion de su height
             v.castCollectionView.layer.transform  = cardTransform
             v.infoView.layer.transform  = noScrollTransform
             v.seeView.layer.transform  = noScrollTransform
@@ -370,11 +401,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == v.castCollectionView {
             print(participations[indexPath.item].name)
-            //search movies where partipation work
         }
-    }
-    
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return UIStatusBarStyle.lightContent
     }
 }

@@ -70,7 +70,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        v.coverImageView.image = chosenImage.kf_normalized()
+        v.coverImageView.image = chosenImage.kf.normalized
         dismiss(animated:true, completion: { _ in })
     }
     
@@ -97,7 +97,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         navigationItem.rightBarButtonItem = saveButton
         v.photoButton.addTarget(self, action: #selector(self.photoPicker), for: .touchUpInside)
         if let avatar = user?.avatar {
-            v.coverImageView.kf_setImage(with: URL(string: "\(DataModel.sharedInstance.path)\(avatar)"),placeholder: UIImage(named: "contact"))
+            v.coverImageView.kf.setImage(with: URL(string: "\(DataModel.sharedInstance.path)\(avatar)"),placeholder: UIImage(named: "contact"))
         }
         v.clearTextButton.addTarget(self, action: #selector(self.textClear(button:)), for: .touchUpInside)
         v.seTextFieldsDelegate(Delegate: self)
@@ -114,7 +114,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         let dateToolBar = UIToolbar()
         dateToolBar.barStyle = UIBarStyle.default
         dateToolBar.isTranslucent = true
-        dateToolBar.tintColor = UIColor(netHex: mooviest_red)
+        dateToolBar.tintColor = mooviest_red
         dateToolBar.sizeToFit()
         let doneButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.nextDatePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
@@ -134,7 +134,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         let genderToolBar = UIToolbar()
         genderToolBar.barStyle = UIBarStyle.default
         genderToolBar.isTranslucent = true
-        genderToolBar.tintColor = UIColor(netHex: mooviest_red)
+        genderToolBar.tintColor =  mooviest_red
         genderToolBar.sizeToFit()
         let doneButton2 = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.nextGenderPicker))
         let spaceButton2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
@@ -160,7 +160,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         let countryToolBar = UIToolbar()
         countryToolBar.barStyle = UIBarStyle.default
         countryToolBar.isTranslucent = true
-        countryToolBar.tintColor = UIColor(netHex: mooviest_red)
+        countryToolBar.tintColor =  mooviest_red
         countryToolBar.sizeToFit()
         let doneButton3 = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.introCountryPicker))
         let spaceButton3 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)

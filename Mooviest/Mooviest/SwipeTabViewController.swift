@@ -11,13 +11,13 @@ import UIKit
 import Kingfisher
 
 class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProtocol {
-    let MAX_BUFFER_SIZE = 2
+    let MAX_BUFFER_SIZE = 4
     var v: SwipeTabView!
     var allCards: [DraggableView]!
     var nextUrl = ""
     var loadedCards = [DraggableView]()
     var movies = [MovieListInfo]()
-    
+    var minCount = Int.max
     override func viewDidLoad() {
         super.viewDidLoad()
         let height = self.navigationController?.navigationBar.frame.height
@@ -177,19 +177,25 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         return draggableView
     }
     
+    func loadMoreCards() {
+        var i = loadedCards.count
+        while loadedCards.count < MAX_BUFFER_SIZE && i < allCards.count  {
+            loadedCards.append(allCards[i])
+            v.panelSwipeView.insertSubview(loadedCards[i], belowSubview: loadedCards[i-1])
+            setupConstraintsSubView(Index: i)
+            i += 1
+        }
+    }
     
     func afterSwiped() {
+        print("\( minCount)")
         loadedCards.remove(at: 0)
         allCards.remove(at: 0)
         movies.remove(at: 0)
-        //controlar errores
-        if allCards.count > 1 {
-            loadedCards.append(allCards[1])
-            v.panelSwipeView.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
-            setupConstraintsSubView(Index: MAX_BUFFER_SIZE - 1)
-        }
-        if allCards.count == 5 {
-            loadSwipe()
+        
+        loadMoreCards()
+        if allCards.count == 9 {
+            self.loadSwipe()
         }
     }
     
@@ -224,20 +230,20 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         }
     }
     
-    func selectTypeMovie(button: UIButton) {
-        button.tintColor = UIColor(netHex: mooviest_red)
-        
-        switch button {
-        case v.clockButton:
-            updateTypeMovie(typemovie: TypeMovie.watchlist.hashValue)
-        case v.heartButton:
-            updateTypeMovie(typemovie: TypeMovie.favourite.hashValue)
-        case v.eyeButton:
-            updateTypeMovie(typemovie: TypeMovie.seen.hashValue)
-        default:
-            updateTypeMovie(typemovie: TypeMovie.black.hashValue)
-        }
-    }
+//    func selectTypeMovie(button: UIButton) {
+//        button.tintColor =   mooviest_red
+//        
+//        switch button {
+//        case v.clockButton:
+//            updateTypeMovie(typemovie: TypeMovie.watchlist.hashValue)
+//        case v.heartButton:
+//            updateTypeMovie(typemovie: TypeMovie.favourite.hashValue)
+//        case v.eyeButton:
+//            updateTypeMovie(typemovie: TypeMovie.seen.hashValue)
+//        default:
+//            updateTypeMovie(typemovie: TypeMovie.black.hashValue)
+//        }
+//    }
 
     func cardSwipedLeft(_ card: UIView) -> Void {
         updateTypeMovie(typemovie: TypeMovie.black.hashValue)

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KCFloatingActionButton
 
 class MovieDetailView: UIView {
     
@@ -24,7 +25,6 @@ class MovieDetailView: UIView {
     
     let bodyScrollView = UIScrollView()
     
-//    let tabsView = UIView()
     var profileCardView = UIView()
     let coverImageView = UIImageView()
     let captionMovieView = CaptionMovieView()
@@ -38,15 +38,15 @@ class MovieDetailView: UIView {
     let barSegmentedView = UIView()
     var barSegmentedControl: UISegmentedControl!
     
-    var panelButtonView = UIView()
-    var closedButton = UIButton(type: UIButtonType.system) as UIButton
-    var clockButton = UIButton(type: UIButtonType.system) as UIButton
-    var eyeButton = UIButton(type: UIButtonType.system) as UIButton
-    var heartButton = UIButton(type: UIButtonType.system) as UIButton
-    
     let space1View = UIView ()
     let space2View = UIView ()
     let space3View = UIView ()
+    
+    let fab = KCFloatingActionButton()
+    let seenItem = KCFloatingActionButtonItem()
+    let wacthItem = KCFloatingActionButtonItem()
+    let favouriteItem = KCFloatingActionButtonItem()
+    let blackItem = KCFloatingActionButtonItem()
     
     init(heightNavBar h: CGFloat) {
         super.init(frame: CGRect.zero)
@@ -62,8 +62,8 @@ class MovieDetailView: UIView {
     func setupComponents() {
         self.backgroundColor = UIColor.white
         
-        backgroundStatusView.backgroundColor = UIColor(netHex: dark_gray).withAlphaComponent(0.5)
-        headerView.backgroundColor = UIColor(netHex: mooviest_red)
+        backgroundStatusView.backgroundColor = dark_gray.withAlphaComponent(0.5)
+        headerView.backgroundColor = mooviest_red
 
         bodyScrollView.showsHorizontalScrollIndicator = false
         bodyScrollView.showsVerticalScrollIndicator = false
@@ -71,7 +71,7 @@ class MovieDetailView: UIView {
         let items = ["INFORMACIÓN", "REPARTO", "VER"]
         barSegmentedControl = UISegmentedControl(items: items)
         barSegmentedControl.selectedSegmentIndex = 0
-        barSegmentedControl.tintColor = UIColor(netHex: mooviest_red)
+        barSegmentedControl.tintColor = mooviest_red
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 1
@@ -82,26 +82,7 @@ class MovieDetailView: UIView {
         
         headerView.clipsToBounds = true
         
-        closedButton.setImage( UIImage(named: "clear"), for: UIControlState())
-        closedButton.tintColor = .black
-        closedButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         
-        clockButton.setImage( UIImage(named: "bookmark"), for: UIControlState())
-        clockButton.tintColor = UIColor(netHex: watchlist_color)
-        clockButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        
-        eyeButton.setImage( UIImage(named: "eye"), for: UIControlState())
-        eyeButton.tintColor = UIColor(netHex: seen_color)
-        eyeButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        
-        heartButton.setImage( UIImage(named: "star"), for: UIControlState())
-        heartButton.tintColor = UIColor(netHex: favourite_color)
-        heartButton.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        
-        closedButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
-        clockButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
-        eyeButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
-        heartButton.tintColor = UIColor.darkGray.withAlphaComponent(0.5)
         
         seeInfoLabel.text = "Proximamente se podrá visualizar..."
         seeInfoLabel.textColor = .darkGray
@@ -114,31 +95,50 @@ class MovieDetailView: UIView {
         
         barSegmentedView.backgroundColor = .white
         
+        fab.animationSpeed = 0.01
+        fab.buttonColor = mooviest_red
+        fab.plusColor = .white
+        
+        seenItem.buttonColor = .lightGray
+        seenItem.icon = UIImage(named:"eye")?.withRenderingMode(.alwaysTemplate)
+        seenItem.tintColor = .white
+        seenItem.title = "Vista"
+        
+        wacthItem.buttonColor = .lightGray
+        wacthItem.icon = UIImage(named:"bookmark")?.withRenderingMode(.alwaysTemplate)
+        wacthItem.tintColor = .white
+        wacthItem.title = "Pendiente"
+        
+        favouriteItem.buttonColor = .lightGray
+        favouriteItem.icon = UIImage(named:"star")?.withRenderingMode(.alwaysTemplate)
+        favouriteItem.tintColor = .white
+        favouriteItem.title = "Favorita"
+        
+        blackItem.buttonColor = .lightGray
+        blackItem.icon = UIImage(named:"clear")?.withRenderingMode(.alwaysTemplate)
+        blackItem.tintColor = .white
+        blackItem.title = "No me interesa"
+        
+        fab.addItem(item: seenItem)
+        fab.addItem(item: wacthItem)
+        fab.addItem(item: favouriteItem)
+        fab.addItem(item: blackItem)
         
         seeView.addSubview(seeInfoLabel)
         
         barSegmentedView.addSubview(barSegmentedControl)
 
-        panelButtonView.addSubview(closedButton)
-        panelButtonView.addSubview(clockButton)
-        panelButtonView.addSubview(eyeButton)
-        panelButtonView.addSubview(heartButton)
-        panelButtonView.addSubview(space1View)
-        panelButtonView.addSubview(space2View)
-        panelButtonView.addSubview(space3View)
-        
-        
         addSubview(headerView)
-        
         
         addSubview(seeView)
         addSubview(castCollectionView)
         addSubview(infoView)
         addSubview(profileCardView)
         addSubview(bodyScrollView)
-        addSubview(panelButtonView)
         addSubview(backgroundStatusView)
         addSubview(barSegmentedView)
+        addSubview(fab)
+        
     }
     
     func setupConstraints() {
@@ -153,11 +153,6 @@ class MovieDetailView: UIView {
         castCollectionView.translatesAutoresizingMaskIntoConstraints = false
         seeView.translatesAutoresizingMaskIntoConstraints = false
         profileCardView.translatesAutoresizingMaskIntoConstraints = false
-        panelButtonView.translatesAutoresizingMaskIntoConstraints = false
-        closedButton.translatesAutoresizingMaskIntoConstraints = false
-        clockButton.translatesAutoresizingMaskIntoConstraints = false
-        eyeButton.translatesAutoresizingMaskIntoConstraints = false
-        heartButton.translatesAutoresizingMaskIntoConstraints = false
         space1View.translatesAutoresizingMaskIntoConstraints = false
         space2View.translatesAutoresizingMaskIntoConstraints = false
         space3View.translatesAutoresizingMaskIntoConstraints = false
@@ -230,48 +225,6 @@ class MovieDetailView: UIView {
         barSegmentedView.addConstraint(barSegmentedControl.leftAnchor.constraint(equalTo: barSegmentedView.leftAnchor,constant: 5))
         barSegmentedView.addConstraint(barSegmentedControl.rightAnchor.constraint(equalTo: barSegmentedView.rightAnchor,constant: -5))
         barSegmentedView.addConstraint(barSegmentedControl.bottomAnchor.constraint(equalTo: barSegmentedView.bottomAnchor,constant: -5))
-        
-        addConstraint(panelButtonView.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(panelButtonView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -spaceBottomBarButtons))
-        addConstraint(panelButtonView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: porcentWidthBarButtons))
-        addConstraint(panelButtonView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: porcentWidthBarButtons*porcentWidthButton))
-        
-        let porcentWidthSpace = (1 - porcentWidthButton*4)/3
-        
-        panelButtonView.addConstraint(closedButton.leftAnchor.constraint(equalTo: panelButtonView.leftAnchor))
-        panelButtonView.addConstraint(closedButton.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
-        panelButtonView.addConstraint(closedButton.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
-        panelButtonView.addConstraint(closedButton.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
-        
-        panelButtonView.addConstraint(space1View.leftAnchor.constraint(equalTo: closedButton.rightAnchor))
-        panelButtonView.addConstraint(space1View.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
-        panelButtonView.addConstraint(space1View.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
-        panelButtonView.addConstraint(space1View.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
-        
-        panelButtonView.addConstraint(clockButton.leftAnchor.constraint(equalTo: space1View.rightAnchor))
-        panelButtonView.addConstraint(clockButton.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
-        panelButtonView.addConstraint(clockButton.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
-        panelButtonView.addConstraint(clockButton.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
-        
-        panelButtonView.addConstraint(space2View.leftAnchor.constraint(equalTo: clockButton.rightAnchor))
-        panelButtonView.addConstraint(space2View.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
-        panelButtonView.addConstraint(space2View.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
-        panelButtonView.addConstraint(space2View.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
-        
-        panelButtonView.addConstraint(eyeButton.leftAnchor.constraint(equalTo: space2View.rightAnchor))
-        panelButtonView.addConstraint(eyeButton.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
-        panelButtonView.addConstraint(eyeButton.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
-        panelButtonView.addConstraint(eyeButton.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
-        
-        panelButtonView.addConstraint(space3View.leftAnchor.constraint(equalTo: eyeButton.rightAnchor))
-        panelButtonView.addConstraint(space3View.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
-        panelButtonView.addConstraint(space3View.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
-        panelButtonView.addConstraint(space3View.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthSpace))
-        
-        panelButtonView.addConstraint(heartButton.leftAnchor.constraint(equalTo: space3View.rightAnchor))
-        panelButtonView.addConstraint(heartButton.centerYAnchor.constraint(equalTo: panelButtonView.centerYAnchor))
-        panelButtonView.addConstraint(heartButton.widthAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
-        panelButtonView.addConstraint(heartButton.heightAnchor.constraint(equalTo: panelButtonView.widthAnchor, multiplier: porcentWidthButton))
     }
     
     func setDelegate(ViewController vc: MovieDetailViewController) {
@@ -281,17 +234,6 @@ class MovieDetailView: UIView {
     }
     
     func adjustFontSizeToFitHeight () {
-        let widthButton = closedButton.bounds.size.width
-        
-        closedButton.layer.cornerRadius = 0.5 * widthButton
-        closedButton.clipsToBounds = true
-        clockButton.layer.cornerRadius = 0.5 * widthButton
-        clockButton.clipsToBounds = true
-        heartButton.layer.cornerRadius = 0.5 * widthButton
-        heartButton.clipsToBounds = true
-        eyeButton.layer.cornerRadius = 0.5 * widthButton
-        eyeButton.clipsToBounds = true
-
         captionMovieView.adjustFontSizeToFitHeight()
         
     }

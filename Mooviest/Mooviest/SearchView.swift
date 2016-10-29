@@ -34,8 +34,8 @@ class SearchView: UIView {
         self.backgroundColor = UIColor.white
 //        searchBar.barTintColor = UIColor(netHex: mooviest_red)
         
-        backgroundStatusView.backgroundColor = UIColor(netHex: dark_gray).withAlphaComponent(0.5)
-        headerView.backgroundColor = UIColor(netHex: mooviest_red)
+        backgroundStatusView.backgroundColor =   dark_gray.withAlphaComponent(0.5)
+        headerView.backgroundColor =   mooviest_red
         headerView.clipsToBounds = true
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()

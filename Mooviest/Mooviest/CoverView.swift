@@ -34,7 +34,7 @@ class CoverView: UIView {
         self.backgroundColor = UIColor.blue
         
         ratingImageView.image = UIImage(named: "star_rate")?.withRenderingMode(.alwaysTemplate)
-        ratingImageView.tintColor = UIColor(netHex: favourite_color)
+        ratingImageView.tintColor = favourite_color
         ratingImageView.contentMode = .scaleToFill
         
         ratingLabel.text = "10.0"

@@ -83,7 +83,7 @@ class AnimatedTabBarController: RAMAnimatedTabBarController {
         nVController4.tabBarItem = tbItem4
         
         self.viewControllers = [nVController1, nVController2, nVController3, nVController4]
-        self.tabBar.barTintColor = UIColor(netHex: mooviest_red)
+        self.tabBar.barTintColor =   mooviest_red
         self.tabBar.isTranslucent = false 
     }
 

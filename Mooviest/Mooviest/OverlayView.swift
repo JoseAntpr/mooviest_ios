@@ -29,7 +29,7 @@ class OverlayView: UIView{
         self.backgroundColor = UIColor.white.withAlphaComponent(0)
         
         imageView = UIImageView()
-        setupOverlay(namedImage:"clear_overlay",tinColor: .white, backgroundColor: UIColor.black)
+        setupOverlay(namedImage:"clear_overlay",tinColor: .white, backgroundColor: blacklist_color)
         
         self.addSubview(imageView)
         
@@ -48,13 +48,13 @@ class OverlayView: UIView{
         _mode = mode
         
         if _mode == GGOverlayViewMode.ggOverlayViewModeLeft {
-            setupOverlay(namedImage:"clear_overlay",tinColor: .white, backgroundColor: UIColor.black.withAlphaComponent(0.7))
+            setupOverlay(namedImage:"clear_overlay",tinColor: .white, backgroundColor: blacklist_color)
         } else if _mode == GGOverlayViewMode.ggOverlayViewModeRight {
-            setupOverlay(namedImage:"star_overlay",tinColor: .white, backgroundColor: UIColor(netHex: favourite_color))
+            setupOverlay(namedImage:"star_overlay",tinColor: .white, backgroundColor: favourite_color)
         } else if _mode == GGOverlayViewMode.ggOverlayViewModeTop {
-            setupOverlay(namedImage:"bookmark_overlay",tinColor: .white, backgroundColor: UIColor(netHex: watchlist_color))
+            setupOverlay(namedImage:"bookmark_overlay",tinColor: .white, backgroundColor: watchlist_color)
         } else {
-            setupOverlay(namedImage:"eye_overlay",tinColor: .white, backgroundColor: UIColor(netHex: seen_color))
+            setupOverlay(namedImage:"eye_overlay",tinColor: .white, backgroundColor: seen_color)
         }
     }
     

@@ -35,7 +35,7 @@ class ItemListView: UIView {
         titleLabel.font.withSize(20)
         
         moreButton.setTitle("More", for: .normal)
-        moreButton.setTitleColor(UIColor(netHex: mooviest_red), for: .normal)
+        moreButton.setTitleColor(mooviest_red, for: .normal)
         moreButton.titleLabel?.font.withSize(20)
         
         emptyLabel.text = "Empty list"

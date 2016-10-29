@@ -42,9 +42,9 @@ class ProfileView: UIView {
     func setupComponents() {
         self.backgroundColor = UIColor.white
         
-        backgroundStatusView.backgroundColor = UIColor(netHex: dark_gray).withAlphaComponent(0.5)
+        backgroundStatusView.backgroundColor =   dark_gray.withAlphaComponent(0.5)
         
-        headerView.backgroundColor = UIColor(netHex: mooviest_red)
+        headerView.backgroundColor =   mooviest_red
         headerBackdropImageView.image = UIImage(named: "backdrop")
         headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
  
@@ -58,7 +58,7 @@ class ProfileView: UIView {
         let items = ["SEGUIDORES", "SIGUIENDO", "FAMOSOS"]
         barSegmentedControl = UISegmentedControl(items: items)
         barSegmentedControl.selectedSegmentIndex = 0
-        barSegmentedControl.tintColor = UIColor(netHex: mooviest_red)
+        barSegmentedControl.tintColor =   mooviest_red
         
 //        bodyScrollView.showsHorizontalScrollIndicator = false
 //        bodyScrollView.showsVerticalScrollIndicator = false

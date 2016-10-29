@@ -46,26 +46,26 @@ class SwipeTabView: UIView {
     func setupComponents() {
         self.backgroundColor = UIColor.white
         
-        backgroundStatusView.backgroundColor = UIColor(netHex: dark_gray).withAlphaComponent(0.5)
-        headerView.backgroundColor = UIColor(netHex: mooviest_red)
+        backgroundStatusView.backgroundColor = dark_gray.withAlphaComponent(0.5)
+        headerView.backgroundColor =  mooviest_red
         
         panelButtonView.backgroundColor = UIColor.white
         
         closedButton.setImage( UIImage(named: "clear"), for: UIControlState())
         closedButton.tintColor = .white
-        closedButton.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        closedButton.backgroundColor = blacklist_color
         
         clockButton.setImage( UIImage(named: "bookmark"), for: UIControlState())
         clockButton.tintColor = .white
-        clockButton.backgroundColor = UIColor(netHex: watchlist_color)
+        clockButton.backgroundColor =  watchlist_color
         
         eyeButton.setImage( UIImage(named: "eye"), for: UIControlState())
         eyeButton.tintColor = .white
-        eyeButton.backgroundColor = UIColor(netHex: seen_color)
+        eyeButton.backgroundColor = seen_color
         
         heartButton.setImage( UIImage(named: "star"), for: UIControlState())
         heartButton.tintColor = .white
-        heartButton.backgroundColor = UIColor(netHex: favourite_color)
+        heartButton.backgroundColor = favourite_color
         
         panelButtonView.addSubview(closedButton)
         panelButtonView.addSubview(clockButton)

@@ -30,8 +30,8 @@ class ListView: UIView {
     func setupComponents() {
         self.backgroundColor = .white
         
-        backgroundStatusView.backgroundColor = UIColor(netHex: dark_gray).withAlphaComponent(0.5)
-        headerView.backgroundColor = UIColor(netHex: mooviest_red)
+        backgroundStatusView.backgroundColor =   dark_gray.withAlphaComponent(0.5)
+        headerView.backgroundColor =   mooviest_red
         headerView.clipsToBounds = true
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()

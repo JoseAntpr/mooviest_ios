@@ -58,7 +58,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     func loadDataView() {
         if let avatar = user?.avatar {
             print("avatar: \(avatar)")
-            v.coverImageView.kf_setImage(with: URL(string:  "\(DataModel.sharedInstance.path)\(avatar)"),placeholder: UIImage(named: "contact"))
+            v.coverImageView.kf.setImage(with: URL(string:  "\(DataModel.sharedInstance.path)\(avatar)"),placeholder: UIImage(named: "contact"))
         }
         if let username = user?.username {
             v.titleLabel.text = "@\(username)"

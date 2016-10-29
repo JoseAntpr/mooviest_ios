@@ -57,12 +57,12 @@ class LoginView: UIView {
     }
     
     func setupComponents() {
-        self.backgroundColor = UIColor(netHex: mooviest_red)
+        self.backgroundColor =   mooviest_red
         
         titleImageView.image = UIImage(named: "Mooviest")!.withRenderingMode(.alwaysOriginal)
         titleImageView.contentMode = UIViewContentMode.scaleAspectFit
         
-        backgroundStatusView.backgroundColor = UIColor(netHex: dark_red).withAlphaComponent(0.5)
+        backgroundStatusView.backgroundColor =   dark_red.withAlphaComponent(0.5)
         //Form Login
         formView.backgroundColor = UIColor.white
         formView.layer.cornerRadius = 3
@@ -72,18 +72,18 @@ class LoginView: UIView {
         centralView.backgroundColor = UIColor.white.withAlphaComponent(0)
         
         userOrEmailTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        userOrEmailTextFieldView.setPlaceholder(Placeholder: "Username or email", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        userOrEmailTextFieldView.setPlaceholder(Placeholder: "Username or email", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         userOrEmailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.emailAddress)
         userOrEmailTextFieldView.setReturnKeyType(returnKeyType: .next)
         userOrEmailTextFieldView.textField.tag = TextFieldViewTag.UserOrEmailTextFieldView.rawValue
         
         passLoginTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        passLoginTextFieldView.setPlaceholder(Placeholder: "Password", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        passLoginTextFieldView.setPlaceholder(Placeholder: "Password", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         passLoginTextFieldView.setSecureText(isSecureTextEntry: true)
         passLoginTextFieldView.setReturnKeyType(returnKeyType: .join)
         passLoginTextFieldView.textField.tag = TextFieldViewTag.PassLoginTextFieldView.rawValue
         
-        loginButton.backgroundColor = UIColor(netHex: mooviest_red)
+        loginButton.backgroundColor =   mooviest_red
         loginButton.setTitle("LOGIN", for: UIControlState())
         loginButton.setTitleColor(UIColor.white, for: UIControlState())
         loginButton.layer.cornerRadius = 3
@@ -99,30 +99,30 @@ class LoginView: UIView {
         padingRegisterformView.backgroundColor = UIColor.white.withAlphaComponent(0)
         
         userTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        userTextFieldView.setPlaceholder(Placeholder: "Username", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        userTextFieldView.setPlaceholder(Placeholder: "Username", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         userTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         userTextFieldView.setReturnKeyType(returnKeyType: .next)
         userTextFieldView.textField.tag = TextFieldViewTag.UserTextFieldView.rawValue
         
         emailTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        emailTextFieldView.setPlaceholder(Placeholder: "Email", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        emailTextFieldView.setPlaceholder(Placeholder: "Email", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         emailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.emailAddress)
         emailTextFieldView.setReturnKeyType(returnKeyType: .next)
         emailTextFieldView.textField.tag = TextFieldViewTag.EmailTextFieldView.rawValue
         
         passTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        passTextFieldView.setPlaceholder(Placeholder: "Password", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        passTextFieldView.setPlaceholder(Placeholder: "Password", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         passTextFieldView.setSecureText(isSecureTextEntry: true)
         passTextFieldView.setReturnKeyType(returnKeyType: .next)
         passTextFieldView.textField.tag = TextFieldViewTag.PassTextFieldView.rawValue
         
         confirmPassTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        confirmPassTextFieldView.setPlaceholder(Placeholder: "Confirm password", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        confirmPassTextFieldView.setPlaceholder(Placeholder: "Confirm password", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         confirmPassTextFieldView.setSecureText(isSecureTextEntry: true)
         confirmPassTextFieldView.setReturnKeyType(returnKeyType: .default)
         confirmPassTextFieldView.textField.tag = TextFieldViewTag.ConfirmPassTextFieldView.rawValue
         
-        createAccountButton.backgroundColor = UIColor(netHex: mooviest_red)
+        createAccountButton.backgroundColor =   mooviest_red
         createAccountButton.setTitle(NSLocalizedString("createAccountButton", comment: "Title of createAccountButton"), for: UIControlState())
         createAccountButton.setTitleColor(UIColor.white, for: UIControlState())
         createAccountButton.layer.cornerRadius = 3

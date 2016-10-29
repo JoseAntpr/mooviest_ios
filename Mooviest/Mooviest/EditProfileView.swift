@@ -47,8 +47,8 @@ class EditProfileView: UIView {
     
     func setupComponents() {
         self.backgroundColor = UIColor.white
-        backgroundStatusView.backgroundColor = UIColor(netHex: dark_gray).withAlphaComponent(0.5)
-        headerView.backgroundColor = UIColor(netHex: mooviest_red)
+        backgroundStatusView.backgroundColor =   dark_gray.withAlphaComponent(0.5)
+        headerView.backgroundColor =   mooviest_red
         headerView.clipsToBounds = true
         
         topView.backgroundColor = .white
@@ -60,51 +60,51 @@ class EditProfileView: UIView {
         coverImageView.layer.masksToBounds = true
         
         userTextFieldView.setTexColor(TextColor: UIColor.black)
-        userTextFieldView.setPlaceholder(Placeholder: "Username", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        userTextFieldView.setPlaceholder(Placeholder: "Username", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         userTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         userTextFieldView.setReturnKeyType(returnKeyType: .next)
         userTextFieldView.textField.tag = 0
         
         firstNameTextFieldView.setTexColor(TextColor: UIColor.black)
-        firstNameTextFieldView.setPlaceholder(Placeholder: "First name", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        firstNameTextFieldView.setPlaceholder(Placeholder: "First name", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         firstNameTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         firstNameTextFieldView.setReturnKeyType(returnKeyType: .next)
         firstNameTextFieldView.setAutocapitalizationType(autocapitalizationType: .words)
         firstNameTextFieldView.textField.tag = 1
         
         lastNameTextFieldView.setTexColor(TextColor: UIColor.black)
-        lastNameTextFieldView.setPlaceholder(Placeholder: "Last name", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        lastNameTextFieldView.setPlaceholder(Placeholder: "Last name", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         lastNameTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         lastNameTextFieldView.setReturnKeyType(returnKeyType: .next)
         lastNameTextFieldView.setAutocapitalizationType(autocapitalizationType: .words)
         lastNameTextFieldView.textField.tag = 2
         
         emailTextFieldView.setTexColor(TextColor: UIColor.black)
-        emailTextFieldView.setPlaceholder(Placeholder: "Email", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        emailTextFieldView.setPlaceholder(Placeholder: "Email", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         emailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.emailAddress)
         emailTextFieldView.setReturnKeyType(returnKeyType: .next)
         emailTextFieldView.textField.tag = 3
         
         dateTextFieldView.setTexColor(TextColor: UIColor.black)
-        dateTextFieldView.setPlaceholder(Placeholder: "Born", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        dateTextFieldView.setPlaceholder(Placeholder: "Born", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         dateTextFieldView.setReturnKeyType(returnKeyType: .next)
         dateTextFieldView.textField.tag = 4
         dateTextFieldView.textField.isSelected = false
         
         genderTextFieldView.setTexColor(TextColor: UIColor.black)
-        genderTextFieldView.setPlaceholder(Placeholder: "gender", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        genderTextFieldView.setPlaceholder(Placeholder: "gender", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         genderTextFieldView.setReturnKeyType(returnKeyType: .next)
         genderTextFieldView.textField.tag = 5
         genderTextFieldView.textField.isSelected = false
         
         countryTextFieldView.setTexColor(TextColor: UIColor.black)
-        countryTextFieldView.setPlaceholder(Placeholder: "Country", PlaceholderColor: UIColor(netHex: placeholder_gray).withAlphaComponent(0.7))
+        countryTextFieldView.setPlaceholder(Placeholder: "Country", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         countryTextFieldView.setReturnKeyType(returnKeyType: .send)
         countryTextFieldView.textField.tag = 6
         countryTextFieldView.textField.isSelected = false
         
         photoButton.setImage(UIImage(named: "camera"), for: UIControlState())
-        photoButton.tintColor = UIColor(netHex: mooviest_red)
+        photoButton.tintColor =   mooviest_red
         photoButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         
         clearTextButton = UIButton(type: UIButtonType.system) as UIButton
