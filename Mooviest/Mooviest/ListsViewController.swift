@@ -114,8 +114,12 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
             self.favouriteList.removeAll()
             for m in data {
                 let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m, isSwwipe: false)
-                self.favouriteList.append(movie!)
+                do {
+                    movie = try MovieListInfo(json: m, isSwwipe: false)
+                    self.favouriteList.append(movie!)
+                } catch {
+                    movie = nil
+                }
             }
             self.v.favouriteListViewCell.movieCollectionView.reloadData()
         }

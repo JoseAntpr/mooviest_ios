@@ -67,7 +67,16 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             nextMovies()
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        searchBar.resignFirstResponder()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
+        self.navigationController?.navigationBar.tintColor = .white
+        searchBar.becomeFirstResponder()
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
     }
     

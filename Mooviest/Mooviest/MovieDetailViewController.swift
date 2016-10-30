@@ -60,6 +60,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
         updateColor(image: v.coverImageView.image)
         if tintColor != nil {
+            self.navigationController?.navigationBar.tintColor = tintColor
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: tintColor]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
         }
@@ -85,6 +86,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.tintColor = .white
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
     }
