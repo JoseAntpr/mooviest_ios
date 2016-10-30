@@ -153,6 +153,7 @@ class DataModel: NSObject {
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         Alamofire.request( "\(path)/api/movie/\(idmovie)/?user_id=\(authenticationUser!.idUser)&movie_lang_id=\(idMovieLang)", method: .get, headers: headers)
             .responseJSON {response in
+                print(response)
                 if let res = response.result.value as? [String:Any] {
                     try! completionRequest(res)
                 }

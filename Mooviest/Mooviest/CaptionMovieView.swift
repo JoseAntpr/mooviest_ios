@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import Chameleon
 
 class CaptionMovieView: UIView {
     let typeLabel = UILabel()
     let titleLabel = UILabel()
-    let ratingView = RatingCollectionViewCell()
+//    let ratingView = RatingCollectionViewCell()
     let releasedLabel = UILabel()
     let runtimeLabel = UILabel()
     
@@ -44,11 +45,11 @@ class CaptionMovieView: UIView {
         releasedLabel.textAlignment = .right
         releasedLabel.textColor = .darkGray
         
-        ratingView.faceImageView.image = UIImage(named: "logo")
+//        ratingView.faceImageView.image = UIImage(named: "logo")
         
         addSubview(typeLabel)
         addSubview(titleLabel)
-        addSubview(ratingView)
+//        addSubview(ratingView)
         addSubview(runtimeLabel)
         addSubview(releasedLabel)
     }
@@ -58,51 +59,48 @@ class CaptionMovieView: UIView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         runtimeLabel.translatesAutoresizingMaskIntoConstraints = false
         releasedLabel.translatesAutoresizingMaskIntoConstraints = false
-        ratingView.translatesAutoresizingMaskIntoConstraints = false
+//        ratingView.translatesAutoresizingMaskIntoConstraints = false
         
-        let widthRating = CGFloat(0.2)
-        addConstraint(ratingView.topAnchor.constraint(equalTo: topAnchor))
-        addConstraint(ratingView.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(ratingView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: widthRating))
-        addConstraint(ratingView.heightAnchor.constraint(equalTo: ratingView.widthAnchor, multiplier: 1/0.7))
+        let widthTypeLabel = CGFloat(0.7)
         
         addConstraint(typeLabel.topAnchor.constraint(equalTo: topAnchor))
-        addConstraint(typeLabel.leftAnchor.constraint(equalTo: ratingView.rightAnchor))
-        addConstraint(typeLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: (1-widthRating)*0.7))
-        addConstraint(typeLabel.bottomAnchor.constraint(equalTo: ratingView.bottomAnchor))
+        addConstraint(typeLabel.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(typeLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: widthTypeLabel))
+        addConstraint(typeLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/5))
         
         addConstraint(releasedLabel.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(releasedLabel.leftAnchor.constraint(equalTo: typeLabel.rightAnchor))
         addConstraint(releasedLabel.rightAnchor.constraint(equalTo: rightAnchor))
-        addConstraint(releasedLabel.heightAnchor.constraint(equalTo: runtimeLabel.heightAnchor))
+        addConstraint(releasedLabel.heightAnchor.constraint(equalTo: typeLabel.heightAnchor, multiplier: 0.5))
         
         addConstraint(runtimeLabel.topAnchor.constraint(equalTo: releasedLabel.bottomAnchor))
         addConstraint(runtimeLabel.leftAnchor.constraint(equalTo: typeLabel.rightAnchor))
         addConstraint(runtimeLabel.rightAnchor.constraint(equalTo: rightAnchor))
-        addConstraint(runtimeLabel.heightAnchor.constraint(equalTo: typeLabel.heightAnchor, multiplier: 0.5))
+        addConstraint(runtimeLabel.heightAnchor.constraint(equalTo: releasedLabel.heightAnchor))
         
-        addConstraint(titleLabel.topAnchor.constraint(equalTo: ratingView.bottomAnchor))
+        addConstraint(titleLabel.topAnchor.constraint(equalTo: typeLabel.bottomAnchor))
         addConstraint(titleLabel.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(titleLabel.rightAnchor.constraint(equalTo: rightAnchor))
         addConstraint(titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor))
     }
     
     func adjustFontSizeToFitHeight () {
-//        ratingView.faceImageView.layer.masksToBounds = true
-//        ratingView.faceImageView.layer.cornerRadius  = ratingView.faceImageView.frame.size.width*0.5
-//        let heightLabel = ratingView.ratingLabel.frame.height
-//        ratingView.ratingLabel.font = UIFont(name: ratingView.ratingLabel.font!.fontName, size:heightLabel)!
-        ratingView.adjustFontSizeToFitHeight()
         let heightLabel = runtimeLabel.frame.height
-        runtimeLabel.font = UIFont(name: runtimeLabel.font!.fontName, size: heightLabel*0.45)!
-        
-        releasedLabel.font = UIFont(name: releasedLabel.font!.fontName, size: heightLabel*0.5)!
-        
-        typeLabel.font = UIFont(name: typeLabel.font!.fontName, size: heightLabel*0.75)!
-        
+        runtimeLabel.font = UIFont(name: runtimeLabel.font!.fontName, size: heightLabel*0.6)!
+        releasedLabel.font = UIFont(name: releasedLabel.font!.fontName, size: heightLabel*0.6)!
+        typeLabel.font = UIFont(name: typeLabel.font!.fontName, size: heightLabel*0.7)!
+        typeLabel.font = UIFont.boldSystemFont(ofSize: typeLabel.font.pointSize)
+
         titleLabel.font = UIFont(name: titleLabel.font!.fontName, size: heightLabel*0.7)!
         titleLabel.font = UIFont.boldSystemFont(ofSize: titleLabel.font.pointSize)
-
+    }
+    
+    func setColors(backgroundColor: UIColor, tintColor:UIColor) {
+        titleLabel.textColor = tintColor
+        typeLabel.textColor = tintColor
+        titleLabel.textColor = tintColor
+        runtimeLabel.textColor = tintColor
+        releasedLabel.textColor = tintColor
     }
 }
 

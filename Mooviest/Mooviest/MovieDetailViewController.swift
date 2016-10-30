@@ -58,12 +58,15 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
-//        updateColor(image: v.headerBackdropImageView.image)
+        updateColor(image: v.coverImageView.image)
+        if tintColor != nil {
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: tintColor]
+            self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //here extract predominant color
-        updateColor(image: v.headerBackdropImageView.image)
+        updateColor(image: v.coverImageView.image)
         heightView = view.frame.size.height
         changeTabs(index: 0)
         v.barSegmentedControl.selectedSegmentIndex = 0
@@ -81,20 +84,26 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             }
         }
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
+    }
     
     override func viewDidLayoutSubviews() {
         v.adjustFontSizeToFitHeight()
     }
     
     func updateColor(image:UIImage?) {
-        if image != nil {
+        if tintColor == nil {
             backgroundColor = AverageColorFromImage(image!)
-            tintColor = ComplementaryFlatColorOf(backgroundColor)
-            v.headerView.backgroundColor = backgroundColor
-            v.barSegmentedControl.tintColor = backgroundColor
-            navigationItem.titleView?.tintColor =  tintColor
-            if movie != nil && movie.typeMovie == "" {
-                self.updateFloatButton(nameImage: "", backgroundColor: backgroundColor, tintColor: .white)
+            tintColor = ContrastColorOf(backgroundColor,returnFlat: true)
+            v.setColors(backgroundColor: backgroundColor, tintColor: tintColor)
+            self.navigationController?.navigationBar.tintColor = tintColor
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: tintColor]
+            self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
+            
+            if movieListInfo.idCollection < 0 {
+                self.updateFloatButton(nameImage: "", backgroundColor: backgroundColor.withAlphaComponent(0.7), tintColor: tintColor)
             }
         }
     }
@@ -120,41 +129,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v.coverImageView.layer.cornerRadius = 5
         v.coverImageView.layer.masksToBounds = true
         
-        v.blackItem.handler = { item in
-            self.selectBlackList(item: item)
-        }
-        v.seenItem.handler = { item in
-            self.selectSeenList(item: item)
-        }
-        v.favouriteItem.handler = { item in
-            self.selectFavouriteList(item: item)
-        }
-        v.wacthItem.handler = { item in
-            self.selectWatchList(item: item)
-        }
-        updateColor(image: v.coverImageView.image)
-    }
-
-    func loadDataView() {
-        
-        //add default backdrop
-        v.headerBackdropImageView.kf.setImage(with: URL(string: movie!.backdrop))
-        v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
-        v.infoView.synopsisTextView.text = movie?.synopsis
-        v.infoView.producerTextView.text = movie?.producers.replacingOccurrences(of: " |", with: ",")
-        v.infoView.genreTextView.text = movie?.genres.joined(separator: ", ")
-//        v.infoView.countryTextView.text = movie.country
-        
-        v.captionMovieView.ratingView.ratingLabel.text = "\(movie.average)"
-        v.captionMovieView.releasedLabel.text = "\(movie.released)"
-        v.captionMovieView.runtimeLabel.text = "\(movie.runtime) min"
-        
-        ratings = movie.ratings
-        participations = movie.participations
-        v.infoView.ratingCollectionView.reloadData()
-        v.castCollectionView.reloadData()
-        
-        switch movie.typeMovie {
+        switch movieListInfo.typeMovie {
         case TypeMovie.black.rawValue:
             v.blackItem.itemBackgroundColor = blacklist_color
             self.updateFloatButton(nameImage: "clear", backgroundColor: blacklist_color, tintColor: .white)
@@ -168,9 +143,46 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             v.wacthItem.itemBackgroundColor = watchlist_color
             self.updateFloatButton(nameImage: "bookmark", backgroundColor: watchlist_color, tintColor: .white)
         default:
-            print("typemovie: \(movie.typeMovie)")
             break
         }
+
+        v.blackItem.handler = { item in
+            self.selectBlackList(item: item)
+        }
+        v.seenItem.handler = { item in
+            self.selectSeenList(item: item)
+        }
+        v.favouriteItem.handler = { item in
+            self.selectFavouriteList(item: item)
+        }
+        v.wacthItem.handler = { item in
+            self.selectWatchList(item: item)
+        }
+        updateColor(image: v.coverImageView.image)
+        let rating = Rating(name: "mooviest", rating: Int(movieListInfo.average), count: 0, dateUpdate: "")
+        ratings.append(rating)
+    }
+
+    func loadDataView() {
+        
+        //add default backdrop
+        v.headerBackdropImageView.kf.setImage(with: URL(string: movie!.backdrop))
+        v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
+        v.infoView.synopsisTextView.text = movie?.synopsis
+        v.infoView.producerTextView.text = movie?.producers.replacingOccurrences(of: " |", with: ",")
+        v.infoView.genreTextView.text = movie?.genres.joined(separator: ", ")
+//        v.infoView.countryTextView.text = movie.country
+        
+//        v.captionMovieView.ratingView.ratingLabel.text = "\(movie.average)"
+        v.captionMovieView.releasedLabel.text = "\(movie.released)"
+        v.captionMovieView.runtimeLabel.text = "\(movie.runtime) min"
+        
+        
+        ratings.append(contentsOf: movie.ratings)
+        participations = movie.participations
+        v.infoView.ratingCollectionView.reloadData()
+        v.castCollectionView.reloadData()
+        updateColor(image: v.coverImageView.image)
     }
     
     
@@ -203,7 +215,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             } else if typemovie.rawValue != movie.typeMovie {
                 DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie.hashValue+1){
                     (res) in
-                    print(res)
                     if let id = res["id"] as? Int {
                         self.movie.idCollection = id
                         if let typeMovie = res["typeMovie"] as? String {
@@ -222,7 +233,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     func updateFloatButton(nameImage: String, backgroundColor: UIColor, tintColor:UIColor) {
         self.v.fab.buttonImage = UIImage(named: nameImage)?.withRenderingMode(.alwaysTemplate)
         self.v.fab.buttonColor = backgroundColor
-        self.v.fab.plusColor = tintColor
+        self.v.fab.plusColor = tintColor.withAlphaComponent(0.7)
     }
     
     func selectBlackList(item: KCFloatingActionButtonItem) {
@@ -358,20 +369,17 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             v.castCollectionView.isHidden = false
             v.seeView.isHidden = true
             v.infoView.isHidden = true
-            print("1")
             calculateContentSize(height: v.castCollectionView.contentSize.height)
             
         case 2:
             v.castCollectionView.isHidden = true
             v.seeView.isHidden = false
             v.infoView.isHidden = true
-            print("2")
             calculateContentSize(height: v.seeView.frame.height)
         default:
             v.castCollectionView.isHidden = true
             v.seeView.isHidden = true
             v.infoView.isHidden = false
-            print("default")
             calculateContentSize(height: v.infoView.calculateHeight())
         }
     }
@@ -420,7 +428,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == v.castCollectionView {
-            print(participations[indexPath.item].name)
+//            print(participations[indexPath.item].name)
         }
     }
 }

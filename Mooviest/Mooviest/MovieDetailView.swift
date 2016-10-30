@@ -35,6 +35,7 @@ class MovieDetailView: UIView {
     let seeView = UIView()
     let seeInfoLabel = UILabel()
     
+    let barSegmentedBackground = UIView()
     let barSegmentedView = UIView()
     var barSegmentedControl: UISegmentedControl!
     
@@ -72,6 +73,7 @@ class MovieDetailView: UIView {
         barSegmentedControl = UISegmentedControl(items: items)
         barSegmentedControl.selectedSegmentIndex = 0
         barSegmentedControl.tintColor = mooviest_red
+        barSegmentedControl.layer.cornerRadius = 5
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 1
@@ -89,11 +91,19 @@ class MovieDetailView: UIView {
         seeInfoLabel.font = UIFont.boldSystemFont(ofSize: seeInfoLabel.font.pointSize)
         seeInfoLabel.textAlignment = .center
         
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        
+ 
+        
+        headerView.addSubview(blurEffectView)
         headerView.addSubview(headerBackdropImageView)
         profileCardView.addSubview(captionMovieView)
         profileCardView.addSubview(coverImageView)
         
         barSegmentedView.backgroundColor = .white
+        
         
         fab.animationSpeed = 0.01
         fab.buttonColor = mooviest_red
@@ -119,6 +129,8 @@ class MovieDetailView: UIView {
         blackItem.tintColor = .white
         blackItem.title = "No me interesa"
         
+        barSegmentedBackground.backgroundColor = .white
+        
         fab.addItem(item: seenItem)
         fab.addItem(item: wacthItem)
         fab.addItem(item: favouriteItem)
@@ -126,7 +138,9 @@ class MovieDetailView: UIView {
         
         seeView.addSubview(seeInfoLabel)
         
+        barSegmentedView.addSubview(barSegmentedBackground)
         barSegmentedView.addSubview(barSegmentedControl)
+        
 
         addSubview(headerView)
         
@@ -158,6 +172,7 @@ class MovieDetailView: UIView {
         space3View.translatesAutoresizingMaskIntoConstraints = false
         captionMovieView.translatesAutoresizingMaskIntoConstraints = false
         seeInfoLabel.translatesAutoresizingMaskIntoConstraints = false
+        barSegmentedBackground.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
@@ -225,6 +240,11 @@ class MovieDetailView: UIView {
         barSegmentedView.addConstraint(barSegmentedControl.leftAnchor.constraint(equalTo: barSegmentedView.leftAnchor,constant: 5))
         barSegmentedView.addConstraint(barSegmentedControl.rightAnchor.constraint(equalTo: barSegmentedView.rightAnchor,constant: -5))
         barSegmentedView.addConstraint(barSegmentedControl.bottomAnchor.constraint(equalTo: barSegmentedView.bottomAnchor,constant: -5))
+        
+        barSegmentedView.addConstraint(barSegmentedBackground.topAnchor.constraint(equalTo: barSegmentedView.topAnchor))
+        barSegmentedView.addConstraint(barSegmentedBackground.leftAnchor.constraint(equalTo: barSegmentedView.leftAnchor))
+        barSegmentedView.addConstraint(barSegmentedBackground.rightAnchor.constraint(equalTo: barSegmentedView.rightAnchor))
+        barSegmentedView.addConstraint(barSegmentedBackground.bottomAnchor.constraint(equalTo: barSegmentedView.bottomAnchor))
     }
     
     func setDelegate(ViewController vc: MovieDetailViewController) {
@@ -235,6 +255,15 @@ class MovieDetailView: UIView {
     
     func adjustFontSizeToFitHeight () {
         captionMovieView.adjustFontSizeToFitHeight()
-        
     }
+    
+    func setColors(backgroundColor: UIColor, tintColor:UIColor) {
+        
+        headerView.backgroundColor = backgroundColor
+        barSegmentedControl.tintColor = tintColor
+        barSegmentedBackground.backgroundColor = backgroundColor
+        profileCardView.backgroundColor = backgroundColor
+        captionMovieView.setColors(backgroundColor: backgroundColor, tintColor: tintColor)
+    }
+    
 }

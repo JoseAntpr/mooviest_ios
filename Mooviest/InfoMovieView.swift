@@ -180,4 +180,13 @@ class InfoMovieView: UIView {
             synopsisTextView.frame.height + genreTextView.frame.height + producerTextView.frame.height
             //+ v.infoView.countryTextView.frame.height
     }
+    
+    func setColors(backgroundColor: UIColor, tintColor:UIColor) {
+        synopsisHeaderTitleView.backgroundColor = backgroundColor
+        synopsisLabel.textColor = tintColor
+        genreHeaderTitleView.backgroundColor = backgroundColor
+        genreLabel.textColor = tintColor
+        producerHeaderTitleView.backgroundColor = backgroundColor
+        producerLabel.textColor = tintColor
+    }
 }

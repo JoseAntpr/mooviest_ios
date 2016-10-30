@@ -17,7 +17,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     var nextUrl = ""
     var loadedCards = [DraggableView]()
     var movies = [MovieListInfo]()
-    var minCount = Int.max
     override func viewDidLoad() {
         super.viewDidLoad()
         let height = self.navigationController?.navigationBar.frame.height
@@ -210,7 +209,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     }
     
     func afterSwiped() {
-        print("\( minCount)")
         loadedCards.remove(at: 0)
         allCards.remove(at: 0)
         movies.remove(at: 0)
