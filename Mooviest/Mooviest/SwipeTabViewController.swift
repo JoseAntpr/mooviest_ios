@@ -10,7 +10,7 @@
 import UIKit
 import Kingfisher
 
-class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProtocol {
+class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProtocol, TabBarProtocol {
     let MAX_BUFFER_SIZE = 4
     var v: SwipeTabView!
     var allCards: [DraggableView]!
@@ -30,11 +30,13 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     override func viewDidAppear(_ animated: Bool) {
          updateSwipe()
     }
-    override func viewWillAppear(_ animated: Bool) {        
-        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)       
+    override func viewWillAppear(_ animated: Bool) {
+        self.resetTabBarAndNavigationController(viewController: self)
+               
     }
     
     func setupView() {
+        
         let searchButton = UIBarButtonItem(image: UIImage(named: "search"),
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.search))

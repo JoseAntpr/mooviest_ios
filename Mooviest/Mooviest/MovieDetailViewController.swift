@@ -11,7 +11,8 @@ import Kingfisher
 import KCFloatingActionButton
 import Chameleon
 
-class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate,  UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieProtocol {
+class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate,  UICollectionViewDataSource,
+                    UICollectionViewDelegateFlowLayout, MovieProtocol,  TabBarProtocol {
 
     var offset_CoverStopScale:CGFloat!
     var offset_BackdropFadeOff:CGFloat!
@@ -50,6 +51,10 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         return UIStatusBarStyle.lightContent
     }
     
+    override func viewDidLayoutSubviews() {
+        v.adjustFontSizeToFitHeight()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         v.bodyScrollView.addSubview(v.seeView)
         v.bodyScrollView.addSubview(v.castCollectionView)
@@ -59,11 +64,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
         updateColor(image: v.coverImageView.image)
-        if tintColor != nil {
-            self.navigationController?.navigationBar.tintColor = tintColor
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: tintColor]
-            self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -85,25 +85,19 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             }
         }
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.navigationBar.tintColor = .white
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
-        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
-    }
     
-    override func viewDidLayoutSubviews() {
-        v.adjustFontSizeToFitHeight()
-    }
+   
     
     func updateColor(image:UIImage?) {
         if tintColor == nil {
             backgroundColor = AverageColorFromImage(image!)
             tintColor = ContrastColorOf(backgroundColor,returnFlat: true)
+            if image == nil {
+                backgroundColor = AverageColorFromImage(image!)
+                tintColor = ContrastColorOf(backgroundColor,returnFlat: true)
+            }
             v.setColors(backgroundColor: backgroundColor, tintColor: tintColor)
-            self.navigationController?.navigationBar.tintColor = tintColor
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: tintColor]
-            self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
-            
+            self.setColors(viewController: self, backgroundColor: backgroundColor, tintColor: tintColor)
             if movieListInfo.idCollection < 0 {
                 self.updateFloatButton(nameImage: "", backgroundColor: backgroundColor.withAlphaComponent(0.7), tintColor: tintColor)
             }
@@ -186,8 +180,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v.castCollectionView.reloadData()
         updateColor(image: v.coverImageView.image)
     }
-    
-    
     
     func calculateOffset() {
         offset_HeaderStop = v.headerView.frame.size.height-(self.navigationController?.navigationBar.frame.size.height)!-v.height

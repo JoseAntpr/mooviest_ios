@@ -9,7 +9,7 @@
 import UIKit
 
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol {
     
     var v = LoginView()
     var activeField:UITextField?
@@ -37,6 +37,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.resetTabBarAndNavigationController(viewController: self)
     }
     
     func setupConstraints() {

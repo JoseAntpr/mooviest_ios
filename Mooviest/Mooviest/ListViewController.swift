@@ -12,7 +12,8 @@ import Kingfisher
 
 
 
-class ListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieProtocol {
+class ListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
+            MovieProtocol, TabBarProtocol {
     
     let user = DataModel.sharedInstance.user
     var height:CGFloat!
@@ -75,7 +76,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
+        self.resetTabBarAndNavigationController(viewController: self)
         reloadList()
     }
     

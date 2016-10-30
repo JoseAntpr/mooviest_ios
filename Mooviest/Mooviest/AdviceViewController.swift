@@ -11,7 +11,8 @@ import Kingfisher
 
 
 
-class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieProtocol {
+class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
+                    MovieProtocol,  TabBarProtocol{
     
     let user = DataModel.sharedInstance.user
     var height:CGFloat!
@@ -73,6 +74,7 @@ class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.resetTabBarAndNavigationController(viewController: self)
         reloadList()
     }
     

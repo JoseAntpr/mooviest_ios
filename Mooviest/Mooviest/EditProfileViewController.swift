@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource {
+class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource, TabBarProtocol {
     
     //offset for animation
     var offset_HeaderStop:CGFloat!
@@ -61,6 +61,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.resetTabBarAndNavigationController(viewController: self)
         loadDataView()
     }
     

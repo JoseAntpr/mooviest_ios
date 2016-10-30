@@ -11,7 +11,7 @@ import Kingfisher
 
 
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, MovieProtocol {
+class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, MovieProtocol,TabBarProtocol {
     
     let user = DataModel.sharedInstance.user
     var height:CGFloat!
@@ -73,11 +73,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
-        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
-        self.navigationController?.navigationBar.tintColor = .white
+        self.resetTabBarAndNavigationController(viewController: self)
         searchBar.becomeFirstResponder()
-        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
     }
     
     override func viewDidAppear(_ animated: Bool) {

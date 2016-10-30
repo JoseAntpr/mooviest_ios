@@ -11,7 +11,7 @@ import Kingfisher
 
 
 
-class ProfileViewController: UIViewController, UIScrollViewDelegate {
+class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProtocol {
     
     //offset for animation
     var offset_HeaderStop:CGFloat!
@@ -41,7 +41,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         calculateOffset()
     }
     
-    override func viewWillAppear(_ animated: Bool) {       
+    override func viewWillAppear(_ animated: Bool) {
+        self.resetTabBarAndNavigationController(viewController: self)
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
         user = DataModel.sharedInstance.user
         loadDataView()

@@ -51,6 +51,7 @@
 		A99105F01DBCDA4700659481 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105EF1DBCDA4700659481 /* SearchView.swift */; };
 		A99105F21DBCDA5800659481 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105F11DBCDA5800659481 /* SearchViewController.swift */; };
 		A9ADF3241DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9ADF3231DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework */; };
+		A9ADF3261DC676A80054CBA0 /* TabBarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ADF3251DC676A80054CBA0 /* TabBarProtocol.swift */; };
 		A9B12EB71DA79FD100F3EF4E /* AnimatedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B12EB61DA79FD100F3EF4E /* AnimatedTabBarController.swift */; };
 		A9B7B3441DAA37FF00A470BF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B7B3431DAA37FF00A470BF /* ProfileView.swift */; };
 		A9B7B3461DAA381100A470BF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B7B3451DAA381100A470BF /* ProfileViewController.swift */; };
@@ -144,6 +145,7 @@
 		A99105EF1DBCDA4700659481 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A99105F11DBCDA5800659481 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A9ADF3231DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RAMAnimatedTabBarController.framework; path = Carthage/Build/iOS/RAMAnimatedTabBarController.framework; sourceTree = "<group>"; };
+		A9ADF3251DC676A80054CBA0 /* TabBarProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarProtocol.swift; sourceTree = "<group>"; };
 		A9B12EB61DA79FD100F3EF4E /* AnimatedTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnimatedTabBarController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A9B7B3431DAA37FF00A470BF /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ProfileView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A9B7B3451DAA381100A470BF /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		A965ACE91D8AB6A200F9FF47 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				A9ADF3251DC676A80054CBA0 /* TabBarProtocol.swift */,
 				A95015561DC39E88006D6D2B /* New Group */,
 				A96B52601D89DEBA0061A766 /* ModelProtocol.swift */,
 				A96B52621D89DED40061A766 /* ParserProtocol.swift */,
@@ -667,6 +670,7 @@
 				A96DCE1E1D8C6EF900BC2119 /* RegisterViewController.swift in Sources */,
 				A950155A1DC3A7CD006D6D2B /* CaptionMovieView.swift in Sources */,
 				A96B520F1D89CCF70061A766 /* AppDelegate.swift in Sources */,
+				A9ADF3261DC676A80054CBA0 /* TabBarProtocol.swift in Sources */,
 				A9B7B3441DAA37FF00A470BF /* ProfileView.swift in Sources */,
 				A96B525D1D89DE670061A766 /* ParticipationModel.swift in Sources */,
 			);
