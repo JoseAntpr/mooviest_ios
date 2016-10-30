@@ -54,7 +54,7 @@ extension User {
         }
         //Extract born
         var born = ""
-        born.toString(string: profileJson["born"])
+        born.toString(string: profileJson["born"] as Any)
         //Extract postal code
         var postalCode = ""
         if let postalCodeString = profileJson["postalCode"] as? String {

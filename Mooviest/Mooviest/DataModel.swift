@@ -143,7 +143,7 @@ class DataModel: NSObject {
             .responseJSON {response in                
                 if let res = response.result.value as? [String:Any] {
                     var next = ""
-                    next.toString(string: res["next"])
+                    next.toString(string: res["next"] as Any)
                     try! completionRequest(res["results"] as! [[String:Any]],next)
                 }
         }
@@ -167,7 +167,7 @@ class DataModel: NSObject {
             .responseJSON {response in
                 if let res = response.result.value as? [String:Any] {
                     var next = ""
-                    next.toString(string: res["next"])
+                    next.toString(string: res["next"] as Any)
                     try! completionRequest(res["results"] as! [[String:Any]], next)
                 }
         }
@@ -179,7 +179,7 @@ class DataModel: NSObject {
             .responseJSON {response in
                 if let res = response.result.value as? [String:Any] {
                     var next = ""
-                    next.toString(string: res["next"])
+                    next.toString(string: res["next"] as Any)
                     try! completionRequest(res["results"] as! [[String:Any]], next)
                 }
         }
@@ -218,7 +218,7 @@ class DataModel: NSObject {
                 
                 if let res = response.result.value as? [String:Any] {
                     var next = ""
-                    next.toString(string: res["next"])
+                    next.toString(string: res["next"] as Any)
                     try! completionRequest(res["results"] as! [[String:Any]], next)
                 }
         }

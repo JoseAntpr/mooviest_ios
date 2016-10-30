@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A911DEE21D929CA5004BB61F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A911DEE11D929CA5004BB61F /* UIViewExtension.swift */; };
 		A911DEE51D929E28004BB61F /* TextFieldValidateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A911DEE41D929E28004BB61F /* TextFieldValidateExtension.swift */; };
-		A93CDB651DA67CA300E2E417 /* AnimatedTabBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93CDB641DA67CA300E2E417 /* AnimatedTabBar.framework */; };
 		A93DCAD61DBA2719004C826A /* MovieListInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93DCAD51DBA2719004C826A /* MovieListInfoModel.swift */; };
 		A93DCAD91DBA2940004C826A /* MovieListInfoParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93DCAD81DBA2940004C826A /* MovieListInfoParser.swift */; };
 		A943A86F1D8AEF5900525BF7 /* ParticipationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A943A86E1D8AEF5900525BF7 /* ParticipationCollectionViewCell.swift */; };
@@ -28,7 +27,6 @@
 		A96B52241D89CCF70061A766 /* MooviestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B52231D89CCF70061A766 /* MooviestTests.swift */; };
 		A96B522F1D89CCF70061A766 /* MooviestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B522E1D89CCF70061A766 /* MooviestUITests.swift */; };
 		A96B523F1D89D34B0061A766 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96B523D1D89D34B0061A766 /* Alamofire.framework */; };
-		A96B52401D89D34B0061A766 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96B523E1D89D34B0061A766 /* Kingfisher.framework */; };
 		A96B52431D89D4CF0061A766 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B52421D89D4CF0061A766 /* LoginViewController.swift */; };
 		A96B52451D89D52B0061A766 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B52441D89D52B0061A766 /* LoginView.swift */; };
 		A96B52471D89D6B20061A766 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B52461D89D6B20061A766 /* Colors.swift */; };
@@ -47,10 +45,12 @@
 		A96B9B551D8D53A10038F4D9 /* UserParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B9B541D8D53A10038F4D9 /* UserParser.swift */; };
 		A96DCE1E1D8C6EF900BC2119 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */; };
 		A972E6601DB7D3ED00E291AE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A972E65F1DB7D3ED00E291AE /* Message.swift */; };
+		A97405301DC5B7E000B7DFC6 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96B523E1D89D34B0061A766 /* Kingfisher.framework */; };
 		A9779CE11DC4E81300D7BD3B /* KCFloatingActionButton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9779CE01DC4E81300D7BD3B /* KCFloatingActionButton.framework */; };
 		A98DE6441DBECD00009B34A1 /* AdviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98DE6431DBECCFF009B34A1 /* AdviceViewController.swift */; };
 		A99105F01DBCDA4700659481 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105EF1DBCDA4700659481 /* SearchView.swift */; };
 		A99105F21DBCDA5800659481 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105F11DBCDA5800659481 /* SearchViewController.swift */; };
+		A9ADF3241DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9ADF3231DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework */; };
 		A9B12EB71DA79FD100F3EF4E /* AnimatedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B12EB61DA79FD100F3EF4E /* AnimatedTabBarController.swift */; };
 		A9B7B3441DAA37FF00A470BF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B7B3431DAA37FF00A470BF /* ProfileView.swift */; };
 		A9B7B3461DAA381100A470BF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B7B3451DAA381100A470BF /* ProfileViewController.swift */; };
@@ -60,6 +60,7 @@
 		A9B869521D89E7C200DDC197 /* RatingParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B869511D89E7C200DDC197 /* RatingParser.swift */; };
 		A9B9E0571DB776FB005369DA /* AuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9E0561DB776FB005369DA /* AuthenticationModel.swift */; };
 		A9B9E0591DB777CE005369DA /* AuthenticationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9E0581DB777CE005369DA /* AuthenticationParser.swift */; };
+		A9C0E8A51DC5BF74008BE77C /* Chameleon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96842131DC5B09600CE458C /* Chameleon.framework */; };
 		A9D757C81DAEB52600905253 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D757C71DAEB52600905253 /* MovieCollectionViewCell.swift */; };
 		A9D757CB1DAED2C200905253 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D757CA1DAED2C200905253 /* ListView.swift */; };
 		A9D757CD1DAED2DE00905253 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D757CC1DAED2DE00905253 /* ListViewController.swift */; };
@@ -92,7 +93,6 @@
 /* Begin PBXFileReference section */
 		A911DEE11D929CA5004BB61F /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A911DEE41D929E28004BB61F /* TextFieldValidateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidateExtension.swift; sourceTree = "<group>"; };
-		A93CDB641DA67CA300E2E417 /* AnimatedTabBar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AnimatedTabBar.framework; path = Carthage/Build/iOS/AnimatedTabBar.framework; sourceTree = "<group>"; };
 		A93DCAD51DBA2719004C826A /* MovieListInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieListInfoModel.swift; sourceTree = "<group>"; };
 		A93DCAD81DBA2940004C826A /* MovieListInfoParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieListInfoParser.swift; sourceTree = "<group>"; };
 		A943A86E1D8AEF5900525BF7 /* ParticipationCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipationCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -101,8 +101,9 @@
 		A95015591DC3A7CD006D6D2B /* CaptionMovieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionMovieView.swift; sourceTree = "<group>"; };
 		A96411C81D8BE02C00E3AAB4 /* RegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RegisterView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A965ACE11D8AAE1C00F9FF47 /* MovieDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
-		A965ACE31D8AB07A00F9FF47 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		A965ACE31D8AB07A00F9FF47 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		A965ACE51D8AB34B00F9FF47 /* InfoMovieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoMovieView.swift; path = ../InfoMovieView.swift; sourceTree = "<group>"; };
+		A96842131DC5B09600CE458C /* Chameleon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Chameleon.framework; path = Carthage/Build/iOS/Chameleon.framework; sourceTree = "<group>"; };
 		A96B520B1D89CCF70061A766 /* Mooviest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mooviest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A96B520E1D89CCF70061A766 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A96B52101D89CCF70061A766 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +143,7 @@
 		A98DE6431DBECCFF009B34A1 /* AdviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdviceViewController.swift; sourceTree = "<group>"; };
 		A99105EF1DBCDA4700659481 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A99105F11DBCDA5800659481 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		A9ADF3231DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RAMAnimatedTabBarController.framework; path = Carthage/Build/iOS/RAMAnimatedTabBarController.framework; sourceTree = "<group>"; };
 		A9B12EB61DA79FD100F3EF4E /* AnimatedTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnimatedTabBarController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A9B7B3431DAA37FF00A470BF /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ProfileView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A9B7B3451DAA381100A470BF /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -168,9 +170,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9ADF3241DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework in Frameworks */,
 				A96B523F1D89D34B0061A766 /* Alamofire.framework in Frameworks */,
-				A96B52401D89D34B0061A766 /* Kingfisher.framework in Frameworks */,
-				A93CDB651DA67CA300E2E417 /* AnimatedTabBar.framework in Frameworks */,
+				A9C0E8A51DC5BF74008BE77C /* Chameleon.framework in Frameworks */,
+				A97405301DC5B7E000B7DFC6 /* Kingfisher.framework in Frameworks */,
 				A9779CE11DC4E81300D7BD3B /* KCFloatingActionButton.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,13 +341,13 @@
 			children = (
 				A96B520E1D89CCF70061A766 /* AppDelegate.swift */,
 				A96B52101D89CCF70061A766 /* ViewController.swift */,
+				A965ACE81D8AB67500F9FF47 /* Models */,
 				A96B52121D89CCF70061A766 /* Main.storyboard */,
 				A96B52151D89CCF70061A766 /* Assets.xcassets */,
 				A96B52171D89CCF70061A766 /* LaunchScreen.storyboard */,
 				A96B521A1D89CCF70061A766 /* Info.plist */,
 				A965ACED1D8AB74A00F9FF47 /* Resources */,
 				A965ACE91D8AB6A200F9FF47 /* Protocols */,
-				A965ACE81D8AB67500F9FF47 /* Models */,
 				A911DEE01D929C75004BB61F /* Extension */,
 				A965ACE71D8AB62B00F9FF47 /* Views */,
 			);
@@ -372,8 +375,9 @@
 		A96B523C1D89D34B0061A766 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9ADF3231DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework */,
+				A96842131DC5B09600CE458C /* Chameleon.framework */,
 				A9779CE01DC4E81300D7BD3B /* KCFloatingActionButton.framework */,
-				A93CDB641DA67CA300E2E417 /* AnimatedTabBar.framework */,
 				A96B523D1D89D34B0061A766 /* Alamofire.framework */,
 				A96B523E1D89D34B0061A766 /* Kingfisher.framework */,
 			);
@@ -515,7 +519,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Mooviest;
 				TargetAttributes = {
 					A96B520A1D89CCF60061A766 = {
@@ -589,14 +593,15 @@
 /* Begin PBXShellScriptBuildPhase section */
 		A96B52411D89D3580061A766 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/IOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/IOS/Kingfisher.framework",
-				"$(SRCROOT)/Carthage/Build/IOS/AnimatedTabBar.framework",
+				"$(SRCROOT)/Carthage/Build/IOS/RAMAnimatedTabBarController.framework",
 				"$(SRCROOT)/Carthage/Build/IOS/KCFloatingActionButton.framework",
+				"$(SRCROOT)/Carthage/Build/IOS/Chameleon.framework",
 			);
 			outputPaths = (
 			);
@@ -747,6 +752,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -797,6 +803,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -861,6 +868,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = MTWP2E29RY;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = MooviestTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mooviest.Mooviest.MooviestTests;
@@ -876,6 +887,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = MTWP2E29RY;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = MooviestTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mooviest.Mooviest.MooviestTests;
@@ -890,6 +905,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = MTWP2E29RY;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = MooviestUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mooviest.Mooviest.MooviestUITests;
@@ -904,6 +923,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = MTWP2E29RY;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = MooviestUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mooviest.Mooviest.MooviestUITests;

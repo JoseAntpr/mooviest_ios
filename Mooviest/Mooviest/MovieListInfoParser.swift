@@ -30,7 +30,7 @@ extension MovieListInfo {
         }
         //Extract image
         var image = ""
-        image.toString(string: json["image"])
+        image.toString(string: json["image"] as Any)
         
         //Extract average
         guard let average = json["average"] as? Float else{

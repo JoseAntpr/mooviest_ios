@@ -6,8 +6,8 @@
 //  Copyright © 2016 Mooviest. All rights reserved.
 //
 
-import Foundation
-import AnimatedTabBar
+import UIKit
+import RAMAnimatedTabBarController
 
 class AnimatedTabBarController: RAMAnimatedTabBarController {
     

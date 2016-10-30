@@ -140,7 +140,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                 avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation*0.5, 0)
                 avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
                 
-                if offset <= offset_CoverStopScale {
+                if offset <= offset_CoverStopScale! {
                     if v.coverImageView.layer.zPosition < v.headerView.layer.zPosition{
                         v.headerView.layer.zPosition = 0
                     }

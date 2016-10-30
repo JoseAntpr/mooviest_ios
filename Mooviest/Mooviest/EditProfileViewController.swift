@@ -243,7 +243,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     
     //TextField Delegate
     func textFieldDidEndEditing(_ textField: UITextField) {
-        print(activeField?.text)
+        print(activeField?.text as Any)
         validatePickers(textField: activeField!)
         v.formView.comeBackOrigin(withDuration: 0.3, moved: move)
         move = 0

@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 import KCFloatingActionButton
-
+import Chameleon
 
 class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate,  UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieProtocol {
 
@@ -19,7 +19,8 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     var offset_CardProfileStop:CGFloat!
     let offset_B_LabelHeader:CGFloat = 30
     let distance_W_LabelHeader:CGFloat = 5
-    
+    var backgroundColor = mooviest_red
+    var tintColor:UIColor!
     var movie:Movie!
     var movieListInfo:MovieListInfo!
     var ratings = [Rating]()
@@ -49,8 +50,20 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         return UIStatusBarStyle.lightContent
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        v.bodyScrollView.addSubview(v.seeView)
+        v.bodyScrollView.addSubview(v.castCollectionView)
+        v.bodyScrollView.addSubview(v.infoView)
+        
+        v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
+//        updateColor(image: v.headerBackdropImageView.image)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         //here extract predominant color
+        updateColor(image: v.headerBackdropImageView.image)
         heightView = view.frame.size.height
         changeTabs(index: 0)
         v.barSegmentedControl.selectedSegmentIndex = 0
@@ -61,8 +74,10 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         if parent == nil {
             if let vc = navigationController?.viewControllers[0] as? SwipeTabViewController {
                 //controlar error
-                vc.movies[0].idCollection = movie.idCollection
-                vc.movies[0].typeMovie = movie.typeMovie
+                if movie != nil {
+                    vc.movies[0].idCollection = movie.idCollection
+                    vc.movies[0].typeMovie = movie.typeMovie
+                }
             }
         }
     }
@@ -71,8 +86,57 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v.adjustFontSizeToFitHeight()
     }
     
+    func updateColor(image:UIImage?) {
+        if image != nil {
+            backgroundColor = AverageColorFromImage(image!)
+            tintColor = ComplementaryFlatColorOf(backgroundColor)
+            v.headerView.backgroundColor = backgroundColor
+            v.barSegmentedControl.tintColor = backgroundColor
+            navigationItem.titleView?.tintColor =  tintColor
+            if movie != nil && movie.typeMovie == "" {
+                self.updateFloatButton(nameImage: "", backgroundColor: backgroundColor, tintColor: .white)
+            }
+        }
+    }
+    
+    func setupView() {
+        v.setDelegate(ViewController: self)
+        
+        v.castCollectionView.dataSource = self
+        v.castCollectionView.register(ParticipationCollectionViewCell.self, forCellWithReuseIdentifier: participationCellIdentifier)
+        v.castCollectionView.isScrollEnabled = false
+        v.infoView.ratingCollectionView.dataSource = self
+        v.infoView.ratingCollectionView.register(RatingCollectionViewCell.self, forCellWithReuseIdentifier: ratingCellIdentifier)
+        
+        v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
+        v.captionMovieView.titleLabel.text = movieListInfo.title
+        self.navigationItem.title = movieListInfo.title
+        v.captionMovieView.typeLabel.text = "Película"
+        
+        v.coverImageView.kf.setImage(with: URL(string:  movieListInfo!.image),placeholder: UIImage(named:  "noimage"))
+        v.coverImageView.contentMode = UIViewContentMode.scaleToFill
+        v.coverImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
+        v.coverImageView.layer.borderWidth = 1.8
+        v.coverImageView.layer.cornerRadius = 5
+        v.coverImageView.layer.masksToBounds = true
+        
+        v.blackItem.handler = { item in
+            self.selectBlackList(item: item)
+        }
+        v.seenItem.handler = { item in
+            self.selectSeenList(item: item)
+        }
+        v.favouriteItem.handler = { item in
+            self.selectFavouriteList(item: item)
+        }
+        v.wacthItem.handler = { item in
+            self.selectWatchList(item: item)
+        }
+        updateColor(image: v.coverImageView.image)
+    }
+
     func loadDataView() {
-        v.coverImageView.kf.setImage(with: URL(string:  movieListInfo!.image),placeholder: UIImage(named:  "noimage"))        
+        
         //add default backdrop
         v.headerBackdropImageView.kf.setImage(with: URL(string: movie!.backdrop))
         v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
@@ -104,45 +168,11 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             v.wacthItem.itemBackgroundColor = watchlist_color
             self.updateFloatButton(nameImage: "bookmark", backgroundColor: watchlist_color, tintColor: .white)
         default:
+            print("typemovie: \(movie.typeMovie)")
             break
         }
-        
     }
     
-    func setupView() {
-        v.setDelegate(ViewController: self)
-        
-        v.castCollectionView.dataSource = self
-        v.castCollectionView.register(ParticipationCollectionViewCell.self, forCellWithReuseIdentifier: participationCellIdentifier)
-        v.castCollectionView.isScrollEnabled = false 
-        v.infoView.ratingCollectionView.dataSource = self
-        v.infoView.ratingCollectionView.register(RatingCollectionViewCell.self, forCellWithReuseIdentifier: ratingCellIdentifier)
-        
-        v.barSegmentedControl.addTarget(self, action: #selector(self.changeSelected(sender:)), for: .valueChanged)
-        v.captionMovieView.titleLabel.text = movieListInfo.title
-        self.navigationItem.title = movieListInfo.title
-        v.captionMovieView.typeLabel.text = "Película"
-        
-        v.coverImageView.kf.setImage(with: URL(string:  movieListInfo!.image),placeholder: UIImage(named:  "noimage"))
-        v.coverImageView.contentMode = UIViewContentMode.scaleToFill
-        v.coverImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
-        v.coverImageView.layer.borderWidth = 1.8
-        v.coverImageView.layer.cornerRadius = 5
-        v.coverImageView.layer.masksToBounds = true
-        
-        v.blackItem.handler = { item in
-            self.selectBlackList(item: item)
-        }
-        v.seenItem.handler = { item in
-            self.selectSeenList(item: item)
-        }
-        v.favouriteItem.handler = { item in
-            self.selectFavouriteList(item: item)
-        }
-        v.wacthItem.handler = { item in
-            self.selectWatchList(item: item)
-        }
-    }
     
     
     func calculateOffset() {
@@ -151,16 +181,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         offset_CardProfileStop = offset_HeaderStop+v.profileCardView.frame.height
         offset_BackdropFadeOff = offset_CoverStopScale/1.6
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(-offset_CardProfileStop+10, for: .default)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        v.bodyScrollView.addSubview(v.seeView)
-        v.bodyScrollView.addSubview(v.castCollectionView)
-        v.bodyScrollView.addSubview(v.infoView)
-        
-        v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
     }
     
     override func didReceiveMemoryWarning() {
@@ -304,7 +324,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                 avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation*0.5, 0)
                 avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
                 
-                if offset <= offset_CoverStopScale {
+                if offset <= offset_CoverStopScale! {
                     if v.coverImageView.layer.zPosition < v.headerView.layer.zPosition{
                         v.headerView.layer.zPosition = 0
                     }

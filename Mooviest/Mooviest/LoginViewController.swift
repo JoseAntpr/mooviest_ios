@@ -234,7 +234,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         DataModel.sharedInstance.login(Username: user, Password: pass) {
             (successful,message) in
-            print(message)
+            print(message as Any)
             if successful {
                 Message.msgPopupDelay(title: "", message: "Login successful", delay: 1,ctrl: self) {
                     self.chargueApp()

@@ -32,10 +32,10 @@ extension Movie {
         }
         //Extract image
         var image = ""
-        image.toString(string: json["image"])
+        image.toString(string: json["image"] as Any)
         //Extract backdrop
         var backdrop = ""
-        backdrop.toString(string: json["backdrop"])
+        backdrop.toString(string: json["backdrop"] as Any)
         
         //Extract synopsis
         guard let synopsis = json["synopsis"] as? String else{
