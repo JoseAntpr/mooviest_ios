@@ -25,6 +25,37 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         view.addSubview(v)
         setupConstraints()
         setupView()
+        initSwipe()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+         updateSwipe()
+    }
+    override func viewWillAppear(_ animated: Bool) {        
+        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)       
+    }
+    
+    func setupView() {
+        let searchButton = UIBarButtonItem(image: UIImage(named: "search"),
+                                           style: UIBarButtonItemStyle.plain ,
+                                           target: self, action: #selector(self.search))
+        searchButton.tintColor = UIColor.white
+        
+        let replayButton = UIBarButtonItem(image: UIImage(named: "star"),
+                                           style: UIBarButtonItemStyle.plain ,
+                                           target: self, action: #selector(self.reloadSwipe))
+        replayButton.tintColor = UIColor.white
+        navigationItem.leftBarButtonItem = replayButton
+        navigationItem.rightBarButtonItem = searchButton
+        
+        
+        v.closedButton.addTarget(self, action: #selector(self.clickSwipeLeft), for: .touchUpInside)
+        v.heartButton.addTarget(self, action: #selector(self.clickSwipeRight), for: .touchUpInside)
+        v.clockButton.addTarget(self, action: #selector(self.clickSwipeTop), for: .touchUpInside)
+        v.eyeButton.addTarget(self, action: #selector(self.clickSwipeBottom), for: .touchUpInside)
+    }
+    
+    func initSwipe(){
         DataModel.sharedInstance.getMoviesSwipe() {
             (data, next) in
             self.nextUrl = next
@@ -44,11 +75,12 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-         updateSwipe()
-    }
-    override func viewWillAppear(_ animated: Bool) {        
-        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)       
+    func reloadSwipe() {
+        for card in loadedCards {
+            card.removeFromSuperview()
+        }
+        initSwipe()
+        
     }
     
     func updateSwipe() {
@@ -140,17 +172,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         }
     }
     
-    func setupView() {
-        let searchButton = UIBarButtonItem(image: UIImage(named: "search"),
-                                         style: UIBarButtonItemStyle.plain ,
-                                         target: self, action: #selector(self.search))
-        searchButton.tintColor = UIColor.white
-        navigationItem.rightBarButtonItem = searchButton
-        v.closedButton.addTarget(self, action: #selector(self.clickSwipeLeft), for: .touchUpInside)
-        v.heartButton.addTarget(self, action: #selector(self.clickSwipeRight), for: .touchUpInside)
-        v.clockButton.addTarget(self, action: #selector(self.clickSwipeTop), for: .touchUpInside)
-        v.eyeButton.addTarget(self, action: #selector(self.clickSwipeBottom), for: .touchUpInside)
-    }
+    
     
     func search() {
         let nViewController = SearchViewController()

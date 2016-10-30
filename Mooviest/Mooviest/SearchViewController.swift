@@ -119,13 +119,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         searchBar.resignFirstResponder()
     }
     
-    // keyboard
-    func handleTap(sender: UITapGestureRecognizer) {
-        if sender.state == .ended {
-            self.view.endEditing(true)            
-        }
-    }
-    
     func setupConstraints() {
         v.translatesAutoresizingMaskIntoConstraints = false
         
