@@ -31,7 +31,7 @@ class ParticipationCollectionViewCell: UICollectionViewCell {
         faceImageView.contentMode = .scaleAspectFill
         faceImageView.clipsToBounds = true
         
-        captionView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.4)
+        captionView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
         
         nameLabel.text = "Nombre"
         nameLabel.textColor = .white

@@ -178,7 +178,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func changeSecureText(button: UIButton) {
         if let textField = button.superview as? UITextField {
             textField.isSecureTextEntry = !textField.isSecureTextEntry
-            button.setImage(UIImage(named: textField.isSecureTextEntry ? "eye_off" : "eye"), for: UIControlState())
+            button.setImage(UIImage(named: textField.isSecureTextEntry ? "eye" : "eye_off"), for: UIControlState())
         }
     }
     

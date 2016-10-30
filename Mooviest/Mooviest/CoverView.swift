@@ -46,7 +46,7 @@ class CoverView: UIView {
         
         movieImageView.contentMode = .scaleToFill
         
-        captionView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.4)
+        captionView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
         captionView.addSubview(ratingImageView)
         captionView.addSubview(ratingLabel)
         captionView.addSubview(titleLabel)
@@ -75,15 +75,15 @@ class CoverView: UIView {
         addConstraint(titleLabel.topAnchor.constraint(equalTo: captionView.topAnchor))
         addConstraint(titleLabel.leftAnchor.constraint(equalTo: captionView.leftAnchor))
         addConstraint(titleLabel.widthAnchor.constraint(equalTo: captionView.widthAnchor))
-        addConstraint(titleLabel.heightAnchor.constraint(equalTo: captionView.heightAnchor, multiplier: 0.7))
+        addConstraint(titleLabel.heightAnchor.constraint(equalTo: captionView.heightAnchor, multiplier: porcentTitle))
         
-        addConstraint(ratingImageView.bottomAnchor.constraint(equalTo: captionView.bottomAnchor))
-        addConstraint(ratingImageView.heightAnchor.constraint(equalTo: captionView.heightAnchor, multiplier:porcentTitle))
-        addConstraint(ratingImageView.rightAnchor.constraint(equalTo: captionView.centerXAnchor))
+        addConstraint(ratingImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor))
+        addConstraint(ratingImageView.bottomAnchor.constraint(equalTo: captionView.bottomAnchor,constant:-4))
+        addConstraint(ratingImageView.rightAnchor.constraint(equalTo: captionView.centerXAnchor,constant: -4))
         addConstraint(ratingImageView.widthAnchor.constraint(equalTo: ratingImageView.heightAnchor))
         
         addConstraint(ratingLabel.topAnchor.constraint(equalTo: ratingImageView.topAnchor))
-        addConstraint(ratingLabel.leftAnchor.constraint(equalTo: ratingImageView.rightAnchor))
+        addConstraint(ratingLabel.leftAnchor.constraint(equalTo: ratingImageView.rightAnchor,constant: 4))
         addConstraint(ratingLabel.rightAnchor.constraint(equalTo: captionView.rightAnchor))
         addConstraint(ratingLabel.bottomAnchor.constraint(equalTo: ratingImageView.bottomAnchor))
     }

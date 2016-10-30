@@ -137,7 +137,7 @@ class LoginView: UIView {
         clearTextButton.tintColor = .gray
         
         secureTextButton = UIButton(type: UIButtonType.system) as UIButton
-        secureTextButton.setImage(UIImage(named: "eye_off"), for: UIControlState())
+        secureTextButton.setImage(UIImage(named: "eye"), for: UIControlState())
         secureTextButton.tintColor = .gray
         secureTextButton.contentMode = .scaleToFill
         
