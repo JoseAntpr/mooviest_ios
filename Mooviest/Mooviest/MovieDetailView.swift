@@ -84,8 +84,6 @@ class MovieDetailView: UIView {
         
         headerView.clipsToBounds = true
         
-        
-        
         seeInfoLabel.text = "Proximamente..."
         seeInfoLabel.textColor = .darkGray
         seeInfoLabel.font = UIFont.boldSystemFont(ofSize: seeInfoLabel.font.pointSize)

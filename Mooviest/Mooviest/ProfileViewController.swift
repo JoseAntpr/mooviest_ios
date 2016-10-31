@@ -58,13 +58,16 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
     
     func loadDataView() {
         if let avatar = user?.avatar {
-            print("avatar: \(avatar)")
             v.coverImageView.kf.setImage(with: URL(string:  "\(DataModel.sharedInstance.path)\(avatar)"),placeholder: UIImage(named: "contact"))
         }
-        if let username = user?.username {
-            v.titleLabel.text = "@\(username)"
+        if let email = user?.email {
+            v.emailLabel.text = "\(email)"
         }
-        
+        if user != nil {
+            v.usernameLabel.text = "@\(user!.username)"
+            v.firstnameLabel.text = "\(user!.firstname)"
+            v.lastnameLabel.text = "\(user!.lastname)"
+        }
     }
     
     //This method is called when the autolayout engine has finished to calculate your views' frames
@@ -164,23 +167,13 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
     }
     
     func changeSelected(sender: UISegmentedControl) {
-        print("Change selected")
         switch sender.selectedSegmentIndex {
         case 1:
-            v.castView.isHidden = false
-            v.seeView.isHidden = true
-            v.infoView.isHidden = true
-            print("1")
-        case 2:
-            v.castView.isHidden = true
-            v.seeView.isHidden = false
-            v.infoView.isHidden = true
-            print("2")
+            v.followingView.isHidden = false
+            v.followersView.isHidden = true
         default:
-            v.castView.isHidden = true
-            v.seeView.isHidden = true
-            v.infoView.isHidden = false
-            print("default")
+            v.followingView.isHidden = true
+            v.followersView.isHidden = false
         }
     }
     

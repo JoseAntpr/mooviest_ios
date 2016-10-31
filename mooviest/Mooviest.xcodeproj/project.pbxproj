@@ -344,7 +344,6 @@
 			children = (
 				A96B520E1D89CCF70061A766 /* AppDelegate.swift */,
 				A96B52101D89CCF70061A766 /* ViewController.swift */,
-				A965ACE81D8AB67500F9FF47 /* Models */,
 				A96B52121D89CCF70061A766 /* Main.storyboard */,
 				A96B52151D89CCF70061A766 /* Assets.xcassets */,
 				A96B52171D89CCF70061A766 /* LaunchScreen.storyboard */,
@@ -352,6 +351,7 @@
 				A965ACED1D8AB74A00F9FF47 /* Resources */,
 				A965ACE91D8AB6A200F9FF47 /* Protocols */,
 				A911DEE01D929C75004BB61F /* Extension */,
+				A965ACE81D8AB67500F9FF47 /* Models */,
 				A965ACE71D8AB62B00F9FF47 /* Views */,
 			);
 			path = Mooviest;

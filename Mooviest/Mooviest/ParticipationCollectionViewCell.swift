@@ -39,12 +39,12 @@ class ParticipationCollectionViewCell: UICollectionViewCell {
         nameLabel.textAlignment = .center
         nameLabel.lineBreakMode = .byWordWrapping
         nameLabel.numberOfLines = 2
-        nameLabel.font.withSize(nameLabel.font.pointSize*0.9)
+        nameLabel.font.withSize(nameLabel.font.pointSize*0.8)
 
         roleLabel.text = "Role"
         roleLabel.textColor = UIColor.white.withAlphaComponent(0.5)
         roleLabel.textAlignment = .center
-        roleLabel.font.withSize(nameLabel.font.pointSize*0.8)
+        roleLabel.font.withSize(roleLabel.font.pointSize*0.5)
         
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
