@@ -6,15 +6,24 @@
 //  Copyright © 2016 Mooviest. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-enum TypeMovie:String {
-    case seen = "seen"
-    case watchlist = "watchlist"
-    case favourite = "favourite"
-    case swipe = "swipe"
-    case black = "black"
+
+struct TypeMovieModel {
+    let rawValue:String
+    let hashValue: Int
+    let image:String
+    let color: UIColor
 }
+
+struct TypeMovieStruct{
+    let seen = TypeMovieModel(rawValue: "seen", hashValue: 1, image: "eye", color: seen_color)
+    let watchlist = TypeMovieModel(rawValue: "watchlist", hashValue: 2, image: "bookmark", color: watchlist_color)
+    let favourite = TypeMovieModel(rawValue: "favourite", hashValue: 3, image: "star", color: favourite_color)
+    let black = TypeMovieModel(rawValue: "black", hashValue: 5, image: "clear", color: blacklist_color)
+}
+
+let TypeMovie = TypeMovieStruct()
 
 struct Movie: Model {
     var id: Int

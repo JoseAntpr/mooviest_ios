@@ -77,7 +77,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     override func willMove(toParentViewController parent: UIViewController?) {
         if parent == nil {
             if let vc = navigationController?.viewControllers[0] as? SwipeTabViewController {
-                //controlar error
                 if movie != nil {
                     vc.movies[0].idCollection = movie.idCollection
                     vc.movies[0].typeMovie = movie.typeMovie
@@ -85,8 +84,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             }
         }
     }
-    
-   
     
     func updateColor(image:UIImage?) {
         if tintColor == nil {
@@ -99,7 +96,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             v.setColors(backgroundColor: backgroundColor, tintColor: tintColor)
             self.setColors(viewController: self, backgroundColor: backgroundColor, tintColor: tintColor)
             if movieListInfo.idCollection < 0 {
-                self.updateFloatButton(nameImage: "", backgroundColor: backgroundColor.withAlphaComponent(0.7), tintColor: tintColor)
+                self.updateFloatPlustButton(image: "", backgroundColor: backgroundColor, tintColor: tintColor)
             }
         }
     }
@@ -127,33 +124,38 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         
         switch movieListInfo.typeMovie {
         case TypeMovie.black.rawValue:
-            v.blackItem.itemBackgroundColor = blacklist_color
-            self.updateFloatButton(nameImage: "clear", backgroundColor: blacklist_color, tintColor: .white)
+            self.v.blackItem.buttonColor = TypeMovie.black.color
+            updateFloatPlustButton(image: TypeMovie.black.image, backgroundColor: TypeMovie.black.color, tintColor: .white)
         case TypeMovie.favourite.rawValue:
-            v.favouriteItem.itemBackgroundColor = favourite_color
-            self.updateFloatButton(nameImage: "star", backgroundColor: favourite_color, tintColor: .white)
+            self.v.favouriteItem.buttonColor = TypeMovie.favourite.color
+            updateFloatPlustButton(image: TypeMovie.favourite.image, backgroundColor: TypeMovie.favourite.color, tintColor: .white)
         case TypeMovie.seen.rawValue:
-            v.seenItem.itemBackgroundColor = seen_color
-            self.updateFloatButton(nameImage: "eye", backgroundColor: seen_color, tintColor: .white)
+            self.v.seenItem.buttonColor = TypeMovie.seen.color
+            updateFloatPlustButton(image: TypeMovie.seen.image, backgroundColor: TypeMovie.seen.color, tintColor: .white)
         case TypeMovie.watchlist.rawValue:
-            v.wacthItem.itemBackgroundColor = watchlist_color
-            self.updateFloatButton(nameImage: "bookmark", backgroundColor: watchlist_color, tintColor: .white)
+            self.v.watchItem.buttonColor = TypeMovie.watchlist.color
+            updateFloatPlustButton(image: TypeMovie.watchlist.image, backgroundColor: TypeMovie.watchlist.color, tintColor: .white)
         default:
+            self.v.blackItem.buttonColor = blacklist_color
+            self.v.seenItem.buttonColor = seen_color
+            self.v.watchItem.buttonColor = watchlist_color
+            self.v.favouriteItem.buttonColor = favourite_color
             break
         }
-
+        
         v.blackItem.handler = { item in
-            self.selectBlackList(item: item)
+            self.selectList(item: item, typemovie: TypeMovie.black)
         }
         v.seenItem.handler = { item in
-            self.selectSeenList(item: item)
+            self.selectList(item: item, typemovie: TypeMovie.seen)
         }
         v.favouriteItem.handler = { item in
-            self.selectFavouriteList(item: item)
+            self.selectList(item: item, typemovie: TypeMovie.favourite)
         }
-        v.wacthItem.handler = { item in
-            self.selectWatchList(item: item)
+        v.watchItem.handler = { item in
+            self.selectList(item: item, typemovie: TypeMovie.watchlist)
         }
+        
         updateColor(image: v.coverImageView.image)
         let rating = Rating(name: "mooviest", rating: Int(movieListInfo.average), count: 0, dateUpdate: "")
         ratings.append(rating)
@@ -193,10 +195,11 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         super.didReceiveMemoryWarning()
     }
     
-    func updateTypeMovie(typemovie: TypeMovie,completion: @escaping (Bool) -> Void) {
+    func updateTypeMovie(typemovie: TypeMovieModel,completion: @escaping (Bool) -> Void) {
+        
         if movie != nil {
-            if movie.typeMovie == "" {//insert Collection
-                DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie.hashValue+1){
+            if movie.typeMovie == "" {
+                DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie.hashValue){
                     (res) in
                     if let id = res["id"] as? Int {
                         self.movie.idCollection = id
@@ -207,7 +210,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                     }
                 }
             } else if typemovie.rawValue != movie.typeMovie {
-                DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie.hashValue+1){
+                DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie.hashValue){
                     (res) in
                     if let id = res["id"] as? Int {
                         self.movie.idCollection = id
@@ -220,69 +223,37 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             } else {
                 completion(false)
             }
+        } else {
+            completion(false)
         }
     }
     
     
-    func updateFloatButton(nameImage: String, backgroundColor: UIColor, tintColor:UIColor) {
-        self.v.fab.buttonImage = UIImage(named: nameImage)?.withRenderingMode(.alwaysTemplate)
-        self.v.fab.buttonColor = backgroundColor
-        self.v.fab.plusColor = tintColor.withAlphaComponent(0.7)
+    func updateFloatPlustButton(image: String, backgroundColor: UIColor, tintColor:UIColor) {
+        self.v.fab.buttonImage = UIImage(named: image)?.withRenderingMode(.alwaysTemplate)
+        self.v.fab.buttonColor = backgroundColor.withAlphaComponent(0.7)
+        self.v.fab.plusColor = tintColor
     }
     
-    func selectBlackList(item: KCFloatingActionButtonItem) {
-        updateTypeMovie(typemovie: TypeMovie.black) {
+    func updateFloatButtons(item: KCFloatingActionButtonItem,  typemovie: TypeMovieModel) {
+        let backgroundColor = typemovie.color
+        self.v.blackItem.itemBackgroundColor = .lightGray
+        self.v.seenItem.itemBackgroundColor = .lightGray
+        self.v.watchItem.itemBackgroundColor = .lightGray
+        self.v.favouriteItem.itemBackgroundColor = .lightGray
+        item.itemBackgroundColor = backgroundColor
+        updateFloatPlustButton(image: typemovie.image, backgroundColor: backgroundColor, tintColor: .white)
+    }
+    
+    func selectList(item: KCFloatingActionButtonItem, typemovie: TypeMovieModel) {
+        updateTypeMovie(typemovie: typemovie) {
             (ok) in
             if ok {
-                self.v.seenItem.itemBackgroundColor = .lightGray
-                self.v.wacthItem.itemBackgroundColor = .lightGray
-                self.v.favouriteItem.itemBackgroundColor = .lightGray
-                item.itemBackgroundColor = blacklist_color
-                self.updateFloatButton(nameImage: "clear", backgroundColor: item.itemBackgroundColor!, tintColor: .white)
+                self.updateFloatButtons(item: item, typemovie: typemovie)
             }
         }
     }
 
-    func selectSeenList(item: KCFloatingActionButtonItem) {
-        updateTypeMovie(typemovie: TypeMovie.seen) {
-            (ok) in
-            if ok {
-                self.v.blackItem.itemBackgroundColor = .lightGray
-                self.v.wacthItem.itemBackgroundColor = .lightGray
-                self.v.favouriteItem.itemBackgroundColor = .lightGray
-                item.itemBackgroundColor = seen_color
-                self.updateFloatButton(nameImage: "eye", backgroundColor: item.itemBackgroundColor!, tintColor: .white)
-            }
-        }
-    }
-
-    func selectFavouriteList(item: KCFloatingActionButtonItem) {
-        updateTypeMovie(typemovie: TypeMovie.favourite) {
-            (ok) in
-            if ok {
-                self.v.blackItem.itemBackgroundColor = .lightGray
-                self.v.seenItem.itemBackgroundColor = .lightGray
-                self.v.wacthItem.itemBackgroundColor = .lightGray
-                item.itemBackgroundColor = favourite_color
-                self.updateFloatButton(nameImage: "star", backgroundColor: item.itemBackgroundColor!, tintColor: .white)
-            }
-        }
-    }
-
-    func selectWatchList(item: KCFloatingActionButtonItem) {
-        v.blackItem.itemBackgroundColor = .lightGray
-        v.seenItem.itemBackgroundColor = .lightGray
-        v.favouriteItem.itemBackgroundColor = .lightGray
-        
-        updateTypeMovie(typemovie: TypeMovie.watchlist) {
-            (ok) in
-            if ok {
-                item.itemBackgroundColor = watchlist_color
-                self.updateFloatButton(nameImage: "bookmark", backgroundColor: item.itemBackgroundColor!, tintColor: .white)
-            }
-        }
-    }
-    
     func setupConstraints() {
         v.translatesAutoresizingMaskIntoConstraints = false
         

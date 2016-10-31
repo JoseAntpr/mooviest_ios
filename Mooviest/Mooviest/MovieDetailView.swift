@@ -45,7 +45,7 @@ class MovieDetailView: UIView {
     
     let fab = KCFloatingActionButton()
     let seenItem = KCFloatingActionButtonItem()
-    let wacthItem = KCFloatingActionButtonItem()
+    let watchItem = KCFloatingActionButtonItem()
     let favouriteItem = KCFloatingActionButtonItem()
     let blackItem = KCFloatingActionButtonItem()
     
@@ -112,10 +112,10 @@ class MovieDetailView: UIView {
         seenItem.tintColor = .white
         seenItem.title = "Vista"
         
-        wacthItem.buttonColor = .lightGray
-        wacthItem.icon = UIImage(named:"bookmark")?.withRenderingMode(.alwaysTemplate)
-        wacthItem.tintColor = .white
-        wacthItem.title = "Pendiente"
+        watchItem.buttonColor = .lightGray
+        watchItem.icon = UIImage(named:"bookmark")?.withRenderingMode(.alwaysTemplate)
+        watchItem.tintColor = .white
+        watchItem.title = "Pendiente"
         
         favouriteItem.buttonColor = .lightGray
         favouriteItem.icon = UIImage(named:"star")?.withRenderingMode(.alwaysTemplate)
@@ -130,7 +130,7 @@ class MovieDetailView: UIView {
         barSegmentedBackground.backgroundColor = .white
         
         fab.addItem(item: seenItem)
-        fab.addItem(item: wacthItem)
+        fab.addItem(item: watchItem)
         fab.addItem(item: favouriteItem)
         fab.addItem(item: blackItem)
         
@@ -139,7 +139,6 @@ class MovieDetailView: UIView {
         barSegmentedView.addSubview(barSegmentedBackground)
         barSegmentedView.addSubview(barSegmentedControl)
         
-
         addSubview(headerView)
         
         addSubview(seeView)
@@ -150,7 +149,6 @@ class MovieDetailView: UIView {
         addSubview(backgroundStatusView)
         addSubview(barSegmentedView)
         addSubview(fab)
-        
     }
     
     func setupConstraints() {
@@ -255,8 +253,7 @@ class MovieDetailView: UIView {
         captionMovieView.adjustFontSizeToFitHeight()
     }
     
-    func setColors(backgroundColor: UIColor, tintColor:UIColor) {
-        
+    func setColors(backgroundColor: UIColor, tintColor:UIColor) {        
         headerView.backgroundColor = backgroundColor
         barSegmentedControl.tintColor = tintColor
         barSegmentedBackground.backgroundColor = backgroundColor
