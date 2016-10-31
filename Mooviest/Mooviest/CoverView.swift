@@ -10,18 +10,24 @@ import UIKit
 
 class CoverView: UIView {
     var porcentCaption: CGFloat!
-    var porcentTitle: CGFloat!
+    var porcentRating: CGFloat!
+    
     let captionView = UIView()
+    let titleLabel = UILabel()
+    
+    let captionRatingView = UIView()
     let ratingImageView = UIImageView()
     let ratingLabel = UILabel()
-    let titleLabel = UILabel()
     
     let movieImageView = UIImageView()
     
-    init(porcentCaption: CGFloat, porcentTitle: CGFloat) {
+    var blurEffectView: UIVisualEffectView!
+    var blurEffectRatingView: UIVisualEffectView!
+    
+    init(porcentCaption: CGFloat, porcentRating: CGFloat) {
         super.init(frame: CGRect.zero)
         self.porcentCaption = porcentCaption
-        self.porcentTitle = porcentTitle
+        self.porcentRating = porcentRating
         setupComponents()
         setupConstraints()
     }
@@ -32,60 +38,93 @@ class CoverView: UIView {
     
     func setupComponents() {
         self.backgroundColor = UIColor.blue
+    
+        movieImageView.contentMode = .scaleToFill
         
         ratingImageView.image = UIImage(named: "star_rate")?.withRenderingMode(.alwaysTemplate)
         ratingImageView.tintColor = favourite_color
         ratingImageView.contentMode = .scaleToFill
-        
+
         ratingLabel.text = "10.0"
-        ratingLabel.textColor = .white
+        ratingLabel.textColor = UIColor.white.withAlphaComponent(0.6)
         
         titleLabel.text = "Titulo"
-        titleLabel.textColor = .white        
+        titleLabel.textColor = UIColor.white.withAlphaComponent(0.6)
         titleLabel.textAlignment = .center
         
-        movieImageView.contentMode = .scaleToFill
+        captionRatingView.layer.cornerRadius = 5
+        captionRatingView.layer.masksToBounds = true
         
-        captionView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
-        captionView.addSubview(ratingImageView)
-        captionView.addSubview(ratingLabel)
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        let blurEffectRating = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        blurEffectRatingView = UIVisualEffectView(effect: blurEffectRating)
+        blurEffectRatingView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+       
+        captionRatingView.addSubview(blurEffectRatingView)
+        captionRatingView.addSubview(ratingImageView)
+        captionRatingView.addSubview(ratingLabel)
+        
+        captionView.addSubview(blurEffectView)
         captionView.addSubview(titleLabel)
         
         addSubview(movieImageView)
+        addSubview(captionRatingView)
         addSubview(captionView)
     }
     
     func setupConstraints() {
         movieImageView.translatesAutoresizingMaskIntoConstraints = false
         captionView.translatesAutoresizingMaskIntoConstraints = false
+        captionRatingView.translatesAutoresizingMaskIntoConstraints = false
         ratingImageView.translatesAutoresizingMaskIntoConstraints = false
         ratingLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
+        blurEffectRatingView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(movieImageView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(movieImageView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(movieImageView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(movieImageView.heightAnchor.constraint(equalTo: heightAnchor))
         
+        let margin = CGFloat(5)
+        addConstraint(captionRatingView.topAnchor.constraint(equalTo: topAnchor, constant: -margin))
+        addConstraint(captionRatingView.leftAnchor.constraint(equalTo: leftAnchor, constant: -margin))
+        addConstraint(captionRatingView.widthAnchor.constraint(equalTo: heightAnchor, multiplier: porcentRating))
+        addConstraint(captionRatingView.heightAnchor.constraint(equalTo: captionRatingView.widthAnchor, multiplier: 0.45))
+        
+        addConstraint(blurEffectRatingView.bottomAnchor.constraint(equalTo: captionRatingView.bottomAnchor))
+        addConstraint(blurEffectRatingView.leftAnchor.constraint(equalTo: captionRatingView.leftAnchor))
+        addConstraint(blurEffectRatingView.widthAnchor.constraint(equalTo: captionRatingView.widthAnchor))
+        addConstraint(blurEffectRatingView.heightAnchor.constraint(equalTo: captionRatingView.heightAnchor))
+        
+        addConstraint(ratingImageView.topAnchor.constraint(equalTo: captionRatingView.topAnchor, constant: margin))
+        addConstraint(ratingImageView.bottomAnchor.constraint(equalTo: captionRatingView.bottomAnchor))
+        addConstraint(ratingImageView.leftAnchor.constraint(equalTo: captionRatingView.leftAnchor, constant: margin))
+        addConstraint(ratingImageView.widthAnchor.constraint(equalTo: ratingImageView.heightAnchor))
+        
+        addConstraint(ratingLabel.topAnchor.constraint(equalTo: ratingImageView.topAnchor))
+        addConstraint(ratingLabel.leftAnchor.constraint(equalTo: ratingImageView.rightAnchor))
+        addConstraint(ratingLabel.rightAnchor.constraint(equalTo: captionRatingView.rightAnchor))
+        addConstraint(ratingLabel.bottomAnchor.constraint(equalTo: captionRatingView.bottomAnchor))
+        
         addConstraint(captionView.bottomAnchor.constraint(equalTo: bottomAnchor))
         addConstraint(captionView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(captionView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(captionView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: porcentCaption))
         
+        addConstraint(blurEffectView.bottomAnchor.constraint(equalTo: captionView.bottomAnchor))
+        addConstraint(blurEffectView.leftAnchor.constraint(equalTo: captionView.leftAnchor))
+        addConstraint(blurEffectView.widthAnchor.constraint(equalTo: captionView.widthAnchor))
+        addConstraint(blurEffectView.heightAnchor.constraint(equalTo: captionView.heightAnchor))
+        
         addConstraint(titleLabel.topAnchor.constraint(equalTo: captionView.topAnchor))
         addConstraint(titleLabel.leftAnchor.constraint(equalTo: captionView.leftAnchor))
         addConstraint(titleLabel.widthAnchor.constraint(equalTo: captionView.widthAnchor))
-        addConstraint(titleLabel.heightAnchor.constraint(equalTo: captionView.heightAnchor, multiplier: porcentTitle))
-        
-        addConstraint(ratingImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor))
-        addConstraint(ratingImageView.bottomAnchor.constraint(equalTo: captionView.bottomAnchor,constant:-4))
-        addConstraint(ratingImageView.rightAnchor.constraint(equalTo: captionView.centerXAnchor,constant: -4))
-        addConstraint(ratingImageView.widthAnchor.constraint(equalTo: ratingImageView.heightAnchor))
-        
-        addConstraint(ratingLabel.topAnchor.constraint(equalTo: ratingImageView.topAnchor))
-        addConstraint(ratingLabel.leftAnchor.constraint(equalTo: ratingImageView.rightAnchor,constant: 4))
-        addConstraint(ratingLabel.rightAnchor.constraint(equalTo: captionView.rightAnchor))
-        addConstraint(ratingLabel.bottomAnchor.constraint(equalTo: ratingImageView.bottomAnchor))
+        addConstraint(titleLabel.heightAnchor.constraint(equalTo: captionView.heightAnchor))
     }
 }
 

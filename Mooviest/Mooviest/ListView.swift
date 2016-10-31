@@ -11,7 +11,7 @@ import UIKit
 class ListView: UIView {
     let height = UIApplication.shared.statusBarFrame.size.height
     var heightNavBar:CGFloat!
-    
+    let margin = CGFloat(2)
     var backgroundStatusView = UIView()
     var headerView = UIView()
     var movieCollectionView:UICollectionView!
@@ -35,8 +35,8 @@ class ListView: UIView {
         headerView.clipsToBounds = true
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 1
-        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = margin/2
+        layout.minimumLineSpacing = margin
         
         movieCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
         movieCollectionView.backgroundColor = .white
@@ -60,9 +60,9 @@ class ListView: UIView {
         addConstraint(headerView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(headerView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(headerView.heightAnchor.constraint(equalToConstant: height + heightNavBar))
-
-        addConstraint(movieCollectionView.topAnchor.constraint(equalTo: topAnchor))
-        addConstraint(movieCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor))
+        
+        addConstraint(movieCollectionView.topAnchor.constraint(equalTo: topAnchor, constant: margin))
+        addConstraint(movieCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin))
         addConstraint(movieCollectionView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(movieCollectionView.rightAnchor.constraint(equalTo: rightAnchor))        
     }

@@ -48,9 +48,9 @@ class ListsView: UIView {
         seenListViewCell.titleLabel.text = "Seen list"
         blackListViewCell.titleLabel.text = "Black list"
         
-        heightItemListView = width*0.7
+        heightItemListView = width*0.6
         
-        listsScrollView.contentSize.height = heightItemListView*4 + margin*6
+        listsScrollView.contentSize.height = heightItemListView*4 + margin*5
         
         listsScrollView.addSubview(watchListViewCell)
         listsScrollView.addSubview(favouriteListViewCell)
@@ -85,7 +85,6 @@ class ListsView: UIView {
         addConstraint(listsScrollView.bottomAnchor.constraint(equalTo: bottomAnchor))
         addConstraint(listsScrollView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(listsScrollView.rightAnchor.constraint(equalTo: rightAnchor))
-        
         
         listsScrollView.addConstraint(watchListViewCell.topAnchor.constraint(equalTo: listsScrollView.topAnchor, constant: margin))
         listsScrollView.addConstraint(watchListViewCell.centerXAnchor.constraint(equalTo: listsScrollView.centerXAnchor))

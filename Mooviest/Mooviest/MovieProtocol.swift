@@ -20,7 +20,7 @@ extension MovieProtocol {
         coverView.movieImageView.kf.setImage(with: URL(string: movie.image),placeholder: UIImage(named:  "noimage"))
         coverView.titleLabel.text = movie.title
         coverView.ratingLabel.text = "\(movie.average)"
-        
+        coverView.layer.masksToBounds = true
         return coverView
     }
     
