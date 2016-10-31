@@ -86,7 +86,7 @@ class MovieDetailView: UIView {
         
         
         
-        seeInfoLabel.text = "Proximamente se podrá visualizar..."
+        seeInfoLabel.text = "Proximamente..."
         seeInfoLabel.textColor = .darkGray
         seeInfoLabel.font = UIFont.boldSystemFont(ofSize: seeInfoLabel.font.pointSize)
         seeInfoLabel.textAlignment = .center

@@ -23,6 +23,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     func setupComponents() {
         coverView = CoverView(porcentCaption: 0.3, porcentRating: 0.35)
+        coverView.titleLabel.font.withSize(coverView.titleLabel.font.pointSize*0.8)
         coverView.titleLabel.lineBreakMode = .byWordWrapping
         coverView.titleLabel.numberOfLines = 2
         addSubview(coverView)

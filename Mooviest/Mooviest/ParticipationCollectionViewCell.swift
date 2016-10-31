@@ -14,6 +14,7 @@ class ParticipationCollectionViewCell: UICollectionViewCell {
     let nameLabel = UILabel()
     
     var faceImageView = UIImageView()
+    var blurEffectView: UIVisualEffectView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,16 +35,22 @@ class ParticipationCollectionViewCell: UICollectionViewCell {
         captionView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
         
         nameLabel.text = "Nombre"
-        nameLabel.textColor = .white
+        nameLabel.textColor = UIColor.white.withAlphaComponent(0.5)
         nameLabel.textAlignment = .center
         nameLabel.lineBreakMode = .byWordWrapping
         nameLabel.numberOfLines = 2
-        nameLabel.font = UIFont.boldSystemFont(ofSize: nameLabel.font.pointSize)
+        nameLabel.font.withSize(nameLabel.font.pointSize*0.9)
 
         roleLabel.text = "Role"
-        roleLabel.textColor = .white
+        roleLabel.textColor = UIColor.white.withAlphaComponent(0.5)
         roleLabel.textAlignment = .center
-        nameLabel.font = UIFont.boldSystemFont(ofSize: nameLabel.font.pointSize)
+        roleLabel.font.withSize(nameLabel.font.pointSize*0.8)
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        captionView.addSubview(blurEffectView)
         captionView.addSubview(nameLabel)
         captionView.addSubview(roleLabel)
 
@@ -56,6 +63,7 @@ class ParticipationCollectionViewCell: UICollectionViewCell {
         captionView.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         roleLabel.translatesAutoresizingMaskIntoConstraints = false
+        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(faceImageView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(faceImageView.leftAnchor.constraint(equalTo: leftAnchor))
@@ -65,16 +73,21 @@ class ParticipationCollectionViewCell: UICollectionViewCell {
         addConstraint(captionView.bottomAnchor.constraint(equalTo: faceImageView.bottomAnchor))
         addConstraint(captionView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(captionView.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(captionView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.45))
+        addConstraint(captionView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.35))
         
-        captionView.addConstraint(nameLabel.topAnchor.constraint(equalTo: captionView.topAnchor))
+        addConstraint(blurEffectView.bottomAnchor.constraint(equalTo: captionView.bottomAnchor))
+        addConstraint(blurEffectView.leftAnchor.constraint(equalTo: captionView.leftAnchor))
+        addConstraint(blurEffectView.widthAnchor.constraint(equalTo: captionView.widthAnchor))
+        addConstraint(blurEffectView.heightAnchor.constraint(equalTo: captionView.heightAnchor))
+        
+        captionView.addConstraint(nameLabel.bottomAnchor.constraint(equalTo: captionView.bottomAnchor))
         captionView.addConstraint(nameLabel.leftAnchor.constraint(equalTo: captionView.leftAnchor))
         captionView.addConstraint(nameLabel.widthAnchor.constraint(equalTo: captionView.widthAnchor))
-        captionView.addConstraint(nameLabel.heightAnchor.constraint(equalTo: captionView.heightAnchor, multiplier: 0.7))
+        captionView.addConstraint(nameLabel.heightAnchor.constraint(equalTo: captionView.heightAnchor, multiplier: 0.6))
         
-        captionView.addConstraint(roleLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor))
+        captionView.addConstraint(roleLabel.topAnchor.constraint(equalTo: captionView.topAnchor))
         captionView.addConstraint(roleLabel.leftAnchor.constraint(equalTo: captionView.leftAnchor))
         captionView.addConstraint(roleLabel.widthAnchor.constraint(equalTo: captionView.widthAnchor))
-        captionView.addConstraint(roleLabel.bottomAnchor.constraint(equalTo: captionView.bottomAnchor, constant: -4))
+        captionView.addConstraint(roleLabel.bottomAnchor.constraint(equalTo: nameLabel.topAnchor))
     }
 }

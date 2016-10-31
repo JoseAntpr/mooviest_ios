@@ -354,7 +354,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     func calculateContentSize(height h: CGFloat) {
-        v.bodyScrollView.contentSize.height = view.frame.size.height-v.barSegmentedView.center.y+v.barSegmentedView.frame.size.height*2+h+10
+        v.bodyScrollView.contentSize.height = view.frame.size.height-v.barSegmentedView.center.y+v.barSegmentedView.frame.size.height*2+h+7.5
     }
         
     func changeTabs(index: Int){

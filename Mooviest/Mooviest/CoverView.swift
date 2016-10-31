@@ -55,6 +55,7 @@ class CoverView: UIView {
         captionRatingView.layer.cornerRadius = 5
         captionRatingView.layer.masksToBounds = true
         
+        
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
