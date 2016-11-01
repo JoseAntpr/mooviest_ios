@@ -54,7 +54,10 @@ class ListsView: UIView {
         
         listsScrollView.contentSize.height = heightItemListView*4 + margin*5
         
-        activityView.activityIndicatorViewStyle = .gray
+        activityView.activityIndicatorViewStyle = .white
+        activityView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
+        activityView.layer.cornerRadius = 5
+        activityView.layer.masksToBounds = true
         
         listsScrollView.addSubview(watchListViewCell)
         listsScrollView.addSubview(favouriteListViewCell)

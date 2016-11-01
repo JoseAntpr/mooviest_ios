@@ -114,7 +114,10 @@ class EditProfileView: UIView {
         clearTextButton.contentMode = .scaleToFill
         clearTextButton.tintColor = .gray
 
-        activityView.activityIndicatorViewStyle = .gray
+        activityView.activityIndicatorViewStyle = .white
+        activityView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
+        activityView.layer.cornerRadius = 5
+        activityView.layer.masksToBounds = true
         
         topView.addSubview(coverImageView)
         topView.addSubview(photoButton)

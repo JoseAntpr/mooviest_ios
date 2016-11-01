@@ -143,7 +143,10 @@ class LoginView: UIView {
         secureTextButton.tintColor = .gray
         secureTextButton.contentMode = .scaleToFill
         
-        activityView.activityIndicatorViewStyle = .gray
+        activityView.activityIndicatorViewStyle = .white
+        activityView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        activityView.layer.cornerRadius = 5
+        activityView.layer.masksToBounds = true
         
         formRegisterView.addSubview(padingRegisterformView)
         padingRegisterformView.addSubview(userTextFieldView)
@@ -191,7 +194,7 @@ class LoginView: UIView {
         
         addConstraint(activityView.centerYAnchor.constraint(equalTo: centerYAnchor))
         addConstraint(activityView.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(activityView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2))
+        addConstraint(activityView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1))
         addConstraint(activityView.heightAnchor.constraint(equalTo: activityView.widthAnchor))
         
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))

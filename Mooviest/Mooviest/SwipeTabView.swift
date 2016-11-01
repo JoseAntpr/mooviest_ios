@@ -67,7 +67,10 @@ class SwipeTabView: UIView {
         heartButton.tintColor = .white
         heartButton.backgroundColor = favourite_color        
         
-        activityView.activityIndicatorViewStyle = .gray
+        activityView.activityIndicatorViewStyle = .white
+        activityView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
+        activityView.layer.cornerRadius = 5
+        activityView.layer.masksToBounds = true
         
         panelButtonView.addSubview(closedButton)
         panelButtonView.addSubview(clockButton)

@@ -114,7 +114,10 @@ class ProfileView: UIView {
         
         headerView.addSubview(headerBackdropImageView)
         
-        activityView.activityIndicatorViewStyle = .gray
+        activityView.activityIndicatorViewStyle = .white
+        activityView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
+        activityView.layer.cornerRadius = 5
+        activityView.layer.masksToBounds = true
         
         followersView.addSubview(InfoLabel)
         followingView.addSubview(Info2Label)

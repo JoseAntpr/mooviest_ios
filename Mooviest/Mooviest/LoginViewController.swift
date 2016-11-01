@@ -210,25 +210,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
             let email = v.emailTextFieldView.getText()
             v.activityView.startAnimating()
             DataModel.sharedInstance.register(Username: user, Password: pass, Email: email) {
-                (data) in
-                //menssage emergente Success register
-                do {
-                    DataModel.sharedInstance.authenticationUser = try Authentication(json: data)
-                    self.v.activityView.stopAnimating()
-                    Message.msgPopupDelay(title: "Confirm", message: "Register successful", delay: 1, ctrl: self){
-                        self.hiddenFormRegister()
-                    }
-                    
-                } catch {
-                    DataModel.sharedInstance.user = nil
-                    //error login
-                    Message.msgPopupDelay(title: "Register error", message: "Ha ocurrido algún error", delay: 0,ctrl: self) {
-                    }
+                successful, title, message in
+                self.v.activityView.stopAnimating()
+                if successful {
+                    self.chargueApp()
+                } else {
+                    Message.msgPopupDelay(title: title, message: message == nil ? "Ha ocurrido algún error":message!, delay: 0, ctrl: self) {}
                 }
             }
+            
         } else {
-            //Menssage emergente de error
-            Message.msgPopupDelay(title: "Register error", message: "Error data form", delay: 0, ctrl: self) {
+            Message.msgPopupDelay(title: "Register error", message: "Data form error", delay: 0, ctrl: self) {
             }
         }
     }
@@ -238,12 +230,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
         let pass = v.passLoginTextFieldView.getText()
         v.activityView.startAnimating()
         DataModel.sharedInstance.login(Username: user, Password: pass) {
-            (successful,message) in
+            (successful,title,message) in
             self.v.activityView.stopAnimating()
             if successful {
                 self.chargueApp()                
             } else {
-                Message.msgPopupDelay(title: "Login error", message: message == nil ? "Ha ocurrido algún error":message!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title: title, message: message == nil ? "Ha ocurrido algún error":message!, delay: 0, ctrl: self) {}
             }
         }       
     }

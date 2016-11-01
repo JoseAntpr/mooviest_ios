@@ -78,7 +78,7 @@ class MovieDetailView: UIView {
         barSegmentedControl.layer.cornerRadius = 5
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 1
+        layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 1
         
         castCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
@@ -136,7 +136,10 @@ class MovieDetailView: UIView {
         fab.addItem(item: favouriteItem)
         fab.addItem(item: blackItem)
         
-        activityView.activityIndicatorViewStyle = .gray
+        activityView.activityIndicatorViewStyle = .white
+        activityView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
+        activityView.layer.cornerRadius = 5
+        activityView.layer.masksToBounds = true
         
         seeView.addSubview(seeInfoLabel)
         

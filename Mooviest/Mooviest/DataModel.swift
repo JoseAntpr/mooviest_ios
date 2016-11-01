@@ -16,33 +16,38 @@ class DataModel: NSObject {
     var user:User?
     var authenticationUser: Authentication?
     
-    func login(Username u: String, Password p: String,completionRequest:  @escaping (Bool,String?) -> Void){
+    func login(Username u: String, Password p: String,completionRequest:  @escaping (Bool,String,String?) -> Void){
         let parameters: Parameters = [
             "username": u,
             "password": p
         ]
         let preferredLanguage = NSLocale.preferredLanguages[0] as String
-        print("Lenguaje = \(preferredLanguage)")
+        let p = preferredLanguage.components(separatedBy: "-")
+        print(p)
         Alamofire.request( "\(path)/api/users/login/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []))
             .responseJSON {response in
-                if let res = response.result.value as? [String:Any] {
-                    let msg = res["message"] as? String
-                    do {
-                        self.authenticationUser = try Authentication(json: res)
-                        completionRequest(true,  msg)
-                    } catch {
-                        self.authenticationUser = nil
-                        completionRequest(false, msg)
+                switch response.result {
+                case .success:
+                    if let res = response.result.value as? [String:Any] {
+                        let msg = res["message"] as? String
+                        do {
+                            self.authenticationUser = try Authentication(json: res)
+                            completionRequest(true, "", msg)
+                        } catch {
+                            completionRequest(false, "Model parser error", msg)
+                        }
                     }
+                    
+                case .failure(let error):
+                    completionRequest(false, "Connection error", error.localizedDescription)
                 }
         }
     }
     
-    func register(Username u: String, Password p: String, Email e: String,completionRequest:  @escaping ([String:Any]) -> Void){
-        var codeLang = NSLocale.preferredLanguages[0] as String
-        if codeLang != "es" && codeLang != "en"{
-            codeLang = "en"
-        }
+    func register(Username u: String, Password p: String, Email e: String,completionRequest:  @escaping (Bool,String,String?) -> Void){
+        let preferredLanguage = NSLocale.preferredLanguages[0] as String
+        let codeLang = preferredLanguage.components(separatedBy: "-")[0]
+        
         let parameters: Parameters = [
             "username": u,
             "password": p,
@@ -53,12 +58,22 @@ class DataModel: NSObject {
                 ]
             ]
         ]
-        print(parameters)
         Alamofire.request( "\(path)/api/users/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []))
             .responseJSON { response in
-                print(response)
-                if let res = response.result.value as? [String:Any] {
-                    completionRequest(res)
+                switch response.result {
+                case .success:
+                    if let res = response.result.value as? [String:Any] {
+                        let msg = res["message"] as? String
+                        do {
+                            self.authenticationUser = try Authentication(json: res)
+                            completionRequest(true, "", msg)
+                        } catch {
+                            completionRequest(false, "Register error", msg)
+                        }
+                    }
+                    
+                case .failure(let error):
+                    completionRequest(false, "Connection error", error.localizedDescription)
                 }
         }
     }

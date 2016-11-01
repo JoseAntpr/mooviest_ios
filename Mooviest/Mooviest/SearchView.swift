@@ -45,7 +45,10 @@ class SearchView: UIView {
         movieCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
         movieCollectionView.backgroundColor = .white
         
-        activityView.activityIndicatorViewStyle = .gray
+        activityView.activityIndicatorViewStyle = .white
+        activityView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
+        activityView.layer.cornerRadius = 5
+        activityView.layer.masksToBounds = true
         
         addSubview(headerView)
         addSubview(movieCollectionView)
