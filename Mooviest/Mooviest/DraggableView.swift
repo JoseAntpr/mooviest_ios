@@ -32,7 +32,7 @@ protocol DraggableViewDelegate {
 }
 
 class DraggableView: UIView {
-    let heightOverlay = CGFloat(150)
+    let porcentOverlay = CGFloat(0.4)
     var delegate: DraggableViewDelegate!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var originPoint: CGPoint!
@@ -73,8 +73,6 @@ class DraggableView: UIView {
         noImageLabel.font = noImageLabel.font.withSize(30)
         
         overlayView = OverlayView()
-        overlayView.layer.cornerRadius = 0.5 * heightOverlay
-        overlayView.clipsToBounds = true
         overlayView.alpha = 0
         
         addSubview(noImageLabel)
@@ -94,8 +92,8 @@ class DraggableView: UIView {
         
         addConstraint(overlayView.centerXAnchor.constraint(equalTo: centerXAnchor))
         addConstraint(overlayView.centerYAnchor.constraint(equalTo: centerYAnchor))
-        addConstraint(overlayView.widthAnchor.constraint(equalToConstant: heightOverlay))
-        addConstraint(overlayView.heightAnchor.constraint(equalToConstant: heightOverlay))
+        addConstraint(overlayView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: porcentOverlay))
+        addConstraint(overlayView.heightAnchor.constraint(equalTo: overlayView.widthAnchor))
         
         addConstraint(noImageLabel.centerXAnchor.constraint(equalTo: centerXAnchor))
         addConstraint(noImageLabel.centerYAnchor.constraint(equalTo: centerYAnchor))

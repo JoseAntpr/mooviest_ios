@@ -29,16 +29,18 @@ class OverlayView: UIView{
         self.backgroundColor = UIColor.white.withAlphaComponent(0)
         
         imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
         setupOverlay(namedImage:"clear_overlay",tinColor: .white, backgroundColor: blacklist_color)
         
         self.addSubview(imageView)
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(imageView.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(imageView.rightAnchor.constraint(equalTo: rightAnchor))
-        addConstraint(imageView.topAnchor.constraint(equalTo: topAnchor))
-        addConstraint(imageView.bottomAnchor.constraint(equalTo: bottomAnchor))
+        addConstraint(imageView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(imageView.centerYAnchor.constraint(equalTo: centerYAnchor))
+        addConstraint(imageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6))
+        addConstraint(imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor))
     }
     
     func setMode(_ mode: GGOverlayViewMode) -> Void {
@@ -61,7 +63,7 @@ class OverlayView: UIView{
     func setupOverlay(namedImage:String,tinColor:UIColor, backgroundColor: UIColor) {
         imageView.image = UIImage(named: namedImage)?.withRenderingMode(.alwaysTemplate)
         imageView.tintColor = tinColor
-        imageView.backgroundColor = backgroundColor
+        self.backgroundColor = backgroundColor
     }
     
     override func layoutSubviews() {

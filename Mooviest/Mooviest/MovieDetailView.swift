@@ -76,8 +76,8 @@ class MovieDetailView: UIView {
         barSegmentedControl.layer.cornerRadius = 5
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 2
-        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 1
+        layout.minimumLineSpacing = 2
         
         castCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
         castCollectionView.backgroundColor = UIColor.white

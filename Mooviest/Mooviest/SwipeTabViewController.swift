@@ -111,7 +111,11 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         v.heartButton.clipsToBounds = true
         v.eyeButton.layer.cornerRadius = 0.5 * widthButton
         v.eyeButton.clipsToBounds = true
-
+        if loadedCards.count > 0 {
+            
+            loadedCards[0].overlayView.layer.cornerRadius = 0.5 * loadedCards[0].overlayView.bounds.size.height
+            loadedCards[0].overlayView.clipsToBounds = true
+        }
     }
     
     func tappedCard(_ sender: UITapGestureRecognizer) {
