@@ -36,6 +36,8 @@ class ProfileView: UIView {
     var barSegmentedView = UIView()
     var barSegmentedControl: UISegmentedControl!
     
+    let activityView = UIActivityIndicatorView()
+    
     init() {
         super.init(frame: CGRect.zero)
         setupComponents()
@@ -112,6 +114,8 @@ class ProfileView: UIView {
         
         headerView.addSubview(headerBackdropImageView)
         
+        activityView.activityIndicatorViewStyle = .gray
+        
         followersView.addSubview(InfoLabel)
         followingView.addSubview(Info2Label)
         tabsView.addSubview(followingView)
@@ -133,6 +137,7 @@ class ProfileView: UIView {
         addSubview(bodyScrollView)
         addSubview(barSegmentedView)
         addSubview(backgroundStatusView)
+        addSubview(activityView)
     }
     
     func setupConstraints() {
@@ -156,6 +161,12 @@ class ProfileView: UIView {
         lastnameLabel.translatesAutoresizingMaskIntoConstraints = false
         followersLabel.translatesAutoresizingMaskIntoConstraints = false
         followingLabel.translatesAutoresizingMaskIntoConstraints = false
+        activityView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addConstraint(activityView.centerYAnchor.constraint(equalTo: centerYAnchor))
+        addConstraint(activityView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(activityView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1))
+        addConstraint(activityView.heightAnchor.constraint(equalTo: activityView.widthAnchor))
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))

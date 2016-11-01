@@ -49,6 +49,8 @@ class MovieDetailView: UIView {
     let favouriteItem = KCFloatingActionButtonItem()
     let blackItem = KCFloatingActionButtonItem()
     
+    let activityView = UIActivityIndicatorView()
+    
     init(heightNavBar h: CGFloat) {
         super.init(frame: CGRect.zero)
         heightNavBar = h
@@ -134,6 +136,8 @@ class MovieDetailView: UIView {
         fab.addItem(item: favouriteItem)
         fab.addItem(item: blackItem)
         
+        activityView.activityIndicatorViewStyle = .gray
+        
         seeView.addSubview(seeInfoLabel)
         
         barSegmentedView.addSubview(barSegmentedBackground)
@@ -149,6 +153,7 @@ class MovieDetailView: UIView {
         addSubview(backgroundStatusView)
         addSubview(barSegmentedView)
         addSubview(fab)
+        addSubview(activityView)
     }
     
     func setupConstraints() {
@@ -169,6 +174,12 @@ class MovieDetailView: UIView {
         captionMovieView.translatesAutoresizingMaskIntoConstraints = false
         seeInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         barSegmentedBackground.translatesAutoresizingMaskIntoConstraints = false
+        activityView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addConstraint(activityView.centerYAnchor.constraint(equalTo: centerYAnchor))
+        addConstraint(activityView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(activityView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1))
+        addConstraint(activityView.heightAnchor.constraint(equalTo: activityView.widthAnchor))
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))

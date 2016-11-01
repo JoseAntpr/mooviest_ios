@@ -37,10 +37,13 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         super.viewDidLoad()
         let height = self.navigationController?.navigationBar.frame.height
         v = MovieDetailView(heightNavBar: height!)
+        self.v.activityView.startAnimating()
+        
         DataModel.sharedInstance.getMovie(idmovie: movieListInfo.id, idMovieLang: movieListInfo.idMovieLang) {
             (data) in
             self.movie = try! Movie(json: data)
             self.loadDataView()
+            self.v.activityView.stopAnimating()
         }
         setupView()
         view.addSubview(v)
@@ -196,7 +199,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     func updateTypeMovie(typemovie: TypeMovieModel,completion: @escaping (Bool) -> Void) {
-        
         if movie != nil {
             if movie.typeMovie == "" {
                 DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie.hashValue){
@@ -228,7 +230,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         }
     }
     
-    
     func updateFloatPlustButton(image: String, backgroundColor: UIColor, tintColor:UIColor) {
         self.v.fab.buttonImage = UIImage(named: image)?.withRenderingMode(.alwaysTemplate)
         self.v.fab.buttonColor = backgroundColor.withAlphaComponent(0.7)
@@ -246,10 +247,12 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     func selectList(item: KCFloatingActionButtonItem, typemovie: TypeMovieModel) {
+        self.v.activityView.startAnimating()
         updateTypeMovie(typemovie: typemovie) {
             (ok) in
             if ok {
                 self.updateFloatButtons(item: item, typemovie: typemovie)
+                self.v.activityView.stopAnimating()
             }
         }
     }

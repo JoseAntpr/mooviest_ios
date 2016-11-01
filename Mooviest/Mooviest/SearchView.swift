@@ -18,6 +18,8 @@ class SearchView: UIView {
 
     var movieCollectionView:UICollectionView!
 
+    let activityView = UIActivityIndicatorView()
+    
     init(heightNavBar h: CGFloat) {
         super.init(frame: CGRect.zero)
         heightNavBar = h
@@ -43,16 +45,24 @@ class SearchView: UIView {
         movieCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
         movieCollectionView.backgroundColor = .white
         
+        activityView.activityIndicatorViewStyle = .gray
         
         addSubview(headerView)
         addSubview(movieCollectionView)
         addSubview(backgroundStatusView)
+        addSubview(activityView)
     }
     
     func setupConstraints() {
         backgroundStatusView.translatesAutoresizingMaskIntoConstraints = false
         headerView.translatesAutoresizingMaskIntoConstraints = false
         movieCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        activityView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addConstraint(activityView.centerYAnchor.constraint(equalTo: centerYAnchor))
+        addConstraint(activityView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(activityView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1))
+        addConstraint(activityView.heightAnchor.constraint(equalTo: activityView.widthAnchor))
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))

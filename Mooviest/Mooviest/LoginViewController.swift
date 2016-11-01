@@ -208,12 +208,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
             let user = v.userTextFieldView.getText()
             let pass = v.passTextFieldView.getText()
             let email = v.emailTextFieldView.getText()
-            
+            v.activityView.startAnimating()
             DataModel.sharedInstance.register(Username: user, Password: pass, Email: email) {
                 (data) in
                 //menssage emergente Success register
                 do {
                     DataModel.sharedInstance.authenticationUser = try Authentication(json: data)
+                    self.v.activityView.stopAnimating()
                     Message.msgPopupDelay(title: "Confirm", message: "Register successful", delay: 1, ctrl: self){
                         self.hiddenFormRegister()
                     }
@@ -235,14 +236,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
     func login() {
         let user = v.userOrEmailTextFieldView.getText()
         let pass = v.passLoginTextFieldView.getText()
-        
+        v.activityView.startAnimating()
         DataModel.sharedInstance.login(Username: user, Password: pass) {
             (successful,message) in
-            print(message as Any)
+            self.v.activityView.stopAnimating()
             if successful {
-                Message.msgPopupDelay(title: "", message: "Login successful", delay: 1,ctrl: self) {
-                    self.chargueApp()
-                }
+                self.chargueApp()                
             } else {
                 Message.msgPopupDelay(title: "Login error", message: message == nil ? "Ha ocurrido algún error":message!, delay: 0, ctrl: self) {}
             }

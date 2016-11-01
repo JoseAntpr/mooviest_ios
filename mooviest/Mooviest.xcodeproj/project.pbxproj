@@ -15,7 +15,6 @@
 		A943A8711D8B2E8700525BF7 /* RatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A943A8701D8B2E8700525BF7 /* RatingCollectionViewCell.swift */; };
 		A95015581DC39E94006D6D2B /* MovieProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95015571DC39E94006D6D2B /* MovieProtocol.swift */; };
 		A950155A1DC3A7CD006D6D2B /* CaptionMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95015591DC3A7CD006D6D2B /* CaptionMovieView.swift */; };
-		A96411C91D8BE02C00E3AAB4 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96411C81D8BE02C00E3AAB4 /* RegisterView.swift */; };
 		A965ACE21D8AAE1C00F9FF47 /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A965ACE11D8AAE1C00F9FF47 /* MovieDetailView.swift */; };
 		A965ACE41D8AB07A00F9FF47 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A965ACE31D8AB07A00F9FF47 /* MovieDetailViewController.swift */; };
 		A965ACE61D8AB34B00F9FF47 /* InfoMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A965ACE51D8AB34B00F9FF47 /* InfoMovieView.swift */; };
@@ -43,7 +42,6 @@
 		A96B52631D89DED40061A766 /* ParserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B52621D89DED40061A766 /* ParserProtocol.swift */; };
 		A96B9B531D8D52C10038F4D9 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B9B521D8D52C10038F4D9 /* UserModel.swift */; };
 		A96B9B551D8D53A10038F4D9 /* UserParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B9B541D8D53A10038F4D9 /* UserParser.swift */; };
-		A96DCE1E1D8C6EF900BC2119 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */; };
 		A972E6601DB7D3ED00E291AE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A972E65F1DB7D3ED00E291AE /* Message.swift */; };
 		A97405301DC5B7E000B7DFC6 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96B523E1D89D34B0061A766 /* Kingfisher.framework */; };
 		A9779CE11DC4E81300D7BD3B /* KCFloatingActionButton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9779CE01DC4E81300D7BD3B /* KCFloatingActionButton.framework */; };
@@ -100,7 +98,6 @@
 		A943A8701D8B2E8700525BF7 /* RatingCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingCollectionViewCell.swift; sourceTree = "<group>"; };
 		A95015571DC39E94006D6D2B /* MovieProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieProtocol.swift; sourceTree = "<group>"; };
 		A95015591DC3A7CD006D6D2B /* CaptionMovieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionMovieView.swift; sourceTree = "<group>"; };
-		A96411C81D8BE02C00E3AAB4 /* RegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RegisterView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A965ACE11D8AAE1C00F9FF47 /* MovieDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
 		A965ACE31D8AB07A00F9FF47 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		A965ACE51D8AB34B00F9FF47 /* InfoMovieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoMovieView.swift; path = ../InfoMovieView.swift; sourceTree = "<group>"; };
@@ -138,7 +135,6 @@
 		A96B52621D89DED40061A766 /* ParserProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserProtocol.swift; sourceTree = "<group>"; };
 		A96B9B521D8D52C10038F4D9 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A96B9B541D8D53A10038F4D9 /* UserParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserParser.swift; sourceTree = "<group>"; };
-		A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A972E65F1DB7D3ED00E291AE /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A9779CE01DC4E81300D7BD3B /* KCFloatingActionButton.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KCFloatingActionButton.framework; path = Carthage/Build/iOS/KCFloatingActionButton.framework; sourceTree = "<group>"; };
 		A98DE6431DBECCFF009B34A1 /* AdviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdviceViewController.swift; sourceTree = "<group>"; };
@@ -224,7 +220,6 @@
 			isa = PBXGroup;
 			children = (
 				A972E65F1DB7D3ED00E291AE /* Message.swift */,
-				A9DA6E5F1D9070910097C2B6 /* Deprecated */,
 				A9EF59911D8DD3D90005C819 /* Resgister & Login */,
 				A965ACEC1D8AB71D00F9FF47 /* SwipeView */,
 				A965ACEB1D8AB6DC00F9FF47 /* MovieDetail */,
@@ -423,15 +418,6 @@
 				A9EC57941DBFE57B00542345 /* CoverView.swift */,
 			);
 			name = Subview;
-			sourceTree = "<group>";
-		};
-		A9DA6E5F1D9070910097C2B6 /* Deprecated */ = {
-			isa = PBXGroup;
-			children = (
-				A96DCE1D1D8C6EF900BC2119 /* RegisterViewController.swift */,
-				A96411C81D8BE02C00E3AAB4 /* RegisterView.swift */,
-			);
-			name = Deprecated;
 			sourceTree = "<group>";
 		};
 		A9DD49BA1DACD87100DACA5E /* Lists */ = {
@@ -649,7 +635,6 @@
 				A9D757CD1DAED2DE00905253 /* ListViewController.swift in Sources */,
 				A96B52551D89DDB00061A766 /* DraggableView.swift in Sources */,
 				A96B9B551D8D53A10038F4D9 /* UserParser.swift in Sources */,
-				A96411C91D8BE02C00E3AAB4 /* RegisterView.swift in Sources */,
 				A99105F01DBCDA4700659481 /* SearchView.swift in Sources */,
 				A96B52471D89D6B20061A766 /* Colors.swift in Sources */,
 				A96B52631D89DED40061A766 /* ParserProtocol.swift in Sources */,
@@ -667,7 +652,6 @@
 				A96B52531D89DD610061A766 /* SwipeTabView.swift in Sources */,
 				A99105F21DBCDA5800659481 /* SearchViewController.swift in Sources */,
 				A9D757CB1DAED2C200905253 /* ListView.swift in Sources */,
-				A96DCE1E1D8C6EF900BC2119 /* RegisterViewController.swift in Sources */,
 				A950155A1DC3A7CD006D6D2B /* CaptionMovieView.swift in Sources */,
 				A96B520F1D89CCF70061A766 /* AppDelegate.swift in Sources */,
 				A9ADF3261DC676A80054CBA0 /* TabBarProtocol.swift in Sources */,

@@ -93,6 +93,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func nextMovies(){
         if nextUrl != "" {
+            
             DataModel.sharedInstance.nextMovies(url: nextUrl) {
                 (data, next) in
                 self.nextUrl = next
@@ -110,6 +111,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.v.activityView.startAnimating()
         DataModel.sharedInstance.searchMovies(name: searchBar.text!) {
             (data, next) in
             self.nextUrl = next
@@ -120,6 +122,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
             self.v.movieCollectionView.contentOffset.y = 0
             self.v.movieCollectionView.reloadData()
+            self.v.activityView.stopAnimating()
         }
         movies.removeAll()
         searchBar.resignFirstResponder()

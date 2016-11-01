@@ -83,12 +83,15 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
                                            target: self, action: #selector(self.editProfile))
         editButton.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = editButton
+        self.v.activityView.startAnimating()
         DataModel.sharedInstance.getUser() {
             (successful, user) in
             if successful {
                 self.user = user
                 self.loadDataView()
+                self.v.activityView.stopAnimating()
             } else {
+                self.v.activityView.stopAnimating()
                 Message.msgPopupDelay(title:  "Profile view error", message: "Ha ocurrido algún error al cargar la vista", delay: 0, ctrl: self) {}
             }
         }

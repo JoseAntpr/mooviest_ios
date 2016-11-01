@@ -391,8 +391,9 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         let born = dateFormater.date(from: (user?.born)!)
         dateFormat = user?.codeLang == "es" ? "dd/MM/yyyy":"yyyy/MM/dd"
         dateFormater.dateFormat = dateFormat
-        v.dateTextFieldView.textField.text = dateFormater.string(from: born!)
-        
+        if born != nil {
+            v.dateTextFieldView.textField.text = dateFormater.string(from: born!)
+        }
         v.genderTextFieldView.textField.text = user?.gender
         if user!.gender != "" {
             print(user!.gender)
@@ -425,14 +426,16 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     
     func saveProfile(){
         if validateForm () {
-            saveChange()
-            
+            self.v.activityView.startAnimating()
+            saveChange()            
             DataModel.sharedInstance.updateUser(user: user!,avatar: v.coverImageView.image!){
                 (successful, message, user) in
                 if successful {
                     self.user = user
+                    self.v.activityView.stopAnimating()
                     Message.msgPopupDelay(title: "", message: "Update successful", delay: 1, ctrl: self){}                    
                 } else {
+                    self.v.activityView.stopAnimating()
                     Message.msgPopupDelay(title: "Error update data", message: message, delay: 0, ctrl: self) {}
                 }
             }    

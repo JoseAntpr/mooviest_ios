@@ -2,7 +2,6 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Logo Rojo app (Nuevo).png",
       "scale" : "1x"
     },
     {
@@ -11,6 +10,7 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "Logo Rojo app (Nuevo).png",
       "scale" : "3x"
     }
   ],

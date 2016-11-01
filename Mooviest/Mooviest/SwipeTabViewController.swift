@@ -42,7 +42,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
                                            target: self, action: #selector(self.search))
         searchButton.tintColor = UIColor.white
         
-        let replayButton = UIBarButtonItem(image: UIImage(named: "star"),
+        let replayButton = UIBarButtonItem(image: UIImage(named: "autorenew"),
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.reloadSwipe))
         replayButton.tintColor = UIColor.white
@@ -56,7 +56,8 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         v.eyeButton.addTarget(self, action: #selector(self.clickSwipeBottom), for: .touchUpInside)
     }
     
-    func initSwipe(){
+    func initSwipe() {
+        self.v.activityView.startAnimating()
         DataModel.sharedInstance.getMoviesSwipe() {
             (data, next) in
             self.nextUrl = next
@@ -73,6 +74,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
             self.allCards = []
             self.loadedCards = []
             self.loadCards()
+            self.v.activityView.stopAnimating()
         }
     }
     
@@ -156,6 +158,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     }
     
     func loadSwipe() {
+        self.v.activityView.startAnimating()
         DataModel.sharedInstance.getMoviesSwipe() {
             (data, next) in
             self.nextUrl = next
@@ -166,8 +169,10 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
                     self.movies.append(movie!)
                     let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(movie: movie!)
                     self.allCards.append(newCard)
+                    self.v.activityView.stopAnimating()
                 } catch ErrorMovie.invalidMovie {
                     movie = nil
+                    self.v.activityView.stopAnimating()
                 }
             }
         }
@@ -221,55 +226,67 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         }
     }
     
-    func updateTypeMovie(typemovie: Int) {
+    func updateTypeMovie(typemovie: TypeMovieModel,completion: @escaping (Bool) -> Void) {
         if movies.count > 0 {
             var movie = movies[0]
-            if movie.idCollection > 0 {
-                if movie.typeMovie == "" {//insert Collection
-                    DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie+1){
-                        (res) in
-                        if let id = res["id"] as? Int {
-                            movie.idCollection = id
-                            if let typeMovie = res["typeMovie"] as? String {
-                                movie.typeMovie = typeMovie
-                            }
-                        }
-                    }
-                } else {
-                    DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie+1){
-                        (res) in
-                        print(res)
-                        if let id = res["id"] as? Int {
-                            movie.idCollection = id
-                            if let typeMovie = res["typeMovie"] as? String {
-                                movie.typeMovie = typeMovie
-                            }
+            if movie.typeMovie == "" {
+                DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie.hashValue){
+                    (res) in
+                    if let id = res["id"] as? Int {
+                        movie.idCollection = id
+                        if let typeMovie = res["typeMovie"] as? String {
+                            movie.typeMovie = typeMovie
+                            self.movies[0] = movie
+                            completion(true)
                         }
                     }
                 }
-                movies[0] = movie
+            } else if typemovie.rawValue != movie.typeMovie {
+                DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie.hashValue){
+                    (res) in
+                    if let id = res["id"] as? Int {
+                        movie.idCollection = id
+                        if let typeMovie = res["typeMovie"] as? String {
+                            movie.typeMovie = typeMovie
+                            self.movies[0] = movie
+                            completion(true)
+                        }
+                    }
+                }
+            } else {
+                completion(false)
             }
+        } else {
+            completion(false)
         }
     }
 
     func cardSwipedLeft(_ card: UIView) -> Void {
-        updateTypeMovie(typemovie: TypeMovie.black.hashValue)
-        afterSwiped()
+        updateTypeMovie(typemovie: TypeMovie.black) {
+            (ok) in
+            self.afterSwiped()
+        }
     }
     
     func cardSwipedRight(_ card: UIView) -> Void {
-        updateTypeMovie(typemovie: TypeMovie.favourite.hashValue)
-        afterSwiped()
+        updateTypeMovie(typemovie: TypeMovie.favourite) {
+            (ok) in
+            self.afterSwiped()
+        }
     }
     
     func cardSwipedTop(_ card: UIView) -> Void {
-        updateTypeMovie(typemovie: TypeMovie.watchlist.hashValue)
-        afterSwiped()
+        updateTypeMovie(typemovie: TypeMovie.watchlist) {
+            (ok) in
+            self.afterSwiped()
+        }
     }
     
     func cardSwipedBottom(_ card: UIView) -> Void {
-        updateTypeMovie(typemovie: TypeMovie.seen.hashValue)
-        afterSwiped()
+        updateTypeMovie(typemovie: TypeMovie.seen) {
+        (ok) in
+            self.afterSwiped()
+        }
     }
     
     func clickSwipeRight() -> Void {

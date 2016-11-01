@@ -19,32 +19,34 @@ enum TextFieldViewTag:Int {
 
 class LoginView: UIView {
     let height = UIApplication.shared.statusBarFrame.size.height
-    var backgroundStatusView = UIView()
-    var titleImageView = UIImageView()
+    let backgroundStatusView = UIView()
+    let titleImageView = UIImageView()
     
-    var formView = UIView()
-    var padingformView = UIView()
+    let formView = UIView()
+    let padingformView = UIView()
     
-    var userOrEmailTextFieldView = TextFieldView()
-    var passLoginTextFieldView = TextFieldView()
+    let userOrEmailTextFieldView = TextFieldView()
+    let passLoginTextFieldView = TextFieldView()
     
-    var centralView = UIView()
-    var loginButton = UIButton(type: UIButtonType.system) as UIButton
-    var goCreateAccountFormButton = UIButton() 
+    let centralView = UIView()
+    let loginButton = UIButton(type: UIButtonType.system) as UIButton
+    let goCreateAccountFormButton = UIButton() 
     
-    var formRegisterView = UIView()
-    var padingRegisterformView = UIView()
-    var userTextFieldView = TextFieldView()
-    var emailTextFieldView = TextFieldView()
-    var passTextFieldView = TextFieldView()
-    var confirmPassTextFieldView = TextFieldView()
-    var createAccountButton = UIButton(type: UIButtonType.system) as UIButton
-    var backLoginButton = UIButton()
+    let formRegisterView = UIView()
+    let padingRegisterformView = UIView()
+    let userTextFieldView = TextFieldView()
+    let emailTextFieldView = TextFieldView()
+    let passTextFieldView = TextFieldView()
+    let confirmPassTextFieldView = TextFieldView()
+    let createAccountButton = UIButton(type: UIButtonType.system) as UIButton
+    let backLoginButton = UIButton()
     var clearTextButton:UIButton!
     var secureTextButton:UIButton!
     
     var formRegisterViewCenterXAnchor:NSLayoutConstraint!
     var formRegisterViewCenterYAnchor:NSLayoutConstraint!
+    
+    let activityView = UIActivityIndicatorView()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -141,6 +143,8 @@ class LoginView: UIView {
         secureTextButton.tintColor = .gray
         secureTextButton.contentMode = .scaleToFill
         
+        activityView.activityIndicatorViewStyle = .gray
+        
         formRegisterView.addSubview(padingRegisterformView)
         padingRegisterformView.addSubview(userTextFieldView)
         padingRegisterformView.addSubview(emailTextFieldView)
@@ -160,6 +164,7 @@ class LoginView: UIView {
         addSubview(goCreateAccountFormButton)
         addSubview(backLoginButton)
         addSubview(centralView)
+        addSubview(activityView)
     }
     
     func setupConstraints() {
@@ -182,6 +187,12 @@ class LoginView: UIView {
         passTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         confirmPassTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
+        activityView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addConstraint(activityView.centerYAnchor.constraint(equalTo: centerYAnchor))
+        addConstraint(activityView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(activityView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2))
+        addConstraint(activityView.heightAnchor.constraint(equalTo: activityView.widthAnchor))
         
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
