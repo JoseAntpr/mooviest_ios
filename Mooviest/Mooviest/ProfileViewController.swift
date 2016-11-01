@@ -44,6 +44,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
     override func viewWillAppear(_ animated: Bool) {
         self.resetTabBarAndNavigationController(viewController: self)
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
+        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
         user = DataModel.sharedInstance.user
         loadDataView()
     }

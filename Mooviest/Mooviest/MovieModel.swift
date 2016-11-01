@@ -14,13 +14,14 @@ struct TypeMovieModel {
     let hashValue: Int
     let image:String
     let color: UIColor
+    let title: String 
 }
 
 struct TypeMovieStruct{
-    let seen = TypeMovieModel(rawValue: "seen", hashValue: 1, image: "eye", color: seen_color)
-    let watchlist = TypeMovieModel(rawValue: "watchlist", hashValue: 2, image: "bookmark", color: watchlist_color)
-    let favourite = TypeMovieModel(rawValue: "favourite", hashValue: 3, image: "star", color: favourite_color)
-    let black = TypeMovieModel(rawValue: "black", hashValue: 5, image: "clear", color: blacklist_color)
+    let seen = TypeMovieModel(rawValue: "seen", hashValue: 1, image: "eye", color: seen_color, title: "Seen list")
+    let watchlist = TypeMovieModel(rawValue: "watchlist", hashValue: 2, image: "bookmark", color: watchlist_color,title: "Watch list")
+    let favourite = TypeMovieModel(rawValue: "favourite", hashValue: 3, image: "star", color: favourite_color, title: "Favourite list")
+    let black = TypeMovieModel(rawValue: "black", hashValue: 5, image: "clear", color: blacklist_color,title: "Black list")
 }
 
 let TypeMovie = TypeMovieStruct()

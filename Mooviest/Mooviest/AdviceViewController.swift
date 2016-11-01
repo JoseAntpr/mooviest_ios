@@ -27,6 +27,7 @@ class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.setupView()
         self.view.addSubview(self.v)
         self.setupConstraints()
+        reloadList()
     }
     
     override func didReceiveMemoryWarning() {
@@ -75,7 +76,6 @@ class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     override func viewWillAppear(_ animated: Bool) {
         self.resetTabBarAndNavigationController(viewController: self)
-        reloadList()
     }
     
     func reloadList(){
@@ -118,6 +118,11 @@ class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollec
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.search))
         searchButton.tintColor = UIColor.white
+        let replayButton = UIBarButtonItem(image: UIImage(named: "autorenew"),
+                                           style: UIBarButtonItemStyle.plain ,
+                                           target: self, action: #selector(self.reloadList))
+        replayButton.tintColor = UIColor.white
+        navigationItem.leftBarButtonItem = replayButton
         navigationItem.rightBarButtonItem = searchButton
     }
     

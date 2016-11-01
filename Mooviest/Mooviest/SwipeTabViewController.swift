@@ -10,7 +10,10 @@
 import UIKit
 import Kingfisher
 
-class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProtocol, TabBarProtocol {
+
+
+
+class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProtocol, TabBarProtocol, DetailMovieDelegate {
     let MAX_BUFFER_SIZE = 4
     var v: SwipeTabView!
     var allCards: [DraggableView]!
@@ -99,6 +102,13 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         }        
     }
     
+    func updateClasificationMovie(_ movie: Movie) {
+        if movies.count > 0 {
+            movies[0].idCollection = movie.idCollection
+            movies[0].typeMovie = movie.typeMovie
+        }
+    }
+    
     //This method is called when the autolayout engine has finished to calculate your views' frames
     override func viewDidLayoutSubviews() {
         let widthButton = v.closedButton.bounds.size.width
@@ -121,6 +131,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     func tappedCard(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended {
             let nViewController = MovieDetailViewController()
+            nViewController.delegate = self
             nViewController.movieListInfo = movies[0]
             navigationController?.pushViewController(nViewController, animated: true)
         }

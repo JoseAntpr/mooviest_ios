@@ -13,7 +13,7 @@ import Chameleon
 
 class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UICollectionViewDelegate,  UICollectionViewDataSource,
                     UICollectionViewDelegateFlowLayout, MovieProtocol,  TabBarProtocol {
-
+    var delegate: DetailMovieDelegate?
     var offset_CoverStopScale:CGFloat!
     var offset_BackdropFadeOff:CGFloat!
     var offset_HeaderStop:CGFloat!
@@ -62,7 +62,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v.bodyScrollView.addSubview(v.infoView)
         
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
-        self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
         updateColor(image: v.coverImageView.image)
     }
@@ -73,17 +72,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         changeTabs(index: 0)
         v.barSegmentedControl.selectedSegmentIndex = 0
         calculateOffset()
-    }
-    
-    override func willMove(toParentViewController parent: UIViewController?) {
-        if parent == nil {
-            if let vc = navigationController?.viewControllers[0] as? SwipeTabViewController {
-                if movie != nil {
-                    vc.movies[0].idCollection = movie.idCollection
-                    vc.movies[0].typeMovie = movie.typeMovie
-                }
-            }
-        }
     }
     
     func updateColor(image:UIImage?) {
@@ -97,7 +85,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             v.setColors(backgroundColor: backgroundColor, tintColor: tintColor)
             self.setColors(viewController: self, backgroundColor: backgroundColor, tintColor: tintColor)
             if movieListInfo.idCollection < 0 {
-                self.updateFloatPlustButton(image: "", backgroundColor: backgroundColor, tintColor: tintColor)
+                self.updateFloatPlustButton(image: "add", backgroundColor: backgroundColor, tintColor: tintColor)
             }
         }
     }
@@ -205,6 +193,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                         self.movie.idCollection = id
                         if let typeMovie = res["typeMovie"] as? String {
                             self.movie.typeMovie = typeMovie
+                            self.delegate?.updateClasificationMovie(self.movie)
                             completion(true)
                         }
                     }
@@ -216,7 +205,9 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                         self.movie.idCollection = id
                         if let typeMovie = res["typeMovie"] as? String {
                             self.movie.typeMovie = typeMovie
+                            self.delegate?.updateClasificationMovie(self.movie)
                             completion(true)
+                            
                         }
                     }
                 }

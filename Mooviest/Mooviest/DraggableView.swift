@@ -24,13 +24,6 @@ enum MoveDirection:Int {
     case bottom = 2
 }
 
-protocol DraggableViewDelegate {
-    func cardSwipedLeft(_ card: UIView) -> Void
-    func cardSwipedRight(_ card: UIView) -> Void
-    func cardSwipedTop(_ card: UIView) -> Void
-    func cardSwipedBottom(_ card: UIView) -> Void
-}
-
 class DraggableView: UIView {
     let porcentOverlay = CGFloat(0.4)
     var delegate: DraggableViewDelegate!

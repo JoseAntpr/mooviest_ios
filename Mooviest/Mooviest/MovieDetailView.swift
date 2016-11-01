@@ -89,11 +89,8 @@ class MovieDetailView: UIView {
         seeInfoLabel.font = UIFont.boldSystemFont(ofSize: seeInfoLabel.font.pointSize)
         seeInfoLabel.textAlignment = .center
         
-        
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        
- 
         
         headerView.addSubview(blurEffectView)
         headerView.addSubview(headerBackdropImageView)
@@ -105,6 +102,7 @@ class MovieDetailView: UIView {
         
         fab.animationSpeed = 0.01
         fab.buttonColor = mooviest_red
+        fab.buttonImage =  UIImage(named:"add")?.withRenderingMode(.alwaysTemplate)
         fab.plusColor = .white
         
         seenItem.buttonColor = .lightGray

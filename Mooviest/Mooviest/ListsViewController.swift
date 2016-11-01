@@ -10,19 +10,14 @@ import UIKit
 import Kingfisher
 
 class ListsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
-                MovieProtocol, TabBarProtocol {
+                MovieProtocol, TabBarProtocol, DetailMovieDelegate {
     var height:CGFloat!
     let user = DataModel.sharedInstance.user
     
     var v: ListsView!
-    var watchList = [MovieListInfo]()
-    var nextWatch = ""
-    var favouriteList = [MovieListInfo]()
-    var nextFavourite = ""
-    var seenList = [MovieListInfo]()
-    var nextSeen = ""
-    var blackList = [MovieListInfo]()
-    var nextBlack = ""
+    var nextUrl = ["","","","",""]
+    var lists = [[MovieListInfo](), [MovieListInfo](),
+        [MovieListInfo](),[MovieListInfo](),[MovieListInfo]()]
     let movieCellIdentifier = "movieCollectionViewCell"
     
     override func viewDidLoad() {
@@ -30,7 +25,7 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         self.setupView()
         self.view.addSubview(v)
         self.setupConstraints()
-        reloadList()
+        reloadLists()
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,10 +40,10 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         var list:[MovieListInfo]!
         
         switch collectionView {
-            case v.watchListViewCell.movieCollectionView: list = watchList
-            case v.favouriteListViewCell.movieCollectionView: list = favouriteList
-            case v.seenListViewCell.movieCollectionView: list = seenList
-            default: list = blackList
+            case v.watchListViewCell.movieCollectionView: list = lists[TypeMovie.watchlist.hashValue-1]
+            case v.favouriteListViewCell.movieCollectionView: list = lists[TypeMovie.favourite.hashValue-1]
+            case v.seenListViewCell.movieCollectionView: list = lists[TypeMovie.seen.hashValue-1]
+            default: list = lists[TypeMovie.black.hashValue-1]
         }
         return list
     }
@@ -72,6 +67,7 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nViewController = MovieDetailViewController()
+        nViewController.delegate = self
         nViewController.movieListInfo = getList(collectionView: collectionView)[indexPath.item]
         navigationController?.pushViewController(nViewController, animated: true)
     }
@@ -82,13 +78,9 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         return size
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         self.resetTabBarAndNavigationController(viewController: self)
-        reloadList()
     }
     
     //This method is called when the autolayout engine has finished to calculate your views' frames
@@ -96,57 +88,29 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         v.adjustFontSizeToFitHeight()
     }
     
-    func reloadList() {
-        DataModel.sharedInstance.getMovieList(listname: TypeMovie.watchlist.rawValue) {
+    func updateClasificationMovie(_ movie: Movie) {
+        reloadLists()
+    }
+    
+    func reloadLists() {
+        reloadList(typemovie: TypeMovie.watchlist, collection: v.watchListViewCell.movieCollectionView)
+        reloadList(typemovie: TypeMovie.favourite, collection: v.favouriteListViewCell.movieCollectionView)
+        reloadList(typemovie: TypeMovie.seen, collection: v.seenListViewCell.movieCollectionView)
+        reloadList(typemovie: TypeMovie.black, collection: v.blackListViewCell.movieCollectionView)
+    }
+    
+    func reloadList(typemovie: TypeMovieModel, collection: UICollectionView) {
+        DataModel.sharedInstance.getMovieList(listname: typemovie.rawValue) {
             (data, next) in
-            self.nextWatch = next
-            self.watchList.removeAll()
+            let indexList = typemovie.hashValue-1
+            self.nextUrl[indexList] = next
+            self.lists[indexList].removeAll()
             for m in data {
                 let movie:MovieListInfo?
                 movie = try! MovieListInfo(json: m, isSwwipe: false)
-                self.watchList.append(movie!)
+                self.lists[indexList].append(movie!)
             }
-            self.v.watchListViewCell.movieCollectionView.reloadData()
-        }
-        
-        DataModel.sharedInstance.getMovieList(listname: TypeMovie.favourite.rawValue) {
-            (data,next) in
-            self.nextFavourite = next
-            self.favouriteList.removeAll()
-            for m in data {
-                let movie:MovieListInfo?
-                do {
-                    movie = try MovieListInfo(json: m, isSwwipe: false)
-                    self.favouriteList.append(movie!)
-                } catch {
-                    movie = nil
-                }
-            }
-            self.v.favouriteListViewCell.movieCollectionView.reloadData()
-        }
-        
-        DataModel.sharedInstance.getMovieList(listname: TypeMovie.seen.rawValue) {
-            (data,next) in
-            self.nextSeen = next
-            self.seenList.removeAll()
-            for m in data {
-                let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m, isSwwipe: false)
-                self.seenList.append(movie!)
-            }
-            self.v.seenListViewCell.movieCollectionView.reloadData()
-        }
-        
-        DataModel.sharedInstance.getMovieList(listname: TypeMovie.black.rawValue) {
-            (data,next) in
-            self.nextBlack = next
-            self.blackList.removeAll()
-            for m in data {
-                let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m, isSwwipe: false)
-                self.blackList.append(movie!)
-            }
-            self.v.blackListViewCell.movieCollectionView.reloadData()
+            collection.reloadData()
         }
     }
     
@@ -174,36 +138,42 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.search))
         searchButton.tintColor = UIColor.white
+        let replayButton = UIBarButtonItem(image: UIImage(named: "autorenew"),
+                                           style: UIBarButtonItemStyle.plain ,
+                                           target: self, action: #selector(self.reloadLists))
+        replayButton.tintColor = UIColor.white
+        navigationItem.leftBarButtonItem = replayButton
         navigationItem.rightBarButtonItem = searchButton
     
-        v.watchListViewCell.moreButton.addTarget(self, action: #selector(self.tappedMore), for: .touchUpInside)
-        v.favouriteListViewCell.moreButton.addTarget(self, action: #selector(self.tappedMore), for: .touchUpInside)
-        v.seenListViewCell.moreButton.addTarget(self, action: #selector(self.tappedMore), for: .touchUpInside)
-        v.blackListViewCell.moreButton.addTarget(self, action: #selector(self.tappedMore), for: .touchUpInside)
+        v.watchListViewCell.moreButton.addTarget(self, action: #selector(self.tappedWatchListMore), for: .touchUpInside)
+        v.favouriteListViewCell.moreButton.addTarget(self, action: #selector(self.tappedFavouriteListMore), for: .touchUpInside)
+        v.seenListViewCell.moreButton.addTarget(self, action: #selector(self.tappedSeenListMore), for: .touchUpInside)
+        v.blackListViewCell.moreButton.addTarget(self, action: #selector(self.tappedBlackListMore), for: .touchUpInside)
     }
     
-    func tappedMore(button:UIButton)  {
+    func tappedMore(typemovie: TypeMovieModel){
         let nViewController = ListViewController()
-        
-        switch button {
-        case v.watchListViewCell.moreButton:
-            nViewController.typeMovie = TypeMovie.watchlist.rawValue
-            nViewController.nextUrl = nextWatch
-            nViewController.ctrlTitle = "Watch list"
-        case v.favouriteListViewCell.moreButton:
-            nViewController.typeMovie = TypeMovie.favourite.rawValue
-            nViewController.nextUrl = nextFavourite
-            nViewController.ctrlTitle = "Favourite list"
-        case v.seenListViewCell.moreButton:
-            nViewController.typeMovie = TypeMovie.seen.rawValue
-            nViewController.nextUrl = nextSeen
-            nViewController.ctrlTitle = "Seen list"
-        default:
-            nViewController.typeMovie = TypeMovie.black.rawValue
-            nViewController.nextUrl = nextBlack
-            nViewController.ctrlTitle = "Black list"
-        }
+        nViewController.delegate = self
+        nViewController.ctrlTitle = typemovie.title
+        nViewController.typeMovie = typemovie.rawValue
+        nViewController.nextUrl = nextUrl[typemovie.hashValue-1]
         navigationController?.pushViewController(nViewController, animated: true)
+    }
+    
+    func tappedWatchListMore()  {
+        tappedMore(typemovie: TypeMovie.watchlist)
+    }
+    
+    func tappedFavouriteListMore()  {
+        tappedMore(typemovie: TypeMovie.favourite)
+    }
+    
+    func tappedSeenListMore()  {
+        tappedMore(typemovie: TypeMovie.seen)
+    }
+    
+    func tappedBlackListMore()  {
+        tappedMore(typemovie: TypeMovie.black)
     }
     
     func search() {

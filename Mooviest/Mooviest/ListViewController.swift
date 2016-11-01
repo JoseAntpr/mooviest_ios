@@ -13,7 +13,7 @@ import Kingfisher
 
 
 class ListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
-            MovieProtocol, TabBarProtocol {
+            MovieProtocol, TabBarProtocol, DetailMovieDelegate {
     
     let user = DataModel.sharedInstance.user
     var height:CGFloat!
@@ -23,12 +23,14 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var movies = [MovieListInfo]()
     var typeMovie =  ""
     let movieCellIdentifier = "movieCollectionViewCell"
+    var delegate:DetailMovieDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
         self.view.addSubview(self.v)
         self.setupConstraints()
+        reloadList()
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,6 +54,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nViewController = MovieDetailViewController()
+        nViewController.delegate = self
         nViewController.movieListInfo = movies[indexPath.row]
         navigationController?.pushViewController(nViewController, animated: true)
         
@@ -77,7 +80,13 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func viewWillAppear(_ animated: Bool) {
         self.resetTabBarAndNavigationController(viewController: self)
-        reloadList()
+    }
+    
+    func updateClasificationMovie(_ movie: Movie) {
+        if typeMovie != movie.typeMovie {
+            reloadList()
+            delegate?.updateClasificationMovie(movie)
+        }
     }
     
     func reloadList(){

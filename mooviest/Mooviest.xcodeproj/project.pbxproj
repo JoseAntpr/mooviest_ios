@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A906B05A1DC8ED7300FB98B9 /* DraggableViewDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906B0591DC8ED7300FB98B9 /* DraggableViewDelegateProtocol.swift */; };
+		A906B05C1DC8EE3600FB98B9 /* DetailMovieDelegateProtocol .swift in Sources */ = {isa = PBXBuildFile; fileRef = A906B05B1DC8EE3600FB98B9 /* DetailMovieDelegateProtocol .swift */; };
 		A911DEE21D929CA5004BB61F /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A911DEE11D929CA5004BB61F /* UIViewExtension.swift */; };
 		A911DEE51D929E28004BB61F /* TextFieldValidateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A911DEE41D929E28004BB61F /* TextFieldValidateExtension.swift */; };
 		A93DCAD61DBA2719004C826A /* MovieListInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93DCAD51DBA2719004C826A /* MovieListInfoModel.swift */; };
@@ -90,6 +92,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A906B0591DC8ED7300FB98B9 /* DraggableViewDelegateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableViewDelegateProtocol.swift; sourceTree = "<group>"; };
+		A906B05B1DC8EE3600FB98B9 /* DetailMovieDelegateProtocol .swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailMovieDelegateProtocol .swift"; sourceTree = "<group>"; };
 		A911DEE11D929CA5004BB61F /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A911DEE41D929E28004BB61F /* TextFieldValidateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidateExtension.swift; sourceTree = "<group>"; };
 		A93DCAD51DBA2719004C826A /* MovieListInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieListInfoModel.swift; sourceTree = "<group>"; };
@@ -193,6 +197,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A906B0581DC8ED0600FB98B9 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				A906B0591DC8ED7300FB98B9 /* DraggableViewDelegateProtocol.swift */,
+				A906B05B1DC8EE3600FB98B9 /* DetailMovieDelegateProtocol .swift */,
+			);
+			name = Protocol;
+			sourceTree = "<group>";
+		};
+		A906B05D1DC8F66E00FB98B9 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Protocol;
+			sourceTree = "<group>";
+		};
 		A911DEE01D929C75004BB61F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +304,7 @@
 		A965ACEC1D8AB71D00F9FF47 /* SwipeView */ = {
 			isa = PBXGroup;
 			children = (
+				A906B0581DC8ED0600FB98B9 /* Protocol */,
 				A96B52501D89DD010061A766 /* SwipeTabViewController.swift */,
 				A96B52521D89DD610061A766 /* SwipeTabView.swift */,
 				A96B52541D89DDB00061A766 /* DraggableView.swift */,
@@ -423,6 +444,7 @@
 		A9DD49BA1DACD87100DACA5E /* Lists */ = {
 			isa = PBXGroup;
 			children = (
+				A906B05D1DC8F66E00FB98B9 /* Protocol */,
 				A9D757C91DAED19D00905253 /* Subview */,
 				A9DD49BB1DACD88400DACA5E /* ListsView.swift */,
 				A9DD49BD1DACD89D00DACA5E /* ListsViewController.swift */,
@@ -638,6 +660,7 @@
 				A99105F01DBCDA4700659481 /* SearchView.swift in Sources */,
 				A96B52471D89D6B20061A766 /* Colors.swift in Sources */,
 				A96B52631D89DED40061A766 /* ParserProtocol.swift in Sources */,
+				A906B05C1DC8EE3600FB98B9 /* DetailMovieDelegateProtocol .swift in Sources */,
 				A943A86F1D8AEF5900525BF7 /* ParticipationCollectionViewCell.swift in Sources */,
 				A9B869501D89E78A00DDC197 /* ParticipationParser.swift in Sources */,
 				A96B9B531D8D52C10038F4D9 /* UserModel.swift in Sources */,
@@ -656,6 +679,7 @@
 				A96B520F1D89CCF70061A766 /* AppDelegate.swift in Sources */,
 				A9ADF3261DC676A80054CBA0 /* TabBarProtocol.swift in Sources */,
 				A9B7B3441DAA37FF00A470BF /* ProfileView.swift in Sources */,
+				A906B05A1DC8ED7300FB98B9 /* DraggableViewDelegateProtocol.swift in Sources */,
 				A96B525D1D89DE670061A766 /* ParticipationModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
