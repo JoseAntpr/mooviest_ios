@@ -96,9 +96,7 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         v.adjustFontSizeToFitHeight()
     }
     
-    func reloadList(){
-        var count = 0
-        self.v.activityView.startAnimating()
+    func reloadList() {
         DataModel.sharedInstance.getMovieList(listname: TypeMovie.watchlist.rawValue) {
             (data, next) in
             self.nextWatch = next
@@ -109,10 +107,6 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
                 self.watchList.append(movie!)
             }
             self.v.watchListViewCell.movieCollectionView.reloadData()
-            count += 1
-            if count == 4 {
-                self.v.activityView.stopAnimating()
-            }
         }
         
         DataModel.sharedInstance.getMovieList(listname: TypeMovie.favourite.rawValue) {
@@ -129,10 +123,6 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
                 }
             }
             self.v.favouriteListViewCell.movieCollectionView.reloadData()
-            count += 1
-            if count == 4 {
-                self.v.activityView.stopAnimating()
-            }
         }
         
         DataModel.sharedInstance.getMovieList(listname: TypeMovie.seen.rawValue) {
@@ -145,10 +135,6 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
                 self.seenList.append(movie!)
             }
             self.v.seenListViewCell.movieCollectionView.reloadData()
-            count += 1
-            if count == 4 {
-                self.v.activityView.stopAnimating()
-            }
         }
         
         DataModel.sharedInstance.getMovieList(listname: TypeMovie.black.rawValue) {
@@ -161,10 +147,6 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
                 self.blackList.append(movie!)
             }
             self.v.blackListViewCell.movieCollectionView.reloadData()
-            count += 1
-            if count == 4 {
-                self.v.activityView.stopAnimating()
-            }
         }
     }
     

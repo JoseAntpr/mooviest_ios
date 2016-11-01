@@ -79,7 +79,6 @@ class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func reloadList(){
-        self.v.activityView.startAnimating()
         DataModel.sharedInstance.getMoviesSwipe() {
             (data, next) in
             self.nextUrl = next
@@ -90,13 +89,11 @@ class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.movies.append(movie!)
             }
             self.v.movieCollectionView.reloadData()
-            self.v.activityView.stopAnimating()
         }
     }
     
     func nextMovies(){
         if nextUrl != "" {
-            self.v.activityView.startAnimating()
             DataModel.sharedInstance.nextMovies(url: nextUrl) {
                 (data, next) in
                 self.nextUrl = next
@@ -106,7 +103,6 @@ class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollec
                     self.movies.append(movie!)
                 }
                 self.v.movieCollectionView.reloadData()
-                self.v.activityView.stopAnimating()
             }
         }
     }

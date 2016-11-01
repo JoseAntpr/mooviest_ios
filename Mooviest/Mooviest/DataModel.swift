@@ -11,21 +11,28 @@ import Alamofire
 
 class DataModel: NSObject {
     static let sharedInstance = DataModel()
-    var path =  "http://192.168.1.133:8000"//"http://localhost:8000"//
+    var path =  "http://192.168.1.129:8000"//"http://localhost:8000"//
     var movies = [Movie]()
     var user:User?
     var authenticationUser: Authentication?
+    
+    func startActivity() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func stopActivity() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
     
     func login(Username u: String, Password p: String,completionRequest:  @escaping (Bool,String,String?) -> Void){
         let parameters: Parameters = [
             "username": u,
             "password": p
         ]
-        let preferredLanguage = NSLocale.preferredLanguages[0] as String
-        let p = preferredLanguage.components(separatedBy: "-")
-        print(p)
+        self.startActivity()
         Alamofire.request( "\(path)/api/users/login/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []))
-            .responseJSON {response in
+            .responseJSON { response in
+                self.stopActivity()
                 switch response.result {
                 case .success:
                     if let res = response.result.value as? [String:Any] {
@@ -34,7 +41,7 @@ class DataModel: NSObject {
                             self.authenticationUser = try Authentication(json: res)
                             completionRequest(true, "", msg)
                         } catch {
-                            completionRequest(false, "Model parser error", msg)
+                            completionRequest(false, "Login error", msg)
                         }
                     }
                     
@@ -47,7 +54,7 @@ class DataModel: NSObject {
     func register(Username u: String, Password p: String, Email e: String,completionRequest:  @escaping (Bool,String,String?) -> Void){
         let preferredLanguage = NSLocale.preferredLanguages[0] as String
         let codeLang = preferredLanguage.components(separatedBy: "-")[0]
-        
+        print(codeLang)
         let parameters: Parameters = [
             "username": u,
             "password": p,
@@ -58,8 +65,10 @@ class DataModel: NSObject {
                 ]
             ]
         ]
+        self.startActivity()
         Alamofire.request( "\(path)/api/users/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []))
             .responseJSON { response in
+                self.stopActivity()
                 switch response.result {
                 case .success:
                     if let res = response.result.value as? [String:Any] {
@@ -80,9 +89,10 @@ class DataModel: NSObject {
     
     func getUser(completionRequest:  @escaping (Bool,User?)-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
-        
+        self.startActivity()
         Alamofire.request( "\(path)/api/users/\(authenticationUser!.idUser)/", method: .get, headers: headers)
             .responseJSON {response in
+                self.stopActivity()
                 if let res = response.result.value as? [String:Any] {
                     do {
                         self.user = try User(json: res)
@@ -100,7 +110,7 @@ class DataModel: NSObject {
         let url = try! URLRequest(url: "\(path)/api/users/\(user.id)/", method: .put, headers: headers)
         let imageData:Data = UIImageJPEGRepresentation(avatar, 0.2)!
         
-        print(user)
+        self.startActivity()
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 multipartFormData.append(user.username.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "username")
@@ -119,6 +129,7 @@ class DataModel: NSObject {
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.responseJSON { response in
+                        self.stopActivity()
                         if let res = response.result.value as? [String:Any] {
                             do {
                                 if let status = res["status"] as? Int {
@@ -154,8 +165,9 @@ class DataModel: NSObject {
     
     func getMovieList(listname: String, completionRequest:  @escaping ([[String:Any]],String)throws-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
-        Alamofire.request( "\(path)/api/users/\(authenticationUser!.idUser)/collection/?name=\(listname)", method: .get, headers: headers)
-            .responseJSON {response in                
+        self.startActivity()
+        Alamofire.request( "\(path)/api/users/\(authenticationUser!.idUser)/collection/?name=\(listname)", method: .get, headers: headers).responseJSON { response in
+                self.stopActivity()
                 if let res = response.result.value as? [String:Any] {
                     var next = ""
                     next.toString(string: res["next"] as Any)
@@ -166,9 +178,10 @@ class DataModel: NSObject {
     
     func getMovie(idmovie: Int, idMovieLang: Int, completionRequest:  @escaping ([String:Any])throws-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        self.startActivity()
         Alamofire.request( "\(path)/api/movie/\(idmovie)/?user_id=\(authenticationUser!.idUser)&movie_lang_id=\(idMovieLang)", method: .get, headers: headers)
-            .responseJSON {response in
-                print(response)
+            .responseJSON { response in
+                self.stopActivity()
                 if let res = response.result.value as? [String:Any] {
                     try! completionRequest(res)
                 }
@@ -178,9 +191,10 @@ class DataModel: NSObject {
     func searchMovies(name: String, completionRequest:  @escaping ([[String:Any]],String)throws-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         let  url = "\(path)/api/movie_lang/?title=\(name)&code=\(authenticationUser!.codeLang)".addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed)
-        
+        self.startActivity()
         Alamofire.request( url!, method: .get, headers: headers)
-            .responseJSON {response in
+            .responseJSON { response in
+                self.stopActivity()
                 if let res = response.result.value as? [String:Any] {
                     var next = ""
                     next.toString(string: res["next"] as Any)
@@ -191,9 +205,12 @@ class DataModel: NSObject {
     
     func nextMovies(url: String, completionRequest:  @escaping ([[String:Any]],String)throws-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        self.startActivity()
         Alamofire.request( url, method: .get, headers: headers)
-            .responseJSON {response in
+            .responseJSON { response in
+                self.stopActivity()
                 if let res = response.result.value as? [String:Any] {
+                    
                     var next = ""
                     next.toString(string: res["next"] as Any)
                     try! completionRequest(res["results"] as! [[String:Any]], next)
@@ -208,8 +225,11 @@ class DataModel: NSObject {
             "movie": idMovie,
             "typeMovie": typeMovie
         ]
+        self.startActivity()
         Alamofire.request( "\(path)/api/collection/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers).responseJSON { response in
+                self.stopActivity()
                 if let res = response.result.value as? [String:Any] {
+                    
                     completionRequest(res)
                 }
         }
@@ -220,8 +240,11 @@ class DataModel: NSObject {
         let parameters: Parameters = [
             "typeMovie": typeMovie
         ]
+        self.startActivity()
         Alamofire.request( "\(path)/api/collection/\(idCollection)/", method: .patch,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers).responseJSON { response in
+            self.stopActivity()
             if let res = response.result.value as? [String:Any] {
+                
                 completionRequest(res)
             }
         }
@@ -229,13 +252,15 @@ class DataModel: NSObject {
     
     func getMoviesSwipe(completionRequest:  @escaping ([[String:Any]], String)throws-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]        
+        self.startActivity()
         Alamofire.request( "\(path)/api/users/\(authenticationUser!.idUser)/swipelist/", method: .get, headers: headers)
-            .responseJSON {response in
-                
+            .responseJSON { response in
+                self.stopActivity()
                 if let res = response.result.value as? [String:Any] {
                     var next = ""
                     next.toString(string: res["next"] as Any)
                     try! completionRequest(res["results"] as! [[String:Any]], next)
+                    
                 }
         }
     }

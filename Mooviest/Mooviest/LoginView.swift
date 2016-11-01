@@ -46,8 +46,6 @@ class LoginView: UIView {
     var formRegisterViewCenterXAnchor:NSLayoutConstraint!
     var formRegisterViewCenterYAnchor:NSLayoutConstraint!
     
-    let activityView = UIActivityIndicatorView()
-    
     init() {
         super.init(frame: CGRect.zero)
         setupComponents()
@@ -143,11 +141,6 @@ class LoginView: UIView {
         secureTextButton.tintColor = .gray
         secureTextButton.contentMode = .scaleToFill
         
-        activityView.activityIndicatorViewStyle = .white
-        activityView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
-        activityView.layer.cornerRadius = 5
-        activityView.layer.masksToBounds = true
-        
         formRegisterView.addSubview(padingRegisterformView)
         padingRegisterformView.addSubview(userTextFieldView)
         padingRegisterformView.addSubview(emailTextFieldView)
@@ -167,7 +160,6 @@ class LoginView: UIView {
         addSubview(goCreateAccountFormButton)
         addSubview(backLoginButton)
         addSubview(centralView)
-        addSubview(activityView)
     }
     
     func setupConstraints() {
@@ -190,12 +182,6 @@ class LoginView: UIView {
         passTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         confirmPassTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
-        activityView.translatesAutoresizingMaskIntoConstraints = false
-        
-        addConstraint(activityView.centerYAnchor.constraint(equalTo: centerYAnchor))
-        addConstraint(activityView.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(activityView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1))
-        addConstraint(activityView.heightAnchor.constraint(equalTo: activityView.widthAnchor))
         
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))

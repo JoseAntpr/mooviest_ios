@@ -81,7 +81,6 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func reloadList(){
-        self.v.activityView.startAnimating()
         DataModel.sharedInstance.getMovieList(listname: typeMovie) {
             (data, next) in
             self.nextUrl = next
@@ -92,13 +91,11 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 self.movies.append(movie!)
             }
             self.v.movieCollectionView.reloadData()
-            self.v.activityView.stopAnimating()
         }
     }
     
     func nextMovies(){
         if nextUrl != "" {
-            self.v.activityView.startAnimating()
             DataModel.sharedInstance.nextMovies(url: nextUrl) {
                 (data, next) in
                 self.nextUrl = next
@@ -108,7 +105,6 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     self.movies.append(movie!)
                 }
                 self.v.movieCollectionView.reloadData()
-                self.v.activityView.stopAnimating()
             }
         }
     }

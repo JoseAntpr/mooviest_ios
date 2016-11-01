@@ -32,8 +32,6 @@ class SwipeTabView: UIView {
     let space3View = UIView ()
     let panelSwipeView = UIView()
     
-    let activityView = UIActivityIndicatorView()
-    
     init(heightNavBar h: CGFloat) {
         super.init(frame: CGRect.zero)
         heightNavBar = h
@@ -67,11 +65,6 @@ class SwipeTabView: UIView {
         heartButton.tintColor = .white
         heartButton.backgroundColor = favourite_color        
         
-        activityView.activityIndicatorViewStyle = .white
-        activityView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
-        activityView.layer.cornerRadius = 5
-        activityView.layer.masksToBounds = true
-        
         panelButtonView.addSubview(closedButton)
         panelButtonView.addSubview(clockButton)
         panelButtonView.addSubview(eyeButton)
@@ -85,7 +78,6 @@ class SwipeTabView: UIView {
         addSubview(panelButtonView)
         addSubview(headerView)
         addSubview(backgroundStatusView)
-        addSubview(activityView)
     }
     
     func setupConstraints() {
@@ -100,12 +92,6 @@ class SwipeTabView: UIView {
         space2View.translatesAutoresizingMaskIntoConstraints = false
         space3View.translatesAutoresizingMaskIntoConstraints = false
         panelSwipeView.translatesAutoresizingMaskIntoConstraints = false
-        activityView.translatesAutoresizingMaskIntoConstraints = false
-        
-        addConstraint(activityView.centerYAnchor.constraint(equalTo: centerYAnchor))
-        addConstraint(activityView.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(activityView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1))
-        addConstraint(activityView.heightAnchor.constraint(equalTo: activityView.widthAnchor))
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))

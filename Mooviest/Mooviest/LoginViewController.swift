@@ -208,10 +208,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
             let user = v.userTextFieldView.getText()
             let pass = v.passTextFieldView.getText()
             let email = v.emailTextFieldView.getText()
-            v.activityView.startAnimating()
             DataModel.sharedInstance.register(Username: user, Password: pass, Email: email) {
                 successful, title, message in
-                self.v.activityView.stopAnimating()
                 if successful {
                     self.chargueApp()
                 } else {
@@ -228,10 +226,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
     func login() {
         let user = v.userOrEmailTextFieldView.getText()
         let pass = v.passLoginTextFieldView.getText()
-        v.activityView.startAnimating()
         DataModel.sharedInstance.login(Username: user, Password: pass) {
             (successful,title,message) in
-            self.v.activityView.stopAnimating()
             if successful {
                 self.chargueApp()                
             } else {

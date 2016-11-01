@@ -57,7 +57,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     }
     
     func initSwipe() {
-        self.v.activityView.startAnimating()
         DataModel.sharedInstance.getMoviesSwipe() {
             (data, next) in
             self.nextUrl = next
@@ -74,7 +73,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
             self.allCards = []
             self.loadedCards = []
             self.loadCards()
-            self.v.activityView.stopAnimating()
         }
     }
     
@@ -158,7 +156,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     }
     
     func loadSwipe() {
-        self.v.activityView.startAnimating()
         DataModel.sharedInstance.getMoviesSwipe() {
             (data, next) in
             self.nextUrl = next
@@ -169,10 +166,8 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
                     self.movies.append(movie!)
                     let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(movie: movie!)
                     self.allCards.append(newCard)
-                    self.v.activityView.stopAnimating()
                 } catch ErrorMovie.invalidMovie {
                     movie = nil
-                    self.v.activityView.stopAnimating()
                 }
             }
         }
