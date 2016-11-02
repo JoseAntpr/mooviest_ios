@@ -39,9 +39,17 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v = MovieDetailView(heightNavBar: height!)
 
         DataModel.sharedInstance.getMovie(idmovie: movieListInfo.id, idMovieLang: movieListInfo.idMovieLang) {
-            (data) in
-            self.movie = try! Movie(json: data)
-            self.loadDataView()
+            (successful, title, msg, res) in
+            if successful {
+                do {
+                    self.movie = try Movie(json: res)
+                    self.loadDataView()
+                } catch {
+                    
+                }
+            } else {
+                
+            }
         }
         setupView()
         view.addSubview(v)
@@ -188,28 +196,36 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         if movie != nil {
             if movie.typeMovie == "" {
                 DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie.hashValue){
-                    (res) in
-                    if let id = res["id"] as? Int {
-                        self.movie.idCollection = id
-                        if let typeMovie = res["typeMovie"] as? String {
-                            self.movie.typeMovie = typeMovie
-                            self.delegate?.updateClasificationMovie(self.movie)
-                            completion(true)
+                    (successful, title, msg, res) in
+                    if successful {
+                        if let id = res["id"] as? Int {
+                            self.movie.idCollection = id
+                            if let typeMovie = res["typeMovie"] as? String {
+                                self.movie.typeMovie = typeMovie
+                                self.delegate?.updateClasificationMovie(self.movie)
+                                completion(true)
+                            }
                         }
+                    } else {
+                        completion(false)
                     }
+                    
                 }
             } else if typemovie.rawValue != movie.typeMovie {
                 DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie.hashValue){
-                    (res) in
-                    if let id = res["id"] as? Int {
-                        self.movie.idCollection = id
-                        if let typeMovie = res["typeMovie"] as? String {
-                            self.movie.typeMovie = typeMovie
-                            self.delegate?.updateClasificationMovie(self.movie)
-                            completion(true)
-                            
+                    (successful, title, msg, res) in
+                    if successful {
+                        if let id = res["id"] as? Int {
+                            self.movie.idCollection = id
+                            if let typeMovie = res["typeMovie"] as? String {
+                                self.movie.typeMovie = typeMovie
+                                self.delegate?.updateClasificationMovie(self.movie)
+                                completion(true)
+                            }
                         }
-                    }
+                    } else {
+                        completion(false)
+                    }                    
                 }
             } else {
                 completion(false)

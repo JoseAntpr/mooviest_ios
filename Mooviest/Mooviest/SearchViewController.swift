@@ -93,36 +93,55 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func nextMovies(){
         if nextUrl != "" {
-            
             DataModel.sharedInstance.nextMovies(url: nextUrl) {
-                (data, next) in
-                self.nextUrl = next
-                for m in data {
-                    let movie:MovieListInfo?
-                    movie = try! MovieListInfo(json: m, isSwwipe: false)
-                    self.movies.append(movie!)
+                (successful, title, msg, res) in
+                if successful {
+                    do {
+                        self.nextUrl = ""
+                        self.nextUrl.toString(string: res["next"] as Any)
+                        
+                        for m in res["results"] as! [[String:Any]] {
+                            let movie:MovieListInfo?
+                            movie = try MovieListInfo(json: m, isSwwipe: false)
+                            self.movies.append(movie!)
+                        }
+                        
+                        self.v.movieCollectionView.reloadData()
+                    } catch {
+                        
+                    }
+                } else {
+                    
                 }
-                //guardar offset
-                self.v.movieCollectionView.reloadData()
-                //poner offset guardado
             }
         }
     }
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        DataModel.sharedInstance.searchMovies(name: searchBar.text!) {
-            (data, next) in
-            self.nextUrl = next
-            for m in data {
-                let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m, isSwwipe: false)
-                self.movies.append(movie!)
-            }
-            self.v.movieCollectionView.contentOffset.y = 0
-            self.v.movieCollectionView.reloadData()
-        }
         movies.removeAll()
+        DataModel.sharedInstance.searchMovies(name: searchBar.text!) {
+            (successful, title, msg, res) in
+            if successful {
+                do {
+                    self.nextUrl = ""
+                    self.nextUrl.toString(string: res["next"] as Any)
+                    
+                    for m in res["results"] as! [[String:Any]] {
+                        let movie:MovieListInfo?
+                        movie = try MovieListInfo(json: m, isSwwipe: false)
+                        self.movies.append(movie!)
+                    }
+                    self.v.movieCollectionView.contentOffset.y = 0
+                    self.v.movieCollectionView.reloadData()
+                } catch {
+                    
+                }
+            } else {
+                
+            }
+        }
+        
         searchBar.resignFirstResponder()
     }
     

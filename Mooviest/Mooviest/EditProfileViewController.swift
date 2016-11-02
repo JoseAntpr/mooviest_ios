@@ -428,12 +428,12 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         if validateForm () {
             saveChange()            
             DataModel.sharedInstance.updateUser(user: user!,avatar: v.coverImageView.image!){
-                (successful, message, user) in
+                (successful, title, message) in
                 if successful {
-                    self.user = user
-                    Message.msgPopupDelay(title: "", message: "Update successful", delay: 1, ctrl: self){}                    
+                    self.user = DataModel.sharedInstance.user
+                    Message.msgPopupDelay(title: title, message: message!, delay: 1, ctrl: self){}
                 } else {
-                    Message.msgPopupDelay(title: "Error update data", message: message, delay: 0, ctrl: self) {}
+                    Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {}
                 }
             }    
         }

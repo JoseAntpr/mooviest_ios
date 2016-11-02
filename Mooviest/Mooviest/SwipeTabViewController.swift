@@ -24,6 +24,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         super.viewDidLoad()
         let height = self.navigationController?.navigationBar.frame.height
         v = SwipeTabView(heightNavBar: height!)
+        
         view.addSubview(v)
         setupConstraints()
         setupView()
@@ -61,21 +62,27 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     
     func initSwipe() {
         DataModel.sharedInstance.getMoviesSwipe() {
-            (data, next) in
-            self.nextUrl = next
-            self.movies.removeAll()
-            for m in data {
-                let movie:MovieListInfo?
-                do {
-                    movie = try MovieListInfo(json: m, isSwwipe: true)
-                    self.movies.append(movie!)
-                } catch ErrorMovie.invalidMovie {
-                    movie = nil
+            (successful, title, msg, res) in
+            if successful {
+                self.movies.removeAll()
+                self.nextUrl = ""
+                self.nextUrl.toString(string: res["next"] as Any)
+                
+                for m in res["results"] as! [[String:Any]] {
+                    let movie:MovieListInfo?
+                    do {
+                        movie = try MovieListInfo(json: m, isSwwipe: true)
+                        self.movies.append(movie!)
+                    } catch {
+                        movie = nil
+                    }
                 }
+                self.allCards = []
+                self.loadedCards = []
+                self.loadCards()
+            } else {
+                
             }
-            self.allCards = []
-            self.loadedCards = []
-            self.loadCards()
         }
     }
     
@@ -172,18 +179,24 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     
     func loadSwipe() {
         DataModel.sharedInstance.getMoviesSwipe() {
-            (data, next) in
-            self.nextUrl = next
-            for m in data {
-                let movie:MovieListInfo?
-                do {
-                    movie = try MovieListInfo(json: m, isSwwipe: true)
-                    self.movies.append(movie!)
-                    let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(movie: movie!)
-                    self.allCards.append(newCard)
-                } catch ErrorMovie.invalidMovie {
-                    movie = nil
+            (successful, title, msg, res) in
+            if successful {
+                self.nextUrl = ""
+                self.nextUrl.toString(string: res["next"] as Any)
+                
+                for m in res["results"] as! [[String:Any]] {
+                    let movie:MovieListInfo?
+                    do {
+                        movie = try MovieListInfo(json: m, isSwwipe: true)
+                        self.movies.append(movie!)
+                        let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(movie: movie!)
+                        self.allCards.append(newCard)
+                    } catch  {
+                        movie = nil
+                    }
                 }
+            } else {
+                
             }
         }
     }
@@ -241,27 +254,36 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
             var movie = movies[0]
             if movie.typeMovie == "" {
                 DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie.hashValue){
-                    (res) in
-                    if let id = res["id"] as? Int {
-                        movie.idCollection = id
-                        if let typeMovie = res["typeMovie"] as? String {
-                            movie.typeMovie = typeMovie
-                            self.movies[0] = movie
-                            completion(true)
+                    (successful, title, msg, res) in
+                    if successful {
+                        if let id = res["id"] as? Int {
+                            movie.idCollection = id
+                            if let typeMovie = res["typeMovie"] as? String {
+                                movie.typeMovie = typeMovie
+                                self.movies[0] = movie
+                                completion(true)
+                            }
                         }
+                    } else {
+                        completion(false)
                     }
+                    
                 }
             } else if typemovie.rawValue != movie.typeMovie {
                 DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie.hashValue){
-                    (res) in
-                    if let id = res["id"] as? Int {
-                        movie.idCollection = id
-                        if let typeMovie = res["typeMovie"] as? String {
-                            movie.typeMovie = typeMovie
-                            self.movies[0] = movie
-                            completion(true)
+                    (successful, title, msg, res) in
+                    if successful {
+                        if let id = res["id"] as? Int {
+                            movie.idCollection = id
+                            if let typeMovie = res["typeMovie"] as? String {
+                                movie.typeMovie = typeMovie
+                                self.movies[0] = movie
+                                completion(true)
+                            }
                         }
-                    }
+                    } else {
+                        completion(false)
+                    } 
                 }
             } else {
                 completion(false)

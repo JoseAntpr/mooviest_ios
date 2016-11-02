@@ -15,11 +15,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let login =  LoginViewController() //MovieDetailViewController()//
+       
+        var rootViewController:UIViewController!
+        if DataModel.sharedInstance.loadContext() {
+            rootViewController =  AnimatedTabBarController()
+        } else {
+            rootViewController =  LoginViewController()
+        }
+    
+        
         let frame = UIScreen.main.bounds
         self.window = UIWindow(frame: frame)
         if let w = self.window {
-            w.rootViewController = login
+            w.rootViewController = rootViewController
             w.makeKeyAndVisible()
         }
         return true
@@ -45,6 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
+        DataModel.sharedInstance.saveContext()
     }
 
 

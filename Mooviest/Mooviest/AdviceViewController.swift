@@ -9,8 +9,6 @@
 import UIKit
 import Kingfisher
 
-
-
 class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
                     MovieProtocol,  TabBarProtocol{
     
@@ -80,29 +78,50 @@ class AdviceViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func reloadList(){
         DataModel.sharedInstance.getMoviesSwipe() {
-            (data, next) in
-            self.nextUrl = next
-            self.movies.removeAll()
-            for m in data {
-                let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m, isSwwipe: false)
-                self.movies.append(movie!)
+            (successful, title, msg, res) in
+            if successful {
+                do {
+                    self.nextUrl = ""
+                    self.nextUrl.toString(string: res["next"] as Any)
+                    
+                    for m in res["results"] as! [[String:Any]] {
+                        let movie:MovieListInfo?
+                        movie = try MovieListInfo(json: m, isSwwipe: false)
+                        self.movies.append(movie!)
+                    }
+                    
+                    self.v.movieCollectionView.reloadData()
+                } catch {
+                    
+                }
+            } else {
+                
             }
-            self.v.movieCollectionView.reloadData()
         }
     }
     
     func nextMovies(){
         if nextUrl != "" {
             DataModel.sharedInstance.nextMovies(url: nextUrl) {
-                (data, next) in
-                self.nextUrl = next
-                for m in data {
-                    let movie:MovieListInfo?
-                    movie = try! MovieListInfo(json: m, isSwwipe: false)
-                    self.movies.append(movie!)
+                (successful, title, msg, res) in
+                if successful {
+                    do {
+                        self.nextUrl = ""
+                        self.nextUrl.toString(string: res["next"] as Any)
+                        
+                        for m in res["results"] as! [[String:Any]] {
+                            let movie:MovieListInfo?
+                            movie = try MovieListInfo(json: m, isSwwipe: false)
+                            self.movies.append(movie!)
+                        }
+                        
+                        self.v.movieCollectionView.reloadData()
+                    } catch {
+                        
+                    }
+                } else {
+                    
                 }
-                self.v.movieCollectionView.reloadData()
             }
         }
     }

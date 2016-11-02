@@ -101,16 +101,26 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     func reloadList(typemovie: TypeMovieModel, collection: UICollectionView) {
         DataModel.sharedInstance.getMovieList(listname: typemovie.rawValue) {
-            (data, next) in
-            let indexList = typemovie.hashValue-1
-            self.nextUrl[indexList] = next
-            self.lists[indexList].removeAll()
-            for m in data {
-                let movie:MovieListInfo?
-                movie = try! MovieListInfo(json: m, isSwwipe: false)
-                self.lists[indexList].append(movie!)
+            (successful, title, msg, res) in
+            if successful {
+                do {
+                    let indexList = typemovie.hashValue-1
+                    self.nextUrl[indexList] = ""
+                    self.nextUrl[indexList].toString(string: res["next"] as Any)
+                    self.lists[indexList].removeAll()
+                    
+                    for m in res["results"] as! [[String:Any]] {
+                        let movie:MovieListInfo?
+                        movie = try MovieListInfo(json: m, isSwwipe: false)
+                        self.lists[indexList].append(movie!)
+                    }
+                    collection.reloadData()
+                } catch {
+                    
+                }
+            } else {
+                
             }
-            collection.reloadData()
         }
     }
     

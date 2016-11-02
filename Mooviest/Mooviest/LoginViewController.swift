@@ -39,8 +39,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.resetTabBarAndNavigationController(viewController: self)
+    override func viewDidAppear(_ animated: Bool) {
+        if DataModel.sharedInstance.loadContext() {
+            chargueApp()
+        }
     }
     
     func setupConstraints() {

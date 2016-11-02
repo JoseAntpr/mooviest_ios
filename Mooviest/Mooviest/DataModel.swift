@@ -15,6 +15,7 @@ class DataModel: NSObject {
     var movies = [Movie]()
     var user:User?
     var authenticationUser: Authentication?
+    let userDefault = UserDefaults()
     
     func startActivity() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -40,6 +41,7 @@ class DataModel: NSObject {
                         do {
                             self.authenticationUser = try Authentication(json: res)
                             completionRequest(true, "", msg)
+                            self.saveContext()
                         } catch {
                             completionRequest(false, "Login error", msg)
                         }
@@ -87,25 +89,30 @@ class DataModel: NSObject {
         }
     }
     
-    func getUser(completionRequest:  @escaping (Bool,User?)-> Void){
+    func getUser(completionRequest:  @escaping (Bool,String,String?)-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         self.startActivity()
         Alamofire.request( "\(path)/api/users/\(authenticationUser!.idUser)/", method: .get, headers: headers)
             .responseJSON {response in
                 self.stopActivity()
-                if let res = response.result.value as? [String:Any] {
-                    do {
-                        self.user = try User(json: res)
-                        completionRequest(true, self.user)
-                    } catch {
-                        self.user = nil
-                        completionRequest(false, nil)
+                switch response.result {
+                case .success:
+                    if let res = response.result.value as? [String:Any] {
+                        do {
+                            self.user = try User(json: res)
+                            completionRequest(true, "","")
+                        } catch {
+                            completionRequest(false, "User error","Error to load profile")
+                        }
                     }
+                    
+                case .failure(let error):
+                    completionRequest(false, "Connection error", error.localizedDescription)
                 }
         }
     }
     
-    func updateUser(user: User, avatar: UIImage, completionRequest:  @escaping (Bool, String, User?) -> Void){
+    func updateUser(user: User, avatar: UIImage, completionRequest:  @escaping (Bool,String,String?) -> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "multipart/form-data"]
         let url = try! URLRequest(url: "\(path)/api/users/\(user.id)/", method: .put, headers: headers)
         let imageData:Data = UIImageJPEGRepresentation(avatar, 0.2)!
@@ -124,101 +131,121 @@ class DataModel: NSObject {
                 multipartFormData.append(user.city.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "profile.city")
                 multipartFormData.append(user.codeLang.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "profile.lang.code")
             },
-            with: url,
-            encodingCompletion: { encodingResult in
+            with: url, encodingCompletion: { encodingResult in
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.responseJSON { response in
                         self.stopActivity()
-                        if let res = response.result.value as? [String:Any] {
+                        switch response.result {
+                        case .success:
                             do {
-                                if let status = res["status"] as? Int {
-                                    if status == 200 {
-                                        self.user = try User(json: res)
-                                        completionRequest(true, "", self.user)
-                                    } else {
-                                        var msg = ""
-                                        if let errors = res["errors"] as? [String:Any] {
-                                            if let username = errors["username"] as? [String] {
-                                                msg += "\n\(username[0])"
+                                if let res = response.result.value as? [String:Any] {
+                                    if let status = res["status"] as? Int {
+                                        if status == 200 {
+                                            self.user = try User(json: res)
+                                            completionRequest(true, "Update successful", "")
+                                        } else {
+                                            var msg = ""
+                                            if let errors = res["errors"] as? [String:Any] {
+                                                if let username = errors["username"] as? [String] {
+                                                    msg += "\n\(username[0])"
+                                                }
+                                                if let email = errors["email"] as? [String] {
+                                                    msg += "\n\(email[0])"
+                                                }
                                             }
-                                            if let email = errors["email"] as? [String] {
-                                                msg += "\n\(email[0])"
-                                            }
-                                            print(errors)
+                                            completionRequest(false, "Update profile error", msg)
                                         }
-                                        completionRequest(false, msg, nil)
                                     }
                                 }
                                 
                             } catch {
-                                completionRequest(false, "Error parser User", nil)
+                                completionRequest(false, "Update profile","return struct error")
                             }
+                        case .failure(let error):
+                            completionRequest(false, "Connection error", error.localizedDescription)
                         }
                     }
                 case .failure(let msg):
-                    completionRequest(false, "Error encoding: \(msg)", nil)
+                    self.stopActivity()
+                    completionRequest(false, "Encoding Error", "\(msg)")
                 }
             }
         )
     }
     
-    func getMovieList(listname: String, completionRequest:  @escaping ([[String:Any]],String)throws-> Void){
+    func getMovieList(listname: String, completionRequest:  @escaping (Bool,String,String?,[String:Any])-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         self.startActivity()
         Alamofire.request( "\(path)/api/users/\(authenticationUser!.idUser)/collection/?name=\(listname)", method: .get, headers: headers).responseJSON { response in
-                self.stopActivity()
+            self.stopActivity()
+            switch response.result {
+            case .success:
                 if let res = response.result.value as? [String:Any] {
-                    var next = ""
-                    next.toString(string: res["next"] as Any)
-                    try! completionRequest(res["results"] as! [[String:Any]],next)
+                    completionRequest(true, "Get list","", res)
                 }
-        }
-    }
-    
-    func getMovie(idmovie: Int, idMovieLang: Int, completionRequest:  @escaping ([String:Any])throws-> Void){
-        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
-        self.startActivity()
-        Alamofire.request( "\(path)/api/movie/\(idmovie)/?user_id=\(authenticationUser!.idUser)&movie_lang_id=\(idMovieLang)", method: .get, headers: headers)
-            .responseJSON { response in
-                self.stopActivity()
-                if let res = response.result.value as? [String:Any] {
-                    try! completionRequest(res)
-                }
+                
+            case .failure(let error):
+                completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+            }
         }
     }
 
-    func searchMovies(name: String, completionRequest:  @escaping ([[String:Any]],String)throws-> Void){
+    func searchMovies(name: String, completionRequest:  @escaping (Bool,String,String?,[String:Any])-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         let  url = "\(path)/api/movie_lang/?title=\(name)&code=\(authenticationUser!.codeLang)".addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed)
         self.startActivity()
         Alamofire.request( url!, method: .get, headers: headers)
             .responseJSON { response in
                 self.stopActivity()
-                if let res = response.result.value as? [String:Any] {
-                    var next = ""
-                    next.toString(string: res["next"] as Any)
-                    try! completionRequest(res["results"] as! [[String:Any]], next)
+                switch response.result {
+                case .success:
+                    if let res = response.result.value as? [String:Any] {
+                        completionRequest(true, "Search","", res)
+                    }
+                    
+                case .failure(let error):
+                    completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
                 }
         }
     }
     
-    func nextMovies(url: String, completionRequest:  @escaping ([[String:Any]],String)throws-> Void){
+    func nextMovies(url: String, completionRequest:  @escaping (Bool,String,String?,[String:Any])-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         self.startActivity()
         Alamofire.request( url, method: .get, headers: headers)
             .responseJSON { response in
                 self.stopActivity()
-                if let res = response.result.value as? [String:Any] {
+                switch response.result {
+                case .success:
+                    if let res = response.result.value as? [String:Any] {
+                        completionRequest(true, "Search","", res)
+                    }
                     
-                    var next = ""
-                    next.toString(string: res["next"] as Any)
-                    try! completionRequest(res["results"] as! [[String:Any]], next)
+                case .failure(let error):
+                    completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
                 }
         }
     }
     
-    func insertMovieCollection(idMovie: Int, typeMovie: Int,completionRequest:  @escaping ([String:Any]) -> Void){
+    func getMovie(idmovie: Int, idMovieLang: Int, completionRequest:  @escaping (Bool,String,String?,[String:Any])-> Void){
+        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        self.startActivity()
+        Alamofire.request( "\(path)/api/movie/\(idmovie)/?user_id=\(authenticationUser!.idUser)&movie_lang_id=\(idMovieLang)", method: .get, headers: headers)
+            .responseJSON { response in
+                self.stopActivity()
+                switch response.result {
+                case .success:
+                    if let res = response.result.value as? [String:Any] {
+                        completionRequest(true, "Get movie","", res)
+                    }
+                case .failure(let error):
+                    completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+                }
+        }
+    }
+    
+    func insertMovieCollection(idMovie: Int, typeMovie: Int,completionRequest:  @escaping (Bool,String,String?,[String:Any]) -> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         let parameters: Parameters = [
             "user": authenticationUser!.idUser,
@@ -227,15 +254,19 @@ class DataModel: NSObject {
         ]
         self.startActivity()
         Alamofire.request( "\(path)/api/collection/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers).responseJSON { response in
-                self.stopActivity()
+            self.stopActivity()
+            switch response.result {
+            case .success:
                 if let res = response.result.value as? [String:Any] {
-                    
-                    completionRequest(res)
+                    completionRequest(true, "Search","", res)
                 }
+            case .failure(let error):
+                completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+            }
         }
     }
     
-    func updateMovieCollection(idCollection:Int, typeMovie: Int,completionRequest:  @escaping ([String:Any]) -> Void){
+    func updateMovieCollection(idCollection:Int, typeMovie: Int,completionRequest:  @escaping (Bool,String,String?,[String:Any])-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         let parameters: Parameters = [
             "typeMovie": typeMovie
@@ -243,25 +274,58 @@ class DataModel: NSObject {
         self.startActivity()
         Alamofire.request( "\(path)/api/collection/\(idCollection)/", method: .patch,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers).responseJSON { response in
             self.stopActivity()
-            if let res = response.result.value as? [String:Any] {
-                
-                completionRequest(res)
+            switch response.result {
+            case .success:
+                if let res = response.result.value as? [String:Any] {
+                    completionRequest(true, "Search","", res)
+                }
+            case .failure(let error):
+                completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
             }
         }
     }
     
-    func getMoviesSwipe(completionRequest:  @escaping ([[String:Any]], String)throws-> Void){
+    func getMoviesSwipe(completionRequest:  @escaping (Bool,String,String?,[String:Any])-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]        
         self.startActivity()
         Alamofire.request( "\(path)/api/users/\(authenticationUser!.idUser)/swipelist/", method: .get, headers: headers)
             .responseJSON { response in
-                self.stopActivity()
+            self.stopActivity()
+            switch response.result {
+            case .success:
                 if let res = response.result.value as? [String:Any] {
-                    var next = ""
-                    next.toString(string: res["next"] as Any)
-                    try! completionRequest(res["results"] as! [[String:Any]], next)
-                    
+                    completionRequest(true, "Search","", res)
                 }
+                
+            case .failure(let error):
+                completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+            }
+        }
+    }
+    
+    func saveContext() {
+        let token = (authenticationUser?.token)! as String
+        userDefault.set(token, forKey: "token")
+        let idUser = (authenticationUser?.idUser)! as Int
+        userDefault.set(idUser, forKey: "idUser")
+        let codeLang = (authenticationUser?.token)! as String
+        userDefault.set(codeLang, forKey: "codeLang")
+        userDefault.synchronize()
+    }
+
+    func loadContext()-> Bool {
+        if let token = userDefault.object(forKey: "token") as? String,
+            let idUser = userDefault.object(forKey: "idUser") as? Int,
+            let codeLang = userDefault.object(forKey: "codeLang") as? String {
+            authenticationUser = Authentication(idUser: idUser, token: token, codeLang: codeLang)
+        }
+        return authenticationUser != nil
+    }
+    
+    func resetDataUser () {
+        authenticationUser = nil
+        for key in UserDefaults.standard.dictionaryRepresentation().keys {
+            UserDefaults.standard.removeObject(forKey: key.description)
         }
     }
 }

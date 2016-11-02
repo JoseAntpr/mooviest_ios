@@ -28,7 +28,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
         super.viewDidLoad()
         v = ProfileView()
         v.bodyScrollView.delegate = self
-//        setupDataView()
         setupView()
         view.addSubview(v)
         setupConstraints()
@@ -83,16 +82,27 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.editProfile))
         editButton.tintColor = UIColor.white
+        let replayButton = UIBarButtonItem(image: UIImage(named: "logout"),
+                                           style: UIBarButtonItemStyle.plain ,
+                                           target: self, action: #selector(self.logout))
+        replayButton.tintColor = UIColor.white
+        navigationItem.leftBarButtonItem = replayButton
         navigationItem.rightBarButtonItem = editButton
         DataModel.sharedInstance.getUser() {
-            (successful, user) in
+            (successful, title, msg) in
             if successful {
-                self.user = user
+                self.user = DataModel.sharedInstance.user
                 self.loadDataView()
             } else {
-                Message.msgPopupDelay(title:  "Profile view error", message: "Ha ocurrido algún error al cargar la vista", delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title:  title, message: msg!, delay: 0, ctrl: self) {}
             }
         }
+    }
+    
+    func logout() {
+        DataModel.sharedInstance.resetDataUser()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = LoginViewController()
     }
     
     func calculateOffset() {
