@@ -57,7 +57,6 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
         nViewController.delegate = self
         nViewController.movieListInfo = movies[indexPath.row]
         navigationController?.pushViewController(nViewController, animated: true)
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -96,18 +95,19 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 do {
                     self.nextUrl = ""
                     self.nextUrl.toString(string: res["next"] as Any)
-                    
+                    self.movies.removeAll()
                     for m in res["results"] as! [[String:Any]] {
                         let movie:MovieListInfo?
                         movie = try MovieListInfo(json: m, isSwwipe: false)
                         self.movies.append(movie!)
                     }
-                    
                     self.v.movieCollectionView.reloadData()
                 } catch {
                     
+                    
                 }
             } else {
+                
                 
             }
         }
@@ -131,8 +131,10 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         self.v.movieCollectionView.reloadData()
                     } catch {
                         
+                        
                     }
                 } else {
+                    
                     
                 }
             }

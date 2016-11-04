@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         var rootViewController:UIViewController!
         if DataModel.sharedInstance.loadContext() {
-            rootViewController =  AnimatedTabBarController()
+            rootViewController =  TabBarController()
         } else {
             rootViewController =  LoginViewController()
         }

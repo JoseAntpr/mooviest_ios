@@ -1,16 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "iphone",
+      "idiom" : "universal",
+      "filename" : "m.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "iphone",
+      "idiom" : "universal",
+      "filename" : "m_2x.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
-      "filename" : "Thumb Up-100.png",
+      "idiom" : "universal",
+      "filename" : "m_3x.png",
       "scale" : "3x"
     }
   ],

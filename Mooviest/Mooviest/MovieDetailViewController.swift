@@ -68,14 +68,14 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v.bodyScrollView.addSubview(v.seeView)
         v.bodyScrollView.addSubview(v.castCollectionView)
         v.bodyScrollView.addSubview(v.infoView)
-        
+        if tintColor != nil {
+            self.setColors(viewController: self, backgroundColor: backgroundColor, tintColor: tintColor)
+        }
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
-        updateColor(image: v.coverImageView.image)
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        updateColor(image: v.coverImageView.image)
         heightView = view.frame.size.height
         changeTabs(index: 0)
         v.barSegmentedControl.selectedSegmentIndex = 0
@@ -83,13 +83,9 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     func updateColor(image:UIImage?) {
-        if tintColor == nil {
+        if image != nil {
             backgroundColor = AverageColorFromImage(image!)
             tintColor = ContrastColorOf(backgroundColor,returnFlat: true)
-            if image == nil {
-                backgroundColor = AverageColorFromImage(image!)
-                tintColor = ContrastColorOf(backgroundColor,returnFlat: true)
-            }
             v.setColors(backgroundColor: backgroundColor, tintColor: tintColor)
             self.setColors(viewController: self, backgroundColor: backgroundColor, tintColor: tintColor)
             if movieListInfo.idCollection < 0 {
@@ -99,6 +95,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     func setupView() {
+        
         v.setDelegate(ViewController: self)
         
         v.castCollectionView.dataSource = self
@@ -112,12 +109,24 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         self.navigationItem.title = movieListInfo.title
         v.captionMovieView.typeLabel.text = "Película"
         
-        v.coverImageView.kf.setImage(with: URL(string:  movieListInfo!.image),placeholder: UIImage(named:  "noimage"))
+        v.coverImageView.kf.setImage(with: URL(string:  movieListInfo!.image), placeholder: UIImage(named:  "noimage"))
         v.coverImageView.contentMode = UIViewContentMode.scaleToFill
         v.coverImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
         v.coverImageView.layer.borderWidth = 1.8
         v.coverImageView.layer.cornerRadius = 5
         v.coverImageView.layer.masksToBounds = true
+        v.headerBackdropImageView.kf.setImage(with: URL(string: movieListInfo!.backdrop), placeholder: UIImage(named: "backdrop"), completionHandler: {
+            (image, error, cacheType, imageUrl) in
+            if image != nil {
+                self.updateColor(image: image)
+            } else {
+                if let img = self.v.coverImageView.image {
+                    self.v.headerBackdropImageView.image = img
+                    self.updateColor(image: img)
+                }
+            }
+        })
+        v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
         
         switch movieListInfo.typeMovie {
         case TypeMovie.black.rawValue:
@@ -153,7 +162,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             self.selectList(item: item, typemovie: TypeMovie.watchlist)
         }
         
-        updateColor(image: v.coverImageView.image)
         let rating = Rating(name: "mooviest", rating: Int(movieListInfo.average), count: 0, dateUpdate: "")
         ratings.append(rating)
     }
@@ -161,23 +169,17 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     func loadDataView() {
         
         //add default backdrop
-        v.headerBackdropImageView.kf.setImage(with: URL(string: movie!.backdrop))
         v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
         v.infoView.synopsisTextView.text = movie?.synopsis
         v.infoView.producerTextView.text = movie?.producers.replacingOccurrences(of: " |", with: ",")
         v.infoView.genreTextView.text = movie?.genres.joined(separator: ", ")
-//        v.infoView.countryTextView.text = movie.country
-        
-//        v.captionMovieView.ratingView.ratingLabel.text = "\(movie.average)"
         v.captionMovieView.releasedLabel.text = "\(movie.released)"
         v.captionMovieView.runtimeLabel.text = "\(movie.runtime) min"
-        
         
         ratings.append(contentsOf: movie.ratings)
         participations = movie.participations
         v.infoView.ratingCollectionView.reloadData()
         v.castCollectionView.reloadData()
-        updateColor(image: v.coverImageView.image)
     }
     
     func calculateOffset() {

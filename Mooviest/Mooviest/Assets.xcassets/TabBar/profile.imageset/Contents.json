@@ -1,16 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "iphone",
+      "idiom" : "universal",
+      "filename" : "ic_contacts.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "iphone",
+      "idiom" : "universal",
+      "filename" : "ic_contacts_2x.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
-      "filename" : "profile.png",
+      "idiom" : "universal",
+      "filename" : "ic_contacts_3x.png",
       "scale" : "3x"
     }
   ],

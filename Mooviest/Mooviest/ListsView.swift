@@ -17,6 +17,7 @@ class ListsView: UIView {
     
     var heightNavBar:CGFloat!
     var headerView = UIView()
+    var lineView = UIView()
 
     let listsScrollView = UIScrollView()
     
@@ -39,9 +40,10 @@ class ListsView: UIView {
     func setupComponents() {
         self.backgroundColor = .white
         
-        backgroundStatusView.backgroundColor =   dark_gray.withAlphaComponent(0.5)
-        headerView.backgroundColor =   mooviest_red
+        backgroundStatusView.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+        headerView.backgroundColor =   .white
         headerView.clipsToBounds = true
+        lineView.backgroundColor = UIColor.lightGray
         
         watchListViewCell.titleLabel.text = "Watch list"
         favouriteListViewCell.titleLabel.text = "Favourite list"
@@ -59,6 +61,7 @@ class ListsView: UIView {
         
         addSubview(listsScrollView)
         addSubview(headerView)
+        addSubview(lineView)
         addSubview(backgroundStatusView)
     }
     
@@ -70,6 +73,7 @@ class ListsView: UIView {
         favouriteListViewCell.translatesAutoresizingMaskIntoConstraints = false
         seenListViewCell.translatesAutoresizingMaskIntoConstraints = false
         blackListViewCell.translatesAutoresizingMaskIntoConstraints = false
+        lineView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
@@ -80,6 +84,11 @@ class ListsView: UIView {
         addConstraint(headerView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(headerView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(headerView.heightAnchor.constraint(equalToConstant: height + heightNavBar))
+        
+        addConstraint(lineView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(lineView.topAnchor.constraint(equalTo: headerView.bottomAnchor))
+        addConstraint(lineView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(lineView.heightAnchor.constraint(equalToConstant: 0.5))
         
         addConstraint(listsScrollView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(listsScrollView.bottomAnchor.constraint(equalTo: bottomAnchor))

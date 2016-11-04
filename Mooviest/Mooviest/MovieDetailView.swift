@@ -63,7 +63,7 @@ class MovieDetailView: UIView {
     func setupComponents() {
         self.backgroundColor = UIColor.white
         
-        backgroundStatusView.backgroundColor = dark_gray.withAlphaComponent(0.5)
+        backgroundStatusView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         headerView.backgroundColor = mooviest_red
 
         bodyScrollView.showsHorizontalScrollIndicator = false
@@ -253,6 +253,7 @@ class MovieDetailView: UIView {
     
     func setColors(backgroundColor: UIColor, tintColor:UIColor) {        
         headerView.backgroundColor = backgroundColor
+        headerBackdropImageView.backgroundColor = backgroundColor
         barSegmentedControl.tintColor = tintColor
         barSegmentedBackground.backgroundColor = backgroundColor
         profileCardView.backgroundColor = backgroundColor

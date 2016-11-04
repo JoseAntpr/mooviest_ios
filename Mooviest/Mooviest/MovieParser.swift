@@ -11,7 +11,7 @@ import Foundation
 extension Movie {
     init(json:[String:Any])throws {
         let externalImagePath = "https://cdn.tviso.com/"
-        let tvisoImagePath = "https://img.tviso.com/ES/poster/w430/"
+        let tvisoImagePath = "https://img.tviso.com/ES/poster/w430"
         let pre = "EXTERNAL#"
         
         //Extract id
@@ -124,7 +124,6 @@ extension Movie {
         if backdrop != "" {
             backdrop = "https://img.tviso.com/ES/backdrop/w600\(backdrop)"
         }
-        
         if image != "" {
             
             if image.hasPrefix(pre) {

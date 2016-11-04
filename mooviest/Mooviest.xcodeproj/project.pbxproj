@@ -47,12 +47,10 @@
 		A972E6601DB7D3ED00E291AE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A972E65F1DB7D3ED00E291AE /* Message.swift */; };
 		A97405301DC5B7E000B7DFC6 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96B523E1D89D34B0061A766 /* Kingfisher.framework */; };
 		A9779CE11DC4E81300D7BD3B /* KCFloatingActionButton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9779CE01DC4E81300D7BD3B /* KCFloatingActionButton.framework */; };
-		A98DE6441DBECD00009B34A1 /* AdviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98DE6431DBECCFF009B34A1 /* AdviceViewController.swift */; };
 		A99105F01DBCDA4700659481 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105EF1DBCDA4700659481 /* SearchView.swift */; };
 		A99105F21DBCDA5800659481 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105F11DBCDA5800659481 /* SearchViewController.swift */; };
-		A9ADF3241DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9ADF3231DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework */; };
 		A9ADF3261DC676A80054CBA0 /* TabBarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ADF3251DC676A80054CBA0 /* TabBarProtocol.swift */; };
-		A9B12EB71DA79FD100F3EF4E /* AnimatedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B12EB61DA79FD100F3EF4E /* AnimatedTabBarController.swift */; };
+		A9B12EB71DA79FD100F3EF4E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B12EB61DA79FD100F3EF4E /* TabBarController.swift */; };
 		A9B7B3441DAA37FF00A470BF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B7B3431DAA37FF00A470BF /* ProfileView.swift */; };
 		A9B7B3461DAA381100A470BF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B7B3451DAA381100A470BF /* ProfileViewController.swift */; };
 		A9B8694C1D89E49300DDC197 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B8694B1D89E49300DDC197 /* DataModel.swift */; };
@@ -141,12 +139,11 @@
 		A96B9B541D8D53A10038F4D9 /* UserParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserParser.swift; sourceTree = "<group>"; };
 		A972E65F1DB7D3ED00E291AE /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A9779CE01DC4E81300D7BD3B /* KCFloatingActionButton.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KCFloatingActionButton.framework; path = Carthage/Build/iOS/KCFloatingActionButton.framework; sourceTree = "<group>"; };
-		A98DE6431DBECCFF009B34A1 /* AdviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdviceViewController.swift; sourceTree = "<group>"; };
 		A99105EF1DBCDA4700659481 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A99105F11DBCDA5800659481 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A9ADF3231DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RAMAnimatedTabBarController.framework; path = Carthage/Build/iOS/RAMAnimatedTabBarController.framework; sourceTree = "<group>"; };
 		A9ADF3251DC676A80054CBA0 /* TabBarProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarProtocol.swift; sourceTree = "<group>"; };
-		A9B12EB61DA79FD100F3EF4E /* AnimatedTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnimatedTabBarController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		A9B12EB61DA79FD100F3EF4E /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TabBarController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A9B7B3431DAA37FF00A470BF /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ProfileView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A9B7B3451DAA381100A470BF /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A9B8694B1D89E49300DDC197 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
@@ -172,7 +169,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9ADF3241DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework in Frameworks */,
 				A96B523F1D89D34B0061A766 /* Alamofire.framework in Frameworks */,
 				A9C0E8A51DC5BF74008BE77C /* Chameleon.framework in Frameworks */,
 				A97405301DC5B7E000B7DFC6 /* Kingfisher.framework in Frameworks */,
@@ -243,7 +239,6 @@
 				A9EF59911D8DD3D90005C819 /* Resgister & Login */,
 				A965ACEC1D8AB71D00F9FF47 /* SwipeView */,
 				A965ACEB1D8AB6DC00F9FF47 /* MovieDetail */,
-				A98DE6401DBECC75009B34A1 /* Advice */,
 				A9DD49BA1DACD87100DACA5E /* Lists */,
 				A96EEA9E1DA25E870057FEE6 /* Perfil */,
 				A99105EE1DBCDA0500659481 /* Search */,
@@ -414,14 +409,6 @@
 			name = Perfil;
 			sourceTree = "<group>";
 		};
-		A98DE6401DBECC75009B34A1 /* Advice */ = {
-			isa = PBXGroup;
-			children = (
-				A98DE6431DBECCFF009B34A1 /* AdviceViewController.swift */,
-			);
-			name = Advice;
-			sourceTree = "<group>";
-		};
 		A99105EE1DBCDA0500659481 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,7 +448,7 @@
 				A96B52421D89D4CF0061A766 /* LoginViewController.swift */,
 				A96B52441D89D52B0061A766 /* LoginView.swift */,
 				A9EF59921D8DD41D0005C819 /* TextFieldView.swift */,
-				A9B12EB61DA79FD100F3EF4E /* AnimatedTabBarController.swift */,
+				A9B12EB61DA79FD100F3EF4E /* TabBarController.swift */,
 			);
 			name = "Resgister & Login";
 			sourceTree = "<group>";
@@ -641,7 +628,6 @@
 				A9DD49BE1DACD89D00DACA5E /* ListsViewController.swift in Sources */,
 				A9E5C93F1DAC11E900CC2E34 /* EditProfileViewController.swift in Sources */,
 				A943A8711D8B2E8700525BF7 /* RatingCollectionViewCell.swift in Sources */,
-				A98DE6441DBECD00009B34A1 /* AdviceViewController.swift in Sources */,
 				A972E6601DB7D3ED00E291AE /* Message.swift in Sources */,
 				A9DD49C01DACE2C700DACA5E /* ItemListView.swift in Sources */,
 				A911DEE51D929E28004BB61F /* TextFieldValidateExtension.swift in Sources */,
@@ -651,7 +637,7 @@
 				A965ACE61D8AB34B00F9FF47 /* InfoMovieView.swift in Sources */,
 				A96B525B1D89DE470061A766 /* RatingModel.swift in Sources */,
 				A9B8694C1D89E49300DDC197 /* DataModel.swift in Sources */,
-				A9B12EB71DA79FD100F3EF4E /* AnimatedTabBarController.swift in Sources */,
+				A9B12EB71DA79FD100F3EF4E /* TabBarController.swift in Sources */,
 				A9EC57951DBFE57B00542345 /* CoverView.swift in Sources */,
 				A96B52611D89DEBA0061A766 /* ModelProtocol.swift in Sources */,
 				A9D757CD1DAED2DE00905253 /* ListViewController.swift in Sources */,
@@ -850,6 +836,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Mooviest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mooviest.Mooviest.Mooviest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -867,6 +854,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Mooviest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mooviest.Mooviest.Mooviest;
 				PRODUCT_NAME = "$(TARGET_NAME)";

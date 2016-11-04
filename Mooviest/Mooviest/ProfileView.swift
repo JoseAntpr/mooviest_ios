@@ -49,7 +49,7 @@ class ProfileView: UIView {
     func setupComponents() {
         self.backgroundColor = UIColor.white
         
-        backgroundStatusView.backgroundColor =   dark_gray.withAlphaComponent(0.5)
+        backgroundStatusView.backgroundColor = UIColor.white.withAlphaComponent(0.2)
         
         headerView.backgroundColor =   mooviest_red
         headerBackdropImageView.image = UIImage(named: "backdrop")

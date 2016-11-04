@@ -11,9 +11,9 @@ import Foundation
 extension MovieListInfo {
     init(json:[String:Any], isSwwipe: Bool) throws {
         let externalImagePath = "https://cdn.tviso.com/"
-        var tvisoImagePath = "https://img.tviso.com/ES/poster/w200/"
+        var tvisoImagePath = "https://img.tviso.com/ES/poster/w200"
         if isSwwipe {
-            tvisoImagePath = "https://img.tviso.com/ES/poster/w430/"
+            tvisoImagePath = "https://img.tviso.com/ES/poster/w430"
         }
         let pre = "EXTERNAL#"
         //Extract id
@@ -31,7 +31,9 @@ extension MovieListInfo {
         //Extract image
         var image = ""
         image.toString(string: json["image"] as Any)
-        
+        //Extract backdrop
+        var backdrop = ""
+        backdrop.toString(string: json["backdrop"] as Any)
         //Extract average
         guard let average = json["average"] as? Float else{
             throw SerializationError.missing("average")
@@ -61,6 +63,11 @@ extension MovieListInfo {
                 image =  tvisoImagePath+image
             }
         }
+        print("backdrop:\(backdrop)")
+        if backdrop != "" {
+            backdrop = "https://img.tviso.com/ES/backdrop/w300\(backdrop)"
+            
+        }
         
         // Initialize properties
         self.id = id
@@ -68,6 +75,7 @@ extension MovieListInfo {
         self.idCollection = idCollection
         self.title = title
         self.image = image
+        self.backdrop = backdrop
         self.average = average
         self.typeMovie = typeMovie
     }

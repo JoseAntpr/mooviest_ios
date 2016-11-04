@@ -18,7 +18,8 @@ let placeholder_gray = UIColor(netHex: 0x848484)
 let seen_color = UIColor(netHex: 0x3cca81)
 let watchlist_color = UIColor(netHex: 0x0090ff)
 let favourite_color = UIColor(netHex: 0xffcc00)
-let blacklist_color = UIColor(red: 69, green: 69, blue: 69)
-//let blacklist_color = 0xe74034 76
+let blacklist_color = UIColor(netHex: 0xe74034)
+//let blacklist_color = UIColor(red: 69, green: 69, blue: 69)
+//let blacklist_color = 0xe7403476
 
 

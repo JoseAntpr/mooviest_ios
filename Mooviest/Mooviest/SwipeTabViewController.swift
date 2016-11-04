@@ -10,9 +10,6 @@
 import UIKit
 import Kingfisher
 
-
-
-
 class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProtocol, TabBarProtocol, DetailMovieDelegate {
     let MAX_BUFFER_SIZE = 4
     var v: SwipeTabView!
@@ -24,7 +21,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         super.viewDidLoad()
         let height = self.navigationController?.navigationBar.frame.height
         v = SwipeTabView(heightNavBar: height!)
-        
         view.addSubview(v)
         setupConstraints()
         setupView()
@@ -40,16 +36,15 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     }
     
     func setupView() {
-        
         let searchButton = UIBarButtonItem(image: UIImage(named: "search"),
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.search))
-        searchButton.tintColor = UIColor.white
+        searchButton.tintColor = mooviest_red
         
         let replayButton = UIBarButtonItem(image: UIImage(named: "autorenew"),
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.reloadSwipe))
-        replayButton.tintColor = UIColor.white
+        replayButton.tintColor = mooviest_red
         navigationItem.leftBarButtonItem = replayButton
         navigationItem.rightBarButtonItem = searchButton
         
@@ -67,14 +62,15 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
                 self.movies.removeAll()
                 self.nextUrl = ""
                 self.nextUrl.toString(string: res["next"] as Any)
-                
-                for m in res["results"] as! [[String:Any]] {
-                    let movie:MovieListInfo?
-                    do {
-                        movie = try MovieListInfo(json: m, isSwwipe: true)
-                        self.movies.append(movie!)
-                    } catch {
-                        movie = nil
+                if let results = res["results"] as? [[String:Any]] {
+                    for m in results {
+                        let movie:MovieListInfo?
+                        do {
+                            movie = try MovieListInfo(json: m, isSwwipe: true)
+                            self.movies.append(movie!)
+                        } catch {
+                            movie = nil
+                        }
                     }
                 }
                 self.allCards = []
@@ -135,8 +131,19 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         }
     }
     
+    func prefetch(urls: [URL]) {
+        let prefetcher = ImagePrefetcher(urls: urls) {
+            skippedResources, failedResources, completedResources in
+            print("These resources are prefetched: \(completedResources)")
+        }
+        prefetcher.start()
+    }
+    
     func tappedCard(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended {
+            if let url = URL(string:movies[0].backdrop) {
+                prefetch(urls: [url])
+            }
             let nViewController = MovieDetailViewController()
             nViewController.delegate = self
             nViewController.movieListInfo = movies[0]
@@ -159,13 +166,18 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     func loadCards() -> Void {
         if movies.count > 0 {
             let numLoadedCardsCap = movies.count > MAX_BUFFER_SIZE ? MAX_BUFFER_SIZE : movies.count
+            var urls = [URL]()
             for i in 0 ..< movies.count {
                 let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(movie: movies[i])
                 allCards.append(newCard)
                 if i < numLoadedCardsCap {
                     loadedCards.append(newCard)
                 }
+                if let url  = URL(string: movies[i].image) {
+                    urls.append(url)
+                }
             }
+            prefetch(urls: urls)
             for i in 0 ..< loadedCards.count {
                 if i > 0 {
                     v.panelSwipeView.insertSubview(loadedCards[i], belowSubview: loadedCards[i - 1])
@@ -183,7 +195,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
             if successful {
                 self.nextUrl = ""
                 self.nextUrl.toString(string: res["next"] as Any)
-                
+                var urls = [URL]()
                 for m in res["results"] as! [[String:Any]] {
                     let movie:MovieListInfo?
                     do {
@@ -191,17 +203,19 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
                         self.movies.append(movie!)
                         let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(movie: movie!)
                         self.allCards.append(newCard)
+                        if let url  = URL(string: movie!.image) {
+                            urls.append(url)
+                        }
                     } catch  {
                         movie = nil
                     }
                 }
+                self.prefetch(urls: urls)
             } else {
                 
             }
         }
     }
-    
-    
     
     func search() {
         let nViewController = SearchViewController()
@@ -251,19 +265,19 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     
     func updateTypeMovie(typemovie: TypeMovieModel,completion: @escaping (Bool) -> Void) {
         if movies.count > 0 {
-            var movie = movies[0]
+            let movie = movies[0]
             if movie.typeMovie == "" {
                 DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie.hashValue){
                     (successful, title, msg, res) in
                     if successful {
-                        if let id = res["id"] as? Int {
-                            movie.idCollection = id
-                            if let typeMovie = res["typeMovie"] as? String {
-                                movie.typeMovie = typeMovie
-                                self.movies[0] = movie
-                                completion(true)
-                            }
-                        }
+//                        if let id = res["id"] as? Int {
+//                            movie.idCollection = id
+//                            if let typeMovie = res["typeMovie"] as? String {
+//                                movie.typeMovie = typeMovie
+//                                self.movies[0] = movie
+//                                completion(true)
+//                            }
+//                        }
                     } else {
                         completion(false)
                     }
@@ -273,51 +287,58 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
                 DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie.hashValue){
                     (successful, title, msg, res) in
                     if successful {
-                        if let id = res["id"] as? Int {
-                            movie.idCollection = id
-                            if let typeMovie = res["typeMovie"] as? String {
-                                movie.typeMovie = typeMovie
-                                self.movies[0] = movie
-                                completion(true)
-                            }
-                        }
+//                        if let id = res["id"] as? Int {
+//                            movie.idCollection = id
+//                            if let typeMovie = res["typeMovie"] as? String {
+//                                movie.typeMovie = typeMovie
+//                                self.movies[0] = movie
+//                                completion(true)
+//                            }
+//                        }
                     } else {
                         completion(false)
+                        
                     } 
                 }
             } else {
                 completion(false)
+                
             }
         } else {
             completion(false)
+            
         }
     }
 
     func cardSwipedLeft(_ card: UIView) -> Void {
+        self.afterSwiped()
         updateTypeMovie(typemovie: TypeMovie.black) {
             (ok) in
-            self.afterSwiped()
+           
         }
     }
     
     func cardSwipedRight(_ card: UIView) -> Void {
+        self.afterSwiped()
         updateTypeMovie(typemovie: TypeMovie.favourite) {
             (ok) in
-            self.afterSwiped()
+            
         }
     }
     
     func cardSwipedTop(_ card: UIView) -> Void {
+        self.afterSwiped()
         updateTypeMovie(typemovie: TypeMovie.watchlist) {
             (ok) in
-            self.afterSwiped()
+            
         }
     }
     
     func cardSwipedBottom(_ card: UIView) -> Void {
+        self.afterSwiped()
         updateTypeMovie(typemovie: TypeMovie.seen) {
         (ok) in
-            self.afterSwiped()
+            
         }
     }
     

@@ -23,10 +23,6 @@ class InfoMovieView: UIView {
     var producerHeaderTitleView = UIView()
     var producerLabel = UILabel()
     var producerTextView = UITextView()
-//    
-//    var countryHeaderTitleView = UIView()
-//    var countryLabel = UILabel()
-//    var countryTextView = UITextView()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -61,12 +57,10 @@ class InfoMovieView: UIView {
         setupHeader(header: synopsisHeaderTitleView, label: synopsisLabel,key: "synopsisLabel",msg: "Text label synopsis")
         setupHeader(header: genreHeaderTitleView, label: genreLabel,key: "genreLabel",msg: "Text label genre")
         setupHeader(header: producerHeaderTitleView, label: producerLabel, key: "producerLabel",msg: "Text label producer")
-//        setupHeader(header: countryHeaderTitleView, label: countryLabel,key: "countryLabel",msg: "Text label country")
-        
+
         setupTextView(textView: synopsisTextView)
         setupTextView(textView: genreTextView)
         setupTextView(textView: producerTextView)
-//        setupTextView(textView: countryTextView)
 
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 10
@@ -80,7 +74,6 @@ class InfoMovieView: UIView {
         synopsisHeaderTitleView.addSubview(synopsisLabel)
         genreHeaderTitleView.addSubview(genreLabel)
         producerHeaderTitleView.addSubview(producerLabel)
-//        countryHeaderTitleView.addSubview(countryLabel)
         
         addSubview(ratingCollectionView)
         addSubview(synopsisHeaderTitleView)
@@ -89,8 +82,6 @@ class InfoMovieView: UIView {
         addSubview(genreTextView)
         addSubview(producerHeaderTitleView)
         addSubview(producerTextView)
-//        addSubview(countryHeaderTitleView)
-//        addSubview(countryTextView)
     }
     
     func setupConstraints() {
@@ -104,9 +95,6 @@ class InfoMovieView: UIView {
         producerLabel.translatesAutoresizingMaskIntoConstraints = false
         genreTextView.translatesAutoresizingMaskIntoConstraints = false
         producerTextView.translatesAutoresizingMaskIntoConstraints = false
-//        countryHeaderTitleView.translatesAutoresizingMaskIntoConstraints = false
-//        countryLabel.translatesAutoresizingMaskIntoConstraints = false
-//        countryTextView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(ratingCollectionView.centerXAnchor.constraint(equalTo: centerXAnchor))
         addConstraint(ratingCollectionView.topAnchor.constraint(equalTo: topAnchor, constant: 20))
@@ -158,27 +146,11 @@ class InfoMovieView: UIView {
         addConstraint(producerTextView.topAnchor.constraint(equalTo: producerHeaderTitleView.bottomAnchor))
         addConstraint(producerTextView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(producerTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier:0.1))
-        
-//        addConstraint(countryHeaderTitleView.leftAnchor.constraint(equalTo: leftAnchor))
-//        addConstraint(countryHeaderTitleView.topAnchor.constraint(equalTo:producerTextView.bottomAnchor, constant: 10))
-//        addConstraint(countryHeaderTitleView.rightAnchor.constraint(equalTo: rightAnchor))
-//        addConstraint(countryHeaderTitleView.heightAnchor.constraint(equalTo: synopsisHeaderTitleView.heightAnchor))
-//        
-//        countryHeaderTitleView.addConstraint(countryLabel.leftAnchor.constraint(equalTo: countryHeaderTitleView.leftAnchor, constant:5))
-//        countryHeaderTitleView.addConstraint(countryLabel.topAnchor.constraint(equalTo: countryHeaderTitleView.topAnchor))
-//        countryHeaderTitleView.addConstraint(countryLabel.rightAnchor.constraint(equalTo: countryHeaderTitleView.rightAnchor))
-//        countryHeaderTitleView.addConstraint(countryLabel.heightAnchor.constraint(equalTo: countryHeaderTitleView.heightAnchor))
-//        
-//        addConstraint(countryTextView.leftAnchor.constraint(equalTo: leftAnchor))
-//        addConstraint(countryTextView.topAnchor.constraint(equalTo: countryHeaderTitleView.bottomAnchor))
-//        addConstraint(countryTextView.widthAnchor.constraint(equalTo: widthAnchor))
-//        addConstraint(countryTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier:0.2))
     }
     
     func calculateHeight()-> CGFloat {
         return ratingCollectionView.frame.height + synopsisHeaderTitleView.frame.height*4 +
             synopsisTextView.frame.height + genreTextView.frame.height + producerTextView.frame.height
-            //+ v.infoView.countryTextView.frame.height
     }
     
     func setColors(backgroundColor: UIColor, tintColor:UIColor) {

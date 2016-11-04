@@ -239,7 +239,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
     }
     
     func chargueApp() {
-        let tabBarController = AnimatedTabBarController()
+        let tabBarController = TabBarController()
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = tabBarController

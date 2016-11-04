@@ -14,6 +14,7 @@ class ListView: UIView {
     let margin = CGFloat(2)
     var backgroundStatusView = UIView()
     var headerView = UIView()
+    let lineView = UIView()
     var movieCollectionView:UICollectionView!
     
     init(heightNavBar h: CGFloat) {
@@ -30,9 +31,11 @@ class ListView: UIView {
     func setupComponents() {
         self.backgroundColor = .white
         
-        backgroundStatusView.backgroundColor =   dark_gray.withAlphaComponent(0.5)
-        headerView.backgroundColor =   mooviest_red
+        backgroundStatusView.backgroundColor =   UIColor.white.withAlphaComponent(0.2)
+        headerView.backgroundColor =   .white
         headerView.clipsToBounds = true
+        
+        lineView.backgroundColor = UIColor.lightGray
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = margin/2
@@ -43,6 +46,7 @@ class ListView: UIView {
 
         addSubview(movieCollectionView)
         addSubview(headerView)
+        addSubview(lineView)
         addSubview(backgroundStatusView)
     }
     
@@ -50,6 +54,7 @@ class ListView: UIView {
         backgroundStatusView.translatesAutoresizingMaskIntoConstraints = false
         headerView.translatesAutoresizingMaskIntoConstraints = false
         movieCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
@@ -60,6 +65,11 @@ class ListView: UIView {
         addConstraint(headerView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(headerView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(headerView.heightAnchor.constraint(equalToConstant: height + heightNavBar))
+        
+        addConstraint(lineView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(lineView.topAnchor.constraint(equalTo: headerView.bottomAnchor))
+        addConstraint(lineView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(lineView.heightAnchor.constraint(equalToConstant: 0.5))
         
         addConstraint(movieCollectionView.topAnchor.constraint(equalTo: topAnchor, constant: margin))
         addConstraint(movieCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin))

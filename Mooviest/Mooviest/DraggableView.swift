@@ -52,13 +52,16 @@ class DraggableView: UIView {
         xFromCenter = 0
         yFromCenter = 0
         
-        backgroundColor = UIColor.white.withAlphaComponent(0)
+        self.backgroundColor = UIColor.white
+        
         coverView = CoverView(porcentCaption: 0.12, porcentRating: 0.16)
+        coverView.layer.borderWidth = 0.5
+        coverView.layer.borderColor = UIColor.lightGray.cgColor
         coverView.layer.cornerRadius = 5
         coverView.layer.masksToBounds = true
         coverView.titleLabel.lineBreakMode = .byWordWrapping
         coverView.titleLabel.numberOfLines = 2
-    
+        
         noImageLabel = UILabel()
         noImageLabel.text = "Image No Found"
         noImageLabel.textColor = UIColor.white

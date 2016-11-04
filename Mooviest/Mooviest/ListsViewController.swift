@@ -147,11 +147,11 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         let searchButton = UIBarButtonItem(image: UIImage(named: "search"),
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.search))
-        searchButton.tintColor = UIColor.white
+        searchButton.tintColor = mooviest_red
         let replayButton = UIBarButtonItem(image: UIImage(named: "autorenew"),
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.reloadLists))
-        replayButton.tintColor = UIColor.white
+        replayButton.tintColor = mooviest_red
         navigationItem.leftBarButtonItem = replayButton
         navigationItem.rightBarButtonItem = searchButton
     

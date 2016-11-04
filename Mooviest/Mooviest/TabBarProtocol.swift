@@ -16,32 +16,27 @@ extension TabBarProtocol {
     
     func resetTabBarAndNavigationController(viewController vc: UIViewController) {
 //        vc.tabBarController?.tabBar.barTintColor = mooviest_red
-//        if let tbCtrl = vc.tabBarController as? AnimatedTabBarController,
-//            let items = tbCtrl.tabBar.items as? [RAMAnimatedTabBarItem] {
-//            for tbItmen in items {
-//                tbItmen.iconColor = UIColor.white.withAlphaComponent(0.5)
-//                tbItmen.textColor = tbItmen.iconColor
-//                tbItmen.animation.iconSelectedColor = .white
-//                tbItmen.animation.textSelectedColor = .white
-//            }
+//        vc.tabBarController?.tabBar.tintColor = .white
+//        if #available(iOS 10.0, *) {
+//            vc.tabBarController?.tabBar.unselectedItemTintColor = UIColor.white.withAlphaComponent(0.5)
+//        } else {
+//            // Fallback on earlier versions
 //        }
-        
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
+//        vc.tabBarController?.tabBar.isTranslucent = false
+//        vc.tabBarController?.tabBar.isHidden = false
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: mooviest_red]
         vc.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
-        vc.navigationController?.navigationBar.tintColor = .white
+        vc.navigationController?.navigationBar.tintColor = mooviest_red
         vc.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)
     }
     
     func setColors(viewController vc: UIViewController, backgroundColor: UIColor, tintColor:UIColor) {
 //        vc.tabBarController?.tabBar.barTintColor = backgroundColor
-//        if let tbCtrl = vc.tabBarController as? AnimatedTabBarController,
-//            let items = tbCtrl.tabBar.items as? [RAMAnimatedTabBarItem] {
-//            for tbItmen in items {
-//                tbItmen.iconColor = tintColor.withAlphaComponent(0.5)
-//                tbItmen.textColor = tbItmen.iconColor
-//                tbItmen.animation.iconSelectedColor = tintColor
-//                tbItmen.animation.textSelectedColor = tintColor
-//            }
+//        vc.tabBarController?.tabBar.tintColor = tintColor
+//        if #available(iOS 10.0, *) {
+//            vc.tabBarController?.tabBar.unselectedItemTintColor = tintColor.withAlphaComponent(0.5)
+//        } else {
+//            // Fallback on earlier versions
 //        }
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: tintColor]
         vc.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]

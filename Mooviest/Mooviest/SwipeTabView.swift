@@ -21,6 +21,7 @@ class SwipeTabView: UIView {
     
     var backgroundStatusView = UIView()
     var headerView = UIView()
+    var lineView = UIView()
     
     var panelButtonView = UIView()
     var closedButton = UIButton(type: UIButtonType.system) as UIButton
@@ -46,8 +47,9 @@ class SwipeTabView: UIView {
     func setupComponents() {
         self.backgroundColor = UIColor.white
         
-        backgroundStatusView.backgroundColor = dark_gray.withAlphaComponent(0.5)
-        headerView.backgroundColor =  mooviest_red
+        backgroundStatusView.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+        headerView.backgroundColor =  .white
+        lineView.backgroundColor = UIColor.lightGray
         
         closedButton.setImage( UIImage(named: "clear"), for: UIControlState())
         closedButton.tintColor = .white
@@ -77,6 +79,7 @@ class SwipeTabView: UIView {
         addSubview(panelSwipeView)
         addSubview(panelButtonView)
         addSubview(headerView)
+        addSubview(lineView)
         addSubview(backgroundStatusView)
     }
     
@@ -92,6 +95,7 @@ class SwipeTabView: UIView {
         space2View.translatesAutoresizingMaskIntoConstraints = false
         space3View.translatesAutoresizingMaskIntoConstraints = false
         panelSwipeView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
@@ -102,6 +106,11 @@ class SwipeTabView: UIView {
         addConstraint(headerView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(headerView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(headerView.heightAnchor.constraint(equalToConstant: height + heightNavBar))
+        
+        addConstraint(lineView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(lineView.topAnchor.constraint(equalTo: headerView.bottomAnchor))
+        addConstraint(lineView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(lineView.heightAnchor.constraint(equalToConstant: 0.5))
         
         addConstraint(panelSwipeView.topAnchor.constraint(equalTo: headerView.bottomAnchor,constant: spaceBottomBarButtons*2))
         addConstraint(panelSwipeView.bottomAnchor.constraint(equalTo: panelButtonView.topAnchor,constant: -spaceBottomBarButtons))

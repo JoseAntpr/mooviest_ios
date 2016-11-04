@@ -15,6 +15,7 @@ class EditProfileView: UIView {
     
     var heightNavBar:CGFloat!
     var headerView = UIView()
+    let lineView = UIView()
     
     var centralView = UIView()
     var topView = UIView()
@@ -47,9 +48,10 @@ class EditProfileView: UIView {
     
     func setupComponents() {
         self.backgroundColor = UIColor.white
-        backgroundStatusView.backgroundColor =   dark_gray.withAlphaComponent(0.5)
-        headerView.backgroundColor =   mooviest_red
+        backgroundStatusView.backgroundColor =   UIColor.white.withAlphaComponent(0.2)
+        headerView.backgroundColor =   .white
         headerView.clipsToBounds = true
+        lineView.backgroundColor = UIColor.lightGray
         
         topView.backgroundColor = .white
         coverImageView.image = UIImage(named: "contact")
@@ -129,6 +131,7 @@ class EditProfileView: UIView {
         addSubview(centralView)
         addSubview(topView)        
         addSubview(headerView)
+        addSubview(lineView)
         addSubview(backgroundStatusView)
     } 
     
@@ -148,6 +151,7 @@ class EditProfileView: UIView {
         dateTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         genderTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         countryTextFieldView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
@@ -158,6 +162,11 @@ class EditProfileView: UIView {
         addConstraint(headerView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(headerView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(headerView.heightAnchor.constraint(equalToConstant: height + heightNavBar))
+        
+        addConstraint(lineView.leftAnchor.constraint(equalTo: leftAnchor))
+        addConstraint(lineView.topAnchor.constraint(equalTo: headerView.bottomAnchor))
+        addConstraint(lineView.widthAnchor.constraint(equalTo: widthAnchor))
+        addConstraint(lineView.heightAnchor.constraint(equalToConstant: 0.5))
         
         addConstraint(topView.topAnchor.constraint(equalTo: headerView.bottomAnchor))
         addConstraint(topView.leftAnchor.constraint(equalTo: leftAnchor))
