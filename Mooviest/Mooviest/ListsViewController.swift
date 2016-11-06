@@ -81,6 +81,12 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     override func viewWillAppear(_ animated: Bool) {
         self.resetTabBarAndNavigationController(viewController: self)
+        if let value = tabBarController?.tabBar.items?[1].badgeValue {
+            if value != "" {
+                reloadLists()
+                tabBarController?.tabBar.items?[1].badgeValue = nil
+            }
+        }
     }
     
     //This method is called when the autolayout engine has finished to calculate your views' frames
@@ -125,6 +131,7 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     func setupView() {
+        tabBarController?.tabBar.items?[1].badgeValue = nil
         height = self.navigationController?.navigationBar.frame.height
         v = ListsView(heightNavBar: height)
         

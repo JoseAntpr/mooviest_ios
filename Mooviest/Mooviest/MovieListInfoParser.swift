@@ -63,7 +63,6 @@ extension MovieListInfo {
                 image =  tvisoImagePath+image
             }
         }
-        print("backdrop:\(backdrop)")
         if backdrop != "" {
             backdrop = "https://img.tviso.com/ES/backdrop/w300\(backdrop)"
             

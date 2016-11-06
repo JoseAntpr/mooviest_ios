@@ -26,7 +26,7 @@ class TabBarController: UITabBarController {
         nVController.navigationBar.topItem?.title = t
         nVController.navigationBar.setBackgroundImage(UIImage(), for: .default)
         nVController.navigationBar.shadowImage = UIImage()
-        nVController.navigationBar.barStyle = UIBarStyle.default
+        nVController.navigationBar.barStyle = UIBarStyle.black
         nVController.navigationBar.isTranslucent = true
         nVController.navigationBar.clipsToBounds = true
 
@@ -63,10 +63,12 @@ class TabBarController: UITabBarController {
 
         let tab3 = ProfileViewController(nibName: nil, bundle: nil)
         let nVController3 = createNavigationController(rootViewController: tab3, title: tbItem3.title!)
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
+        nVController3.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
         nVController3.tabBarItem = tbItem3
         
         self.viewControllers = [nVController1, nVController2, nVController3]
-        self.tabBar.barTintColor = .white
+        self.tabBar.barTintColor = barTintColor
         self.tabBar.tintColor = mooviest_red
         self.tabBar.isTranslucent = false
     }

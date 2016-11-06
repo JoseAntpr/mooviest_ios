@@ -24,7 +24,7 @@ extension TabBarProtocol {
 //        }
 //        vc.tabBarController?.tabBar.isTranslucent = false
 //        vc.tabBarController?.tabBar.isHidden = false
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: mooviest_red]
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.black]
         vc.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : Any]
         vc.navigationController?.navigationBar.tintColor = mooviest_red
         vc.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0, for: .default)

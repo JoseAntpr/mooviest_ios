@@ -53,6 +53,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         v.heartButton.addTarget(self, action: #selector(self.clickSwipeRight), for: .touchUpInside)
         v.clockButton.addTarget(self, action: #selector(self.clickSwipeTop), for: .touchUpInside)
         v.eyeButton.addTarget(self, action: #selector(self.clickSwipeBottom), for: .touchUpInside)
+        
     }
     
     func initSwipe() {
@@ -88,6 +89,15 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         }
         initSwipe()
         
+    }
+    
+    func updateBadgeValue() {
+        var count = 0
+        let value = tabBarController?.tabBar.items?[1].badgeValue
+        if value != nil && value != "" {
+            count = Int(value!)!
+        }
+        tabBarController?.tabBar.items?[1].badgeValue   = "\(count+1)"
     }
     
     func updateSwipe() {
@@ -274,10 +284,11 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
 //                            movie.idCollection = id
 //                            if let typeMovie = res["typeMovie"] as? String {
 //                                movie.typeMovie = typeMovie
-//                                self.movies[0] = movie
-//                                completion(true)
+//                                self.movies[0] = movie//
 //                            }
 //                        }
+                        completion(true)
+                        self.updateBadgeValue()
                     } else {
                         completion(false)
                     }
@@ -292,16 +303,19 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
 //                            if let typeMovie = res["typeMovie"] as? String {
 //                                movie.typeMovie = typeMovie
 //                                self.movies[0] = movie
-//                                completion(true)
 //                            }
 //                        }
+                        
+                        completion(true)
+                        self.updateBadgeValue()
                     } else {
                         completion(false)
                         
                     } 
                 }
             } else {
-                completion(false)
+                completion(true)
+                updateBadgeValue()
                 
             }
         } else {
@@ -367,6 +381,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
-        return UIStatusBarStyle.lightContent
+        return UIStatusBarStyle.default
     }
 }

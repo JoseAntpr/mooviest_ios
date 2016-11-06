@@ -45,10 +45,10 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                     self.movie = try Movie(json: res)
                     self.loadDataView()
                 } catch {
-                    
+                    Message.msgPopupDelay(title: "Movie error", message: "not load movie", delay: 0, ctrl: self) {}
                 }
             } else {
-                
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
             }
         }
         setupView()
@@ -73,6 +73,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         }
         v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -109,19 +110,16 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         self.navigationItem.title = movieListInfo.title
         v.captionMovieView.typeLabel.text = "Película"
         
-        v.coverImageView.kf.setImage(with: URL(string:  movieListInfo!.image), placeholder: UIImage(named:  "noimage"))
-        v.coverImageView.contentMode = UIViewContentMode.scaleToFill
-        v.coverImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
-        v.coverImageView.layer.borderWidth = 1.8
-        v.coverImageView.layer.cornerRadius = 5
-        v.coverImageView.layer.masksToBounds = true
-        v.headerBackdropImageView.kf.setImage(with: URL(string: movieListInfo!.backdrop), placeholder: UIImage(named: "backdrop"), completionHandler: {
+        v.coverImageView.kf.setImage(with: URL(string:  movieListInfo!.image))       
+        v.headerBackdropImageView.kf.setImage(with: URL(string: movieListInfo!.backdrop), completionHandler: {
             (image, error, cacheType, imageUrl) in
             if image != nil {
                 self.updateColor(image: image)
             } else {
+                self.v.headerBackdropImageView.image = UIImage(named: "backdrop")?.withRenderingMode(.alwaysTemplate)
+                self.v.headerBackdropImageView.tintColor = mooviest_red
+                self.v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
                 if let img = self.v.coverImageView.image {
-                    self.v.headerBackdropImageView.image = img
                     self.updateColor(image: img)
                 }
             }
@@ -194,46 +192,38 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         super.didReceiveMemoryWarning()
     }
     
-    func updateTypeMovie(typemovie: TypeMovieModel,completion: @escaping (Bool) -> Void) {
-        if movie != nil {
-            if movie.typeMovie == "" {
-                DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie.hashValue){
-                    (successful, title, msg, res) in
-                    if successful {
-                        if let id = res["id"] as? Int {
-                            self.movie.idCollection = id
-                            if let typeMovie = res["typeMovie"] as? String {
-                                self.movie.typeMovie = typeMovie
-                                self.delegate?.updateClasificationMovie(self.movie)
-                                completion(true)
-                            }
-                        }
-                    } else {
-                        completion(false)
+    func updateMovie(res: [String:Any]) {
+        if let id = res["id"] as? Int {
+            movie.idCollection = id
+            if let typeMovie = res["typeMovie"] as? String {
+                movie.typeMovie = typeMovie
+                delegate?.updateClasificationMovie(movie)
+            }
+        }
+    }
+    
+    func updateTypeMovie(typemovie: TypeMovieModel,completion: @escaping (Bool,String,String?) -> Void) {
+        let queue = DispatchQueue(label: "mooviest.updateTypeMovie")
+        queue.async {
+            if self.movie != nil {
+                if self.movie.typeMovie == "" {
+                    DataModel.sharedInstance.insertMovieCollection(idMovie: self.movie.id, typeMovie: typemovie.hashValue){
+                        (successful, title, msg, res) in
+                        completion(successful, title, msg)
+                        self.updateMovie(res: res)
                     }
-                    
-                }
-            } else if typemovie.rawValue != movie.typeMovie {
-                DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie.hashValue){
-                    (successful, title, msg, res) in
-                    if successful {
-                        if let id = res["id"] as? Int {
-                            self.movie.idCollection = id
-                            if let typeMovie = res["typeMovie"] as? String {
-                                self.movie.typeMovie = typeMovie
-                                self.delegate?.updateClasificationMovie(self.movie)
-                                completion(true)
-                            }
-                        }
-                    } else {
-                        completion(false)
-                    }                    
+                } else if typemovie.rawValue != self.movie.typeMovie {
+                    DataModel.sharedInstance.updateMovieCollection(idCollection: self.movie.idCollection,typeMovie: typemovie.hashValue){
+                        (successful, title, msg, res) in
+                        completion(successful, title, msg)
+                        self.updateMovie(res: res)
+                    }
+                } else {
+                    completion(true, "", "")
                 }
             } else {
-                completion(false)
+                completion(false, "Movie error", "movie not load")
             }
-        } else {
-            completion(false)
         }
     }
     
@@ -254,10 +244,11 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     func selectList(item: KCFloatingActionButtonItem, typemovie: TypeMovieModel) {
+        self.updateFloatButtons(item: item, typemovie: typemovie)
         updateTypeMovie(typemovie: typemovie) {
-            (ok) in
-            if ok {
-                self.updateFloatButtons(item: item, typemovie: typemovie)
+            (successful, title, msg) in
+            if !successful {
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
             }
         }
     }
@@ -286,7 +277,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                 cardTransform = CATransform3DTranslate(headerTransform, 0, headerSizevariation, 0)
                 headerTransform = CATransform3DScale(headerTransform, 1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0)
                 noScrollTransform = cardTransform
-                if v.coverImageView.layer.zPosition < v.headerView.layer.zPosition{
+                if v.coverView.layer.zPosition < v.headerView.layer.zPosition{
                     v.headerView.layer.zPosition = 0
                 }                
             } else {
@@ -303,18 +294,18 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                 cardTransform = CATransform3DTranslate(cardTransform, 0, max(-offset_CardProfileStop, -offset), 0)
                 noScrollTransform = CATransform3DTranslate(noScrollTransform, 0, -offset, 0)
                 
-                let avatarScaleFactor = (min(offset_CoverStopScale, offset)) / v.coverImageView.bounds.height
-                let avatarSizeVariation = ((v.coverImageView.bounds.height * (1.0 + avatarScaleFactor)) - v.coverImageView.bounds.height)
+                let avatarScaleFactor = (min(offset_CoverStopScale, offset)) / v.coverView.bounds.height
+                let avatarSizeVariation = ((v.coverView.bounds.height * (1.0 + avatarScaleFactor)) - v.coverView.bounds.height)
                 avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation*0.5, 0)
                 avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
                 
                 if offset <= offset_CoverStopScale! {
-                    if v.coverImageView.layer.zPosition < v.headerView.layer.zPosition{
+                    if v.coverView.layer.zPosition < v.headerView.layer.zPosition{
                         v.headerView.layer.zPosition = 0
                     }
                 }
                 else {
-                    if v.coverImageView.layer.zPosition >= v.headerView.layer.zPosition{
+                    if v.coverView.layer.zPosition >= v.headerView.layer.zPosition{
                         v.headerView.layer.zPosition = 1
                         v.barSegmentedView.layer.zPosition = 2
                         v.backgroundStatusView.layer.zPosition = 3
@@ -323,7 +314,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                 }
             }
             v.headerView.layer.transform = headerTransform
-            v.coverImageView.layer.transform = avatarTransform
+            v.coverView.layer.transform = avatarTransform
             v.profileCardView.layer.transform  = cardTransform
             v.barSegmentedView.layer.transform = cardTransform
             v.castCollectionView.layer.transform  = cardTransform

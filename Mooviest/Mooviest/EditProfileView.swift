@@ -49,7 +49,7 @@ class EditProfileView: UIView {
     func setupComponents() {
         self.backgroundColor = UIColor.white
         backgroundStatusView.backgroundColor =   UIColor.white.withAlphaComponent(0.2)
-        headerView.backgroundColor =   .white
+        headerView.backgroundColor = barTintColor
         headerView.clipsToBounds = true
         lineView.backgroundColor = UIColor.lightGray
         

@@ -20,6 +20,7 @@ class CoverView: UIView {
     let ratingLabel = UILabel()
     
     let movieImageView = UIImageView()
+    let mooviestImageView = UIImageView()
     
     var blurEffectView: UIVisualEffectView!
     var blurEffectRatingView: UIVisualEffectView!
@@ -37,9 +38,11 @@ class CoverView: UIView {
     }
     
     func setupComponents() {
-        self.backgroundColor = UIColor.blue
-    
+        self.backgroundColor = .white
         movieImageView.contentMode = .scaleToFill
+        mooviestImageView.contentMode = .scaleAspectFit
+        mooviestImageView.image = UIImage(named:"Mooviest")?.withRenderingMode(.alwaysTemplate)
+        mooviestImageView.tintColor = mooviest_red
         
         ratingImageView.image = UIImage(named: "star_rate")?.withRenderingMode(.alwaysTemplate)
         ratingImageView.tintColor = favourite_color
@@ -70,7 +73,7 @@ class CoverView: UIView {
         
         captionView.addSubview(blurEffectView)
         captionView.addSubview(titleLabel)
-        
+        addSubview(mooviestImageView)
         addSubview(movieImageView)
         addSubview(captionRatingView)
         addSubview(captionView)
@@ -85,11 +88,17 @@ class CoverView: UIView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         blurEffectRatingView.translatesAutoresizingMaskIntoConstraints = false
+        mooviestImageView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(movieImageView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(movieImageView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(movieImageView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(movieImageView.heightAnchor.constraint(equalTo: heightAnchor))
+        
+        addConstraint(mooviestImageView.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(mooviestImageView.centerXAnchor.constraint(equalTo: centerXAnchor))
+        addConstraint(mooviestImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.7))
+        addConstraint(mooviestImageView.bottomAnchor.constraint(equalTo: captionView.topAnchor))
         
         let margin = CGFloat(5)
         addConstraint(captionRatingView.topAnchor.constraint(equalTo: topAnchor, constant: -margin))

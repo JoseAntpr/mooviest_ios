@@ -48,7 +48,7 @@ class SwipeTabView: UIView {
         self.backgroundColor = UIColor.white
         
         backgroundStatusView.backgroundColor = UIColor.white.withAlphaComponent(0.2)
-        headerView.backgroundColor =  .white
+        headerView.backgroundColor =  barTintColor
         lineView.backgroundColor = UIColor.lightGray
         
         closedButton.setImage( UIImage(named: "clear"), for: UIControlState())

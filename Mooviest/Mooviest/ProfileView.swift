@@ -26,12 +26,9 @@ class ProfileView: UIView {
     
     var profileCardView = UIView()
     var coverImageView = UIImageView()
-    var emailLabel = UILabel()
-    let usernameLabel = UILabel()
+    var usernameLabel = UILabel()
     let firstnameLabel = UILabel()
     let lastnameLabel = UILabel()
-    let followersLabel = UILabel()
-    let followingLabel = UILabel()
     
     var barSegmentedView = UIView()
     var barSegmentedControl: UISegmentedControl!
@@ -49,10 +46,11 @@ class ProfileView: UIView {
     func setupComponents() {
         self.backgroundColor = UIColor.white
         
-        backgroundStatusView.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+        backgroundStatusView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         
-        headerView.backgroundColor =   mooviest_red
-        headerBackdropImageView.image = UIImage(named: "backdrop")
+        headerView.backgroundColor =   .white
+        headerBackdropImageView.image = UIImage(named: "backdrop")?.withRenderingMode(.alwaysTemplate)
+        headerBackdropImageView.tintColor = mooviest_red
         headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
  
         profileCardView.backgroundColor = .white
@@ -60,13 +58,8 @@ class ProfileView: UIView {
         coverImageView.backgroundColor = UIColor.white
         
         let porcentSize = CGFloat(0.7)
-        emailLabel.text = "email@gmail.com"
-        emailLabel.textAlignment = .center
-        emailLabel.font.withSize(emailLabel.font.capHeight*porcentSize)
-        emailLabel.textColor = .darkGray
-        
-        usernameLabel.text = "username"
-        usernameLabel.textAlignment = .left
+        usernameLabel.text = "email@gmail.com"
+        usernameLabel.textAlignment = .center
         usernameLabel.font.withSize(usernameLabel.font.capHeight*porcentSize)
         usernameLabel.textColor = .darkGray
         
@@ -80,17 +73,7 @@ class ProfileView: UIView {
         lastnameLabel.font.withSize(lastnameLabel.font.capHeight*porcentSize)
         lastnameLabel.textColor = .darkGray
         
-        followersLabel.text = "0 followers"
-        followersLabel.textAlignment = .right
-        followersLabel.font.withSize(followersLabel.font.capHeight*porcentSize)
-        followersLabel.textColor = .darkGray
-        
-        followingLabel.text = "0 following"
-        followingLabel.textAlignment = .right
-        followingLabel.font.withSize(followingLabel.font.capHeight*porcentSize)
-        followingLabel.textColor = .darkGray
-        
-        let items = ["SEGUIDORES", "SIGUIENDO"]
+        let items = ["SEGUIDORES 0", "SIGUIENDO 0"]
         barSegmentedControl = UISegmentedControl(items: items)
         barSegmentedControl.selectedSegmentIndex = 0
         barSegmentedControl.tintColor =   mooviest_red
@@ -118,12 +101,9 @@ class ProfileView: UIView {
         tabsView.addSubview(followersView)
         
         profileCardView.addSubview(coverImageView)
-        profileCardView.addSubview(emailLabel)
         profileCardView.addSubview(usernameLabel)
         profileCardView.addSubview(firstnameLabel)
         profileCardView.addSubview(lastnameLabel)
-        profileCardView.addSubview(followersLabel)
-        profileCardView.addSubview(followingLabel)
         
         barSegmentedView.addSubview(barSegmentedControl)
         
@@ -140,7 +120,7 @@ class ProfileView: UIView {
         bodyScrollView.translatesAutoresizingMaskIntoConstraints = false
         tabsView.translatesAutoresizingMaskIntoConstraints = false
         coverImageView.translatesAutoresizingMaskIntoConstraints = false
-        emailLabel.translatesAutoresizingMaskIntoConstraints = false
+        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         headerBackdropImageView.translatesAutoresizingMaskIntoConstraints = false
         backgroundStatusView.translatesAutoresizingMaskIntoConstraints = false
         barSegmentedView.translatesAutoresizingMaskIntoConstraints = false
@@ -150,12 +130,8 @@ class ProfileView: UIView {
         profileCardView.translatesAutoresizingMaskIntoConstraints = false
         InfoLabel.translatesAutoresizingMaskIntoConstraints = false
         Info2Label.translatesAutoresizingMaskIntoConstraints = false
-        
-        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         firstnameLabel.translatesAutoresizingMaskIntoConstraints = false
         lastnameLabel.translatesAutoresizingMaskIntoConstraints = false
-        followersLabel.translatesAutoresizingMaskIntoConstraints = false
-        followingLabel.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
@@ -183,10 +159,10 @@ class ProfileView: UIView {
         profileCardView.addConstraint(coverImageView.heightAnchor.constraint(equalTo: profileCardView.widthAnchor, multiplier: 0.4))
         
         let margin = CGFloat(5)
-        profileCardView.addConstraint(emailLabel.heightAnchor.constraint(equalTo: firstnameLabel.heightAnchor))
-        profileCardView.addConstraint(emailLabel.centerXAnchor.constraint(equalTo: profileCardView.centerXAnchor))
-        profileCardView.addConstraint(emailLabel.bottomAnchor.constraint(equalTo:  profileCardView.bottomAnchor))
-        profileCardView.addConstraint(emailLabel.widthAnchor.constraint(equalTo: profileCardView.widthAnchor, multiplier: 0.5))
+        profileCardView.addConstraint(usernameLabel.heightAnchor.constraint(equalTo: firstnameLabel.heightAnchor))
+        profileCardView.addConstraint(usernameLabel.centerXAnchor.constraint(equalTo: profileCardView.centerXAnchor))
+        profileCardView.addConstraint(usernameLabel.bottomAnchor.constraint(equalTo:  profileCardView.bottomAnchor))
+        profileCardView.addConstraint(usernameLabel.widthAnchor.constraint(equalTo: profileCardView.widthAnchor, multiplier: 0.5))
         
         profileCardView.addConstraint(firstnameLabel.leftAnchor.constraint(equalTo: profileCardView.leftAnchor))
         profileCardView.addConstraint(firstnameLabel.bottomAnchor.constraint(equalTo: lastnameLabel.topAnchor, constant: -margin))
@@ -197,21 +173,6 @@ class ProfileView: UIView {
         profileCardView.addConstraint(lastnameLabel.centerYAnchor.constraint(equalTo: profileCardView.centerYAnchor, constant: -margin))
         profileCardView.addConstraint(lastnameLabel.heightAnchor.constraint(equalTo: firstnameLabel.heightAnchor))
         profileCardView.addConstraint(lastnameLabel.rightAnchor.constraint(equalTo: coverImageView.leftAnchor))
-        
-        profileCardView.addConstraint(usernameLabel.leftAnchor.constraint(equalTo: profileCardView.leftAnchor))
-        profileCardView.addConstraint(usernameLabel.topAnchor.constraint(equalTo: lastnameLabel.bottomAnchor, constant: margin))
-        profileCardView.addConstraint(usernameLabel.heightAnchor.constraint(equalTo: firstnameLabel.heightAnchor))
-        profileCardView.addConstraint(usernameLabel.rightAnchor.constraint(equalTo: coverImageView.leftAnchor))
-        
-        profileCardView.addConstraint(followersLabel.leftAnchor.constraint(equalTo: coverImageView.rightAnchor))
-        profileCardView.addConstraint(followersLabel.bottomAnchor.constraint(equalTo: profileCardView.centerYAnchor, constant: -margin))
-        profileCardView.addConstraint(followersLabel.heightAnchor.constraint(equalTo: firstnameLabel.heightAnchor))
-        profileCardView.addConstraint(followersLabel.rightAnchor.constraint(equalTo: profileCardView.rightAnchor))
-        
-        profileCardView.addConstraint(followingLabel.leftAnchor.constraint(equalTo: coverImageView.rightAnchor))
-        profileCardView.addConstraint(followingLabel.topAnchor.constraint(equalTo: profileCardView.centerYAnchor))
-        profileCardView.addConstraint(followingLabel.heightAnchor.constraint(equalTo: firstnameLabel.heightAnchor))
-        profileCardView.addConstraint(followingLabel.rightAnchor.constraint(equalTo: profileCardView.rightAnchor))
         
         addConstraint(bodyScrollView.topAnchor.constraint(equalTo: topAnchor))
         addConstraint(bodyScrollView.leftAnchor.constraint(equalTo: leftAnchor))

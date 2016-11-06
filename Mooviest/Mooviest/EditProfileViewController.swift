@@ -84,7 +84,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     }
     
     func setupView() {
-        
+        navigationItem.title = "Edit profile"
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
         view.addGestureRecognizer(tap)
         
@@ -94,7 +94,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         let saveButton = UIBarButtonItem(image: UIImage(named: "save"),
                                          style: UIBarButtonItemStyle.plain ,
                                          target: self, action: #selector(self.saveProfile))
-        saveButton.tintColor = UIColor.white
+        saveButton.tintColor = mooviest_red
         navigationItem.rightBarButtonItem = saveButton
         v.photoButton.addTarget(self, action: #selector(self.photoPicker), for: .touchUpInside)
         if let avatar = user?.avatar {
@@ -244,7 +244,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     
     //TextField Delegate
     func textFieldDidEndEditing(_ textField: UITextField) {
-        print(activeField?.text as Any)
+        
         validatePickers(textField: activeField!)
         v.formView.comeBackOrigin(withDuration: 0.3, moved: move)
         move = 0
@@ -322,7 +322,6 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         default:
             v.countryTextFieldView.textField.text = countries[row]        
         }
-        
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -396,7 +395,6 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         }
         v.genderTextFieldView.textField.text = user?.gender
         if user!.gender != "" {
-            print(user!.gender)
             v.genderTextFieldView.textField.text = user!.gender == "MA" ? genders[0]:genders[1]
         }
     }

@@ -26,7 +26,10 @@ class MovieDetailView: UIView {
     let bodyScrollView = UIScrollView()
     
     var profileCardView = UIView()
+    let coverView = UIView()
     let coverImageView = UIImageView()
+    let mooviestImageView = UIImageView()
+    
     let captionMovieView = CaptionMovieView()
     
     let infoView = InfoMovieView()
@@ -64,8 +67,24 @@ class MovieDetailView: UIView {
         self.backgroundColor = UIColor.white
         
         backgroundStatusView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        headerView.backgroundColor = mooviest_red
-
+        headerView.backgroundColor = barTintColor
+        
+        coverView.backgroundColor = .white
+        coverView.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.9).cgColor
+        coverView.layer.borderWidth = 1
+        coverView.layer.cornerRadius = 5
+        coverView.layer.masksToBounds = true
+        
+        coverImageView.contentMode = UIViewContentMode.scaleToFill
+        coverImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
+        coverImageView.layer.borderWidth = 1.8
+        coverImageView.layer.cornerRadius = 5
+        coverImageView.layer.masksToBounds = true
+        
+        mooviestImageView.contentMode = .scaleAspectFit
+        mooviestImageView.image = UIImage(named:"Mooviest")?.withRenderingMode(.alwaysTemplate)
+        mooviestImageView.tintColor = mooviest_red
+        
         bodyScrollView.showsHorizontalScrollIndicator = false
         bodyScrollView.showsVerticalScrollIndicator = false
         
@@ -92,16 +111,10 @@ class MovieDetailView: UIView {
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         
-        headerView.addSubview(blurEffectView)
-        headerView.addSubview(headerBackdropImageView)
-        profileCardView.addSubview(captionMovieView)
-        profileCardView.addSubview(coverImageView)
-        
         barSegmentedView.backgroundColor = .white
         
-        
         fab.animationSpeed = 0.01
-        fab.buttonColor = mooviest_red
+        fab.buttonColor = mooviest_red.withAlphaComponent(0.7)
         fab.buttonImage =  UIImage(named:"add")?.withRenderingMode(.alwaysTemplate)
         fab.plusColor = .white
         
@@ -132,13 +145,20 @@ class MovieDetailView: UIView {
         fab.addItem(item: favouriteItem)
         fab.addItem(item: blackItem)
         
-        seeView.addSubview(seeInfoLabel)
-        
         barSegmentedView.addSubview(barSegmentedBackground)
         barSegmentedView.addSubview(barSegmentedControl)
         
-        addSubview(headerView)
+        coverView.addSubview(mooviestImageView)
+        coverView.addSubview(coverImageView)
+        profileCardView.addSubview(captionMovieView)
+        profileCardView.addSubview(coverView)
         
+        seeView.addSubview(seeInfoLabel)
+        
+        headerView.addSubview(blurEffectView)
+        headerView.addSubview(headerBackdropImageView)
+        
+        addSubview(headerView)
         addSubview(seeView)
         addSubview(castCollectionView)
         addSubview(infoView)
@@ -167,6 +187,8 @@ class MovieDetailView: UIView {
         captionMovieView.translatesAutoresizingMaskIntoConstraints = false
         seeInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         barSegmentedBackground.translatesAutoresizingMaskIntoConstraints = false
+        mooviestImageView.translatesAutoresizingMaskIntoConstraints = false
+        coverView.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
@@ -188,10 +210,21 @@ class MovieDetailView: UIView {
         addConstraint(profileCardView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(profileCardView.heightAnchor.constraint(equalTo: headerView.heightAnchor, multiplier: 0.7))
         
-        profileCardView.addConstraint(coverImageView.centerYAnchor.constraint(equalTo: profileCardView.topAnchor))
-        profileCardView.addConstraint(coverImageView.leftAnchor.constraint(equalTo: profileCardView.leftAnchor, constant: 20))
-        profileCardView.addConstraint(coverImageView.widthAnchor.constraint(equalTo: coverImageView.heightAnchor, multiplier: 0.7))
-        profileCardView.addConstraint(coverImageView.heightAnchor.constraint(equalTo: profileCardView.heightAnchor, multiplier: 1.7))
+        profileCardView.addConstraint(coverView.centerYAnchor.constraint(equalTo: profileCardView.topAnchor))
+        profileCardView.addConstraint(coverView.leftAnchor.constraint(equalTo: profileCardView.leftAnchor, constant: 20))
+        profileCardView.addConstraint(coverView.widthAnchor.constraint(equalTo: coverImageView.heightAnchor, multiplier: 0.7))
+        profileCardView.addConstraint(coverView.heightAnchor.constraint(equalTo: profileCardView.heightAnchor, multiplier: 1.7))
+        
+        coverView.addConstraint(mooviestImageView.centerXAnchor.constraint(equalTo: coverView.centerXAnchor))
+        coverView.addConstraint(mooviestImageView.widthAnchor.constraint(equalTo: coverView.widthAnchor, multiplier: 0.7))
+        coverView.addConstraint(mooviestImageView.topAnchor.constraint(equalTo: coverView.topAnchor))
+        coverView.addConstraint(mooviestImageView.heightAnchor.constraint(equalTo: coverView.heightAnchor))
+        
+        coverView.addConstraint(coverImageView.leftAnchor.constraint(equalTo: coverView.leftAnchor))
+        coverView.addConstraint(coverImageView.widthAnchor.constraint(equalTo: coverView.widthAnchor))
+        coverView.addConstraint(coverImageView.topAnchor.constraint(equalTo: coverView.topAnchor))
+        coverView.addConstraint(coverImageView.heightAnchor.constraint(equalTo: coverView.heightAnchor))
+        
         let margin = CGFloat(4)
         profileCardView.addConstraint(captionMovieView.topAnchor.constraint(equalTo: profileCardView.topAnchor, constant: margin))
         profileCardView.addConstraint(captionMovieView.leftAnchor.constraint(equalTo: coverImageView.rightAnchor, constant: margin))
@@ -254,6 +287,7 @@ class MovieDetailView: UIView {
     func setColors(backgroundColor: UIColor, tintColor:UIColor) {        
         headerView.backgroundColor = backgroundColor
         headerBackdropImageView.backgroundColor = backgroundColor
+        headerBackdropImageView.tintColor = tintColor
         barSegmentedControl.tintColor = tintColor
         barSegmentedBackground.backgroundColor = backgroundColor
         profileCardView.backgroundColor = backgroundColor

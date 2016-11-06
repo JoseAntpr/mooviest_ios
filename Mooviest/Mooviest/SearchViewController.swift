@@ -11,7 +11,8 @@ import Kingfisher
 
 
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, MovieProtocol,TabBarProtocol {
+class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, MovieProtocol,TabBarProtocol,
+    UICollectionViewDataSourcePrefetching {
     
     let user = DataModel.sharedInstance.user
     var height:CGFloat!
@@ -20,6 +21,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     var nextUrl = ""
     var movies = [MovieListInfo]()
     let movieCellIdentifier = "movieCollectionViewCell"
+    var isIOS10 = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,14 +58,31 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width-2)/3
         let size = CGSize(width: width, height: width*1.42)
-
+        
         return size
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath){
-        if indexPath.row == movies.count-10 {
+        if !isIOS10 {
+            if (movies.count-indexPath.row) < 10 {
+                nextMovies()
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        var urls = [URL]()
+        for indexPath in indexPaths {
+            let image = movies[indexPath.item].image
+            if image != ""{
+                urls.append(URL(string: image)!)
+            }
+        }
+        ImagePrefetcher(urls: urls).start()
+        
+        if (movies.count - (indexPaths.last?.item)!) < indexPaths.count {
             nextMovies()
         }
     }
@@ -73,8 +92,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.resetTabBarAndNavigationController(viewController: self)
-        searchBar.becomeFirstResponder()
+//        self.resetTabBarAndNavigationController(viewController: self)
+//        searchBar.becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -87,13 +106,21 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         v.movieCollectionView.delegate = self
         v.movieCollectionView.dataSource = self
         v.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
+        
         searchBar.delegate = self
         navigationItem.titleView = searchBar
+        if #available(iOS 10.0, *) {
+//            v.movieCollectionView.prefetchDataSource = self
+//            isIOS10 = true
+        }
     }
     
     func nextMovies(){
         if nextUrl != "" {
-            DataModel.sharedInstance.nextMovies(url: nextUrl) {
+            let urlnext = nextUrl
+            nextUrl = ""
+            print(urlnext)
+            DataModel.sharedInstance.nextMovies(url: urlnext) {
                 (successful, title, msg, res) in
                 if successful {
                     do {
@@ -108,7 +135,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                         
                         self.v.movieCollectionView.reloadData()
                     } catch {
-                        
+                       
                     }
                 } else {
                     
@@ -135,10 +162,10 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                     self.v.movieCollectionView.contentOffset.y = 0
                     self.v.movieCollectionView.reloadData()
                 } catch {
-                    
+                    print("falla el parser  \(title) \n \(msg)")
                 }
             } else {
-                
+                print("falla el servidor \(title) \n \(msg)")
             }
         }
         

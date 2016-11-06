@@ -56,7 +56,7 @@ class DataModel: NSObject {
     func register(Username u: String, Password p: String, Email e: String,completionRequest:  @escaping (Bool,String,String?) -> Void){
         let preferredLanguage = NSLocale.preferredLanguages[0] as String
         let codeLang = preferredLanguage.components(separatedBy: "-")[0]
-        print(codeLang)
+        
         let parameters: Parameters = [
             "username": u,
             "password": p,
@@ -252,6 +252,7 @@ class DataModel: NSObject {
             "movie": idMovie,
             "typeMovie": typeMovie
         ]
+        print(parameters)
         self.startActivity()
         Alamofire.request( "\(path)/api/collection/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers).responseJSON { response in
             self.stopActivity()
@@ -271,6 +272,7 @@ class DataModel: NSObject {
         let parameters: Parameters = [
             "typeMovie": typeMovie
         ]
+        print(parameters)
         self.startActivity()
         Alamofire.request( "\(path)/api/collection/\(idCollection)/", method: .patch,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers).responseJSON { response in
             self.stopActivity()
@@ -306,9 +308,11 @@ class DataModel: NSObject {
     func saveContext() {
         let token = (authenticationUser?.token)! as String
         userDefault.set(token, forKey: "token")
+        userDefault.synchronize()
         let idUser = (authenticationUser?.idUser)! as Int
         userDefault.set(idUser, forKey: "idUser")
-        let codeLang = (authenticationUser?.token)! as String
+        userDefault.synchronize()
+        let codeLang = (authenticationUser?.codeLang)! as String
         userDefault.set(codeLang, forKey: "codeLang")
         userDefault.synchronize()
     }

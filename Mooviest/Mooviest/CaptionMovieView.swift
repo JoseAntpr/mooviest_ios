@@ -28,7 +28,7 @@ class CaptionMovieView: UIView {
     
     func setupComponents() {
         typeLabel.text = "Pelicula"
-        typeLabel.textAlignment = .left
+        typeLabel.textAlignment = .center
         typeLabel.textColor = .darkGray
         
         titleLabel.text = "Titulo de la pelicula cargada"

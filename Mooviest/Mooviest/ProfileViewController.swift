@@ -35,7 +35,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
 
     override func viewDidAppear(_ animated: Bool) {
         //here extract predominant color
-        self.navigationController?.navigationBar.isTranslucent = true
         v.bodyScrollView.contentSize.height = view.frame.size.height*1.15+v.barSegmentedView.center.y-v.barSegmentedView.frame.height*1.8
         calculateOffset()
     }
@@ -60,13 +59,12 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
         if let avatar = user?.avatar {
             v.coverImageView.kf.setImage(with: URL(string:  "\(DataModel.sharedInstance.path)\(avatar)"),placeholder: UIImage(named: "contact"))
         }
-        if let email = user?.email {
-            v.emailLabel.text = "\(email)"
-        }
+        navigationItem.title = "Profile"
         if user != nil {
             v.usernameLabel.text = "@\(user!.username)"
             v.firstnameLabel.text = "\(user!.firstname)"
             v.lastnameLabel.text = "\(user!.lastname)"
+            navigationItem.title = "@\(user!.username)"
         }
     }
     
@@ -81,12 +79,13 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
         let editButton = UIBarButtonItem(image: UIImage(named: "edit"),
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.editProfile))
-        editButton.tintColor = UIColor.white
+        editButton.tintColor = mooviest_red
         let replayButton = UIBarButtonItem(image: UIImage(named: "logout"),
                                            style: UIBarButtonItemStyle.plain ,
                                            target: self, action: #selector(self.logout))
-        replayButton.tintColor = UIColor.white
+        replayButton.tintColor = mooviest_red
         navigationItem.leftBarButtonItem = replayButton
+    
         navigationItem.rightBarButtonItem = editButton
         DataModel.sharedInstance.getUser() {
             (successful, title, msg) in
@@ -189,8 +188,10 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
     }
     
     func editProfile(){
+        navigationItem.title = "Profile"
         let nViewController = EditProfileViewController()
         nViewController.user = DataModel.sharedInstance.user
+        
         navigationController?.pushViewController(nViewController, animated: true)
     }
 }

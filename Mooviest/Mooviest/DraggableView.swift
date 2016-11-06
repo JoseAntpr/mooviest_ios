@@ -31,7 +31,6 @@ class DraggableView: UIView {
     var originPoint: CGPoint!
     var overlayView: OverlayView!
     var coverView:CoverView!
-    var noImageLabel: UILabel!
     
     var xFromCenter: Float!
     var yFromCenter: Float!
@@ -55,29 +54,22 @@ class DraggableView: UIView {
         self.backgroundColor = UIColor.white
         
         coverView = CoverView(porcentCaption: 0.12, porcentRating: 0.16)
-        coverView.layer.borderWidth = 0.5
-        coverView.layer.borderColor = UIColor.lightGray.cgColor
-        coverView.layer.cornerRadius = 5
-        coverView.layer.masksToBounds = true
+        self.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.9).cgColor
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 5
+        self.layer.masksToBounds = true
+        
         coverView.titleLabel.lineBreakMode = .byWordWrapping
         coverView.titleLabel.numberOfLines = 2
-        
-        noImageLabel = UILabel()
-        noImageLabel.text = "Image No Found"
-        noImageLabel.textColor = UIColor.white
-        noImageLabel.textAlignment = NSTextAlignment.center
-        noImageLabel.font = noImageLabel.font.withSize(30)
         
         overlayView = OverlayView()
         overlayView.alpha = 0
         
-        addSubview(noImageLabel)
         addSubview(coverView)
         addSubview(overlayView)        
     }
     
     func setupConstraints() {
-        noImageLabel.translatesAutoresizingMaskIntoConstraints = false
         coverView.translatesAutoresizingMaskIntoConstraints = false
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -90,11 +82,6 @@ class DraggableView: UIView {
         addConstraint(overlayView.centerYAnchor.constraint(equalTo: centerYAnchor))
         addConstraint(overlayView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: porcentOverlay))
         addConstraint(overlayView.heightAnchor.constraint(equalTo: overlayView.widthAnchor))
-        
-        addConstraint(noImageLabel.centerXAnchor.constraint(equalTo: centerXAnchor))
-        addConstraint(noImageLabel.centerYAnchor.constraint(equalTo: centerYAnchor))
-        addConstraint(noImageLabel.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(noImageLabel.heightAnchor.constraint(equalToConstant: 100))        
     }
     
     func beingDragged(_ gestureRecognizer: UIPanGestureRecognizer) -> Void {

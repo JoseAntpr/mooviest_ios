@@ -12,8 +12,8 @@ import Kingfisher
 
 
 
-class ListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
-            MovieProtocol, TabBarProtocol, DetailMovieDelegate {
+class ListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,MovieProtocol, TabBarProtocol, DetailMovieDelegate,
+    UICollectionViewDataSourcePrefetching {
     
     let user = DataModel.sharedInstance.user
     var height:CGFloat!
@@ -24,6 +24,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var typeMovie =  ""
     let movieCellIdentifier = "movieCollectionViewCell"
     var delegate:DetailMovieDelegate?
+    var isIOS10 = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,10 +70,29 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath){
-        if indexPath.row == movies.count-10 {
+        
+        if !isIOS10 {
+            if (movies.count-indexPath.row) < 10 {
+                nextMovies()
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        var urls = [URL]()
+        for indexPath in indexPaths {
+            let image = movies[indexPath.item].image
+            if image != ""{
+                urls.append(URL(string: image)!)
+            }
+        }
+        ImagePrefetcher(urls: urls).start()
+        
+        if (movies.count - (indexPaths.last?.item)!) < indexPaths.count {
             nextMovies()
         }
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
     }
@@ -96,10 +116,12 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     self.nextUrl = ""
                     self.nextUrl.toString(string: res["next"] as Any)
                     self.movies.removeAll()
+        
                     for m in res["results"] as! [[String:Any]] {
                         let movie:MovieListInfo?
                         movie = try MovieListInfo(json: m, isSwwipe: false)
                         self.movies.append(movie!)
+                        
                     }
                     self.v.movieCollectionView.reloadData()
                 } catch {
@@ -115,17 +137,19 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func nextMovies(){
         if nextUrl != "" {
-            DataModel.sharedInstance.nextMovies(url: nextUrl) {
+            let urlnext = nextUrl
+            nextUrl = ""
+            DataModel.sharedInstance.nextMovies(url: urlnext) {
                 (successful, title, msg, res) in
                 if successful {
                     do {
                         self.nextUrl = ""
                         self.nextUrl.toString(string: res["next"] as Any)
-                        
                         for m in res["results"] as! [[String:Any]] {
                             let movie:MovieListInfo?
                             movie = try MovieListInfo(json: m, isSwwipe: false)
                             self.movies.append(movie!)
+                           
                         }
                         
                         self.v.movieCollectionView.reloadData()
@@ -146,8 +170,11 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
         v = ListView(heightNavBar: height)
         v.movieCollectionView.delegate = self
         v.movieCollectionView.dataSource = self
+        if #available(iOS 10.0, *) {
+//            v.movieCollectionView.prefetchDataSource = self
+//            isIOS10 = true
+        }
         v.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
-        
         navigationItem.title = ctrlTitle
     }
     
@@ -158,9 +185,5 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
         view.addConstraint(v.rightAnchor.constraint(equalTo: view.rightAnchor))
         view.addConstraint(v.topAnchor.constraint(equalTo: view.topAnchor))
         view.addConstraint(v.bottomAnchor.constraint(equalTo: view.bottomAnchor))
-    }
-    
-    func goList(){
-        print("list")
     }
 }
