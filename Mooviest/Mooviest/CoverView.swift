@@ -52,7 +52,7 @@ class CoverView: UIView {
         ratingLabel.textColor = UIColor.white.withAlphaComponent(0.6)
         
         titleLabel.text = "Titulo"
-        titleLabel.textColor = UIColor.white.withAlphaComponent(0.6)
+        titleLabel.textColor = UIColor.white
         titleLabel.textAlignment = .center
         
         captionRatingView.layer.cornerRadius = 5
@@ -62,11 +62,13 @@ class CoverView: UIView {
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.alpha = 0.5
         
         let blurEffectRating = UIBlurEffect(style: UIBlurEffectStyle.dark)
         blurEffectRatingView = UIVisualEffectView(effect: blurEffectRating)
         blurEffectRatingView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-       
+        blurEffectRatingView.alpha = 0.5
+        
         captionRatingView.addSubview(blurEffectRatingView)
         captionRatingView.addSubview(ratingImageView)
         captionRatingView.addSubview(ratingLabel)

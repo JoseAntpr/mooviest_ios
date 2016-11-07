@@ -1,26 +1,28 @@
 //
-//  SearchViewController.swift
+//  ListMovieCast.swift
 //  Mooviest
 //
-//  Created by Antonio RG on 23/10/16.
+//  Created by Antonio RG on 6/11/16.
 //  Copyright © 2016 Mooviest. All rights reserved.
 //
+
 
 import UIKit
 import Kingfisher
 
 
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, MovieProtocol,TabBarProtocol,
-    UICollectionViewDataSourcePrefetching {
+class ListMovieCast: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,MovieProtocol, TabBarProtocol,
+UICollectionViewDataSourcePrefetching {
     
     let user = DataModel.sharedInstance.user
     var height:CGFloat!
     var v:ListView!
-    let searchBar = UISearchBar()
     var nextUrl = ""
     var movies = [MovieListInfo]()
+    var participation:Participation?
     let movieCellIdentifier = "movieCollectionViewCell"
+    var delegate:DetailMovieDelegate?
     var isIOS10 = false
     
     override func viewDidLoad() {
@@ -28,6 +30,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.setupView()
         self.view.addSubview(self.v)
         self.setupConstraints()
+        reloadList()
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,8 +59,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width-2)/3
-        let size = CGSize(width: width, height: width*1.42)
+        let width = (collectionView.frame.width/3)-1
+        let size = CGSize(width: width, height: width*1.30)
         
         return size
     }
@@ -65,6 +68,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath){
+        
         if !isIOS10 {
             if (movies.count-indexPath.row) < 10 {
                 nextMovies()
@@ -87,31 +91,36 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        searchBar.resignFirstResponder()
+    
+    override func viewDidAppear(_ animated: Bool) {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        self.resetTabBarAndNavigationController(viewController: self)
-//        searchBar.becomeFirstResponder()
+        self.resetTabBarAndNavigationController(viewController: self)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-    }
-    
-    func setupView() {
-        height = self.navigationController?.navigationBar.frame.height
-        v = ListView(heightNavBar: height)
-        v.movieCollectionView.delegate = self
-        v.movieCollectionView.dataSource = self
-        v.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
-        
-        searchBar.delegate = self
-        navigationItem.titleView = searchBar
-        if #available(iOS 10.0, *) {
-//            v.movieCollectionView.prefetchDataSource = self
-//            isIOS10 = true
+    func reloadList(){
+        DataModel.sharedInstance.searchMoviesByCelebrity(celebrity_id: participation!.id) {
+            (successful, title, msg, res) in
+            if successful {
+                do {
+                    self.nextUrl = ""
+                    self.nextUrl.toString(string: res["next"] as Any)
+                    self.movies.removeAll()
+                    
+                    for m in res["results"] as! [[String:Any]] {
+                        let movie:MovieListInfo?
+                        movie = try MovieListInfo(json: m, isSwwipe: false)
+                        self.movies.append(movie!)
+                        
+                    }
+                    self.v.movieCollectionView.reloadData()
+                } catch {
+                    Message.msgPopupDelay(title: "Roles list error", message:"load list error", delay: 0, ctrl: self) {}
+                }
+            } else {
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+            }
         }
     }
     
@@ -119,14 +128,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         if nextUrl != "" {
             let urlnext = nextUrl
             nextUrl = ""
-            print(urlnext)
             DataModel.sharedInstance.nextMovies(url: urlnext) {
                 (successful, title, msg, res) in
                 if successful {
                     do {
                         self.nextUrl = ""
                         self.nextUrl.toString(string: res["next"] as Any)
-                        
                         for m in res["results"] as! [[String:Any]] {
                             let movie:MovieListInfo?
                             movie = try MovieListInfo(json: m, isSwwipe: false)
@@ -134,41 +141,26 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                         }
                         self.v.movieCollectionView.reloadData()
                     } catch {
-                       Message.msgPopupDelay(title: "Search error", message:"movies load list error", delay: 0, ctrl: self) {}
+                        Message.msgPopupDelay(title: "Roles list error", message:"next movie load list error", delay: 0, ctrl: self) {}
                     }
                 } else {
-                    Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}  
+                    Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
                 }
             }
         }
     }
     
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        movies.removeAll()
-        DataModel.sharedInstance.searchMovies(name: searchBar.text!) {
-            (successful, title, msg, res) in
-            if successful {
-                do {
-                    self.nextUrl = ""
-                    self.nextUrl.toString(string: res["next"] as Any)
-                    
-                    for m in res["results"] as! [[String:Any]] {
-                        let movie:MovieListInfo?
-                        movie = try MovieListInfo(json: m, isSwwipe: false)
-                        self.movies.append(movie!)
-                    }
-                    self.v.movieCollectionView.contentOffset.y = 0
-                    self.v.movieCollectionView.reloadData()
-                } catch {
-                    Message.msgPopupDelay(title: "Search error", message:"next movies load list error", delay: 0, ctrl: self) {}
-                }
-            } else {
-                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
-            }
+    func setupView() {
+        height = self.navigationController?.navigationBar.frame.height
+        v = ListView(heightNavBar: height)
+        v.movieCollectionView.delegate = self
+        v.movieCollectionView.dataSource = self
+        if #available(iOS 10.0, *) {
+            //            v.movieCollectionView.prefetchDataSource = self
+            //            isIOS10 = true
         }
-        
-        searchBar.resignFirstResponder()
+        v.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
+        navigationItem.title = "Roles of \(participation!.name)"
     }
     
     func setupConstraints() {

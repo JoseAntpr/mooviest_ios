@@ -125,12 +125,10 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     }
                     self.v.movieCollectionView.reloadData()
                 } catch {
-                    
-                    
+                    Message.msgPopupDelay(title: "\(self.ctrlTitle) list error", message:"load list error", delay: 0, ctrl: self) {}
                 }
             } else {
-                
-                
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
             }
         }
     }
@@ -149,17 +147,13 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
                             let movie:MovieListInfo?
                             movie = try MovieListInfo(json: m, isSwwipe: false)
                             self.movies.append(movie!)
-                           
                         }
-                        
                         self.v.movieCollectionView.reloadData()
                     } catch {
-                        
-                        
+                        Message.msgPopupDelay(title: "\(self.ctrlTitle) list error", message:"next movie load list error", delay: 0, ctrl: self) {}
                     }
                 } else {
-                    
-                    
+                    Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
                 }
             }
         }

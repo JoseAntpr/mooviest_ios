@@ -122,10 +122,10 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
                     }
                     collection.reloadData()
                 } catch {
-                    
+                    Message.msgPopupDelay(title: "Error lists", message: "load list error", delay: 0, ctrl: self) {}
                 }
             } else {
-                
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
             }
         }
     }

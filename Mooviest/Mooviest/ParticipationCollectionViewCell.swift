@@ -35,7 +35,7 @@ class ParticipationCollectionViewCell: UICollectionViewCell {
         captionView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
         
         nameLabel.text = "Nombre"
-        nameLabel.textColor = UIColor.white.withAlphaComponent(0.5)
+        nameLabel.textColor = UIColor.white
         nameLabel.textAlignment = .center
         nameLabel.lineBreakMode = .byWordWrapping
         nameLabel.numberOfLines = 2
@@ -49,6 +49,7 @@ class ParticipationCollectionViewCell: UICollectionViewCell {
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.alpha = 0.5
         
         captionView.addSubview(blurEffectView)
         captionView.addSubview(nameLabel)

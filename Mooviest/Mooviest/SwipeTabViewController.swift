@@ -117,8 +117,10 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     
     func updateClasificationMovie(_ movie: Movie) {
         if movies.count > 0 {
-            movies[0].idCollection = movie.idCollection
-            movies[0].typeMovie = movie.typeMovie
+            if movies[0].id == movie.id {
+                movies[0].idCollection = movie.idCollection
+                movies[0].typeMovie = movie.typeMovie
+            }
         }
     }
     
@@ -273,87 +275,67 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         }
     }
     
-    func updateTypeMovie(typemovie: TypeMovieModel,completion: @escaping (Bool) -> Void) {
-        if movies.count > 0 {
-            let movie = movies[0]
-            if movie.typeMovie == "" {
-                DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie.hashValue){
-                    (successful, title, msg, res) in
-                    if successful {
-//                        if let id = res["id"] as? Int {
-//                            movie.idCollection = id
-//                            if let typeMovie = res["typeMovie"] as? String {
-//                                movie.typeMovie = typeMovie
-//                                self.movies[0] = movie//
-//                            }
-//                        }
-                        completion(true)
-                        self.updateBadgeValue()
-                    } else {
-                        completion(false)
-                    }
-                    
-                }
-            } else if typemovie.rawValue != movie.typeMovie {
-                DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie.hashValue){
-                    (successful, title, msg, res) in
-                    if successful {
-//                        if let id = res["id"] as? Int {
-//                            movie.idCollection = id
-//                            if let typeMovie = res["typeMovie"] as? String {
-//                                movie.typeMovie = typeMovie
-//                                self.movies[0] = movie
-//                            }
-//                        }
-                        
-                        completion(true)
-                        self.updateBadgeValue()
-                    } else {
-                        completion(false)
-                        
-                    } 
-                }
-            } else {
-                completion(true)
-                updateBadgeValue()
-                
+    func updateTypeMovie(typemovie: TypeMovieModel, movie: MovieListInfo,completion: @escaping (Bool,String,String?) -> Void) {
+        if movie.typeMovie == "" {
+            DataModel.sharedInstance.insertMovieCollection(idMovie: movie.id, typeMovie: typemovie.hashValue){
+                (successful, title, msg, res) in
+                self.updateBadgeValue()
+                completion(successful, title, msg)
+            }
+        } else if typemovie.rawValue != movie.typeMovie {
+            DataModel.sharedInstance.updateMovieCollection(idCollection: movie.idCollection,typeMovie: typemovie.hashValue){
+                (successful, title, msg, res) in
+                self.updateBadgeValue()
+                completion(successful, title, msg)
             }
         } else {
-            completion(false)
-            
+            completion(true,"","")
+            updateBadgeValue()
         }
     }
 
     func cardSwipedLeft(_ card: UIView) -> Void {
-        self.afterSwiped()
-        updateTypeMovie(typemovie: TypeMovie.black) {
-            (ok) in
-           
+        
+        updateTypeMovie(typemovie: TypeMovie.black, movie: movies[0]) {
+            (successful, title, msg) in
+            if !successful {
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+            }
         }
+        self.afterSwiped()
     }
     
     func cardSwipedRight(_ card: UIView) -> Void {
-        self.afterSwiped()
-        updateTypeMovie(typemovie: TypeMovie.favourite) {
-            (ok) in
-            
+        
+        updateTypeMovie(typemovie: TypeMovie.favourite, movie: movies[0]) {
+            (successful, title, msg) in
+            if !successful {
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+            }
         }
+        self.afterSwiped()
     }
     
     func cardSwipedTop(_ card: UIView) -> Void {
-        self.afterSwiped()
-        updateTypeMovie(typemovie: TypeMovie.watchlist) {
-            (ok) in
-            
+        
+        updateTypeMovie(typemovie: TypeMovie.watchlist, movie: movies[0]) {
+            (successful, title, msg) in
+            if !successful {
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+            }
         }
+        self.afterSwiped()
     }
     
     func cardSwipedBottom(_ card: UIView) -> Void {
-        self.afterSwiped()
-        updateTypeMovie(typemovie: TypeMovie.seen) {
-        (ok) in
-            
+       
+        updateTypeMovie(typemovie: TypeMovie.seen, movie: movies[0]) {
+        (successful, title, msg) in
+            if !successful {
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+            }
         }
+        self.afterSwiped()
     }
     
     func clickSwipeRight() -> Void {

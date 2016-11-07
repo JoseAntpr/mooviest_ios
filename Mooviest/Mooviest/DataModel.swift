@@ -99,6 +99,7 @@ class DataModel: NSObject {
                 case .success:
                     if let res = response.result.value as? [String:Any] {
                         do {
+                            //actualizar donde se llama
                             self.user = try User(json: res)
                             completionRequest(true, "","")
                         } catch {
@@ -194,6 +195,25 @@ class DataModel: NSObject {
     func searchMovies(name: String, completionRequest:  @escaping (Bool,String,String?,[String:Any])-> Void){
         let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
         let  url = "\(path)/api/movie_lang/?title=\(name)&code=\(authenticationUser!.codeLang)".addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed)
+        self.startActivity()
+        Alamofire.request( url!, method: .get, headers: headers)
+            .responseJSON { response in
+                self.stopActivity()
+                switch response.result {
+                case .success:
+                    if let res = response.result.value as? [String:Any] {
+                        completionRequest(true, "Search","", res)
+                    }
+                    
+                case .failure(let error):
+                    completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+                }
+        }
+    }
+    
+    func searchMoviesByCelebrity(celebrity_id: Int, completionRequest:  @escaping (Bool,String,String?,[String:Any])-> Void){
+        let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+        let  url = "\(path)/api/movie_lang/participation/?celebrity=\(celebrity_id)&code=\(authenticationUser!.codeLang)".addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed)
         self.startActivity()
         Alamofire.request( url!, method: .get, headers: headers)
             .responseJSON { response in

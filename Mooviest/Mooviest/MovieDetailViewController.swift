@@ -71,15 +71,14 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         if tintColor != nil {
             self.setColors(viewController: self, backgroundColor: backgroundColor, tintColor: tintColor)
         }
-        v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
+//        v.bodyScrollView.setContentOffset(CGPoint(x:0,y:0), animated: true)
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(300, for: .default)
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         heightView = view.frame.size.height
-        changeTabs(index: 0)
-        v.barSegmentedControl.selectedSegmentIndex = 0
+        changeTabs(index: v.barSegmentedControl.selectedSegmentIndex)
         calculateOffset()
     }
     
@@ -97,6 +96,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     func setupView() {
         
+
         v.setDelegate(ViewController: self)
         
         v.castCollectionView.dataSource = self
@@ -391,8 +391,11 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == v.castCollectionView {
-//            print(participations[indexPath.item].name)
+        if collectionView == v.castCollectionView && participations.count > indexPath.item {
+            let nViewController = ListMovieCast()
+            nViewController.nextUrl = ""
+            nViewController.participation = participations[indexPath.item]
+            navigationController?.pushViewController(nViewController, animated: true)
         }
     }
 }
