@@ -84,7 +84,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     }
     
     func setupView() {
-        navigationItem.title = "Edit profile"
+        navigationItem.title = "Editar perfil"
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
         view.addGestureRecognizer(tap)
         
@@ -117,7 +117,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         dateToolBar.isTranslucent = true
         dateToolBar.tintColor = mooviest_red
         dateToolBar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.nextDatePicker))
+        let doneButton = UIBarButtonItem(title: "Siguiente", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.nextDatePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         dateToolBar.setItems([spaceButton, doneButton], animated: false)
         dateToolBar.isUserInteractionEnabled = true
@@ -137,7 +137,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         genderToolBar.isTranslucent = true
         genderToolBar.tintColor =  mooviest_red
         genderToolBar.sizeToFit()
-        let doneButton2 = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.nextGenderPicker))
+        let doneButton2 = UIBarButtonItem(title: "Siguiente", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.nextGenderPicker))
         let spaceButton2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         genderToolBar.setItems([spaceButton2, doneButton2], animated: false)
         genderToolBar.isUserInteractionEnabled = true
@@ -163,7 +163,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         countryToolBar.isTranslucent = true
         countryToolBar.tintColor =  mooviest_red
         countryToolBar.sizeToFit()
-        let doneButton3 = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.introCountryPicker))
+        let doneButton3 = UIBarButtonItem(title: "Salir", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.introCountryPicker))
         let spaceButton3 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         countryToolBar.setItems([spaceButton3, doneButton3], animated: false)
         countryToolBar.isUserInteractionEnabled = true

@@ -31,7 +31,7 @@ class OverlayView: UIView{
         imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        setupOverlay(namedImage:"clear_overlay",tinColor: .white, backgroundColor: blacklist_color)
+        setupOverlay(namedImage:"bookmark_overlay",tinColor: .white, backgroundColor: watchlist_color)
         
         self.addSubview(imageView)
         
@@ -50,13 +50,16 @@ class OverlayView: UIView{
         _mode = mode
         
         if _mode == GGOverlayViewMode.ggOverlayViewModeLeft {
-            setupOverlay(namedImage:"clear_overlay",tinColor: .white, backgroundColor: blacklist_color)
-        } else if _mode == GGOverlayViewMode.ggOverlayViewModeRight {
-            setupOverlay(namedImage:"star_overlay",tinColor: .white, backgroundColor: favourite_color)
-        } else if _mode == GGOverlayViewMode.ggOverlayViewModeTop {
             setupOverlay(namedImage:"bookmark_overlay",tinColor: .white, backgroundColor: watchlist_color)
-        } else {
+            
+        } else if _mode == GGOverlayViewMode.ggOverlayViewModeRight {
             setupOverlay(namedImage:"eye_overlay",tinColor: .white, backgroundColor: seen_color)
+            
+        } else if _mode == GGOverlayViewMode.ggOverlayViewModeTop {
+            setupOverlay(namedImage:"star_overlay",tinColor: .white, backgroundColor: favourite_color)
+        } else {
+            setupOverlay(namedImage:"clear_overlay",tinColor: .white, backgroundColor: blacklist_color)
+            
         }
     }
     

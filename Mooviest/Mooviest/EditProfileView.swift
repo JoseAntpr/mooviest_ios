@@ -62,20 +62,20 @@ class EditProfileView: UIView {
         coverImageView.layer.masksToBounds = true
         
         userTextFieldView.setTexColor(TextColor: UIColor.black)
-        userTextFieldView.setPlaceholder(Placeholder: "Username", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        userTextFieldView.setPlaceholder(Placeholder: "Usuario", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         userTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         userTextFieldView.setReturnKeyType(returnKeyType: .next)
         userTextFieldView.textField.tag = 0
         
         firstNameTextFieldView.setTexColor(TextColor: UIColor.black)
-        firstNameTextFieldView.setPlaceholder(Placeholder: "First name", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        firstNameTextFieldView.setPlaceholder(Placeholder: "Nombre", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         firstNameTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         firstNameTextFieldView.setReturnKeyType(returnKeyType: .next)
         firstNameTextFieldView.setAutocapitalizationType(autocapitalizationType: .words)
         firstNameTextFieldView.textField.tag = 1
         
         lastNameTextFieldView.setTexColor(TextColor: UIColor.black)
-        lastNameTextFieldView.setPlaceholder(Placeholder: "Last name", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        lastNameTextFieldView.setPlaceholder(Placeholder: "Apellidos", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         lastNameTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         lastNameTextFieldView.setReturnKeyType(returnKeyType: .next)
         lastNameTextFieldView.setAutocapitalizationType(autocapitalizationType: .words)
@@ -88,19 +88,19 @@ class EditProfileView: UIView {
         emailTextFieldView.textField.tag = 3
         
         dateTextFieldView.setTexColor(TextColor: UIColor.black)
-        dateTextFieldView.setPlaceholder(Placeholder: "Born", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        dateTextFieldView.setPlaceholder(Placeholder: "Fecha de nacimiento", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         dateTextFieldView.setReturnKeyType(returnKeyType: .next)
         dateTextFieldView.textField.tag = 4
         dateTextFieldView.textField.isSelected = false
         
         genderTextFieldView.setTexColor(TextColor: UIColor.black)
-        genderTextFieldView.setPlaceholder(Placeholder: "gender", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        genderTextFieldView.setPlaceholder(Placeholder: "Género", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         genderTextFieldView.setReturnKeyType(returnKeyType: .next)
         genderTextFieldView.textField.tag = 5
         genderTextFieldView.textField.isSelected = false
         
         countryTextFieldView.setTexColor(TextColor: UIColor.black)
-        countryTextFieldView.setPlaceholder(Placeholder: "Country", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        countryTextFieldView.setPlaceholder(Placeholder: "País", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         countryTextFieldView.setReturnKeyType(returnKeyType: .send)
         countryTextFieldView.textField.tag = 6
         countryTextFieldView.textField.isSelected = false

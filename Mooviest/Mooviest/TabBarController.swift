@@ -47,7 +47,7 @@ class TabBarController: UITabBarController {
         nVController1.tabBarItem = tbItem1
 
         //tab2 Lists
-        let tbItem2 = UITabBarItem(title: "Lists",
+        let tbItem2 = UITabBarItem(title: "Listas",
                                    image: UIImage(named: "list")?.withRenderingMode(.alwaysTemplate),
                                    selectedImage: UIImage(named: "list")?.withRenderingMode(.alwaysTemplate))
         
@@ -57,7 +57,7 @@ class TabBarController: UITabBarController {
         nVController2.tabBarItem = tbItem2
         
         //tab3 Profile
-        let tbItem3 = UITabBarItem(title: "Profile",
+        let tbItem3 = UITabBarItem(title: "Perfil",
                                    image: UIImage(named: "profile")?.withRenderingMode(.alwaysTemplate),
                                    selectedImage: UIImage(named: "profile")?.withRenderingMode(.alwaysTemplate))
 

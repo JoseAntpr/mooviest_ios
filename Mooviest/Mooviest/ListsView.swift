@@ -45,10 +45,10 @@ class ListsView: UIView {
         headerView.clipsToBounds = true
         lineView.backgroundColor = UIColor.lightGray
         
-        watchListViewCell.titleLabel.text = "Watch list"
-        favouriteListViewCell.titleLabel.text = "Favourite list"
-        seenListViewCell.titleLabel.text = "Seen list"
-        blackListViewCell.titleLabel.text = "Black list"
+        watchListViewCell.titleLabel.text = "Pendientes"
+        favouriteListViewCell.titleLabel.text = "Favoritas"
+        seenListViewCell.titleLabel.text = "Vistas"
+        blackListViewCell.titleLabel.text = "Lista negra"
         
         heightItemListView = width*0.6
         

@@ -19,7 +19,6 @@ enum TextFieldViewTag:Int {
 
 class LoginView: UIView {
     let height = UIApplication.shared.statusBarFrame.size.height
-    let backgroundStatusView = UIView()
     let titleImageView = UIImageView()
     
     let formView = UIView()
@@ -62,7 +61,6 @@ class LoginView: UIView {
         titleImageView.image = UIImage(named: "Mooviest")!.withRenderingMode(.alwaysOriginal)
         titleImageView.contentMode = UIViewContentMode.scaleAspectFit
         
-        backgroundStatusView.backgroundColor =   dark_red.withAlphaComponent(0.5)
         //Form Login
         formView.backgroundColor = UIColor.white
         formView.layer.cornerRadius = 3
@@ -70,15 +68,17 @@ class LoginView: UIView {
         
         padingformView.backgroundColor = UIColor.white.withAlphaComponent(0)
         centralView.backgroundColor = UIColor.white.withAlphaComponent(0)
-        
+        //Traducir vista
+        //Username or email
+        //Password
         userOrEmailTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        userOrEmailTextFieldView.setPlaceholder(Placeholder: "Username or email", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        userOrEmailTextFieldView.setPlaceholder(Placeholder: "Usuario o email", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         userOrEmailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.emailAddress)
         userOrEmailTextFieldView.setReturnKeyType(returnKeyType: .next)
         userOrEmailTextFieldView.textField.tag = TextFieldViewTag.UserOrEmailTextFieldView.rawValue
         
         passLoginTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        passLoginTextFieldView.setPlaceholder(Placeholder: "Password", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        passLoginTextFieldView.setPlaceholder(Placeholder: "Contraseña", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         passLoginTextFieldView.setSecureText(isSecureTextEntry: true)
         passLoginTextFieldView.setReturnKeyType(returnKeyType: .join)
         passLoginTextFieldView.textField.tag = TextFieldViewTag.PassLoginTextFieldView.rawValue
@@ -97,9 +97,13 @@ class LoginView: UIView {
         formRegisterView.layer.masksToBounds = true
         
         padingRegisterformView.backgroundColor = UIColor.white.withAlphaComponent(0)
-        
+        //Traduccion
+        //Username
+        //Email
+        //Password
+        //Confirm password
         userTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        userTextFieldView.setPlaceholder(Placeholder: "Username", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        userTextFieldView.setPlaceholder(Placeholder: "Usuario", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         userTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         userTextFieldView.setReturnKeyType(returnKeyType: .next)
         userTextFieldView.textField.tag = TextFieldViewTag.UserTextFieldView.rawValue
@@ -111,13 +115,13 @@ class LoginView: UIView {
         emailTextFieldView.textField.tag = TextFieldViewTag.EmailTextFieldView.rawValue
         
         passTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        passTextFieldView.setPlaceholder(Placeholder: "Password", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        passTextFieldView.setPlaceholder(Placeholder: "Contraseña", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         passTextFieldView.setSecureText(isSecureTextEntry: true)
         passTextFieldView.setReturnKeyType(returnKeyType: .next)
         passTextFieldView.textField.tag = TextFieldViewTag.PassTextFieldView.rawValue
         
         confirmPassTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        confirmPassTextFieldView.setPlaceholder(Placeholder: "Confirm password", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        confirmPassTextFieldView.setPlaceholder(Placeholder: "Confirme su contraseña", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         confirmPassTextFieldView.setSecureText(isSecureTextEntry: true)
         confirmPassTextFieldView.setReturnKeyType(returnKeyType: .default)
         confirmPassTextFieldView.textField.tag = TextFieldViewTag.ConfirmPassTextFieldView.rawValue
@@ -155,7 +159,6 @@ class LoginView: UIView {
         centralView.addSubview(formView)
         centralView.addSubview(formRegisterView)
         
-        addSubview(backgroundStatusView)
         addSubview(titleImageView)
         addSubview(goCreateAccountFormButton)
         addSubview(backLoginButton)
@@ -163,7 +166,7 @@ class LoginView: UIView {
     }
     
     func setupConstraints() {
-        backgroundStatusView.translatesAutoresizingMaskIntoConstraints = false
+        
         titleImageView.translatesAutoresizingMaskIntoConstraints = false
         centralView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -183,12 +186,7 @@ class LoginView: UIView {
         confirmPassTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
         
-        addConstraint(backgroundStatusView.topAnchor.constraint(equalTo: topAnchor))
-        addConstraint(backgroundStatusView.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(backgroundStatusView.widthAnchor.constraint(equalTo: widthAnchor))
-        addConstraint(backgroundStatusView.heightAnchor.constraint(equalToConstant: height))
-        
-        addConstraint(titleImageView.topAnchor.constraint(equalTo: backgroundStatusView.bottomAnchor))
+        addConstraint(titleImageView.topAnchor.constraint(equalTo: topAnchor, constant: height))
         addConstraint(titleImageView.centerXAnchor.constraint(equalTo: centerXAnchor))
         addConstraint(titleImageView.widthAnchor.constraint(equalTo: widthAnchor,multiplier: 0.75))
         addConstraint(titleImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2))

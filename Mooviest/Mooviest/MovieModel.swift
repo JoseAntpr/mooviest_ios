@@ -16,12 +16,12 @@ struct TypeMovieModel {
     let color: UIColor
     let title: String 
 }
-
+//traduccion title
 struct TypeMovieStruct{
-    let seen = TypeMovieModel(rawValue: "seen", hashValue: 1, image: "eye", color: seen_color, title: "Seen list")
-    let watchlist = TypeMovieModel(rawValue: "watchlist", hashValue: 2, image: "bookmark", color: watchlist_color,title: "Watch list")
-    let favourite = TypeMovieModel(rawValue: "favourite", hashValue: 3, image: "star", color: favourite_color, title: "Favourite list")
-    let black = TypeMovieModel(rawValue: "black", hashValue: 5, image: "clear", color: blacklist_color,title: "Black list")
+    let seen = TypeMovieModel(rawValue: "seen", hashValue: 1, image: "eye", color: seen_color, title: "Vistas")
+    let watchlist = TypeMovieModel(rawValue: "watchlist", hashValue: 2, image: "bookmark", color: watchlist_color,title: "Pendientes")
+    let favourite = TypeMovieModel(rawValue: "favourite", hashValue: 3, image: "star", color: favourite_color, title: "Favoritas")
+    let black = TypeMovieModel(rawValue: "black", hashValue: 5, image: "clear", color: blacklist_color,title: "Lista negra")
 }
 
 let TypeMovie = TypeMovieStruct()

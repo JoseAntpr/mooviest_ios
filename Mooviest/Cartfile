@@ -1,1 +1,3 @@
-github "Ramotion/animated-tab-bar"
+github "Alamofire/Alamofire"
+github "onevcat/Kingfisher"
+github "kciter/KCFloatingActionButton"

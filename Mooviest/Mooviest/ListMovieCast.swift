@@ -160,7 +160,7 @@ UICollectionViewDataSourcePrefetching {
             //            isIOS10 = true
         }
         v.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
-        navigationItem.title = "Roles of \(participation!.name)"
+        navigationItem.title = "\(participation!.name)"
     }
     
     func setupConstraints() {

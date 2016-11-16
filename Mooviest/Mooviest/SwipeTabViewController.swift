@@ -47,12 +47,12 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         replayButton.tintColor = mooviest_red
         navigationItem.leftBarButtonItem = replayButton
         navigationItem.rightBarButtonItem = searchButton
+        //
         
-        
-        v.closedButton.addTarget(self, action: #selector(self.clickSwipeLeft), for: .touchUpInside)
-        v.heartButton.addTarget(self, action: #selector(self.clickSwipeRight), for: .touchUpInside)
-        v.clockButton.addTarget(self, action: #selector(self.clickSwipeTop), for: .touchUpInside)
-        v.eyeButton.addTarget(self, action: #selector(self.clickSwipeBottom), for: .touchUpInside)
+        v.blackButton.addTarget(self, action: #selector(self.clickSwipeBottom), for: .touchUpInside)
+        v.favouriteButton.addTarget(self, action: #selector(self.clickSwipeTop), for: .touchUpInside)
+        v.watchButton.addTarget(self, action: #selector(self.clickSwipeLeft), for: .touchUpInside)
+        v.seenButton.addTarget(self, action: #selector(self.clickSwipeRight), for: .touchUpInside)
         
     }
     
@@ -99,18 +99,18 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         }
         tabBarController?.tabBar.items?[1].badgeValue   = "\(count+1)"
     }
-    
+    //
     func updateSwipe() {
         if movies.count > 0 && movies[0].typeMovie != "" {
             switch movies[0].typeMovie {
             case TypeMovie.watchlist.rawValue:
-                clickSwipeTop()
-            case TypeMovie.seen.rawValue:
-                clickSwipeBottom()
-            case TypeMovie.favourite.rawValue:
-                clickSwipeRight()
-            default:
                 clickSwipeLeft()
+            case TypeMovie.seen.rawValue:
+                clickSwipeRight()
+            case TypeMovie.favourite.rawValue:
+                clickSwipeTop()
+            default:
+                clickSwipeBottom()
             }
         }        
     }
@@ -126,16 +126,16 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     
     //This method is called when the autolayout engine has finished to calculate your views' frames
     override func viewDidLayoutSubviews() {
-        let widthButton = v.closedButton.bounds.size.width
+        let widthButton = v.blackButton.bounds.size.width
         
-        v.closedButton.layer.cornerRadius = 0.5 * widthButton
-        v.closedButton.clipsToBounds = true
-        v.clockButton.layer.cornerRadius = 0.5 * widthButton
-        v.clockButton.clipsToBounds = true
-        v.heartButton.layer.cornerRadius = 0.5 * widthButton
-        v.heartButton.clipsToBounds = true
-        v.eyeButton.layer.cornerRadius = 0.5 * widthButton
-        v.eyeButton.clipsToBounds = true
+        v.blackButton.layer.cornerRadius = 0.5 * widthButton
+        v.blackButton.clipsToBounds = true
+        v.watchButton.layer.cornerRadius = 0.5 * widthButton
+        v.watchButton.clipsToBounds = true
+        v.favouriteButton.layer.cornerRadius = 0.5 * widthButton
+        v.favouriteButton.clipsToBounds = true
+        v.seenButton.layer.cornerRadius = 0.5 * widthButton
+        v.seenButton.clipsToBounds = true
         if loadedCards.count > 0 {
             
             loadedCards[0].overlayView.layer.cornerRadius = 0.5 * loadedCards[0].overlayView.bounds.size.height
@@ -296,7 +296,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
 
     func cardSwipedLeft(_ card: UIView) -> Void {
         
-        updateTypeMovie(typemovie: TypeMovie.black, movie: movies[0]) {
+        updateTypeMovie(typemovie: TypeMovie.watchlist, movie: movies[0]) {
             (successful, title, msg) in
             if !successful {
                 Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
@@ -307,7 +307,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     
     func cardSwipedRight(_ card: UIView) -> Void {
         
-        updateTypeMovie(typemovie: TypeMovie.favourite, movie: movies[0]) {
+        updateTypeMovie(typemovie: TypeMovie.seen, movie: movies[0]) {
             (successful, title, msg) in
             if !successful {
                 Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
@@ -318,7 +318,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     
     func cardSwipedTop(_ card: UIView) -> Void {
         
-        updateTypeMovie(typemovie: TypeMovie.watchlist, movie: movies[0]) {
+        updateTypeMovie(typemovie: TypeMovie.favourite, movie: movies[0]) {
             (successful, title, msg) in
             if !successful {
                 Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
@@ -329,7 +329,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     
     func cardSwipedBottom(_ card: UIView) -> Void {
        
-        updateTypeMovie(typemovie: TypeMovie.seen, movie: movies[0]) {
+        updateTypeMovie(typemovie: TypeMovie.black, movie: movies[0]) {
         (successful, title, msg) in
             if !successful {
                 Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}

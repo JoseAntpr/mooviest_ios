@@ -227,13 +227,6 @@
 			name = Extension;
 			sourceTree = "<group>";
 		};
-		A95015561DC39E88006D6D2B /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
 		A965ACE71D8AB62B00F9FF47 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,8 +259,8 @@
 		A965ACE91D8AB6A200F9FF47 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				A911DEE01D929C75004BB61F /* Extension */,
 				A9ADF3251DC676A80054CBA0 /* TabBarProtocol.swift */,
-				A95015561DC39E88006D6D2B /* New Group */,
 				A96B52601D89DEBA0061A766 /* ModelProtocol.swift */,
 				A96B52621D89DED40061A766 /* ParserProtocol.swift */,
 				A95015571DC39E94006D6D2B /* MovieProtocol.swift */,
@@ -314,8 +307,8 @@
 		A965ACED1D8AB74A00F9FF47 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A9B8694B1D89E49300DDC197 /* DataModel.swift */,
 				A96B52461D89D6B20061A766 /* Colors.swift */,
+				A9B8694B1D89E49300DDC197 /* DataModel.swift */,
 				A96B524D1D89D93C0061A766 /* Localizable.strings */,
 			);
 			name = Resources;
@@ -364,7 +357,6 @@
 				A96B521A1D89CCF70061A766 /* Info.plist */,
 				A965ACED1D8AB74A00F9FF47 /* Resources */,
 				A965ACE91D8AB6A200F9FF47 /* Protocols */,
-				A911DEE01D929C75004BB61F /* Extension */,
 				A965ACE81D8AB67500F9FF47 /* Models */,
 				A965ACE71D8AB62B00F9FF47 /* Views */,
 			);
