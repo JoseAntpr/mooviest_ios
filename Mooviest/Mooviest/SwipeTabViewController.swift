@@ -12,6 +12,7 @@ import Kingfisher
 
 class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProtocol, TabBarProtocol, DetailMovieDelegate {
     let MAX_BUFFER_SIZE = 4
+    let MIN_CARDS = 9
     var v: SwipeTabView!
     var allCards: [DraggableView]!
     var nextUrl = ""
@@ -146,7 +147,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     func prefetch(urls: [URL]) {
         let prefetcher = ImagePrefetcher(urls: urls) {
             skippedResources, failedResources, completedResources in
-            print("These resources are prefetched: \(completedResources)")
         }
         prefetcher.start()
     }
@@ -270,7 +270,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         movies.remove(at: 0)
         
         loadMoreCards()
-        if allCards.count == 9 {
+        if allCards.count == MIN_CARDS {
             self.loadSwipe()
         }
     }

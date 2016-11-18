@@ -215,12 +215,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
                 if successful {
                     self.chargueApp()
                 } else {
-                    Message.msgPopupDelay(title: title, message: message == nil ? "Ha ocurrido algún error":message!, delay: 0, ctrl: self) {}
+                    let msg = NSLocalizedString("registerMsg", comment: "Message of register")
+                    Message.msgPopupDelay(title: title, message: message == nil ? msg:message!, delay: 0, ctrl: self) {}
                 }
             }
             
         } else {
-            Message.msgPopupDelay(title: "Register error", message: "Data form error", delay: 0, ctrl: self) {
+            let title = NSLocalizedString("registerTitle", comment: "Title of register")
+            let msg = NSLocalizedString("registerMsgDataError", comment: "Message of register data error")
+            Message.msgPopupDelay(title: title, message: msg, delay: 0, ctrl: self) {
             }
         }
     }
@@ -233,7 +236,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
             if successful {
                 self.chargueApp()                
             } else {
-                Message.msgPopupDelay(title: title, message: message == nil ? "Ha ocurrido algún error":message!, delay: 0, ctrl: self) {}
+                let msg = NSLocalizedString("registerMsg", comment: "Message of register")
+                Message.msgPopupDelay(title: title, message: message == nil ? msg:message!, delay: 0, ctrl: self) {}
             }
         }       
     }

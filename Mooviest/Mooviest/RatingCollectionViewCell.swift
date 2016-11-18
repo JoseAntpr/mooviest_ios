@@ -24,7 +24,7 @@ class RatingCollectionViewCell: UICollectionViewCell {
     
     func setupComponents() {
         faceImageView.contentMode = .scaleToFill
-        ratingLabel.text = "100"
+        ratingLabel.text = "_"
         
         ratingLabel.textAlignment = .center
         ratingLabel.textColor = .darkGray

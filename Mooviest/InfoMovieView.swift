@@ -42,7 +42,7 @@ class InfoMovieView: UIView {
     }
     
     func setupTextView(textView: UITextView) {
-        textView.text = "Texto de prueba"
+        textView.text = "text"
         textView.textContainer.lineFragmentPadding = 20
         textView.textAlignment = NSTextAlignment.justified
         textView.textColor = UIColor.gray

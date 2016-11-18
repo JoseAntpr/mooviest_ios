@@ -73,7 +73,9 @@ class ProfileView: UIView {
         lastnameLabel.font.withSize(lastnameLabel.font.capHeight*porcentSize)
         lastnameLabel.textColor = .darkGray
         
-        let items = ["SEGUIDORES 0", "SIGUIENDO 0"]
+        let title1BarSegmentedControl = NSLocalizedString("title1ProfileBarSegmentedControl", comment: "Title1 of ProfileBarSegmentedControl")
+        let title2BarSegmentedControl = NSLocalizedString("title2ProfileBarSegmentedControl", comment: "Title2 of ProfileBarSegmentedControl")
+        let items = ["\(title1BarSegmentedControl) 0", "\(title2BarSegmentedControl) 0"]
         barSegmentedControl = UISegmentedControl(items: items)
         barSegmentedControl.selectedSegmentIndex = 0
         barSegmentedControl.tintColor =   mooviest_red

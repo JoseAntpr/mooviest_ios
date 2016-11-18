@@ -14,7 +14,7 @@ import Kingfisher
 
 class ListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,MovieProtocol, TabBarProtocol, DetailMovieDelegate,
     UICollectionViewDataSourcePrefetching {
-    
+    let MIN_MOVIES = 10
     let user = DataModel.sharedInstance.user
     var height:CGFloat!
     var v:ListView!
@@ -72,7 +72,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         forItemAt indexPath: IndexPath){
         
         if !isIOS10 {
-            if (movies.count-indexPath.row) < 10 {
+            if (movies.count-indexPath.row) < MIN_MOVIES {
                 nextMovies()
             }
         }
@@ -87,7 +87,6 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
         ImagePrefetcher(urls: urls).start()
-        
         if (movies.count - (indexPaths.last?.item)!) < indexPaths.count {
             nextMovies()
         }
@@ -110,7 +109,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func reloadList(){
         DataModel.sharedInstance.getMovieList(listname: typeMovie) {
-            (successful, title, msg, res) in
+            successful, title, message, res in
             if successful {
                 do {
                     self.nextUrl = ""
@@ -125,10 +124,12 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     }
                     self.v.movieCollectionView.reloadData()
                 } catch {
-                    Message.msgPopupDelay(title: "\(self.ctrlTitle) list error", message:"load list error", delay: 0, ctrl: self) {}
+                    let title = NSLocalizedString("getListTitle", comment: "Title of getMovieList")
+                    let msg = NSLocalizedString("getListMsg", comment: "Message of getMovieList")
+                    Message.msgPopupDelay(title: title, message:msg, delay: 0, ctrl: self) {}
                 }
             } else {
-                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {}
             }
         }
     }
@@ -138,7 +139,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let urlnext = nextUrl
             nextUrl = ""
             DataModel.sharedInstance.nextMovies(url: urlnext) {
-                (successful, title, msg, res) in
+                successful, title, message, res in
                 if successful {
                     do {
                         self.nextUrl = ""
@@ -150,10 +151,12 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         }
                         self.v.movieCollectionView.reloadData()
                     } catch {
-                        Message.msgPopupDelay(title: "\(self.ctrlTitle) list error", message:"next movie load list error", delay: 0, ctrl: self) {}
+                        let title = NSLocalizedString("getNextPageListTitle", comment: "Title of nextMovies")
+                        let msg = NSLocalizedString("getNextPageListMsg", comment: "Message of nextMovies")
+                        Message.msgPopupDelay(title: title, message:msg, delay: 0, ctrl: self) {}
                     }
                 } else {
-                    Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+                    Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {}
                 }
             }
         }

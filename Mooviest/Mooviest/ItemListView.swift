@@ -30,15 +30,16 @@ class ItemListView: UIView {
     
     func setupComponents() {
         self.backgroundColor = .white
-        titleLabel.text = "List"
+        titleLabel.text = NSLocalizedString("textTitleLabelList", comment: "Text of titleLabelList")
         titleLabel.textColor = UIColor.darkGray.withAlphaComponent(0.8)
         titleLabel.font.withSize(20)
         
-        moreButton.setTitle("More", for: .normal)
+        let title = NSLocalizedString("titleMoreButton", comment: "Title of moreButton")
+        moreButton.setTitle(title, for: .normal)
         moreButton.setTitleColor(mooviest_red, for: .normal)
         moreButton.titleLabel?.font.withSize(20)
         
-        emptyLabel.text = "Empty list"
+        emptyLabel.text = NSLocalizedString("textEmptyLabel", comment: "Text of emptyLabelList")
         emptyLabel.font.withSize(heightEmptyLabel)
         emptyLabel.textColor = UIColor.darkGray.withAlphaComponent(0.8)
         emptyLabel.textAlignment = .center

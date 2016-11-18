@@ -35,7 +35,8 @@ class TabBarController: UITabBarController {
     
     func makeTabBar() {
         //tab1 Swipe
-        let tbItem1 = UITabBarItem(title: "Swipe",
+        let titleTabSwipe = NSLocalizedString("titleTabSwipe", comment: "Title of TabSwipe")
+        let tbItem1 = UITabBarItem(title: titleTabSwipe,
             image: UIImage(named: "swipe")?.withRenderingMode(.alwaysTemplate),
             selectedImage: UIImage(named: "swipe")?.withRenderingMode(.alwaysTemplate))
         
@@ -47,7 +48,8 @@ class TabBarController: UITabBarController {
         nVController1.tabBarItem = tbItem1
 
         //tab2 Lists
-        let tbItem2 = UITabBarItem(title: "Listas",
+        let titleTabLists = NSLocalizedString("titleTabLists", comment: "Title of TabLists")
+        let tbItem2 = UITabBarItem(title: titleTabLists,
                                    image: UIImage(named: "list")?.withRenderingMode(.alwaysTemplate),
                                    selectedImage: UIImage(named: "list")?.withRenderingMode(.alwaysTemplate))
         
@@ -57,7 +59,8 @@ class TabBarController: UITabBarController {
         nVController2.tabBarItem = tbItem2
         
         //tab3 Profile
-        let tbItem3 = UITabBarItem(title: "Perfil",
+        let titleTabProfile = NSLocalizedString("titleTabProfile", comment: "Title of TabProfile")
+        let tbItem3 = UITabBarItem(title: titleTabProfile,
                                    image: UIImage(named: "profile")?.withRenderingMode(.alwaysTemplate),
                                    selectedImage: UIImage(named: "profile")?.withRenderingMode(.alwaysTemplate))
 

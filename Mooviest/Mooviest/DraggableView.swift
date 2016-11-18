@@ -151,18 +151,16 @@ class DraggableView: UIView {
     func move(direction: MoveDirection) {
         overlayView.alpha = 0
         var transform:CGAffineTransform!
+        let rotationStrength: Float = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
+        let rotationAngle = ROTATION_ANGLE * rotationStrength
         switch direction {
             case .left ,
                  .right:
-                let rotationStrength: Float = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
-                let rotationAngle = ROTATION_ANGLE * rotationStrength
                 let translation = CGAffineTransform(translationX: self.frame.width*2*CGFloat(direction.rawValue), y: CGFloat(yFromCenter))
                 let rotation = CGAffineTransform(rotationAngle: CGFloat(1 - abs(rotationAngle))*CGFloat(direction.rawValue))
                 transform = rotation.concatenating(translation).scaledBy(x: CGFloat(SCALE_MAX), y: CGFloat(SCALE_MAX))
             case .top ,
                  .bottom:
-                let rotationStrength: Float = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
-                let rotationAngle = ROTATION_ANGLE * rotationStrength
                 let y = yFromCenter < ACTION_MARGIN ? CGFloat(direction.rawValue) * CGFloat(self.frame.height) : CGFloat(yFromCenter*3.3)
                 let translation = CGAffineTransform(translationX: CGFloat(xFromCenter), y: y)
                 let rotation = CGAffineTransform(rotationAngle: CGFloat(rotationAngle))

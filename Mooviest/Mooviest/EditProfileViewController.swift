@@ -84,7 +84,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     }
     
     func setupView() {
-        navigationItem.title = "Editar perfil"
+        navigationItem.title = NSLocalizedString("editProfileViewTitle", comment: "Title of EditProfileView")
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
         view.addGestureRecognizer(tap)
         
@@ -190,18 +190,22 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         case v.dateTextFieldView.textField:
             _ = v.dateTextFieldView.validateDate(dateFormat: dateFormat)
         case v.genderTextFieldView.textField:
-            _ = v.genderTextFieldView.validateTextIndexOf(strings: genders, message: "Ivalid gender")
+            let genderMsg = NSLocalizedString("genderMsg", comment: "Placeholder of genderTextFieldView")
+            _ = v.genderTextFieldView.validateTextIndexOf(strings: genders, message: genderMsg)
         case v.countryTextFieldView.textField:
-            _ = v.countryTextFieldView.validateTextIndexOf(strings: countries, message: "Ivalid country")
+            let countryMsg = NSLocalizedString("countryMsg", comment: "Placeholder of countryTextFieldView")
+            _ = v.countryTextFieldView.validateTextIndexOf(strings: countries, message: countryMsg)
         default: break
         }
     }
     
     func validateForm()->Bool {
+        let genderMsg = NSLocalizedString("genderMsg", comment: "Placeholder of genderTextFieldView")
+        let countryMsg = NSLocalizedString("countryMsg", comment: "Placeholder of countryTextFieldView")
         return v.userTextFieldView.validateNumberOfCharacters(minLength: USERNAME_MIN_LENGTH, maxLength: USERNAME_MAX_LENGTH)
             && v.emailTextFieldView.validateEmail() && v.dateTextFieldView.validateDate(dateFormat: dateFormat)
-            && v.genderTextFieldView.validateTextIndexOf(strings: genders, message: "Ivalid gender")
-            && v.countryTextFieldView.validateTextIndexOf(strings: countries, message: "Ivalid country")
+            && v.genderTextFieldView.validateTextIndexOf(strings: genders, message: genderMsg)
+            && v.countryTextFieldView.validateTextIndexOf(strings: countries, message: countryMsg)
     }
     
     

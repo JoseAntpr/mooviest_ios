@@ -18,10 +18,10 @@ struct TypeMovieModel {
 }
 //traduccion title
 struct TypeMovieStruct{
-    let seen = TypeMovieModel(rawValue: "seen", hashValue: 1, image: "eye", color: seen_color, title: "Vistas")
-    let watchlist = TypeMovieModel(rawValue: "watchlist", hashValue: 2, image: "bookmark", color: watchlist_color,title: "Pendientes")
-    let favourite = TypeMovieModel(rawValue: "favourite", hashValue: 3, image: "star", color: favourite_color, title: "Favoritas")
-    let black = TypeMovieModel(rawValue: "black", hashValue: 5, image: "clear", color: blacklist_color,title: "Lista negra")
+    let seen = TypeMovieModel(rawValue: "seen", hashValue: 1, image: "eye", color: seen_color, title: NSLocalizedString("titleSeenList", comment: "Text of TypeMovieModel"))
+    let watchlist = TypeMovieModel(rawValue: "watchlist", hashValue: 2, image: "bookmark", color: watchlist_color,title: NSLocalizedString("titleWatchList", comment: "Text of TypeMovieModel"))
+    let favourite = TypeMovieModel(rawValue: "favourite", hashValue: 3, image: "star", color: favourite_color, title: NSLocalizedString("titleFavouriteList", comment: "Text of TypeMovieModel"))
+    let black = TypeMovieModel(rawValue: "black", hashValue: 5, image: "clear", color: blacklist_color,title: NSLocalizedString("titleBlackList", comment: "Text of TypeMovieModel"))
 }
 
 let TypeMovie = TypeMovieStruct()

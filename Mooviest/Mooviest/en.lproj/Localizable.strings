@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   Mooviest
 
@@ -6,16 +6,99 @@
   Copyright © 2016 Mooviest. All rights reserved.
 */
 
-// LoginView
+// TextFieldView
+validateNumberOfCharactersMsg = "Use between minLength and maxLength characters";
+validateEmailMsg = "Error in email format";
+validateTextEqualToMsg = "Passwords do not match";
+validateDateMsg = "Incorrect date format";
 
-titleCreateAccountButton = "No account yet? Create one";
+// LoginViewController
+registerMsg = "Some error has been occurred";
+registerMsgDataError = "Form data error";
 
-// RegisterView
-createAccountButton = "CREATE ACCOUNT";
-backloginButton = "Already a member? Login";
+// LoginViewController & DataModel
+registerTitle = "Register error";
+
+// LoginView & EditProfileView
+titleGoCreateAccountButton = "No account yet? Create one";
+placeholderUserOrEmail = "Username or email";
+placeholderPass = "Password";
+titleLoginButton = "Log in";
+placeholderUser = "Username";
+placeholderEmail = "Email";
+placeholderConfirmPass = "Confirm password";
+titleCreateAccountButton  = "CREATE ACCOUNT";
+titleBackloginButton = "Already a member? Login";
+
+// TabBarController
+titleTabSwipe = "Swipe";
+titleTabLists = "Lists";
+titleTabProfile = "Profile";
 
 //InfoMovieView
 synopsisLabel = "Synopsis";
-genreLabel = "Genre";
-producerLabel = "Producer";
+genreLabel = "Genres";
+producerLabel = "Producers";
 countryLabel = "Country";
+
+//CaptionMovieView
+textTypeLabel = "Movie";
+textTitleLabel = "Title";
+
+//MovieDetailView
+title1BarSegmentedControl = "INFO";
+title2BarSegmentedControl = "CAST";
+title3BarSegmentedControl = "SEE";
+titleSeenItem = "Seen";
+titleWatchItem = "Pending";
+titleFavouriteItem = "Favourite";
+titleBlackItem = "I'm not interested";
+
+//MovieDetailViewController
+getMovieTitle = "Movie error";
+getMovieMsg = "Unloaded movie";
+
+//ListMovieCastController & ListsViewController & ListViewController
+getListTitle = "Get list error";
+getListMsg = "Unloaded list";
+getNextPageListTitle = "List error";
+getNextPageListMsg = "Error getting the next page from the list";
+
+//ItemListView
+textTitleLabelList = "List";
+titleMoreButton = "More";
+textEmptyLabel = "Empty list";
+
+//ListsView
+titleSeenList = "Seen";
+titleWatchList = "Watchlist";
+titleFavouriteList = "Favourite";
+titleBlackList = "Blacklist";
+
+//ProfileView
+title1ProfileBarSegmentedControl = "FOLLOWERS";
+title2ProfileBarSegmentedControl = "FOLLOWING";
+
+//EditProfileView
+placeholderFirstName = "First Name";
+placeholderLastName = "Last Name";
+placeholderDate = "Born";
+placeholderGender = "Gender";
+placeholderCountry = "Country";
+
+//EditProfileViewController
+genderMsg = "Invalid gender";
+countryMsg = "Invalid country";
+editProfileViewTitle = "Edit Profile";
+
+//SearchViewController
+searchMoviesTitle = "Search error";
+
+//DataModel
+connectionMsg = "Connection error";
+loginTitle = "Log in error";
+getUserTitle = "Profile error";
+getUserMsg = "Unloaded profile";
+updateUserSMsg = "Profile successfully updated";
+updateUserRMsg = "Incorrect response format";
+updateUserTitle = "Encoding error";

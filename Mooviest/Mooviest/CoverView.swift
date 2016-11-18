@@ -51,7 +51,7 @@ class CoverView: UIView {
         ratingLabel.text = "10.0"
         ratingLabel.textColor = UIColor.white.withAlphaComponent(0.6)
         
-        titleLabel.text = "Titulo"
+        titleLabel.text = NSLocalizedString("textTitleLabel", comment: "Text of titleLabel")
         titleLabel.textColor = UIColor.white
         titleLabel.textAlignment = .center
         

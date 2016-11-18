@@ -188,7 +188,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
     }
     
     func editProfile(){
-        navigationItem.title = "Perfil"
+        
+        navigationItem.title = NSLocalizedString("titleTabProfile", comment: "Title of TabProfile")
         let nViewController = EditProfileViewController()
         nViewController.user = DataModel.sharedInstance.user
         

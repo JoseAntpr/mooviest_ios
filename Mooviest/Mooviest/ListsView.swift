@@ -45,10 +45,10 @@ class ListsView: UIView {
         headerView.clipsToBounds = true
         lineView.backgroundColor = UIColor.lightGray
         
-        watchListViewCell.titleLabel.text = "Pendientes"
-        favouriteListViewCell.titleLabel.text = "Favoritas"
-        seenListViewCell.titleLabel.text = "Vistas"
-        blackListViewCell.titleLabel.text = "Lista negra"
+        watchListViewCell.titleLabel.text = NSLocalizedString("titleWatchList", comment: "Text of watchListViewCell")
+        favouriteListViewCell.titleLabel.text = NSLocalizedString("titleFavouriteList", comment: "Text of favouriteListViewCell")
+        seenListViewCell.titleLabel.text = NSLocalizedString("titleSeenList", comment: "Text of seenListViewCell")
+        blackListViewCell.titleLabel.text = NSLocalizedString("titleBlackList", comment: "Text of blackListViewCell")
         
         heightItemListView = width*0.6
         

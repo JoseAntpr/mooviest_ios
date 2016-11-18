@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   Mooviest
 
@@ -6,17 +6,99 @@
   Copyright © 2016 Mooviest. All rights reserved.
 */
 
+// TextFieldView
+validateNumberOfCharactersMsg = "Use entre minLength y maxLength caracteres";
+validateEmailMsg = "Error en el formato de email";
+validateTextEqualToMsg = "Las contraseñas no coinciden";
+validateDateMsg = "Formato de fecha incorrecto";
+
+// LoginViewController
+registerMsg = "Ha ocurrido algún error";
+registerMsgDataError = "Datos del formulario erróneo";
+
+// LoginViewController & DataModel
+registerTitle = "Error de registro";
 
 // LoginView
-
 titleCreateAccountButton = "¿No tienes cuenta? Create una";
+placeholderUserOrEmail = "Usuario o email";
+placeholderPass = "Contraseña";
+titleLoginButton = "Entrar";
+placeholderUser = "Username";
+placeholderEmail = "Email";
+placeholderConfirmPass = "Confirme su contraseña";
+titleCreateAccountButton  = "CREAR CUENTA";
+titleBackloginButton = "¿Eres miembro? Accede";
 
-// RegisterView
-createAccountButton = "CREAR CUENTA";
-backloginButton = "¿Eres miembro? Accede";
+// TabBarController
+titleTabSwipe = "Swipe";
+titleTabLists = "Listas";
+titleTabProfile = "Perfil";
 
 //InfoMovieView
 synopsisLabel = "Sinopsis";
-genreLabel = "Género";
-producerLabel = "Productor";
+genreLabel = "Géneros";
+producerLabel = "Productors";
 countryLabel = "País";
+
+//CaptionMovieView
+textTypeLabel = "Pelicula";
+textTitleLabel = "Título";
+
+//MovieDetailView
+title1BarSegmentedControl = "INFORMACIÓN";
+title2BarSegmentedControl = "REPARTO";
+title3BarSegmentedControl = "VER";
+itleSeenItem = "Vista";
+titleWatchItem = "Pendiente";
+titleFavouriteItem = "Favorita";
+titleBlackItem = "No me interesa";
+
+//MovieDetailViewController
+getMovieTitle = "Error en la película";
+getMovieMsg = "Película no cargada";
+
+//ListMovieCastController
+getListTitle = "Error al obtener la lista";
+getListMsg = "Lista no cargada";
+getNextPageListTitle = "Error en la lista";
+getNextPageListMsg = "Error al obtener la siguiente página de la lista";
+
+//ItemListView
+textTitleLabelList = "Lista";
+titleMoreButton = "Más";
+textEmptyLabel = "Lista vacía";
+
+//ListsView
+titleSeenList = "Vistas";
+titleWatchList = "Pendientes";
+titleFavouriteList = "Favoritas";
+titleBlackList = "Lista negra";
+
+//ProfileView
+title1ProfileBarSegmentedControl = "SEGUIDORES";
+title2ProfileBarSegmentedControl = "SIGUIENDO";
+
+//EditProfileView
+placeholderFirstName = "Nombre";
+placeholderLastName = "Apellidos";
+placeholderDate = "Fecha de nacimiento";
+placeholderGender = "Género";
+placeholderCountry = "País";
+
+//EditProfileViewController
+genderMsg = "Género no válido";
+countryMsg = "País no válido";
+editProfileViewTitle = "Editar Perfil";
+
+//SearchViewController
+searchMoviesTitle = "Error en la búsqueda";
+
+//DataModel
+connectionMsg = "Error de conexión";
+loginTitle = "Error al iniciar la sesión";
+getUserTitle = "Error en el Perfil";
+getUserMsg = "Perfil no cargado";
+updateUserSMsg = "Se ha actualizado el perfil satisfactoriamente";
+updateUserRMsg = "Formato de respuesta errónea";
+updateUserTitle = "Error al codificar";

@@ -61,46 +61,53 @@ class EditProfileView: UIView {
         coverImageView.layer.borderWidth = 1.8
         coverImageView.layer.masksToBounds = true
         
+        let placeholderUser = NSLocalizedString("placeholderUser", comment: "Placeholder of userTextFieldView")
         userTextFieldView.setTexColor(TextColor: UIColor.black)
-        userTextFieldView.setPlaceholder(Placeholder: "Usuario", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        userTextFieldView.setPlaceholder(Placeholder: placeholderUser, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         userTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         userTextFieldView.setReturnKeyType(returnKeyType: .next)
         userTextFieldView.textField.tag = 0
         
+        let placeholderFirstName = NSLocalizedString("placeholderFirstName", comment: "Placeholder of firstNameTextFieldView")
         firstNameTextFieldView.setTexColor(TextColor: UIColor.black)
-        firstNameTextFieldView.setPlaceholder(Placeholder: "Nombre", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        firstNameTextFieldView.setPlaceholder(Placeholder: placeholderFirstName, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         firstNameTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         firstNameTextFieldView.setReturnKeyType(returnKeyType: .next)
         firstNameTextFieldView.setAutocapitalizationType(autocapitalizationType: .words)
         firstNameTextFieldView.textField.tag = 1
         
+        let placeholderLastName = NSLocalizedString("placeholderLastName", comment: "Placeholder of lastNameTextFieldView")
         lastNameTextFieldView.setTexColor(TextColor: UIColor.black)
-        lastNameTextFieldView.setPlaceholder(Placeholder: "Apellidos", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        lastNameTextFieldView.setPlaceholder(Placeholder: placeholderLastName, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         lastNameTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         lastNameTextFieldView.setReturnKeyType(returnKeyType: .next)
         lastNameTextFieldView.setAutocapitalizationType(autocapitalizationType: .words)
         lastNameTextFieldView.textField.tag = 2
         
+        let placeholderEmail = NSLocalizedString("placeholderEmail", comment: "Placeholder of emailTextFieldView")
         emailTextFieldView.setTexColor(TextColor: UIColor.black)
-        emailTextFieldView.setPlaceholder(Placeholder: "Email", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        emailTextFieldView.setPlaceholder(Placeholder: placeholderEmail, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         emailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.emailAddress)
         emailTextFieldView.setReturnKeyType(returnKeyType: .next)
         emailTextFieldView.textField.tag = 3
         
+        let placeholderDate = NSLocalizedString("placeholderDate", comment: "Placeholder of dateTextFieldView")
         dateTextFieldView.setTexColor(TextColor: UIColor.black)
-        dateTextFieldView.setPlaceholder(Placeholder: "Fecha de nacimiento", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        dateTextFieldView.setPlaceholder(Placeholder: placeholderDate, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         dateTextFieldView.setReturnKeyType(returnKeyType: .next)
         dateTextFieldView.textField.tag = 4
         dateTextFieldView.textField.isSelected = false
         
+        let placeholderGender = NSLocalizedString("placeholderGender", comment: "Placeholder of genderTextFieldView")
         genderTextFieldView.setTexColor(TextColor: UIColor.black)
-        genderTextFieldView.setPlaceholder(Placeholder: "Género", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        genderTextFieldView.setPlaceholder(Placeholder: placeholderGender, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         genderTextFieldView.setReturnKeyType(returnKeyType: .next)
         genderTextFieldView.textField.tag = 5
         genderTextFieldView.textField.isSelected = false
         
+        let placeholderCountry = NSLocalizedString("placeholderCountry", comment: "Placeholder of countryTextFieldView")
         countryTextFieldView.setTexColor(TextColor: UIColor.black)
-        countryTextFieldView.setPlaceholder(Placeholder: "País", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        countryTextFieldView.setPlaceholder(Placeholder: placeholderCountry, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         countryTextFieldView.setReturnKeyType(returnKeyType: .send)
         countryTextFieldView.textField.tag = 6
         countryTextFieldView.textField.isSelected = false

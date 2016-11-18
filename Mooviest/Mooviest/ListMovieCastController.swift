@@ -1,5 +1,5 @@
 //
-//  ListMovieCast.swift
+//  ListMovieCastController.swift
 //  Mooviest
 //
 //  Created by Antonio RG on 6/11/16.
@@ -12,7 +12,7 @@ import Kingfisher
 
 
 
-class ListMovieCast: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,MovieProtocol, TabBarProtocol,
+class ListMovieCastController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,MovieProtocol, TabBarProtocol,
 UICollectionViewDataSourcePrefetching {
     
     let user = DataModel.sharedInstance.user
@@ -101,7 +101,7 @@ UICollectionViewDataSourcePrefetching {
     
     func reloadList(){
         DataModel.sharedInstance.searchMoviesByCelebrity(celebrity_id: participation!.id) {
-            (successful, title, msg, res) in
+            successful, title, message, res in
             if successful {
                 do {
                     self.nextUrl = ""
@@ -116,10 +116,12 @@ UICollectionViewDataSourcePrefetching {
                     }
                     self.v.movieCollectionView.reloadData()
                 } catch {
-                    Message.msgPopupDelay(title: "Roles list error", message:"load list error", delay: 0, ctrl: self) {}
+                    let title = NSLocalizedString("getListTitle", comment: "Title of searchMoviesByCelebrity")
+                    let msg = NSLocalizedString("getListMsg", comment: "Message of searchMoviesByCelebrity")
+                    Message.msgPopupDelay(title: title, message:msg, delay: 0, ctrl: self) {}
                 }
             } else {
-                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {}
             }
         }
     }
@@ -129,7 +131,7 @@ UICollectionViewDataSourcePrefetching {
             let urlnext = nextUrl
             nextUrl = ""
             DataModel.sharedInstance.nextMovies(url: urlnext) {
-                (successful, title, msg, res) in
+                successful, title, message, res in
                 if successful {
                     do {
                         self.nextUrl = ""
@@ -141,10 +143,12 @@ UICollectionViewDataSourcePrefetching {
                         }
                         self.v.movieCollectionView.reloadData()
                     } catch {
-                        Message.msgPopupDelay(title: "Roles list error", message:"next movie load list error", delay: 0, ctrl: self) {}
+                        let title = NSLocalizedString("getNextPageListTitle", comment: "Title of nextMovies")
+                        let msg = NSLocalizedString("getNextPageListMsg", comment: "Message of nextMovies")
+                        Message.msgPopupDelay(title: title, message:msg, delay: 0, ctrl: self) {}
                     }
                 } else {
-                    Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+                    Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {}
                 }
             }
         }
@@ -156,8 +160,8 @@ UICollectionViewDataSourcePrefetching {
         v.movieCollectionView.delegate = self
         v.movieCollectionView.dataSource = self
         if #available(iOS 10.0, *) {
-            //            v.movieCollectionView.prefetchDataSource = self
-            //            isIOS10 = true
+            v.movieCollectionView.prefetchDataSource = self
+            isIOS10 = true
         }
         v.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
         navigationItem.title = "\(participation!.name)"

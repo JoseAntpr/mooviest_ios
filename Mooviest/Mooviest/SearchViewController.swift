@@ -110,8 +110,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         searchBar.delegate = self
         navigationItem.titleView = searchBar
         if #available(iOS 10.0, *) {
-//            v.movieCollectionView.prefetchDataSource = self
-//            isIOS10 = true
+            v.movieCollectionView.prefetchDataSource = self
+            isIOS10 = true
         }
     }
     
@@ -121,7 +121,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             nextUrl = ""
             print(urlnext)
             DataModel.sharedInstance.nextMovies(url: urlnext) {
-                (successful, title, msg, res) in
+                successful, title, message, res in
                 if successful {
                     do {
                         self.nextUrl = ""
@@ -134,10 +134,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                         }
                         self.v.movieCollectionView.reloadData()
                     } catch {
-                       Message.msgPopupDelay(title: "Search error", message:"movies load list error", delay: 0, ctrl: self) {}
+                        let title = NSLocalizedString("searchMoviesTitle", comment: "Title of searchNextMovies")
+                        let msg = NSLocalizedString("getNextPageListMsg", comment: "Message of searchNextMovies")
+                        Message.msgPopupDelay(title: title, message:msg, delay: 0, ctrl: self) {}
                     }
                 } else {
-                    Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}  
+                    Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {}  
                 }
             }
         }
@@ -147,7 +149,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         movies.removeAll()
         DataModel.sharedInstance.searchMovies(name: searchBar.text!) {
-            (successful, title, msg, res) in
+            successful, title, message, res in
             if successful {
                 do {
                     self.nextUrl = ""
@@ -161,10 +163,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                     self.v.movieCollectionView.contentOffset.y = 0
                     self.v.movieCollectionView.reloadData()
                 } catch {
-                    Message.msgPopupDelay(title: "Search error", message:"next movies load list error", delay: 0, ctrl: self) {}
+                    let title = NSLocalizedString("searchMoviesTitle", comment: "Title of searchMovies")
+                    let msg = NSLocalizedString("getListMsg", comment: "Message of searchMovies")
+                    Message.msgPopupDelay(title: title, message:msg, delay: 0, ctrl: self) {}
                 }
             } else {
-                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {}
             }
         }
         

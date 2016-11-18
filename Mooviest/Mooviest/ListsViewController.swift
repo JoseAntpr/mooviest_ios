@@ -107,7 +107,7 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     func reloadList(typemovie: TypeMovieModel, collection: UICollectionView) {
         DataModel.sharedInstance.getMovieList(listname: typemovie.rawValue) {
-            (successful, title, msg, res) in
+            successful, title, message, res in
             if successful {
                 do {
                     let indexList = typemovie.hashValue-1
@@ -122,10 +122,12 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
                     }
                     collection.reloadData()
                 } catch {
-                    Message.msgPopupDelay(title: "Error lists", message: "load list error", delay: 0, ctrl: self) {}
+                    let title = NSLocalizedString("getListTitle", comment: "Title of searchMoviesByCelebrity")
+                    let msg = NSLocalizedString("getListMsg", comment: "Message of searchMoviesByCelebrity")
+                    Message.msgPopupDelay(title: title, message: msg, delay: 0, ctrl: self) {}
                 }
             } else {
-                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {}
             }
         }
     }

@@ -68,27 +68,29 @@ class LoginView: UIView {
         
         padingformView.backgroundColor = UIColor.white.withAlphaComponent(0)
         centralView.backgroundColor = UIColor.white.withAlphaComponent(0)
-        //Traducir vista
-        //Username or email
-        //Password
+ 
+        let placeholderUserOrEmail = NSLocalizedString("placeholderUserOrEmail", comment: "Placeholder of userOrEmailTextFieldView")
         userOrEmailTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        userOrEmailTextFieldView.setPlaceholder(Placeholder: "Usuario o email", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        userOrEmailTextFieldView.setPlaceholder(Placeholder: placeholderUserOrEmail, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         userOrEmailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.emailAddress)
         userOrEmailTextFieldView.setReturnKeyType(returnKeyType: .next)
         userOrEmailTextFieldView.textField.tag = TextFieldViewTag.UserOrEmailTextFieldView.rawValue
         
+        let placeholderPass = NSLocalizedString("placeholderUserOrEmail", comment: "Placeholder of passLoginTextFieldView")
         passLoginTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        passLoginTextFieldView.setPlaceholder(Placeholder: "Contraseña", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        passLoginTextFieldView.setPlaceholder(Placeholder: placeholderPass, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         passLoginTextFieldView.setSecureText(isSecureTextEntry: true)
         passLoginTextFieldView.setReturnKeyType(returnKeyType: .join)
         passLoginTextFieldView.textField.tag = TextFieldViewTag.PassLoginTextFieldView.rawValue
         
+        let titleLoginButton = NSLocalizedString("titleLoginButton", comment: "Title of loginButton")
         loginButton.backgroundColor =   mooviest_red
-        loginButton.setTitle("LOGIN", for: UIControlState())
+        loginButton.setTitle(titleLoginButton, for: UIControlState())
         loginButton.setTitleColor(UIColor.white, for: UIControlState())
         loginButton.layer.cornerRadius = 3
         
-        goCreateAccountFormButton.setTitle(NSLocalizedString("titleCreateAccountButton", comment: "Title of goCreateAccountFormButton"), for: UIControlState())
+        let titleGoCreateAccountButton = NSLocalizedString("titleGoCreateAccountButton", comment: "Title of goCreateAccountFormButton")
+        goCreateAccountFormButton.setTitle(titleGoCreateAccountButton, for: UIControlState())
         goCreateAccountFormButton.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: UIControlState())
         
         //Form Register
@@ -102,36 +104,41 @@ class LoginView: UIView {
         //Email
         //Password
         //Confirm password
+        let placeholderUser = NSLocalizedString("placeholderUser", comment: "Placeholder of userTextFieldView")
         userTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        userTextFieldView.setPlaceholder(Placeholder: "Usuario", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        userTextFieldView.setPlaceholder(Placeholder: placeholderUser, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         userTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         userTextFieldView.setReturnKeyType(returnKeyType: .next)
         userTextFieldView.textField.tag = TextFieldViewTag.UserTextFieldView.rawValue
         
+        let placeholderEmail = NSLocalizedString("placeholderEmail", comment: "Placeholder of emailTextFieldView")
         emailTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        emailTextFieldView.setPlaceholder(Placeholder: "Email", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        emailTextFieldView.setPlaceholder(Placeholder: placeholderEmail, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         emailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.emailAddress)
         emailTextFieldView.setReturnKeyType(returnKeyType: .next)
         emailTextFieldView.textField.tag = TextFieldViewTag.EmailTextFieldView.rawValue
         
         passTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        passTextFieldView.setPlaceholder(Placeholder: "Contraseña", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        passTextFieldView.setPlaceholder(Placeholder: placeholderPass, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         passTextFieldView.setSecureText(isSecureTextEntry: true)
         passTextFieldView.setReturnKeyType(returnKeyType: .next)
         passTextFieldView.textField.tag = TextFieldViewTag.PassTextFieldView.rawValue
         
+        let placeholderConfirmPass = NSLocalizedString("placeholderConfirmPass", comment: "Placeholder of confirmPassTextFieldView")
         confirmPassTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
-        confirmPassTextFieldView.setPlaceholder(Placeholder: "Confirme su contraseña", PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
+        confirmPassTextFieldView.setPlaceholder(Placeholder: placeholderConfirmPass, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         confirmPassTextFieldView.setSecureText(isSecureTextEntry: true)
         confirmPassTextFieldView.setReturnKeyType(returnKeyType: .default)
         confirmPassTextFieldView.textField.tag = TextFieldViewTag.ConfirmPassTextFieldView.rawValue
         
+        let titleCreateAccountButton = NSLocalizedString("titleCreateAccountButton", comment: "Title of createAccountButton")
         createAccountButton.backgroundColor =   mooviest_red
-        createAccountButton.setTitle(NSLocalizedString("createAccountButton", comment: "Title of createAccountButton"), for: UIControlState())
+        createAccountButton.setTitle(titleCreateAccountButton, for: UIControlState())
         createAccountButton.setTitleColor(UIColor.white, for: UIControlState())
         createAccountButton.layer.cornerRadius = 3
         
-        backLoginButton.setTitle(NSLocalizedString("backloginButton", comment: "Title of backLoginButton"), for: UIControlState())
+        let titleBackloginButton = NSLocalizedString("titleBackloginButton", comment: "Title of backLoginButton")
+        backLoginButton.setTitle(titleBackloginButton, for: UIControlState())
         backLoginButton.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: UIControlState())
         backLoginButton.alpha = 0.0
         

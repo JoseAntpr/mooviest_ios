@@ -16,7 +16,7 @@ class DataModel: NSObject {
     var user:User?
     var authenticationUser: Authentication?
     let userDefault = UserDefaults()
-    
+    let connectionMsg = NSLocalizedString("connectionMsg", comment: "Title of connection DataModel")
     func startActivity() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
@@ -43,12 +43,13 @@ class DataModel: NSObject {
                             completionRequest(true, "", msg)
                             self.saveContext()
                         } catch {
-                            completionRequest(false, "Login error", msg)
+                            let title = NSLocalizedString("loginTitle", comment: "Title of login")
+                            completionRequest(false, title, msg)
                         }
                     }
                     
                 case .failure(let error):
-                    completionRequest(false, "Connection error", error.localizedDescription)
+                    completionRequest(false, self.connectionMsg, error.localizedDescription)
                 }
         }
     }
@@ -79,12 +80,13 @@ class DataModel: NSObject {
                             self.authenticationUser = try Authentication(json: res)
                             completionRequest(true, "", msg)
                         } catch {
-                            completionRequest(false, "Register error", msg)
+                            let title = NSLocalizedString("registerTitle", comment: "Title of register")
+                            completionRequest(false, title, msg)
                         }
                     }
                     
                 case .failure(let error):
-                    completionRequest(false, "Connection error", error.localizedDescription)
+                    completionRequest(false, self.connectionMsg, error.localizedDescription)
                 }
         }
     }
@@ -103,12 +105,14 @@ class DataModel: NSObject {
                             self.user = try User(json: res)
                             completionRequest(true, "","")
                         } catch {
-                            completionRequest(false, "User error","Error to load profile")
+                            let title = NSLocalizedString("getUserTitle", comment: "Title of getUser")
+                            let msg = NSLocalizedString("getUserMsg", comment: "Message of getUser")
+                            completionRequest(false, title,msg)
                         }
                     }
                     
                 case .failure(let error):
-                    completionRequest(false, "Connection error", error.localizedDescription)
+                    completionRequest(false, self.connectionMsg, error.localizedDescription)
                 }
         }
     }
@@ -137,6 +141,7 @@ class DataModel: NSObject {
                 case .success(let upload, _, _):
                     upload.responseJSON { response in
                         self.stopActivity()
+                        let titleError = NSLocalizedString("getUserTitle", comment: "Title of updateUser")
                         switch response.result {
                         case .success:
                             do {
@@ -144,7 +149,8 @@ class DataModel: NSObject {
                                     if let status = res["status"] as? Int {
                                         if status == 200 {
                                             self.user = try User(json: res)
-                                            completionRequest(true, "Update successful", "")
+                                            let msg = NSLocalizedString("updateUserSMsg", comment: "Message of updateUser")
+                                            completionRequest(true, "", msg)
                                         } else {
                                             var msg = ""
                                             if let errors = res["errors"] as? [String:Any] {
@@ -155,21 +161,24 @@ class DataModel: NSObject {
                                                     msg += "\n\(email[0])"
                                                 }
                                             }
-                                            completionRequest(false, "Update profile error", msg)
+                                            completionRequest(false, titleError, msg)
                                         }
                                     }
                                 }
                                 
                             } catch {
-                                completionRequest(false, "Update profile","return struct error")
+                                
+                                let msg = NSLocalizedString("updateUserRMsg", comment: "Message of updateUser")
+                                completionRequest(false, titleError,msg)
                             }
                         case .failure(let error):
-                            completionRequest(false, "Connection error", error.localizedDescription)
+                            completionRequest(false, self.connectionMsg, error.localizedDescription)
                         }
                     }
                 case .failure(let msg):
                     self.stopActivity()
-                    completionRequest(false, "Encoding Error", "\(msg)")
+                    let title = NSLocalizedString("updateUserTitle", comment: "Title of updateUser")
+                    completionRequest(false, title, "\(msg)")
                 }
             }
         )
@@ -183,11 +192,11 @@ class DataModel: NSObject {
             switch response.result {
             case .success:
                 if let res = response.result.value as? [String:Any] {
-                    completionRequest(true, "Get list","", res)
+                    completionRequest(true, "","", res)
                 }
                 
             case .failure(let error):
-                completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+                completionRequest(false, self.connectionMsg, error.localizedDescription, [String:Any]())
             }
         }
     }
@@ -202,11 +211,11 @@ class DataModel: NSObject {
                 switch response.result {
                 case .success:
                     if let res = response.result.value as? [String:Any] {
-                        completionRequest(true, "Search","", res)
+                        completionRequest(true, "","", res)
                     }
                     
                 case .failure(let error):
-                    completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+                    completionRequest(false, self.connectionMsg, error.localizedDescription, [String:Any]())
                 }
         }
     }
@@ -221,11 +230,11 @@ class DataModel: NSObject {
                 switch response.result {
                 case .success:
                     if let res = response.result.value as? [String:Any] {
-                        completionRequest(true, "Search","", res)
+                        completionRequest(true, "","", res)
                     }
                     
                 case .failure(let error):
-                    completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+                    completionRequest(false, self.connectionMsg, error.localizedDescription, [String:Any]())
                 }
         }
     }
@@ -239,11 +248,11 @@ class DataModel: NSObject {
                 switch response.result {
                 case .success:
                     if let res = response.result.value as? [String:Any] {
-                        completionRequest(true, "Search","", res)
+                        completionRequest(true, "","", res)
                     }
                     
                 case .failure(let error):
-                    completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+                    completionRequest(false, self.connectionMsg, error.localizedDescription, [String:Any]())
                 }
         }
     }
@@ -257,10 +266,10 @@ class DataModel: NSObject {
                 switch response.result {
                 case .success:
                     if let res = response.result.value as? [String:Any] {
-                        completionRequest(true, "Get movie","", res)
+                        completionRequest(true, "","", res)
                     }
                 case .failure(let error):
-                    completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+                    completionRequest(false, self.connectionMsg, error.localizedDescription, [String:Any]())
                 }
         }
     }
@@ -279,10 +288,10 @@ class DataModel: NSObject {
             switch response.result {
             case .success:
                 if let res = response.result.value as? [String:Any] {
-                    completionRequest(true, "Search","", res)
+                    completionRequest(true, "","", res)
                 }
             case .failure(let error):
-                completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+                completionRequest(false, self.connectionMsg, error.localizedDescription, [String:Any]())
             }
         }
     }
@@ -299,10 +308,10 @@ class DataModel: NSObject {
             switch response.result {
             case .success:
                 if let res = response.result.value as? [String:Any] {
-                    completionRequest(true, "Search","", res)
+                    completionRequest(true, "","", res)
                 }
             case .failure(let error):
-                completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+                completionRequest(false, self.connectionMsg, error.localizedDescription, [String:Any]())
             }
         }
     }
@@ -316,11 +325,11 @@ class DataModel: NSObject {
             switch response.result {
             case .success:
                 if let res = response.result.value as? [String:Any] {
-                    completionRequest(true, "Search","", res)
+                    completionRequest(true, "","", res)
                 }
                 
             case .failure(let error):
-                completionRequest(false, "Connection error", error.localizedDescription, [String:Any]())
+                completionRequest(false, self.connectionMsg, error.localizedDescription, [String:Any]())
             }
         }
     }

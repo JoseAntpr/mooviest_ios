@@ -88,7 +88,10 @@ class MovieDetailView: UIView {
         bodyScrollView.showsHorizontalScrollIndicator = false
         bodyScrollView.showsVerticalScrollIndicator = false
         
-        let items = ["INFORMACIÓN", "REPARTO", "VER"]
+        let title1BarSegmentedControl = NSLocalizedString("title1BarSegmentedControl", comment: "Title1 of barSegmentedControl")
+        let title2BarSegmentedControl = NSLocalizedString("title2BarSegmentedControl", comment: "Title2 of barSegmentedControl")
+        let title3BarSegmentedControl = NSLocalizedString("title3BarSegmentedControl", comment: "Title3 of barSegmentedControl")
+        let items = [title1BarSegmentedControl, title2BarSegmentedControl, title3BarSegmentedControl]
         barSegmentedControl = UISegmentedControl(items: items)
         barSegmentedControl.selectedSegmentIndex = 0
         barSegmentedControl.tintColor = mooviest_red
@@ -121,22 +124,22 @@ class MovieDetailView: UIView {
         seenItem.buttonColor = .lightGray
         seenItem.icon = UIImage(named:"eye")?.withRenderingMode(.alwaysTemplate)
         seenItem.tintColor = .white
-        seenItem.title = "Vista"
+        seenItem.title = NSLocalizedString("titleSeenItem", comment: "Title of seenItem")
         
         watchItem.buttonColor = .lightGray
         watchItem.icon = UIImage(named:"bookmark")?.withRenderingMode(.alwaysTemplate)
         watchItem.tintColor = .white
-        watchItem.title = "Pendiente"
+        watchItem.title = NSLocalizedString("titleWatchItem", comment: "Title of watchItem")
         
         favouriteItem.buttonColor = .lightGray
         favouriteItem.icon = UIImage(named:"star")?.withRenderingMode(.alwaysTemplate)
         favouriteItem.tintColor = .white
-        favouriteItem.title = "Favorita"
+        favouriteItem.title = NSLocalizedString("titleFavouriteItem", comment: "Title of favouriteItem")
         
         blackItem.buttonColor = .lightGray
         blackItem.icon = UIImage(named:"clear")?.withRenderingMode(.alwaysTemplate)
         blackItem.tintColor = .white
-        blackItem.title = "No me interesa"
+        blackItem.title = NSLocalizedString("titleBlackItem", comment: "Title of blackItem")
         
         barSegmentedBackground.backgroundColor = .white
         

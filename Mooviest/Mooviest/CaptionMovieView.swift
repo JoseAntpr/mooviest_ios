@@ -27,11 +27,11 @@ class CaptionMovieView: UIView {
     }
     
     func setupComponents() {
-        typeLabel.text = "Pelicula"
+        typeLabel.text = NSLocalizedString("textTypeLabel", comment: "Text of typeLabel")
         typeLabel.textAlignment = .center
         typeLabel.textColor = .darkGray
         
-        titleLabel.text = "Titulo de la pelicula cargada"
+        titleLabel.text = NSLocalizedString("textTitleLabel", comment: "Text of titleLabel")
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
@@ -41,7 +41,7 @@ class CaptionMovieView: UIView {
         runtimeLabel.textAlignment = .right
         runtimeLabel.textColor = .darkGray
         
-        releasedLabel.text = "2000"
+        releasedLabel.text = "2016"
         releasedLabel.textAlignment = .right
         releasedLabel.textColor = .darkGray
         

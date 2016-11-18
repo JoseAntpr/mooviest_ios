@@ -34,14 +34,14 @@ class ParticipationCollectionViewCell: UICollectionViewCell {
         
         captionView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
         
-        nameLabel.text = "Nombre"
+        nameLabel.text = ""
         nameLabel.textColor = UIColor.white
         nameLabel.textAlignment = .center
         nameLabel.lineBreakMode = .byWordWrapping
         nameLabel.numberOfLines = 2
         nameLabel.font.withSize(nameLabel.font.pointSize*0.8)
 
-        roleLabel.text = "Role"
+        roleLabel.text = ""
         roleLabel.textColor = UIColor.white.withAlphaComponent(0.5)
         roleLabel.textAlignment = .center
         roleLabel.font.withSize(roleLabel.font.pointSize*0.5)

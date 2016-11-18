@@ -39,16 +39,18 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         v = MovieDetailView(heightNavBar: height!)
 
         DataModel.sharedInstance.getMovie(idmovie: movieListInfo.id, idMovieLang: movieListInfo.idMovieLang) {
-            (successful, title, msg, res) in
+            successful, title, message, res in
             if successful {
                 do {
                     self.movie = try Movie(json: res)
                     self.loadDataView()
                 } catch {
-                    Message.msgPopupDelay(title: "Movie error", message: "not load movie", delay: 0, ctrl: self) {}
+                    let title = NSLocalizedString("getMovieTitle", comment: "Title of getMovie")
+                    let msg = NSLocalizedString("getMovieMsg", comment: "Message of getMovie")
+                    Message.msgPopupDelay(title: title, message: msg, delay: 0, ctrl: self) {}
                 }
             } else {
-                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {}
             }
         }
         setupView()
@@ -222,7 +224,9 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
                     completion(true, "", "")
                 }
             } else {
-                completion(false, "Movie error", "movie not load")
+                let title = NSLocalizedString("getMovieTitle", comment: "Title of getMovie")
+                let msg = NSLocalizedString("getMovieMsg", comment: "Message of getMovie")
+                completion(false, title, msg)
             }
         }
     }
@@ -334,7 +338,6 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             v.seeView.isHidden = true
             v.infoView.isHidden = true
             calculateContentSize(height: v.castCollectionView.contentSize.height)
-            
         case 2:
             v.castCollectionView.isHidden = true
             v.seeView.isHidden = false
@@ -392,7 +395,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == v.castCollectionView && participations.count > indexPath.item {
-            let nViewController = ListMovieCast()
+            let nViewController = ListMovieCastController()
             nViewController.nextUrl = ""
             nViewController.participation = participations[indexPath.item]
             navigationController?.pushViewController(nViewController, animated: true)
