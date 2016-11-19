@@ -20,7 +20,7 @@ registerMsgDataError = "Form data error";
 registerTitle = "Register error";
 
 // LoginView & EditProfileView
-titleGoCreateAccountButton = "No account yet? Create one";
+goCreateAccountFormButton = "No account yet? Create one";
 placeholderUserOrEmail = "Username or email";
 placeholderPass = "Password";
 titleLoginButton = "Log in";
@@ -90,6 +90,12 @@ placeholderCountry = "Country";
 genderMsg = "Invalid gender";
 countryMsg = "Invalid country";
 editProfileViewTitle = "Edit Profile";
+countryPickerCodeLang = "en_UK";
+genderPickerMale = "Male";
+genderPickerFemale = "Female";
+toolBarNext = "Next";
+toolBarExit = "Exit";
+dateFormat = "yyyy/MM/dd";
 
 //SearchViewController
 searchMoviesTitle = "Search error";

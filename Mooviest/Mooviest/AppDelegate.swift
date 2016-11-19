@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         var rootViewController:UIViewController!
         if DataModel.sharedInstance.loadContext() {
+            DataModel.sharedInstance.updateLang(){_,_,_ in }
             rootViewController =  TabBarController()
         } else {
             rootViewController =  LoginViewController()

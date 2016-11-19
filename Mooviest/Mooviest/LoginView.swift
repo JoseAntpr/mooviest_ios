@@ -76,7 +76,7 @@ class LoginView: UIView {
         userOrEmailTextFieldView.setReturnKeyType(returnKeyType: .next)
         userOrEmailTextFieldView.textField.tag = TextFieldViewTag.UserOrEmailTextFieldView.rawValue
         
-        let placeholderPass = NSLocalizedString("placeholderUserOrEmail", comment: "Placeholder of passLoginTextFieldView")
+        let placeholderPass = NSLocalizedString("placeholderPass", comment: "Placeholder of passLoginTextFieldView")
         passLoginTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
         passLoginTextFieldView.setPlaceholder(Placeholder: placeholderPass, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         passLoginTextFieldView.setSecureText(isSecureTextEntry: true)
@@ -89,7 +89,7 @@ class LoginView: UIView {
         loginButton.setTitleColor(UIColor.white, for: UIControlState())
         loginButton.layer.cornerRadius = 3
         
-        let titleGoCreateAccountButton = NSLocalizedString("titleGoCreateAccountButton", comment: "Title of goCreateAccountFormButton")
+        let titleGoCreateAccountButton = NSLocalizedString("goCreateAccountFormButton", comment: "Title of goCreateAccountFormButton")
         goCreateAccountFormButton.setTitle(titleGoCreateAccountButton, for: UIControlState())
         goCreateAccountFormButton.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: UIControlState())
         

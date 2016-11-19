@@ -117,7 +117,8 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         dateToolBar.isTranslucent = true
         dateToolBar.tintColor = mooviest_red
         dateToolBar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Siguiente", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.nextDatePicker))
+        let next = NSLocalizedString("toolBarNext", comment: "Next of ToolBar")
+        let doneButton = UIBarButtonItem(title: next, style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.nextDatePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         dateToolBar.setItems([spaceButton, doneButton], animated: false)
         dateToolBar.isUserInteractionEnabled = true
@@ -129,7 +130,11 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         genderPicker.delegate = self
         genderPicker.dataSource = self
         genderPicker.showsSelectionIndicator = true
-        genders = ["Masculino","Femenino"]
+        
+        
+        let male = NSLocalizedString("genderPickerMale", comment: "Genre male")
+        let female = NSLocalizedString("genderPickerFemale", comment: "Genre female")
+        genders = [male,female]
         v.genderTextFieldView.textField.inputView = genderPicker
         
         let genderToolBar = UIToolbar()
@@ -137,7 +142,8 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         genderToolBar.isTranslucent = true
         genderToolBar.tintColor =  mooviest_red
         genderToolBar.sizeToFit()
-        let doneButton2 = UIBarButtonItem(title: "Siguiente", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.nextGenderPicker))
+        
+        let doneButton2 = UIBarButtonItem(title: next, style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.nextGenderPicker))
         let spaceButton2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         genderToolBar.setItems([spaceButton2, doneButton2], animated: false)
         genderToolBar.isUserInteractionEnabled = true
@@ -149,11 +155,11 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         countryPicker.dataSource = self
         countryPicker.showsSelectionIndicator = true
         
+        //es_ES, en_UK
+        let localeIdentifier = NSLocalizedString("countryPickerCodeLang", comment: "Code lang of countryPicker")
         for code in NSLocale.isoCountryCodes as [String] {
             let id = NSLocale.localeIdentifier(fromComponents: [NSLocale.Key.countryCode.rawValue: code])
-            
-            //es_ES, en_UK
-            let name = NSLocale(localeIdentifier: "es_ES").displayName(forKey: NSLocale.Key.identifier, value: id) ?? "Country not found for code: \(code)"
+            let name = NSLocale(localeIdentifier: localeIdentifier).displayName(forKey: NSLocale.Key.identifier, value: id) ?? "Country not found for code: \(code)"
             countries.append(name)
         }
         v.countryTextFieldView.textField.inputView = countryPicker
@@ -163,7 +169,9 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         countryToolBar.isTranslucent = true
         countryToolBar.tintColor =  mooviest_red
         countryToolBar.sizeToFit()
-        let doneButton3 = UIBarButtonItem(title: "Salir", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.introCountryPicker))
+        
+        let exit = NSLocalizedString("toolBarExit", comment: "Exit of ToolBar")
+        let doneButton3 = UIBarButtonItem(title: exit, style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.introCountryPicker))
         let spaceButton3 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         countryToolBar.setItems([spaceButton3, doneButton3], animated: false)
         countryToolBar.isUserInteractionEnabled = true
@@ -218,13 +226,13 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     // keyboard
     func handleTap(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
-            let view = sender.view
-            let loc = sender.location(in: view)
-            let subview = view?.hitTest(loc, with: nil)
-            if subview != v.formView
-                && subview != v.padingformView  {
+//            let view = sender.view
+//            let loc = sender.location(in: view)
+//            let subview = view?.hitTest(loc, with: nil)
+//            if subview != v.formView
+//                && subview != v.padingformView  {
                 self.view.endEditing(true)
-            }
+//            }
         }
     }
     func keyboardWillHide(notification: NSNotification) {
@@ -239,7 +247,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
                 let positionEnd = self.view.frame.size.height - keyboardSize.height //- activeField!.frame.height
                 if origin.y + positionEnd < 0 {
                     move = positionEnd + (origin.y)
-                    v.formView.frame.origin.y += self.move
+                    v.centralView.frame.origin.y += self.move
                 }
             }
         }
@@ -250,7 +258,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         validatePickers(textField: activeField!)
-        v.formView.comeBackOrigin(withDuration: 0.3, moved: move)
+        v.centralView.comeBackOrigin(withDuration: 0.3, moved: move)
         move = 0
         activeField = nil
         textField.rightView = nil
@@ -388,18 +396,20 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         v.lastNameTextFieldView.textField.text = user?.lastname
         v.emailTextFieldView.textField.text = user?.email
         v.countryTextFieldView.textField.text = user?.city
-        
-        let dateFormater = DateFormatter()
-        dateFormater.dateFormat = "yyyy-MM-dd"
-        let born = dateFormater.date(from: (user?.born)!)
-        dateFormat = user?.codeLang == "es" ? "dd/MM/yyyy":"yyyy/MM/dd"
-        dateFormater.dateFormat = dateFormat
-        if born != nil {
-            v.dateTextFieldView.textField.text = dateFormater.string(from: born!)
-        }
-        v.genderTextFieldView.textField.text = user?.gender
-        if user!.gender != "" {
-            v.genderTextFieldView.textField.text = user!.gender == "MA" ? genders[0]:genders[1]
+        if user != nil {
+            let dateFormater = DateFormatter()
+            dateFormater.dateFormat = "yyyy-MM-dd"
+            let born = dateFormater.date(from: (user?.born)!)
+            
+            dateFormat = NSLocalizedString("dateFormat", comment: "Date format")
+            dateFormater.dateFormat = dateFormat
+            if born != nil {
+                v.dateTextFieldView.textField.text = dateFormater.string(from: born!)
+            }
+            v.genderTextFieldView.textField.text = user?.gender
+            if user!.gender != "" {
+                v.genderTextFieldView.textField.text = user!.gender == "MA" ? genders[0]:genders[1]
+            }
         }
     }
     

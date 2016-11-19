@@ -11,7 +11,7 @@ import Alamofire
 
 class DataModel: NSObject {
     static let sharedInstance = DataModel()
-    var path = "http://127.0.0.1:8000"//"http://192.168.1.129:8000" //
+    var path = "http://192.168.1.139:8000" //"http://127.0.0.1:8000"//
     var movies = [Movie]()
     var user:User?
     var authenticationUser: Authentication?
@@ -56,7 +56,10 @@ class DataModel: NSObject {
     
     func register(Username u: String, Password p: String, Email e: String,completionRequest:  @escaping (Bool,String,String?) -> Void){
         let preferredLanguage = NSLocale.preferredLanguages[0] as String
-        let codeLang = preferredLanguage.components(separatedBy: "-")[0]
+        var codeLang = preferredLanguage.components(separatedBy: "-")[0]
+        if codeLang != "es" && codeLang != "en" {
+            codeLang = "en"
+        }
         
         let parameters: Parameters = [
             "username": u,
@@ -114,6 +117,42 @@ class DataModel: NSObject {
                 case .failure(let error):
                     completionRequest(false, self.connectionMsg, error.localizedDescription)
                 }
+        }
+    }
+    
+    func updateLang(completionRequest:  @escaping (Bool,String,String?) -> Void){
+        let preferredLanguage = NSLocale.preferredLanguages[0] as String
+        var codeLang = preferredLanguage.components(separatedBy: "-")[0]
+        if codeLang != "es" && codeLang != "en" {
+            codeLang = "en"
+        }
+        print(codeLang)
+        if authenticationUser?.codeLang != codeLang {
+            let parameters: Parameters = [
+                "lang_code": codeLang
+            ]
+            let headers = ["Authorization": "Token \(authenticationUser!.token)","Content-Type": "application/json"]
+            self.startActivity()
+            Alamofire.request( "\(path)/api/users/\(authenticationUser!.idUser)/lang/", method: .post,parameters: parameters, encoding: JSONEncoding(options: []), headers: headers)
+                .responseJSON { response in
+                    self.stopActivity()
+                    switch response.result {
+                    case .success:
+                        if let res = response.result.value as? [String:Any] {
+                            let msg = res["message"] as? String
+                            do {
+                                self.authenticationUser = try Authentication(json: res)
+                                completionRequest(true, "", msg)
+                                self.saveContext()
+                            } catch {
+                                let title = NSLocalizedString("loginTitle", comment: "Title of login")
+                                completionRequest(false, title, msg)
+                            }
+                        }                        
+                    case .failure(let error):
+                        completionRequest(false, self.connectionMsg, error.localizedDescription)
+                    }
+            }
         }
     }
     

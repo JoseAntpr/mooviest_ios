@@ -17,12 +17,9 @@ class EditProfileView: UIView {
     var headerView = UIView()
     let lineView = UIView()
     
-    var centralView = UIView()
+    var centralView = UIScrollView()
     var topView = UIView()
     var coverImageView = UIImageView()
-    
-    var formView = UIView()
-    var padingformView = UIView()
     
     let userTextFieldView = TextFieldView()
     let firstNameTextFieldView = TextFieldView()
@@ -124,16 +121,13 @@ class EditProfileView: UIView {
         topView.addSubview(coverImageView)
         topView.addSubview(photoButton)
         
-        padingformView.addSubview(userTextFieldView)
-        padingformView.addSubview(firstNameTextFieldView)
-        padingformView.addSubview(lastNameTextFieldView)
-        padingformView.addSubview(emailTextFieldView)
-        padingformView.addSubview(dateTextFieldView)
-        padingformView.addSubview(genderTextFieldView)
-        padingformView.addSubview(countryTextFieldView)
-        
-        formView.addSubview(padingformView)
-        centralView.addSubview(formView)
+        centralView.addSubview(userTextFieldView)
+        centralView.addSubview(firstNameTextFieldView)
+        centralView.addSubview(lastNameTextFieldView)
+        centralView.addSubview(emailTextFieldView)
+        centralView.addSubview(dateTextFieldView)
+        centralView.addSubview(genderTextFieldView)
+        centralView.addSubview(countryTextFieldView)
         
         addSubview(centralView)
         addSubview(topView)        
@@ -147,8 +141,6 @@ class EditProfileView: UIView {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         centralView.translatesAutoresizingMaskIntoConstraints = false
         topView.translatesAutoresizingMaskIntoConstraints = false
-        formView.translatesAutoresizingMaskIntoConstraints = false
-        padingformView.translatesAutoresizingMaskIntoConstraints = false
         emailTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         lastNameTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         firstNameTextFieldView.translatesAutoresizingMaskIntoConstraints = false
@@ -195,55 +187,45 @@ class EditProfileView: UIView {
         addConstraint(centralView.widthAnchor.constraint(equalTo: widthAnchor))
         addConstraint(centralView.bottomAnchor.constraint(equalTo: bottomAnchor))
         
-        centralView.addConstraint(formView.topAnchor.constraint(equalTo: centralView.topAnchor))
-        centralView.addConstraint(formView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
-        centralView.addConstraint(formView.widthAnchor.constraint(equalTo: centralView.widthAnchor,multiplier: 0.9))
-        centralView.addConstraint(formView.bottomAnchor.constraint(equalTo: centralView.bottomAnchor))
+        addConstraint(userTextFieldView.topAnchor.constraint(equalTo: topView.bottomAnchor))
+        addConstraint(userTextFieldView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
+        addConstraint(userTextFieldView.widthAnchor.constraint(equalTo: centralView.widthAnchor, multiplier:0.8))
+        addConstraint(userTextFieldView.heightAnchor.constraint(equalTo: centralView.heightAnchor, multiplier: 1/7))
         
-        formView.addConstraint(padingformView.centerYAnchor.constraint(equalTo: formView.centerYAnchor))
-        formView.addConstraint(padingformView.centerXAnchor.constraint(equalTo: formView.centerXAnchor))
-        formView.addConstraint(padingformView.widthAnchor.constraint(equalTo: formView.widthAnchor, multiplier: 0.9))
-        formView.addConstraint(padingformView.heightAnchor.constraint(equalTo: formView.heightAnchor, multiplier: 0.95))
+        addConstraint(firstNameTextFieldView.topAnchor.constraint(equalTo: userTextFieldView.bottomAnchor))
+        addConstraint(firstNameTextFieldView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
+        addConstraint(firstNameTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
+        addConstraint(firstNameTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
         
-        padingformView.addConstraint(userTextFieldView.topAnchor.constraint(equalTo: padingformView.topAnchor))
-        padingformView.addConstraint(userTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
-        padingformView.addConstraint(userTextFieldView.widthAnchor.constraint(equalTo: padingformView.widthAnchor))
-        padingformView.addConstraint(userTextFieldView.heightAnchor.constraint(equalTo: padingformView.heightAnchor, multiplier: 1/7))
+        addConstraint(lastNameTextFieldView.topAnchor.constraint(equalTo: firstNameTextFieldView.bottomAnchor))
+        addConstraint(lastNameTextFieldView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
+        addConstraint(lastNameTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
+        addConstraint(lastNameTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
         
-        padingformView.addConstraint(firstNameTextFieldView.topAnchor.constraint(equalTo: userTextFieldView.bottomAnchor))
-        padingformView.addConstraint(firstNameTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
-        padingformView.addConstraint(firstNameTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
-        padingformView.addConstraint(firstNameTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
+        addConstraint(emailTextFieldView.topAnchor.constraint(equalTo: lastNameTextFieldView.bottomAnchor))
+        addConstraint(emailTextFieldView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
+        addConstraint(emailTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
+        addConstraint(emailTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
         
-        padingformView.addConstraint(lastNameTextFieldView.topAnchor.constraint(equalTo: firstNameTextFieldView.bottomAnchor))
-        padingformView.addConstraint(lastNameTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
-        padingformView.addConstraint(lastNameTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
-        padingformView.addConstraint(lastNameTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
+        addConstraint(dateTextFieldView.topAnchor.constraint(equalTo: emailTextFieldView.bottomAnchor))
+        addConstraint(dateTextFieldView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
+        addConstraint(dateTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
+        addConstraint(dateTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
         
-        padingformView.addConstraint(emailTextFieldView.topAnchor.constraint(equalTo: lastNameTextFieldView.bottomAnchor))
-        padingformView.addConstraint(emailTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
-        padingformView.addConstraint(emailTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
-        padingformView.addConstraint(emailTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
-        
-        padingformView.addConstraint(dateTextFieldView.topAnchor.constraint(equalTo: emailTextFieldView.bottomAnchor))
-        padingformView.addConstraint(dateTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
-        padingformView.addConstraint(dateTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
-        padingformView.addConstraint(dateTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
-        
-        padingformView.addConstraint(dateTextFieldView.topAnchor.constraint(equalTo: emailTextFieldView.bottomAnchor))
-        padingformView.addConstraint(dateTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
-        padingformView.addConstraint(dateTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
-        padingformView.addConstraint(dateTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
+        addConstraint(dateTextFieldView.topAnchor.constraint(equalTo: emailTextFieldView.bottomAnchor))
+        addConstraint(dateTextFieldView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
+        addConstraint(dateTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
+        addConstraint(dateTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
 
-        padingformView.addConstraint(genderTextFieldView.topAnchor.constraint(equalTo: dateTextFieldView.bottomAnchor))
-        padingformView.addConstraint(genderTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
-        padingformView.addConstraint(genderTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
-        padingformView.addConstraint(genderTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
+        addConstraint(genderTextFieldView.topAnchor.constraint(equalTo: dateTextFieldView.bottomAnchor))
+        addConstraint(genderTextFieldView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
+        addConstraint(genderTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
+        addConstraint(genderTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
         
-        padingformView.addConstraint(countryTextFieldView.topAnchor.constraint(equalTo: genderTextFieldView.bottomAnchor))
-        padingformView.addConstraint(countryTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
-        padingformView.addConstraint(countryTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
-        padingformView.addConstraint(countryTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
+        addConstraint(countryTextFieldView.topAnchor.constraint(equalTo: genderTextFieldView.bottomAnchor))
+        addConstraint(countryTextFieldView.centerXAnchor.constraint(equalTo: centralView.centerXAnchor))
+        addConstraint(countryTextFieldView.widthAnchor.constraint(equalTo: userTextFieldView.widthAnchor))
+        addConstraint(countryTextFieldView.heightAnchor.constraint(equalTo: userTextFieldView.heightAnchor))
     }
     
     func seTextFieldsDelegate(Delegate d: UITextFieldDelegate){        

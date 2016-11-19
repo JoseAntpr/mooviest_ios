@@ -20,7 +20,7 @@ registerMsgDataError = "Datos del formulario erróneo";
 registerTitle = "Error de registro";
 
 // LoginView
-titleCreateAccountButton = "¿No tienes cuenta? Create una";
+goCreateAccountFormButton = "¿No tienes cuenta? Create una";
 placeholderUserOrEmail = "Usuario o email";
 placeholderPass = "Contraseña";
 titleLoginButton = "Entrar";
@@ -90,6 +90,12 @@ placeholderCountry = "País";
 genderMsg = "Género no válido";
 countryMsg = "País no válido";
 editProfileViewTitle = "Editar Perfil";
+countryPickerCodeLang = "es_ES";
+genderPickerMale = "Masculino";
+genderPickerFemale = "Femenino";
+toolBarNext = "Siguiente";
+toolBarExit = "Salir";
+dateFormat = "dd/MM/yyyy";
 
 //SearchViewController
 searchMoviesTitle = "Error en la búsqueda";
