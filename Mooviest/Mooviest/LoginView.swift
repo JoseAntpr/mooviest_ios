@@ -148,7 +148,7 @@ class LoginView: UIView {
         clearTextButton.tintColor = .gray
         
         secureTextButton = UIButton(type: UIButtonType.system) as UIButton
-        secureTextButton.setImage(UIImage(named: "eye"), for: UIControlState())
+        secureTextButton.setImage(UIImage(named: "eye_off"), for: UIControlState())
         secureTextButton.tintColor = .gray
         secureTextButton.contentMode = .scaleToFill
         
@@ -221,12 +221,12 @@ class LoginView: UIView {
         formView.addConstraint(padingformView.centerYAnchor.constraint(equalTo: formView.centerYAnchor))
         formView.addConstraint(padingformView.centerXAnchor.constraint(equalTo: formView.centerXAnchor))
         formView.addConstraint(padingformView.widthAnchor.constraint(equalTo: formView.widthAnchor, multiplier: 0.9))
-        formView.addConstraint(padingformView.heightAnchor.constraint(equalTo: formView.heightAnchor, multiplier: 0.8))
+        formView.addConstraint(padingformView.heightAnchor.constraint(equalTo: formView.heightAnchor, multiplier: 0.9))
         
         padingformView.addConstraint(userOrEmailTextFieldView.topAnchor.constraint(equalTo: padingformView.topAnchor))
         padingformView.addConstraint(userOrEmailTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
         padingformView.addConstraint(userOrEmailTextFieldView.widthAnchor.constraint(equalTo: padingformView.widthAnchor))
-        padingformView.addConstraint(userOrEmailTextFieldView.heightAnchor.constraint(equalTo: padingformView.heightAnchor, multiplier: 0.35))
+        padingformView.addConstraint(userOrEmailTextFieldView.heightAnchor.constraint(equalTo: padingformView.heightAnchor, multiplier: 0.34))
         
         padingformView.addConstraint(passLoginTextFieldView.topAnchor.constraint(equalTo: userOrEmailTextFieldView.bottomAnchor))
         padingformView.addConstraint(passLoginTextFieldView.centerXAnchor.constraint(equalTo: padingformView.centerXAnchor))
@@ -248,12 +248,12 @@ class LoginView: UIView {
         formRegisterView.addConstraint(padingRegisterformView.centerYAnchor.constraint(equalTo: formRegisterView.centerYAnchor))
         formRegisterView.addConstraint(padingRegisterformView.centerXAnchor.constraint(equalTo: formRegisterView.centerXAnchor))
         formRegisterView.addConstraint(padingRegisterformView.widthAnchor.constraint(equalTo: formRegisterView.widthAnchor, multiplier: 0.9))
-        formRegisterView.addConstraint(padingRegisterformView.heightAnchor.constraint(equalTo: formRegisterView.heightAnchor, multiplier: 0.85))
+        formRegisterView.addConstraint(padingRegisterformView.heightAnchor.constraint(equalTo: formRegisterView.heightAnchor, multiplier: 0.9))
 
         padingRegisterformView.addConstraint(userTextFieldView.topAnchor.constraint(equalTo: padingRegisterformView.topAnchor))
         padingRegisterformView.addConstraint(userTextFieldView.centerXAnchor.constraint(equalTo: padingRegisterformView.centerXAnchor))
         padingRegisterformView.addConstraint(userTextFieldView.widthAnchor.constraint(equalTo: padingRegisterformView.widthAnchor))
-        padingRegisterformView.addConstraint(userTextFieldView.heightAnchor.constraint(equalTo: padingRegisterformView.heightAnchor, multiplier: 0.22))
+        padingRegisterformView.addConstraint(userTextFieldView.heightAnchor.constraint(equalTo: padingRegisterformView.heightAnchor, multiplier: 0.2))
         
         padingRegisterformView.addConstraint(emailTextFieldView.topAnchor.constraint(equalTo: userTextFieldView.bottomAnchor))
         padingRegisterformView.addConstraint(emailTextFieldView.centerXAnchor.constraint(equalTo: padingRegisterformView.centerXAnchor))

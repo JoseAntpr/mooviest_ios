@@ -93,15 +93,31 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
                 self.user = DataModel.sharedInstance.user
                 self.loadDataView()
             } else {
-                Message.msgPopupDelay(title:  title, message: msg!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title:  title, message: msg!, delay: 0, ctrl: self) {
+                    DataModel.sharedInstance.errorConnetion(title:title)
+                }
             }
         }
     }
     
     func logout() {
-        DataModel.sharedInstance.resetDataUser()
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = LoginViewController()
+        let title = NSLocalizedString("logoutTitle", comment: "Title of alert logout")
+        let msg = NSLocalizedString("logoutMsg", comment: "Message of alert logout")
+        let alertController = UIAlertController(title: title, message: msg, preferredStyle: .actionSheet)
+        
+        let titleButton = NSLocalizedString("buttonTitle", comment: "Title of button Message")
+        alertController.addAction(UIAlertAction(title: titleButton, style: .default, handler: { (action: UIAlertAction!) in
+            DataModel.sharedInstance.resetDataUser()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.window?.rootViewController = LoginViewController()
+        }))
+        let buttonCancelTitle = NSLocalizedString("buttonCancelTitle", comment: "Title of button Message")
+        
+        alertController.addAction(UIAlertAction(title: buttonCancelTitle, style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        
+        self.present(alertController, animated: true, completion: nil)
+        
     }
     
     func calculateOffset() {

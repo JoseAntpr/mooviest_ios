@@ -41,7 +41,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
     
     override func viewDidAppear(_ animated: Bool) {
         if DataModel.sharedInstance.loadContext() {
-            chargueApp()
+            DataModel.sharedInstance.updateLang(){_,_,_ in }
+            DataModel.sharedInstance.getUser() {
+                (successful, title, msg) in
+                if successful {
+                   self.chargueApp()
+                }
+            }            
         }
     }
     
@@ -112,6 +118,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
         move = 0
         activeField = nil
         textField.rightView = nil
+        if let view = textField.superview as? TextFieldView {
+            view.didEndEditing()
+        }
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -122,6 +131,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
         } else {
             textField.rightView = v.clearTextButton
             textField.rightViewMode = UITextFieldViewMode.always
+        }
+        if let view = textField.superview as? TextFieldView {
+            view.didBeginEditing()
         }
     }
     
@@ -184,7 +196,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
     func changeSecureText(button: UIButton) {
         if let textField = button.superview as? UITextField {
             textField.isSecureTextEntry = !textField.isSecureTextEntry
-            button.setImage(UIImage(named: textField.isSecureTextEntry ? "eye" : "eye_off"), for: UIControlState())
+            button.setImage(UIImage(named: textField.isSecureTextEntry ? "eye_off" : "eye"), for: UIControlState())
         }
     }
     
@@ -223,8 +235,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, TabBarProtocol
         } else {
             let title = NSLocalizedString("registerTitle", comment: "Title of register")
             let msg = NSLocalizedString("registerMsgDataError", comment: "Message of register data error")
-            Message.msgPopupDelay(title: title, message: msg, delay: 0, ctrl: self) {
-            }
+            Message.msgPopupDelay(title: title, message: msg, delay: 0, ctrl: self) {}
         }
     }
     

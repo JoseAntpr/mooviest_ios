@@ -23,7 +23,7 @@ registerTitle = "Error de registro";
 goCreateAccountFormButton = "¿No tienes cuenta? Create una";
 placeholderUserOrEmail = "Usuario o email";
 placeholderPass = "Contraseña";
-titleLoginButton = "Entrar";
+titleLoginButton = "ENTRAR";
 placeholderUser = "Username";
 placeholderEmail = "Email";
 placeholderConfirmPass = "Confirme su contraseña";
@@ -96,6 +96,8 @@ genderPickerFemale = "Femenino";
 toolBarNext = "Siguiente";
 toolBarExit = "Salir";
 dateFormat = "dd/MM/yyyy";
+buttonPhotosTitle = "Biblioteca de fotos";
+buttonCameraTitle = "Hacer una foto";
 
 //SearchViewController
 searchMoviesTitle = "Error en la búsqueda";
@@ -108,3 +110,11 @@ getUserMsg = "Perfil no cargado";
 updateUserSMsg = "Se ha actualizado el perfil satisfactoriamente";
 updateUserRMsg = "Formato de respuesta errónea";
 updateUserTitle = "Error al codificar";
+
+//Message
+buttonTitle = "Aceptar";
+
+//ProfileViewController
+logoutTitle = "¿Cerrar sesión?";
+logoutMsg = "Realmente quieres salir";
+buttonCancelTitle = "Cancelar";

@@ -127,7 +127,9 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
                     Message.msgPopupDelay(title: title, message: msg, delay: 0, ctrl: self) {}
                 }
             } else {
-                Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {
+                    DataModel.sharedInstance.errorConnetion(title:title)
+                }
             }
         }
     }

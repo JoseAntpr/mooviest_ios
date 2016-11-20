@@ -293,13 +293,15 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
             updateBadgeValue()
         }
     }
-
+    
     func cardSwipedLeft(_ card: UIView) -> Void {
         
         updateTypeMovie(typemovie: TypeMovie.watchlist, movie: movies[0]) {
             (successful, title, msg) in
             if !successful {
-                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {
+                    DataModel.sharedInstance.errorConnetion(title:title)
+                }
             }
         }
         self.afterSwiped()
@@ -310,7 +312,9 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         updateTypeMovie(typemovie: TypeMovie.seen, movie: movies[0]) {
             (successful, title, msg) in
             if !successful {
-                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {
+                    DataModel.sharedInstance.errorConnetion(title:title)
+                }
             }
         }
         self.afterSwiped()
@@ -321,7 +325,9 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         updateTypeMovie(typemovie: TypeMovie.favourite, movie: movies[0]) {
             (successful, title, msg) in
             if !successful {
-                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {
+                    DataModel.sharedInstance.errorConnetion(title:title)
+                }
             }
         }
         self.afterSwiped()
@@ -332,7 +338,9 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         updateTypeMovie(typemovie: TypeMovie.black, movie: movies[0]) {
         (successful, title, msg) in
             if !successful {
-                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {}
+                Message.msgPopupDelay(title: title, message: msg!, delay: 0, ctrl: self) {
+                    DataModel.sharedInstance.errorConnetion(title:title)
+                }
             }
         }
         self.afterSwiped()

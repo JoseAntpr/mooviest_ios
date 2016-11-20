@@ -23,7 +23,7 @@ registerTitle = "Register error";
 goCreateAccountFormButton = "No account yet? Create one";
 placeholderUserOrEmail = "Username or email";
 placeholderPass = "Password";
-titleLoginButton = "Log in";
+titleLoginButton = "LOG IN";
 placeholderUser = "Username";
 placeholderEmail = "Email";
 placeholderConfirmPass = "Confirm password";
@@ -96,6 +96,8 @@ genderPickerFemale = "Female";
 toolBarNext = "Next";
 toolBarExit = "Exit";
 dateFormat = "yyyy/MM/dd";
+buttonPhotosTitle = "Photo Library";
+buttonCameraTitle = "Take a photo";
 
 //SearchViewController
 searchMoviesTitle = "Search error";
@@ -108,3 +110,11 @@ getUserMsg = "Unloaded profile";
 updateUserSMsg = "Profile successfully updated";
 updateUserRMsg = "Incorrect response format";
 updateUserTitle = "Encoding error";
+
+//Message
+buttonTitle = "Accept";
+
+//ProfileViewController
+logoutTitle = "Log out?";
+logoutMsg = "You really want to log out";
+buttonCancelTitle = "Cancel";

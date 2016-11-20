@@ -18,7 +18,8 @@ class Message {
                 okTapped()
             }
         } else {
-            alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            let titleButton = NSLocalizedString("buttonTitle", comment: "Title of button Message")
+            alertController.addAction(UIAlertAction(title: titleButton, style: .default, handler: { (action: UIAlertAction!) in
                 okTapped()
             }))
         }

@@ -48,6 +48,7 @@
 		A972E6601DB7D3ED00E291AE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A972E65F1DB7D3ED00E291AE /* Message.swift */; };
 		A97405301DC5B7E000B7DFC6 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96B523E1D89D34B0061A766 /* Kingfisher.framework */; };
 		A9779CE11DC4E81300D7BD3B /* KCFloatingActionButton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9779CE01DC4E81300D7BD3B /* KCFloatingActionButton.framework */; };
+		A98F44A71DE1C937003EF08D /* AddPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98F44A61DE1C937003EF08D /* AddPhotoView.swift */; };
 		A99105F01DBCDA4700659481 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105EF1DBCDA4700659481 /* SearchView.swift */; };
 		A99105F21DBCDA5800659481 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99105F11DBCDA5800659481 /* SearchViewController.swift */; };
 		A9ADF3261DC676A80054CBA0 /* TabBarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ADF3251DC676A80054CBA0 /* TabBarProtocol.swift */; };
@@ -141,6 +142,7 @@
 		A96B9B541D8D53A10038F4D9 /* UserParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserParser.swift; sourceTree = "<group>"; };
 		A972E65F1DB7D3ED00E291AE /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A9779CE01DC4E81300D7BD3B /* KCFloatingActionButton.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KCFloatingActionButton.framework; path = Carthage/Build/iOS/KCFloatingActionButton.framework; sourceTree = "<group>"; };
+		A98F44A61DE1C937003EF08D /* AddPhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPhotoView.swift; sourceTree = "<group>"; };
 		A99105EF1DBCDA4700659481 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A99105F11DBCDA5800659481 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A9ADF3231DC608DE0054CBA0 /* RAMAnimatedTabBarController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RAMAnimatedTabBarController.framework; path = Carthage/Build/iOS/RAMAnimatedTabBarController.framework; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 				A9B7B3451DAA381100A470BF /* ProfileViewController.swift */,
 				A9E5C93C1DAC06F500CC2E34 /* EditProfileView.swift */,
 				A9E5C93E1DAC11E900CC2E34 /* EditProfileViewController.swift */,
+				A98F44A61DE1C937003EF08D /* AddPhotoView.swift */,
 			);
 			name = Perfil;
 			sourceTree = "<group>";
@@ -661,6 +664,7 @@
 				A96B520F1D89CCF70061A766 /* AppDelegate.swift in Sources */,
 				A9ADF3261DC676A80054CBA0 /* TabBarProtocol.swift in Sources */,
 				A9B7B3441DAA37FF00A470BF /* ProfileView.swift in Sources */,
+				A98F44A71DE1C937003EF08D /* AddPhotoView.swift in Sources */,
 				A906B05A1DC8ED7300FB98B9 /* DraggableViewDelegateProtocol.swift in Sources */,
 				A96B525D1D89DE670061A766 /* ParticipationModel.swift in Sources */,
 			);

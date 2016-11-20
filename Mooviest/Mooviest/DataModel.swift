@@ -11,7 +11,7 @@ import Alamofire
 
 class DataModel: NSObject {
     static let sharedInstance = DataModel()
-    var path = "http://192.168.1.139:8000" //"http://127.0.0.1:8000"//
+    var path = "http://192.168.1.133:8000" //"http://127.0.0.1:8000"//
     var movies = [Movie]()
     var user:User?
     var authenticationUser: Authentication?
@@ -370,6 +370,13 @@ class DataModel: NSObject {
             case .failure(let error):
                 completionRequest(false, self.connectionMsg, error.localizedDescription, [String:Any]())
             }
+        }
+    }
+    
+    func errorConnetion(title:String) {        
+        if title == connectionMsg {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.window?.rootViewController = LoginViewController()
         }
     }
     

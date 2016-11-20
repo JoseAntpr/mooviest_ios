@@ -25,6 +25,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Set the photo profile</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Set the photo profile</string>
 	<key>UILaunchStoryboardName</key>

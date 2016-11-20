@@ -78,9 +78,26 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     func photoPicker() {
         let picker = UIImagePickerController()
         picker.delegate = self
-        picker.allowsEditing = false
-        picker.sourceType = .photoLibrary
-        self.present(picker, animated: true, completion: { _ in })
+         picker.allowsEditing = false
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+        let buttonCancelTitle = NSLocalizedString("buttonCancelTitle", comment: "Title of button Message")
+        alertController.addAction(UIAlertAction(title: buttonCancelTitle, style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        let buttonPhotosTitle = NSLocalizedString("buttonPhotosTitle", comment: "Title of button Photos")
+        alertController.addAction(UIAlertAction(title: buttonPhotosTitle, style: .default, handler: { (action: UIAlertAction!) in
+            picker.sourceType = .photoLibrary
+            self.present(picker, animated: true, completion: { _ in })
+
+        }))
+        let buttonCameraTitle = NSLocalizedString("buttonCameraTitle", comment: "Title of button Camera")
+        alertController.addAction(UIAlertAction(title: buttonCameraTitle, style: .default, handler: { (action: UIAlertAction!) in
+            picker.sourceType = .camera
+            self.present(picker, animated: true, completion: { _ in })
+
+        }))
+        self.present(alertController, animated: true, completion: nil)
+
     }
     
     func setupView() {
@@ -226,13 +243,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
     // keyboard
     func handleTap(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
-//            let view = sender.view
-//            let loc = sender.location(in: view)
-//            let subview = view?.hitTest(loc, with: nil)
-//            if subview != v.formView
-//                && subview != v.padingformView  {
-                self.view.endEditing(true)
-//            }
+            self.view.endEditing(true)
         }
     }
     func keyboardWillHide(notification: NSNotification) {
@@ -244,7 +255,7 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
 //        Si queda el textfield tapado por el teclado movemos el form para que se vea
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if let origin = self.activeField?.convert((activeField?.frame.origin)!, from: self.view) {
-                let positionEnd = self.view.frame.size.height - keyboardSize.height //- activeField!.frame.height
+                let positionEnd = self.view.frame.size.height - keyboardSize.height //- activeField!.frame.height/2
                 if origin.y + positionEnd < 0 {
                     move = positionEnd + (origin.y)
                     v.centralView.frame.origin.y += self.move
@@ -255,6 +266,16 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
 
     
     //TextField Delegate
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeField = textField
+        textField.rightView = v.clearTextButton
+        textField.rightViewMode = UITextFieldViewMode.always
+        validatePickers(textField: textField)
+        if let view = textField.superview as? TextFieldView {
+            view.didBeginEditing()
+        }
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         validatePickers(textField: activeField!)
@@ -262,6 +283,9 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         move = 0
         activeField = nil
         textField.rightView = nil
+        if let view = textField.superview as? TextFieldView {
+            view.didEndEditing()
+        }
         
     }
 
@@ -308,12 +332,6 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         default: break
         }
 
-    }
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeField = textField   
-        textField.rightView = v.clearTextButton
-        textField.rightViewMode = UITextFieldViewMode.always
-        validatePickers(textField: textField)
     }
     
     func getDate(sender: UIDatePicker)-> String {
@@ -445,7 +463,9 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
                     self.user = DataModel.sharedInstance.user
                     Message.msgPopupDelay(title: title, message: message!, delay: 1, ctrl: self){}
                 } else {
-                    Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {}
+                    Message.msgPopupDelay(title: title, message: message!, delay: 0, ctrl: self) {
+                        DataModel.sharedInstance.errorConnetion(title:title)
+                    }
                 }
             }    
         }
