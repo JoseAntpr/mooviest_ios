@@ -98,6 +98,29 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
         }
     }
     
+    func updateFloatButtons(typemovie t: String) {
+        switch t {
+        case TypeMovie.black.rawValue:
+            self.v.blackItem.buttonColor = TypeMovie.black.color
+            updateFloatPlustButton(image: TypeMovie.black.image, backgroundColor: TypeMovie.black.color, tintColor: .white)
+        case TypeMovie.favourite.rawValue:
+            self.v.favouriteItem.buttonColor = TypeMovie.favourite.color
+            updateFloatPlustButton(image: TypeMovie.favourite.image, backgroundColor: TypeMovie.favourite.color, tintColor: .white)
+        case TypeMovie.seen.rawValue:
+            self.v.seenItem.buttonColor = TypeMovie.seen.color
+            updateFloatPlustButton(image: TypeMovie.seen.image, backgroundColor: TypeMovie.seen.color, tintColor: .white)
+        case TypeMovie.watchlist.rawValue:
+            self.v.watchItem.buttonColor = TypeMovie.watchlist.color
+            updateFloatPlustButton(image: TypeMovie.watchlist.image, backgroundColor: TypeMovie.watchlist.color, tintColor: .white)
+        default:
+            self.v.blackItem.buttonColor = blacklist_color
+            self.v.seenItem.buttonColor = seen_color
+            self.v.watchItem.buttonColor = watchlist_color
+            self.v.favouriteItem.buttonColor = favourite_color
+            break
+        }
+    }
+    
     func setupView() {
         
 
@@ -129,26 +152,8 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
             }
         })
         v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
-        
-        switch movieListInfo.typeMovie {
-        case TypeMovie.black.rawValue:
-            self.v.blackItem.buttonColor = TypeMovie.black.color
-            updateFloatPlustButton(image: TypeMovie.black.image, backgroundColor: TypeMovie.black.color, tintColor: .white)
-        case TypeMovie.favourite.rawValue:
-            self.v.favouriteItem.buttonColor = TypeMovie.favourite.color
-            updateFloatPlustButton(image: TypeMovie.favourite.image, backgroundColor: TypeMovie.favourite.color, tintColor: .white)
-        case TypeMovie.seen.rawValue:
-            self.v.seenItem.buttonColor = TypeMovie.seen.color
-            updateFloatPlustButton(image: TypeMovie.seen.image, backgroundColor: TypeMovie.seen.color, tintColor: .white)
-        case TypeMovie.watchlist.rawValue:
-            self.v.watchItem.buttonColor = TypeMovie.watchlist.color
-            updateFloatPlustButton(image: TypeMovie.watchlist.image, backgroundColor: TypeMovie.watchlist.color, tintColor: .white)
-        default:
-            self.v.blackItem.buttonColor = blacklist_color
-            self.v.seenItem.buttonColor = seen_color
-            self.v.watchItem.buttonColor = watchlist_color
-            self.v.favouriteItem.buttonColor = favourite_color
-            break
+        if movie == nil {
+            updateFloatButtons(typemovie: movieListInfo.typeMovie)
         }
         
         v.blackItem.handler = { item in
@@ -169,7 +174,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, UIColle
     }
 
     func loadDataView() {
-        
+        updateFloatButtons(typemovie: movie.typeMovie)
         //add default backdrop
         v.headerBackdropImageView.contentMode = UIViewContentMode.scaleAspectFill
         v.infoView.synopsisTextView.text = movie?.synopsis
