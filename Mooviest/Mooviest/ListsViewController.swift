@@ -22,10 +22,11 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.setupView()
         self.view.addSubview(v)
         self.setupConstraints()
-        reloadLists()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -169,6 +170,7 @@ class ListsViewController: UIViewController, UICollectionViewDelegate, UICollect
         v.favouriteListViewCell.moreButton.addTarget(self, action: #selector(self.tappedFavouriteListMore), for: .touchUpInside)
         v.seenListViewCell.moreButton.addTarget(self, action: #selector(self.tappedSeenListMore), for: .touchUpInside)
         v.blackListViewCell.moreButton.addTarget(self, action: #selector(self.tappedBlackListMore), for: .touchUpInside)
+        reloadLists()
     }
     
     func tappedMore(typemovie: TypeMovieModel){

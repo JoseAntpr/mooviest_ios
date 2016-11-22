@@ -10,7 +10,7 @@ import UIKit
 
 class ItemListView: UIView {
     
-    
+    let percentTitle = CGFloat(0.2)
     let heightEmptyLabel = CGFloat(30)
     let titleLabel = UILabel()
     let moreButton = UIButton(type: UIButtonType.system) as UIButton
@@ -53,10 +53,11 @@ class ItemListView: UIView {
         movieCollectionView.backgroundColor = UIColor.white.withAlphaComponent(0)
         movieCollectionView.showsHorizontalScrollIndicator = false
 
-        addSubview(titleLabel)
-        addSubview(moreButton)
+        
         addSubview(emptyLabel)
         addSubview(movieCollectionView)
+        addSubview(titleLabel)
+        addSubview(moreButton)
     }
     
     func setupConstraints() {
@@ -66,19 +67,19 @@ class ItemListView: UIView {
         emptyLabel.translatesAutoresizingMaskIntoConstraints = false
         
         addConstraint(titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5))
-        addConstraint(titleLabel.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(titleLabel.bottomAnchor.constraint(equalTo: movieCollectionView.topAnchor))
         addConstraint(titleLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.7))
-        addConstraint(titleLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1))
+        addConstraint(titleLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: percentTitle*0.9))
         
         addConstraint(moreButton.leftAnchor.constraint(equalTo: titleLabel.rightAnchor))
-        addConstraint(moreButton.topAnchor.constraint(equalTo: topAnchor))
+        addConstraint(moreButton.bottomAnchor.constraint(equalTo: movieCollectionView.topAnchor))
         addConstraint(moreButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -5))
         addConstraint(moreButton.heightAnchor.constraint(equalTo: titleLabel.heightAnchor))
         
         addConstraint(movieCollectionView.leftAnchor.constraint(equalTo: leftAnchor))
-        addConstraint(movieCollectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5))
+        addConstraint(movieCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 5))
         addConstraint(movieCollectionView.rightAnchor.constraint(equalTo: rightAnchor))
-        addConstraint(movieCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor))
+        addConstraint(movieCollectionView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1-percentTitle))
         
         addConstraint(emptyLabel.leftAnchor.constraint(equalTo: leftAnchor))
         addConstraint(emptyLabel.centerYAnchor.constraint(equalTo: movieCollectionView.centerYAnchor))
@@ -87,8 +88,10 @@ class ItemListView: UIView {
     }
     
     func adjustFontSizeToFitHeight () {
-        let heightLabel = titleLabel.frame.size.height
-        titleLabel.font =  UIFont(name: titleLabel.font!.fontName, size: heightLabel)!
-        moreButton.titleLabel?.font = UIFont(name: (moreButton.titleLabel?.font.fontName)!, size: heightLabel*0.9)!
+        let heightLabel = titleLabel.frame.size.height*0.5
+        if heightLabel > 0 {
+            titleLabel.font =  UIFont(name: titleLabel.font!.fontName, size: heightLabel)!
+            moreButton.titleLabel?.font = UIFont(name: (moreButton.titleLabel?.font.fontName)!, size: heightLabel*0.9)!
+        }
     }
 }

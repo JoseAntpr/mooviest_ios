@@ -99,7 +99,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         }
         tabBarController?.tabBar.items?[1].badgeValue   = "\(count+1)"
     }
-    //
+    
     func updateSwipe() {
         if movies.count > 0 && movies[0].typeMovie != "" {
             switch movies[0].typeMovie {
@@ -254,7 +254,7 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
     
     func loadMoreCards() {
         var i = loadedCards.count
-        while loadedCards.count < MAX_BUFFER_SIZE && i < allCards.count  {
+        while loadedCards.count < MAX_BUFFER_SIZE && i < allCards.count && loadedCards.count > 0 {
             loadedCards.append(allCards[i])
             v.panelSwipeView.insertSubview(loadedCards[i], belowSubview: loadedCards[i-1])
             setupConstraintsSubView(Index: i)
