@@ -104,7 +104,6 @@ class DataModel: NSObject {
                 case .success:
                     if let res = response.result.value as? [String:Any] {
                         do {
-                            //actualizar donde se llama
                             self.user = try User(json: res)
                             completionRequest(true, "","")
                         } catch {
@@ -126,7 +125,6 @@ class DataModel: NSObject {
         if codeLang != "es" && codeLang != "en" {
             codeLang = "en"
         }
-        print(codeLang)
         if authenticationUser?.codeLang != codeLang {
             let parameters: Parameters = [
                 "lang_code": codeLang
@@ -320,7 +318,6 @@ class DataModel: NSObject {
             "movie": idMovie,
             "typeMovie": typeMovie
         ]
-        print(parameters)
         self.startActivity()
         Alamofire.request( "\(path)/api/collection/", method: .post,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers).responseJSON { response in
             self.stopActivity()
@@ -340,7 +337,6 @@ class DataModel: NSObject {
         let parameters: Parameters = [
             "typeMovie": typeMovie
         ]
-        print(parameters)
         self.startActivity()
         Alamofire.request( "\(path)/api/collection/\(idCollection)/", method: .patch,parameters: parameters,encoding: JSONEncoding(options: []), headers: headers).responseJSON { response in
             self.stopActivity()

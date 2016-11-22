@@ -172,8 +172,8 @@ class ListViewController: UIViewController, UICollectionViewDelegate, UICollecti
         v.movieCollectionView.delegate = self
         v.movieCollectionView.dataSource = self
         if #available(iOS 10.0, *) {
-//            v.movieCollectionView.prefetchDataSource = self
-//            isIOS10 = true
+            v.movieCollectionView.prefetchDataSource = self
+            isIOS10 = true
         }
         v.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: movieCellIdentifier)
         navigationItem.title = ctrlTitle

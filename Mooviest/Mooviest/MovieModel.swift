@@ -29,7 +29,7 @@ let TypeMovie = TypeMovieStruct()
 struct Movie: Model {
     var id: Int
     var idMovieLang: Int
-    var idCollection: Int //-1 para cuado no esté asignada
+    var idCollection: Int //-1 if nil
     var typeMovie:String
     
     var title: String

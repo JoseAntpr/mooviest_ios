@@ -89,7 +89,6 @@ extension User {
                 "first_name": firstname,
                 "last_name": lastname,
                 "profile": [
-//                    "avatar": avatar,
                     "gender": gender,
                     "born": born,
                     "postalCode": postalCode,

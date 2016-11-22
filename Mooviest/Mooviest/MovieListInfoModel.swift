@@ -15,6 +15,6 @@ struct MovieListInfo: Model {
     var image: String
     var backdrop: String
     var average: Float
-    var idCollection: Int //-1 para cuado no esté asignada
+    var idCollection: Int //-1 if nil
     var typeMovie:String
 }

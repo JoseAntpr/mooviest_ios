@@ -91,11 +91,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         searchBar.resignFirstResponder()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-//        self.resetTabBarAndNavigationController(viewController: self)
-//        searchBar.becomeFirstResponder()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         
     }
@@ -119,7 +114,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         if nextUrl != "" {
             let urlnext = nextUrl
             nextUrl = ""
-            print(urlnext)
             DataModel.sharedInstance.nextMovies(url: urlnext) {
                 successful, title, message, res in
                 if successful {

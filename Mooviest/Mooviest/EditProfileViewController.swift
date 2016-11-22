@@ -247,15 +247,13 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         }
     }
     func keyboardWillHide(notification: NSNotification) {
-        print("exit keyboard")
+     
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        print("enter keyboard")
-//        Si queda el textfield tapado por el teclado movemos el form para que se vea
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if let origin = self.activeField?.convert((activeField?.frame.origin)!, from: self.view) {
-                let positionEnd = self.view.frame.size.height - keyboardSize.height //- activeField!.frame.height/2
+                let positionEnd = self.view.frame.size.height - keyboardSize.height
                 if origin.y + positionEnd < 0 {
                     move = positionEnd + (origin.y)
                     v.centralView.frame.origin.y += self.move
@@ -293,7 +291,6 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         switch textField.returnKeyType {
         case .next:
             let nextTag: NSInteger = textField.tag + 1;
-            // Try to find next responder
             if let nextResponder: UIResponder? = self.view.viewWithTag(nextTag){
                 nextResponder?.becomeFirstResponder()
             }
@@ -380,7 +377,6 @@ class EditProfileViewController: UIViewController, UIScrollViewDelegate, UIImage
         return item
     }
 
-    //This method is called when the autolayout engine has finished to calculate your views' frames
     override func viewDidLayoutSubviews() {
         let widthButton = v.photoButton.bounds.size.width
         

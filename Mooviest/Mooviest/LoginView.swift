@@ -70,14 +70,14 @@ class LoginView: UIView {
         centralView.backgroundColor = UIColor.white.withAlphaComponent(0)
  
         let placeholderUserOrEmail = NSLocalizedString("placeholderUserOrEmail", comment: "Placeholder of userOrEmailTextFieldView")
-        userOrEmailTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
+        userOrEmailTextFieldView.setTexColor(TextColor: UIColor.black)
         userOrEmailTextFieldView.setPlaceholder(Placeholder: placeholderUserOrEmail, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         userOrEmailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.emailAddress)
         userOrEmailTextFieldView.setReturnKeyType(returnKeyType: .next)
         userOrEmailTextFieldView.textField.tag = TextFieldViewTag.UserOrEmailTextFieldView.rawValue
         
         let placeholderPass = NSLocalizedString("placeholderPass", comment: "Placeholder of passLoginTextFieldView")
-        passLoginTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
+        passLoginTextFieldView.setTexColor(TextColor: UIColor.black)
         passLoginTextFieldView.setPlaceholder(Placeholder: placeholderPass, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         passLoginTextFieldView.setSecureText(isSecureTextEntry: true)
         passLoginTextFieldView.setReturnKeyType(returnKeyType: .join)
@@ -99,33 +99,29 @@ class LoginView: UIView {
         formRegisterView.layer.masksToBounds = true
         
         padingRegisterformView.backgroundColor = UIColor.white.withAlphaComponent(0)
-        //Traduccion
-        //Username
-        //Email
-        //Password
-        //Confirm password
+    
         let placeholderUser = NSLocalizedString("placeholderUser", comment: "Placeholder of userTextFieldView")
-        userTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
+        userTextFieldView.setTexColor(TextColor: UIColor.black)
         userTextFieldView.setPlaceholder(Placeholder: placeholderUser, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         userTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.alphabet)
         userTextFieldView.setReturnKeyType(returnKeyType: .next)
         userTextFieldView.textField.tag = TextFieldViewTag.UserTextFieldView.rawValue
         
         let placeholderEmail = NSLocalizedString("placeholderEmail", comment: "Placeholder of emailTextFieldView")
-        emailTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
+        emailTextFieldView.setTexColor(TextColor: UIColor.black)
         emailTextFieldView.setPlaceholder(Placeholder: placeholderEmail, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         emailTextFieldView.setKeyboardType(KeyboardType: UIKeyboardType.emailAddress)
         emailTextFieldView.setReturnKeyType(returnKeyType: .next)
         emailTextFieldView.textField.tag = TextFieldViewTag.EmailTextFieldView.rawValue
         
-        passTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
+        passTextFieldView.setTexColor(TextColor: UIColor.black)
         passTextFieldView.setPlaceholder(Placeholder: placeholderPass, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         passTextFieldView.setSecureText(isSecureTextEntry: true)
         passTextFieldView.setReturnKeyType(returnKeyType: .next)
         passTextFieldView.textField.tag = TextFieldViewTag.PassTextFieldView.rawValue
         
         let placeholderConfirmPass = NSLocalizedString("placeholderConfirmPass", comment: "Placeholder of confirmPassTextFieldView")
-        confirmPassTextFieldView.setTexColor(TextColor: UIColor.black)//(netHex: dark_red))
+        confirmPassTextFieldView.setTexColor(TextColor: UIColor.black)
         confirmPassTextFieldView.setPlaceholder(Placeholder: placeholderConfirmPass, PlaceholderColor:   placeholder_gray.withAlphaComponent(0.7))
         confirmPassTextFieldView.setSecureText(isSecureTextEntry: true)
         confirmPassTextFieldView.setReturnKeyType(returnKeyType: .default)

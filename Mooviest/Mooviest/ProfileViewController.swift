@@ -34,7 +34,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        //here extract predominant color
         v.bodyScrollView.contentSize.height = view.frame.size.height*1.15+v.barSegmentedView.center.y-v.barSegmentedView.frame.height*1.8
         calculateOffset()
     }
@@ -68,7 +67,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, TabBarProto
         }
     }
     
-    //This method is called when the autolayout engine has finished to calculate your views' frames
     override func viewDidLayoutSubviews() {
         v.coverImageView.layer.cornerRadius = v.coverImageView.bounds.size.width*0.5
         v.coverImageView.clipsToBounds = true

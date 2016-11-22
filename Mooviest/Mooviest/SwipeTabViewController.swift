@@ -48,7 +48,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         replayButton.tintColor = mooviest_red
         navigationItem.leftBarButtonItem = replayButton
         navigationItem.rightBarButtonItem = searchButton
-        //
         
         v.blackButton.addTarget(self, action: #selector(self.clickSwipeBottom), for: .touchUpInside)
         v.favouriteButton.addTarget(self, action: #selector(self.clickSwipeTop), for: .touchUpInside)
@@ -125,7 +124,6 @@ class SwipeTabViewController: UIViewController, DraggableViewDelegate, MovieProt
         }
     }
     
-    //This method is called when the autolayout engine has finished to calculate your views' frames
     override func viewDidLayoutSubviews() {
         let widthButton = v.blackButton.bounds.size.width
         

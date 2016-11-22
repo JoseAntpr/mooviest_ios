@@ -30,9 +30,9 @@ class TextFieldView: UIView {
 
     
     func setupComponents() {
-        textField.autocorrectionType = .no // autocorreccion
-        textField.autocapitalizationType = .none //La primera mayuscula
-        textField.spellCheckingType = .no //correcion ortografica
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.spellCheckingType = .no 
         textField.enablesReturnKeyAutomatically = true
 
         errorLabel.text = ""

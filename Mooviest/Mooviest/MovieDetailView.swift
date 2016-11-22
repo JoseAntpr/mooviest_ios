@@ -90,8 +90,7 @@ class MovieDetailView: UIView {
         
         let title1BarSegmentedControl = NSLocalizedString("title1BarSegmentedControl", comment: "Title1 of barSegmentedControl")
         let title2BarSegmentedControl = NSLocalizedString("title2BarSegmentedControl", comment: "Title2 of barSegmentedControl")
-        //let title3BarSegmentedControl = NSLocalizedString("title3BarSegmentedControl", comment: "Title3 of barSegmentedControl")
-        let items = [title1BarSegmentedControl, title2BarSegmentedControl]//, title3BarSegmentedControl]
+        let items = [title1BarSegmentedControl, title2BarSegmentedControl]
         barSegmentedControl = UISegmentedControl(items: items)
         barSegmentedControl.selectedSegmentIndex = 0
         barSegmentedControl.tintColor = mooviest_red

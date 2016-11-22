@@ -12,7 +12,6 @@ import Chameleon
 class CaptionMovieView: UIView {
     let typeLabel = UILabel()
     let titleLabel = UILabel()
-//    let ratingView = RatingCollectionViewCell()
     let releasedLabel = UILabel()
     let runtimeLabel = UILabel()
     
@@ -45,11 +44,9 @@ class CaptionMovieView: UIView {
         releasedLabel.textAlignment = .right
         releasedLabel.textColor = .darkGray
         
-//        ratingView.faceImageView.image = UIImage(named: "logo")
         
         addSubview(typeLabel)
         addSubview(titleLabel)
-//        addSubview(ratingView)
         addSubview(runtimeLabel)
         addSubview(releasedLabel)
     }
@@ -59,7 +56,6 @@ class CaptionMovieView: UIView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         runtimeLabel.translatesAutoresizingMaskIntoConstraints = false
         releasedLabel.translatesAutoresizingMaskIntoConstraints = false
-//        ratingView.translatesAutoresizingMaskIntoConstraints = false
         
         let widthTypeLabel = CGFloat(0.7)
         
